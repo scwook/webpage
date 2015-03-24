@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/style.css" media="screen">
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <script src="../resources/js/mediaelement-and-player.min.js"></script>
+  <script>
+   $(document).ready(function() {
+    $('video').mediaelementplayer({
+     alwaysShowControls: false,
+     features: ['playpause','progress','fullscreen']
+    });
+   });
+  </script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+   <aside>
+   <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Step Motor Test with MD5-DH14 Motor Driver</h1>
+   <p>
+             여기서는 Raspberry Pi와 MD-DH14 Motor Driver를 이용하여 5Phase Pentagon방식의  Step Motor작동 테스트를 하였다.
+   </p>
+   <p>사용된 하드웨어와 구성은 다음과 같다.</p>
+   <ul>
+    <li>Raspberry Pi Model B+</li>
+    <li>MD5-HD14 Motor Driver</li>
+    <li>24V Power Supply</li>
+    <li>스텝모터 (A15K-S545-G10)</li>
+   </ul>
+   </br>
+   <a href="../resources/images/raspberry/md5dh14Test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/md5dh14Test.png" width="50%" height="50%"/></a>
+   </br></br>
+   <p>
+   <p>
+      5Phase Step Motor는 작동 방식이 복잡한데 사실 Motor Driver가 알아서 구동시키므로 크게 고려할 필요는 없다. 참고로
+             대략적인 작동 방식은 다음 그림과 같다.
+   </p>
+             그림 출처: <a href="http://www.orientalmotor.com/technology/articles/2phase-v-5phase.html">http://www.orientalmotor.com/technology/articles/2phase-v-5phase.html</a>
+   </p>
+   <a href="../resources/images/raspberry/5-ph-fullstep.jpg" data-lightbox="example-1"><img src="../resources/images/raspberry/5-ph-fullstep.jpg" /></a>
+   <p>
+      MD5-HD14 Motor Driver를 이용한 Step Motor 작동은 간단하다. 외부에서 Pulse 신호를 주면 Driver는 1Pulse당
+      1Step씩 Motor를 움직인다.  여기서 Step 각도는 연결된 Motor에 따라 다른데 테스트에 사용된 스텝모터는 
+      1Step당 0.072도씩 움직인다. 따라서 한바퀴를 돌리기 위해서는 5000Pulse가 필요하다. 모터 방향을 바꾸는 방법은 2가지가
+             있는데 Driver에 있는 1/2 CLK 스위치에 따라 1Pulse방식과 2Pulse방식이 있다. 1Pulse 방식은 CW 입력핀을 
+      Pulse로 주고 CCW 입력핀에 따라 회전 방향을 결정하는 방식이다. 2Pulse방식은 CW 입력핀과 CCW 입력핀에 
+             각각 Pulse를 주는 방식이다. 이 경우 동시에 Pulse가 입력되면 Motor가 작동 되지 않는다. 2Pulse 방식은 2개의 Pulse를
+             만들어야 하므로 테스트에는 1Pulse 방식을 사용하였다.
+   </p>
+   <p>
+             이제 Motor 구동에 필요한 Pulse를 만드는 코드를 다음과 같이 작성한다. Pulse를 만드는 방법에 대한 자세한 설명은 
+      다음 페이지를 참고한다. 여기서는 GPIO를 이용하여 Pulse를 만들었다.
+  </p>
+   <p>참고 사이트: <a href="appPWM.html">Pulse Width Modulation(PWM) 출력 테스트</a></p>
+   <pre>
+step.c
+
+	#include &lt;stdio.h>
+	#include &lt;wiringPi.h>
+	
+	#define PULSE 5000
+
+	int main(void)
+	{
+	  if(wiringPiSetup() == -1)
+	  {
+	    printf("Init Error\n");
+	    return 1;
+	  }
+
+	  pinMode(1, OUTPUT);
+	  pinMode(4, OUTPUT);
+
+	  int pulse;
+	  for(;;)
+	  {
+	    digitalWrite(4, 0);
+	    for(pulse=0; pulse&lt;PULSE; pulse++)
+	    {
+	      digitalWrite(1, 1);
+	      delayMicroseconds(500);
+	      digitalWrite(1, 0);
+	      delayMicroseconds(500);
+	    }
+
+	    digitalWrite(4, 1);
+	    for(pulse=0; pulse&lt;PULSE; pulse++)
+	    {
+	      digitalWrite(1, 1);
+	      delayMicroseconds(500);
+	      digitalWrite(1, 0);
+	      delayMicroseconds(500);
+	    }
+	  }
+	}
+   </pre>
+   <p>테스트 결과는 다음과 같다.</p>
+   <div class="videoFrame">
+   <video width="640" height="480" >
+    <source src="../resources/images/raspberry/stepMotorTest2.mp4" type="video/mp4">
+   </video>
+   </div>
+  </section>
+ </body>
+</html>

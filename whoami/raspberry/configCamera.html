@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+   <aside>
+   <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Camera Configuration</h1>
+   <p>
+      Raspberry Pi에서 제공하고 있는 카메라는 2종류가 있다.  하나는 일반적으로 사용하는 카메라로 기판 색이 초록색으로 되어 있다. 다른 하나는
+      NoIR(No Infrared) 카메라로 기판색이 검은색으로 되어 있다. 적외선 필터가 없는 카메라이다.  두 카메라는 기능적으로 완전 동일하나 NoIR
+             카메라는 적외선 필터가 없으므로 적외선 영역까지도 볼 수있다. 즉 적외선 LED와 함께 사용하면 어두운 장소에서도 촬영이 가능하다. 물론 일반 
+             카메라도 가시광선 LED를 사용하면 되지만 이 경우 불빛이 눈에 보인다는 단점이 있다. 결론적으로 일반 카메라는 감시 카메라로 사용할 수 없다.
+   </p>
+   <img src="../resources/images/raspberry/camera.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <img src="../resources/images/raspberry/noircamera.jpg">
+   <p>카메라가 준비되었으면 그림과 같이 Camera Port에 연결한다.</p>
+   <a href="../resources/images/raspberry/pi_camera_setting.png" data-lightbox="example-1"><img src="../resources/images/raspberry/pi_camera_setting.png" width="50%" height="50%" /></a>
+   <p>Raspberry Pi에서 Camera를 사용하기 위해서는 Port를 Enable 시켜야 한다. raspi-config 화면을 열어 Camera를 Enable 시킨다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ sudo raspi-config
+   </pre>
+   </br>
+   <img src="../resources/images/raspberry/enable_camera.png"></br></br>
+   <img src="../resources/images/raspberry/enable_camera_sel.png">
+   <p>설정을 마쳤으면 재부팅 한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ sudo reboot
+   </pre>
+   <p>기본 적인 카메라 사용방법은 다음과 같다.</p>
+   <p>사진 캡쳐는 raspitill을 사용한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ raspistill -o cam.jpg
+   </pre>
+   <p>상하 좌우 반전을 하고 싶으면 vf, hf 옵션을 설정한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ raspistill -vf -hf -o cam2.jpg
+   </pre>
+   <p>동영상 촬영은 raspivid를 사용한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ raspivid -o vid.h264   
+   </pre>
+   <p>t 옵션을 사용하면 시간 설정이 가능하다.(기본은 5초) 다음은 10초동안 촬영한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ raspivid -o vid.h264 -t 10000   
+   </pre>
+   <p>카메라가 작동할 때 LED가 켜지지 않게 하려면 /boot/config.txt 파일에 disable_camera_led=1을 추가한 후 재부팅 한다.</p>
+   <pre>
+config.txt
+
+	...
+	...
+	...
+
+	# NOOBS Auto-generated Settings:
+	hdmi_force_hotplug=1
+	config_hdmi_boost=4
+	overscan_left=24
+	overscan_right=24
+	overscan_top=16
+	overscan_bottom=16
+	disable_overscan=0
+	start_x=1
+	gpu_mem=128
+	<span class="insert">disable_camera_led=1</spane>
+   </pre>
+   <p>
+             기타 기능들은 다음 홈페이지를 참고한다.</br>
+      <a href="http://www.raspberrypi.org/documentation/usage/camera/raspicam/README.md">http://www.raspberrypi.org/documentation/usage/camera/raspicam/README.md</a>
+   </p>
+  </section>
+ </body>
+</html>

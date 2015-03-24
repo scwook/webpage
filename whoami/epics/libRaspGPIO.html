@@ -1,0 +1,684 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Raspberry Pi GPIO Device Support Development</h1>
+   <p>
+      Raspberry Pi는 40개의 입출력 Pin을 가지고 있는데(Model B의 경우 26개) 여기에서는 GPIO를 EPICS
+      에서 사용하기 위한 방법과 테스트 과정에 대하여 설명하였다. 최종 목표는 다음과 같은 하드웨어
+      구성과 EPICS Record를 만들어 GPIO를 제어하는 것이다. 여기서 '@1'과 '@4'는 GPIO Pin 번호를 의미한다.
+   </p>
+   <a class="example-image-link" href="../resources/images/raspberry/ledbuttontest.png" data-lightbox="example-1"><img class="example-image" src="../resources/images/raspberry/ledbuttontest.png" width="50%" height="50%" /></a>
+   <pre>
+gpio.db
+
+	record(bi, "inp1")
+	{
+	  field(DTYP, "GPIO")
+	  field(SCAN, "1 second")
+	  field(INP, "@1")
+	}
+
+	record(bo, "out4")
+	{
+	  field(DTYP, "GPIO")
+	  field(OUT, "@4")
+	}
+   </pre>
+   <p>모든 작업은 Raspberry Pi에서 하므로 Pi에 접속 후 ioc Application 폴더를 생성한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span> ssh pi@10.1.4.207
+   </pre>
+   <p>
+      GPIO Library는 wiringPi Library를 필요로 한다. 설치되어 있지 않다면 우선 wiringPi를
+      설치하도록 하자.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~$ clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>다운받은 wiringPi를 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~$ cd wiringPi
+<span class="prom">pi@ctrlpi3</span> ~/wiringPi$ ./build
+   </pre>
+   <p>EPICS Application 폴더를 생성한다.
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> cd ../epics/R3.14.12.4/siteApps
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps $ mkdir gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps $ cd gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio $ makeBaseApp.pl -t ioc gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio $ makeBaseApp.pl -i -t ioc gpio
+
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    gpio
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name? gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio $ ls
+conigure  gpioApp  iocBoot Makefile
+   </pre>
+   <p>gpioApp/src 폴더로 이동한 후 devGPIO.c 파일을 만들어 기본 코드를 작성한다.</p>
+   <pre>
+devGPIO.c
+
+        #include &lt;stdio.h&gt;
+        #include &lt;string.h&gt;
+        #include &lt;stdlib.h&gt;
+
+        #include &lt;epicsExport.h&gt;
+        #include &lt;devSup.h&gt;
+        #include &lt;boRecord.h&gt;
+        #include &lt;biRecord.h&gt;
+
+        #include &lt;wiringPi.h&gt;
+
+	static long bo_init_record(boRecord *pbo);
+	static long bi_init_record(biRecord *pbi);
+
+	static long write_bo(boRecord *pbo);
+	static long read_bi(biRecord *pbi);
+
+        static long bo_init_record(boRecord *pbo)
+        {
+        }
+
+        static long bi_init_record(biRecord *pbi)
+        {
+        }
+
+	static long write_bo(boRecord *pbo)
+	{
+	}
+
+        static long read_bi(biRecord *pbi)
+        {
+        }
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     write_bo;
+	  DEVSUPFUN     special_linconv;
+	} devBoGpioAsync = {
+	  6,
+	  NULL,
+	  NULL,
+	  bo_init_record,
+	  NULL,
+	  write_bo,
+	  NULL
+	};
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     read_bi;
+	  DEVSUPFUN     special_linconv;
+	} devBiGpioAsync = {
+	  6,
+	  NULL,
+	  NULL,
+	  bi_init_record,
+	  NULL,
+	  read_bi,
+	  NULL
+	};
+
+	epicsExportAddress(dset,devBoGpioAsync);
+	epicsExportAddress(dset,devBiGpioAsync);
+   </pre>
+   <p>
+     기본 구조에서 boRecord는 출력을, biRecord는 입력을 위한 Record이며, 각각의 Record에 대한 초기화 
+     함수와 GPIO를 읽고 쓰기 위한 함수로 구성되어 있다. dset을 devBoGpioAsync와 devBiGpioAsync로 설정
+     하였으므로 devGPIO.dbd 파일을 만들어 다음과 같이 작성한다.
+   </p>
+   <pre>
+devGPIO.dbd
+
+	device(bo, INST_IO, devBoGpioAsync, "GPIO")
+	device(bi, INST_IO, devBiGpioAsync, "GPIO")
+   </pre>
+   <p>기본 구조가 완성되었으면 실제 코드를 작성하도록 한다. 우선 초기화 함수를 다음과 같이 작성한다.</p>
+   <pre>
+devGPIO.c
+
+	static long bo_init_record(boRecord *pbo)
+	{
+	  struct Pin_Info *pin_info = malloc(sizeof(struct Pin_Info));
+
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  int pin_num = 0;
+	  pin_num = atoi(pbo->out.value.instio.string);
+
+	  pinMode(pin_num, OUTPUT);
+
+	  pin_info->pin_num = pin_num;
+
+	  pbo->dpvt = pin_info;
+
+	  return 0;
+	}
+
+	static long bi_init_record(biRecord *pbi)
+	{
+	  struct Pin_Info *pin_info = malloc(sizeof(struct Pin_Info));
+
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  int pin_num = 0;
+	  pin_num = atoi(pbi->inp.value.instio.string);
+
+	  pinMode(pin_num, INPUT);
+
+	  pin_info->pin_num = pin_num;
+
+	  pbi->dpvt = pin_info;
+
+	  return 0;
+	}
+   </pre>
+   <p>핀 번호를 저장하기 위한 구조체를 함수 선언 아래에 해준다.</p>
+   <pre>
+devGPIO.c
+
+	...
+	...
+        static long write_bo(boRecord *pbo);
+        static long read_bi(biRecord *pbi);
+<span class="insert">	
+        struct Pin_Info
+        {
+          int pin_num;
+        }; 
+</span>
+   </pre>
+   <p>
+      bo와 bi초기화 코드는 거의 동일하며 차이는 bo의 경우 Link를 out에서, bi의 경우 Link를 inp에서
+      가져온다. 또한 bo는 출력이므로 pinMode를 OUTPUT으로 설정하며 bi는 입력 모드인 INPUT로 설정한다.
+   </p>
+   <p>
+   초기화 코드는 다음과 같이 wiringPi를 먼저 초기화 한다.
+   </p>
+   <pre>
+	if(wiringPiSetup() == -1)
+          return 1;
+   </pre>
+   <p>
+      다음에는 INP 또는 OUT값을 읽어 정수로 변환하여 저장하고 pinMode를 설정한다. 참고로 atoi함수는
+      문자열을 정수로 변환시켜 주는 C함수이다. 
+   </p>
+   <pre>
+        int pin_num = 0;
+        pin_num = atoi(pbo->out.value.instio.string);
+
+        pinMode(pin_num, OUTPUT);
+   </pre>
+   <pre>
+        int pin_num = 0;
+        pin_num = atoi(pbi->inp.value.instio.string);
+
+        pinMode(pin_num, INPUT);
+   </pre>
+   <p>
+      마지막으로 pin_num 값을 구조체에 저장한 후 dpvt에 구조체 주소를 설정함으로써 설정된 pin값을
+      사용할 수 있도록 한다.
+   </p>
+   <pre>
+        pin_info->pin_num = pin_num;
+
+        pbo->dpvt = pin_info;
+   </pre>
+   <p>초기화 함수가 완료되었으면 실제 값을 읽고 쓰는 함수를 작성한다. 우선 write_bo 함수를 작성한다.</p>
+   <pre>
+devGPIO.c
+	
+	static long write_bo(boRecord *pbo)
+	{
+	  struct Pin_Info *pin_info = pbo->dpvt;
+
+	  int pin = pin_info->pin_num;
+	  int val = pbo->rval;
+
+	  digitalWrite(pin, val);
+
+	  return 0;
+	}
+   </pre>
+   <p>
+      GPIO 출력을 위해 wiringPi Library에 있는 digitalWrite 함수를 사용하는데 이 함수는 출력하고자 하는
+      핀 번호와 출력값을 함수 인자로 받는다. 핀 번호는 앞서 dpvt 포인터에 저장된 구조체를 이용하여 
+      읽어온다. 출력 값은 boRecord 구조체 안에있는 rval변수로 부터 알 수 있다. 즉, 사용자가 다음과 같이
+      값을 설정하면 그 값이 rval에 저장된다.
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ caput out4 1
+   </pre>
+   <p>다음은 read_bi 함수를 작성한다.</p>
+   <pre>
+devGPIO.c
+
+	static long read_bi(biRecord *pbi)
+	{
+	  struct Pin_Info *pin_info = pbi->dpvt;
+
+	  int pin = pin_info->pin_num;
+	  int val = digitalRead(pin);
+
+	  pbi->rval = val;
+
+	  return 0;
+	}
+   </pre>
+   <p>
+      read_bi함수는 write_bo함수와 구조는 같으며 핀 값을 읽어들이는 digitalRead함수를 사용한다.
+      이 함수는 핀 번호를 함수 인자로 받아 현재 핀 상태가 HIGH면 1, LOW면 0값을 리턴한다.
+   </p>
+   <p>전체 코드는 다음과 같다.</p>
+   <pre>
+devGPIO.c
+
+        #include &lt;stdio.h&gt;
+        #include &lt;string.h&gt;
+        #include &lt;stdlib.h&gt;
+
+        #include &lt;epicsExport.h&gt;
+        #include &lt;devSup.h&gt;
+        #include &lt;boRecord.h&gt;
+        #include &lt;biRecord.h&gt;
+
+        #include &lt;wiringPi.h&gt;
+
+	static long bo_init_record(boRecord *pbo);
+	static long bi_init_record(biRecord *pbi);
+
+	static long write_bo(boRecord *pbo);
+	static long read_bi(biRecord *pbi);
+
+	struct Pin_Info
+	{
+	  int pin_num;
+	};
+
+        static long bo_init_record(boRecord *pbo)
+        {
+          struct Pin_Info *pin_info = malloc(sizeof(struct Pin_Info));
+
+          if(wiringPiSetup() == -1)
+            return 1;
+
+          int pin_num = 0;
+          pin_num = atoi(pbo->out.value.instio.string);
+
+          pinMode(pin_num, OUTPUT);
+
+          pin_info->pin_num = pin_num;
+
+          pbo->dpvt = pin_info;
+
+          return 0;
+        }
+
+        static long bi_init_record(biRecord *pbi)
+        {
+          struct Pin_Info *pin_info = malloc(sizeof(struct Pin_Info));
+
+          if(wiringPiSetup() == -1)
+            return 1;
+
+          int pin_num = 0;
+          pin_num = atoi(pbi->inp.value.instio.string);
+
+          pinMode(pin_num, INPUT);
+
+          pin_info->pin_num = pin_num;
+
+          pbi->dpvt = pin_info;
+
+          return 0;
+        }
+
+
+	static long write_bo(boRecord *pbo)
+	{
+          struct Pin_Info *pin_info = pbo->dpvt;
+
+          int pin = pin_info->pin_num;
+          int val = pbo->rval;
+
+          digitalWrite(pin, val);
+
+          return 0;
+	}
+
+        static long read_bi(biRecord *pbi)
+        {
+          struct Pin_Info *pin_info = pbi->dpvt;
+
+          int pin = pin_info->pin_num;
+          int val = digitalRead(pin);
+
+          pbi->rval = val;
+
+          return 0;
+        }
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     write_bo;
+	  DEVSUPFUN     special_linconv;
+	} devBoGpioAsync = {
+	  6,
+	  NULL,
+	  NULL,
+	  bo_init_record,
+	  NULL,
+	  write_bo,
+	  NULL
+	};
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     read_bi;
+	  DEVSUPFUN     special_linconv;
+	} devBiGpioAsync = {
+	  6,
+	  NULL,
+	  NULL,
+	  bi_init_record,
+	  NULL,
+	  read_bi,
+	  NULL
+	};
+
+	epicsExportAddress(dset,devBoGpioAsync);
+	epicsExportAddress(dset,devBiGpioAsync);
+   </pre>
+   <p>코드 작성이 완료되면 Makefile에 다음과 같이 추가한다.</p>
+   <pre>
+Makefile
+
+	TOP=../..
+
+	include $(TOP)/configure/CONFIG
+	<span class="insert">
+	USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+	wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+	</span>
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+	#=============================
+
+	#=============================
+	# Build the IOC application
+
+	PROD_IOC = gpio
+	# gpio.dbd will be created and installed
+	DBD += gpio.dbd
+
+	# gpio.dbd will be made up from these files:
+	gpio_DBD += base.dbd
+
+	# Include dbd files from all support applications:
+	#gpio_DBD += xxx.dbd
+	<span class="insert">gpio_DBD += devGPIO.dbd</span>
+
+	# Add all the support libraries needed by this IOC
+	#gpio_LIBS += xxx
+	<span class="insert">gpio_LIBS += wiringPi</span>
+
+	# gpio_registerRecordDeviceDriver.cpp derives from gpio.dbd
+	gpio_SRCS += gpio_registerRecordDeviceDriver.cpp
+	<span class="insert">gpio_SRCS += devGPIO.c</span>
+
+	# Build the main IOC entry point on workstation OSs.
+	gpio_SRCS_DEFAULT += gpioMain.cpp
+	gpio_SRCS_vxWorks += -nil-
+
+	# Add support from base/src/vxWorks if needed
+	#gpio_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+	# Finally link to the EPICS Base libraries
+	gpio_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+	#===========================
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <p>
+     이제 코드작성은 완료되었으므로 테스트를 위한 db파일을 만든다. gpioApp/Db 폴더로 이동한 후
+     gpio.db 파일을 만든다.
+   </p>
+   <pre>
+gpio.db
+
+	record(bi, "inp1")
+	{
+	  field(DTYP, "GPIO")
+	  field(SCAN, "1 second")
+	  field(INP, "@1")
+	}
+
+	record(bo, "out4")
+	{
+	  field(DTYP, "GPIO")
+	  field(OUT, "@4")
+	}
+   </pre>
+   <p>
+      gpio.db에서는 GPIO 1번을 입력으로 4번을 출력으로 설정했음을 알 수있다. 
+      Makefile에 db파일을 추가해 준다.
+   </p>
+   <p>이제 컴파일을 하기 위해 gpio폴더로 이동한 후 make를 실행한다.</p>
+   <pre>
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio $ make
+   </pre>
+   <p>make가 완료되면 bin/linux-arm 폴더에 gpio 파일과 db 폴더에 gpio.db 파일이 만들어 진다.</p>
+   <p>이제 ioc를 실행시키기 위해 iocBoot/iocgpio 폴더로 이동 후 st.cmd파일에 gpio.db를 추가해 준다.</p>
+   <pre>
+st.cmd
+
+	#!../../bin/linux-arm/gpio
+
+	## You may have to change gpio to something else
+	## everywhere it appears in this file
+
+	&lt; envPaths
+
+	cd ${TOP}
+
+	## Register all support components
+	dbLoadDatabase "dbd/gpio.dbd"
+	gpio_registerRecordDeviceDriver pdbbase
+
+	## Load record instances
+	#dbLoadTemplate "db/userHost.substitutions"
+	#dbLoadRecords "db/dbSubExample.db", "user=piHost"
+	dbLoadRecords "db/gpio.db"
+
+	## Set this to see messages from mySub
+	#var mySubDebug 1
+
+	## Run this to trace the stages of iocInit
+	#traceIocInit
+
+	cd ${TOP}/iocBoot/${IOC}
+	iocInit
+
+	## Start any sequence programs
+	#seq sncExample, "user=piHost"
+   </pre>
+   <p>마지막으로 st.cmd파일을 실행파일로 변경한 후 실행시킨다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio/iocBoot/iocdht11 $ chmod 755 st.cmd
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio/iocBoot/iocdht11 $ sudo ./st.cmd
+   </pre>
+   <p>out4 출력값을 1로 했을 때 LED에 불이오면 성공!</p>
+   <pre class="shell">
+epics> dbpf out4 1
+   </pre>
+   <p>버튼을 누른 상태에서 inp1 값이 1이면 성공!</p>
+   <pre class="shell">
+epics> dbpr inp1
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: gpio:inp1     RVAL: 0             SEVR: NO_ALARM      
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             VAL: 1
+   </pre>
+   </br>
+   <h2>라이브러리 파일로 만들기</h2>
+   <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+   <p>siteLibs 폴더로 이동한 후 raspGPIOLib 폴더를 하나 만든다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs $ mkdir raspGPIOLib
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs $ cd raspGPIOLibs
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/raspGPIOLibs $
+   </pre>
+   <p>rsapGPIOLib 폴더안에 Db, src폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP = ..
+        include $(TOP)/configure/CONFIG
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+        include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 devGPIO.c와 devGPIO.dbd 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/raspGPIOLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/gpio/gpioApp/src/devGPIO.c ./
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/raspGPIOLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/gpio/gpioApp/src/devGPIO.dbd ./
+   </pre>
+   <p>Makefile 만들고 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP = ../..
+        include $(TOP)/configure/CONFIG
+
+        LIBRARY_IOC += raspGPIO
+        DBD         += devGPIO.dbd
+        raspGPIO_SRCS += devGPIO.c
+
+        include $(TOP)/configure/RULES
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-arm 폴더안에 libraspGPIO.so
+      파일이 만들어 진다.
+   </p>
+   <p>Library에 대한 db파일 제공을 위해 raspGPIOLibs/Db폴더로 이동한 후 다음과 같은 gpio.db파일만든다.</p>
+   <pre>
+gpio.db
+
+        record(bi, "inp1")
+        {
+          field(DTYP, "GPIO")
+          field(SCAN, "1 second")
+          field(INP, "@1")
+        }
+
+        record(bo, "out4")
+        {
+          field(DTYP, "GPIO")
+          field(OUT, "@4")
+        }
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP =../..
+        include $(TOP)/configure/CONFIG
+        DB += gpio.db
+        include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 gpio.db파일이 생성된다.</p>
+   <p>Library를 이용한 GPIO 테스트는 EPICS Application에 있는 <a href="appRaspLedButton.html">GPIO Input/Output Test with LED and Button</a>을 참고하기 바란다.</p>
+  </section>
+ </body>
+</html>

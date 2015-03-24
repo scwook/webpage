@@ -1,0 +1,502 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>LED와 Button을 이용한 GPIO 테스트</h1>
+   <p>
+      GPIO Library를 이용하여 버튼을 눌렀을 때 LED에 불이 들어오는 Application을 만들어 보자. 기본적으로       모든 작업은 Raspberry Pi안에서 이루어 지며 rano epics 기본 구조를 따른다. 테스트에 사용된 
+      하드웨어 구성은 다음과 같다.
+   </p>
+   <a href="../resources/images/raspberry/ledbuttontest.png" data-lightbox="example-1"><img src="../resources/images/raspberry/ledbuttontest.png" width="50%" height="50%" /></a>
+
+   <p>
+      GPIO Library는 wiringPi Library를 필요로 한다. 설치되어 있지 않다면 우선 wiringPi를 
+      설치하도록 하자.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~$ clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>다운받은 wiringPi를 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~$ cd wiringPi
+<span class="prom">pi@ctrlpi3</span> ~/wiringPi$ ./build
+   </pre>
+   <p>
+      wiringPi가 준비되었으면 siteLibs로 이동하자. siteLibs가 없다면 svn에서 내려 받는다. 
+      만약 siteLibs가 있다면 GPIOLibRasp폴더가 있는지 확인 한 후 없다면 마찬가지로 svn에서 내려 받는다.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4 $ svn co svn://10.1.5.14/raon/trunk/siteLibs
+   </pre>
+   <p>siteLibs/GPIOLibRasp 폴더로 이동한 후 make를 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4 $ cd siteLibs/GPIOLibRasp
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/GPIOLibRasp $ make
+   </pre>
+   <p>make가 완료되면 siteLibs/lib/linux-arm 폴더에 libraspGPIO.a 와 libraspGPIO.so 파일이 생성된다.</p>
+   <p>이제 siteApps폴더로 이동한 후 App폴더 하나를 만든다. siteApps폴더가 없다면 svn으로 부터 내려 받는다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4 $ svn co svn://10.1.5.14/raon/trunk/siteApps
+   </pre>
+   <p>siteApps 폴더안에 gpio폴더를 생성한 다음 기본 ioc 구조를 만든다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4 $ cd siteApps
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps $ mkdir gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps $ cd gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio $ makeBaseApp.pl -t ioc gpio
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio $ makeBaseApp.pl -i -t ioc gpio
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    gpio
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name? gpio
+   </pre>
+   <p>gpioApp/src 폴더로 이동하면 gpioMain.cpp와 Makefile이 있다. Makefile에 다음 코드를 추가한다.</p>
+   <pre>
+Makefile
+
+TOP=../..
+
+include $(TOP)/configure/CONFIG
+<span class="insert">
+USR_INCLUDES  += -I$(RAON_SITELIBS)/include
+USR_DBDFLAGS  += -I$(RAON_SITELIBS)/dbd
+USR_INCLUDES  += -I$(EPICS_EXTENSIONS)/include
+
+USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+
+raspGPIO_DIR += $(RAON_SITELIBS)/lib/$(T_A)
+</span>
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
+
+#=============================
+# Build the IOC application
+
+PROD_IOC = gpio
+# gpio.dbd will be created and installed
+DBD += gpio.dbd
+
+# gpio.dbd will be made up from these files:
+gpio_DBD += base.dbd
+
+# Include dbd files from all support applications:
+#gpio_DBD += xxx.dbd
+<span class="insert">
+gpio_DBD += devGPIO.dbd
+</span>
+# Add all the support libraries needed by this IOC
+#gpio_LIBS += xxx
+<span class="insert">
+gpio_LIBS += raspGPIO
+gpio_LIBS += wiringPi
+</span>
+# gpio_registerRecordDeviceDriver.cpp derives from gpio.dbd
+gpio_SRCS += gpio_registerRecordDeviceDriver.cpp
+
+# Build the main IOC entry point on workstation OSs.
+gpio_SRCS_DEFAULT += gpioMain.cpp
+gpio_SRCS_vxWorks += -nil-
+
+# Add support from base/src/vxWorks if needed
+#gpio_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+# Finally link to the EPICS Base libraries
+gpio_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+#===========================
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+   </pre>
+   <p>gpioApp/Db 폴더로 이동 후 gpio.db 파일을 만들고 Makefile에 추가해 준다.</p>
+   <pre>
+gpio.db
+
+	record(bi, "inp1")
+	{
+	  field(DTYP, "GPIO")
+	  field(SCAN, "1 second")
+	  field(INP, "@1")
+	}
+
+	record(bo, "out4")
+	{
+	  field(DTYP, "GPIO")
+	  field(OUT, "@4")
+	}
+   </pre>
+   <pre>
+Makefile
+
+	TOP=../..
+	include $(TOP)/configure/CONFIG
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+	#----------------------------------------------------
+	#  Optimization of db files using dbst (DEFAULT: NO)
+	#DB_OPT = YES
+
+	#----------------------------------------------------
+	# Create and install (or just install) into <top>/db
+	# databases, templates, substitutions like this
+	#DB += xxx.db
+	<span class="insert">DB += gpio.db</span>
+
+	#----------------------------------------------------
+	# If <anyname>.db template is not named <anyname>*.template add
+	# <anyname>_template = <templatename>
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <p>
+      gpio폴더로 이동한 후 make를 실행한다. make가 완료되면 bin/linux-arm 폴더에 gpio 파일과 
+      db폴더에 gpio.db 파일이 생성된다.
+   </p>
+   <p>ioc를 실행하기 위해 iocBoot/iocgpio 폴더로 이동하여 st.cmd파일에 gpio.db를 추가해 준다.</p>
+   <pre>
+st.cmd
+
+	#!../../bin/linux-arm/gpio
+
+	## You may have to change gpio to something else
+	## everywhere it appears in this file
+
+	&lt; envPaths
+
+	cd ${TOP}
+
+	## Register all support components
+	dbLoadDatabase "dbd/gpio.dbd"
+	gpio_registerRecordDeviceDriver pdbbase
+
+	## Load record instances
+	#dbLoadRecords("db/xxx.db","user=piHost")
+	<span class="insert">dbLoadRecords("db/gpio.db")</span>
+
+	cd ${TOP}/iocBoot/${IOC}
+	iocInit
+
+	## Start any sequence programs
+	#seq sncxxx,"user=piHost"
+   </pre>
+   <p>
+      여기까지 완료되면 GPIO를 이용하여 IN/OUT 제어가 가능하다. 테스트를 위해 st.cmd를 실행파일로 
+      변경한 후 실행한다.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio/iocBoot/iocgpio $ chmod 755 st.cmd
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/gpio/iocBoot/iocgpio $ sudo ./st.cmd
+#!../../bin/linux-arm/gpio
+## You may have to change gpio to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-arm")
+epicsEnvSet("IOC","iocgpio")
+epicsEnvSet("TOP","/home/pi/epics/R3.14.12.4/siteApps/gpio")
+epicsEnvSet("SNCSEQ","/home/pi/epics/R3.14.12.4/siteLibs")
+cd /home/pi/epics/R3.14.12.4/siteApps/gpio
+## Register all support components
+dbLoadDatabase "dbd/gpio.dbd"
+gpio_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+dbLoadRecords("db/gpio.db")
+cd /home/pi/epics/R3.14.12.4/siteApps/gpio/iocBoot/iocgpio
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.4 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Aug 29 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+epics&gt;
+   </pre>
+   <p>dbpf 명령을 사용하여 led 출력을 해본다. LED에 불이들어오면 성공!</p>
+   <pre class="shell">
+epics&gt; dbpf out4 1   
+   </pre>
+   <p>dbpr 명령을 사용하여 button 입력을 확인해 본다. button 누른상태에서 값이 1이면 성공!</p>
+   <pre class="shell">
+epics&gt; dbpr inp1
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: inp1          RVAL: 1             SEVR: NO_ALARM      
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             VAL: 1 
+   </pre>
+   <p>
+      이제 처음 의도했던 대로 버튼을 누르면 led가 켜지게 바꿔보자. 방법은 sequence 프로그램을
+      만들어 button값을 모니터링 하고 있다 값이 1이되면 출력을 1로, 0이되면 출력을 0으로 하면된다.
+   </p>
+   <p>
+      sequence 프로그램을 사용하기 위해서는 seq Library가 필요하다. siteLibs/seqLib 폴더로 이동한
+      후 make를 실행한다.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/seqLib $ make
+   </pre>
+   <p>이제 다시 gpio 폴더로 이동한 후 configure/RELEASE 파일을 다음과 같이 수정한다.</p>
+   <pre>
+RELEASE
+
+	# RELEASE - Location of external support modules
+	#
+	# IF YOU MAKE ANY CHANGES to this file you must subsequently
+	# do a "gnumake rebuild" in this application's top level
+	# directory.
+	#
+	# The build process does not check dependencies against files
+	# that are outside this application, thus you should do a
+	# "gnumake rebuild" in the top level directory after EPICS_BASE
+	# or any other external module pointed to below is rebuilt.
+	#
+	# Host- or target-specific settings can be given in files named
+	#  RELEASE.$(EPICS_HOST_ARCH).Common
+	#  RELEASE.Common.$(T_A)
+	#  RELEASE.$(EPICS_HOST_ARCH).$(T_A)
+	#
+	# This file should ONLY define paths to other support modules,
+	# or include statements that pull in similar RELEASE files.
+	# Build settings that are NOT module paths should appear in a
+	# CONFIG_SITE file.
+
+	TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+
+	# If using the sequencer, point SNCSEQ at its top directory:
+	<span class="insert">SNCSEQ=/home/pi/epics/R3.14.12.4/siteLibs</span>
+
+	# EPICS_BASE usually appears last so other apps can override stuff:
+	<span class="insert">EPICS_BASE=${EPICS_PATH}/base</span>
+
+	# Set RULES here if you want to take build rules from somewhere
+	# other than EPICS_BASE:
+	#RULES=/path/to/epics/support/module/rules/x-y
+   </pre>
+  <p>gpioApp/src 폴더로 이동한다. sequence 프로그램을 위해 seqLED.stt 파일을 만들어 다음과 같이 코딩한다.</p>
+   <pre>
+seqLED.stt
+
+	program seqled
+
+	option +r;
+
+	int button;
+	int led;
+
+	assign button to "inp1";
+	assign led to "out4";
+
+	monitor button;
+
+	ss ssStartLEDSeq
+	{
+		state init
+		{
+			when(delay(0.1))
+			{
+				led = 0;
+				pvPut(led);
+
+				printf("LED OnOff Sequence Start\n");
+
+			} state ledOff
+		}
+
+		state ledOn
+		{
+			when(button == 0)
+			{
+				led = 0;
+				pvPut(led);
+
+			} state ledOff
+		}
+
+		state ledOff
+		{
+			when(button == 1)
+			{
+				led = 1;
+				pvPut(led);
+
+			} state ledOn
+		}
+	}
+   </pre>
+   <p>seqLED.dbd 파일을 만들어 sequence를 등록한다.</p>
+   <pre>
+seqLED.dbd
+
+	registrar(seqledRegistrar)
+   </pre>
+   <p>Makefile을 열어 다음 라인을 추가한다.</p>
+   <pre>
+Makefile
+
+	TOP=../..
+
+	include $(TOP)/configure/CONFIG
+
+	USR_INCLUDES  += -I$(RAON_SITELIBS)/include
+	USR_DBDFLAGS  += -I$(RAON_SITELIBS)/dbd
+	USR_INCLUDES  += -I$(EPICS_EXTENSIONS)/include
+
+	USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+	wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+
+	raspGPIO_DIR += $(RAON_SITELIBS)/lib/$(T_A)
+
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+	#=============================
+
+	#=============================
+	# Build the IOC application
+
+	PROD_IOC = gpio
+	# gpio.dbd will be created and installed
+	DBD += gpio.dbd
+
+	# gpio.dbd will be made up from these files:
+	gpio_DBD += base.dbd
+
+	# Include dbd files from all support applications:
+	#gpio_DBD += xxx.dbd
+	gpio_DBD += devGPIO.dbd
+
+	# Add all the support libraries needed by this IOC
+	#gpio_LIBS += xxx
+	gpio_LIBS += raspGPIO
+	gpio_LIBS += wiringPi
+
+	# gpio_registerRecordDeviceDriver.cpp derives from gpio.dbd
+	gpio_SRCS += gpio_registerRecordDeviceDriver.cpp
+
+	# Build the main IOC entry point on workstation OSs.
+	gpio_SRCS_DEFAULT += gpioMain.cpp
+	gpio_SRCS_vxWorks += -nil-
+
+	# Add support from base/src/vxWorks if needed
+	#gpio_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+	# Finally link to the EPICS Base libraries
+	gpio_LIBS += $(EPICS_BASE_IOC_LIBS)
+	#gpio_LIBS += gpioSupport
+
+	#===========================
+	<span class="insert">
+	ifneq ($(SNCSEQ),)
+	    gpio_DBD += seqLED.dbd
+	    gpio_SRCS += seqLED.stt
+	    gpio_LIBS += seq pv
+	endif
+	</span>
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <p>make를 실행한다.</p>
+   <p>make가 완료되면 iocBoot/iocgpio 폴더로 이동해서 st.cmd 파일에 seq를 실행하는 코드를 추가한다.</p>
+   <pre>
+st.cmd
+
+	!../../bin/linux-arm/gpio
+
+	## You may have to change gpio to something else
+	## everywhere it appears in this file
+
+	&lt; envPaths
+
+	cd ${TOP}
+
+	## Register all support components
+	dbLoadDatabase "dbd/gpio.dbd"
+	gpio_registerRecordDeviceDriver pdbbase
+
+	## Load record instances
+	#dbLoadRecords("db/xxx.db","user=piHost")
+	dbLoadRecords("db/gpio.db")
+
+	cd ${TOP}/iocBoot/${IOC}
+	iocInit
+
+	## Start any sequence programs
+	#seq sncxxx,"user=piHost"
+	<span class="insert">seq seqled</span>
+   </pre>
+   <p>st.cmd를 실행하고 버튼을 눌러본다. LED에 불이 들어오면 성공!</p>
+  </section>
+ </body>
+</html>

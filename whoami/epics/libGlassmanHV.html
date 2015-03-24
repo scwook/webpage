@@ -1,0 +1,2479 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Glassman High Voltage Record & Device Support Development</h1>
+   <p>
+      본 메뉴얼에서는 Glassman High Voltage의 FJ01N120, FJ10N12.0, ET50P040 장비를 EPICS에서
+      제어하기 위한 방법을 설명하였다. 최종 목표는 EPICS를 통해 High Voltage 장비로 Command를 전송하고
+      HV장비로 부터 전압 및 전류와 같은 데이터를 모니터링 하는 것이다. 하드웨어 구성은 다음과 같으며 테스트는
+   FJ01N120 모델에 대하여 진행하였다.
+   </p>
+<a href="../resources/images/epics/glasshvdrawing.png" data-lightbox="example-1"><img src="../resources/images/epics/glasshvdrawing.png" width="50%" height="50%"/></a>
+   <p>
+      기본적인 하드웨어 구성은 Ethrnet을 통해 EPICS와 HV장기간에 시리얼 명령을 주고 받으며 이를 위해
+      IOC와 HV사이에 Digi Srial Port Server를 사용하였다. Digi Port는 Ethernet을 통해 여러개의 Serial
+      장비에 접근할 수 있도록 한다. Digi Port 없이 IOC와 HV장비를 Serial로 바로 연결할 수 있으나 이럴
+      경우 IOC를 Ethernet에 연결하는 작업이 추가적으로 필요하다. 또한 IOC가 연결할 수 있는 
+      Serial Port 개수에 제한이 있어 다수의 Serial 장비에 연결하는데 한계가 있다.
+   </p>
+   <p>
+      Digi Port를 사용할 때는 Cable연결에 주의해야 한다. 일반적으로 Serial통신을 하는 장비는 
+      9Pin D-SUB Connector을 사용한다. 따라서 만약 Digi에서 제공하는 RJ-45 to DB-9 Console Adapter가
+      없을 경우 다음 그림과 같은 Pin Map을 사용하는 Cable로 연결해야 한다.
+   </p>
+<a href="../resources/images/epics/digi_consol_apdapter.png" data-lightbox="example-1"><img src="../resources/images/epics/digi_consol_apdapter.png" width="50%" height="50%" /></a>
+   <p>Digi Port는 몇가지 기능을 제공하는데 Ethernet을 통해 Serial을 사용하기 위해서는 다음 그림과 같이 Port Profile
+      이 Consol Management로 되어있어야 한다. 설정 방법은 다음과 같다.
+   </p>
+    <ol>
+     <li>웹 브라우저를 통해 Digi Port Server로 접속</li>
+     <li>로그인 화면이 나오면 설정된 ID와 PW로 접속(기본 설정은 ID:root, PW:dbps)</li>
+     <li>Configuration에서 Serial Ports를 선택</li>
+     <li>Serial이 연결된 Prot를 선택</li>
+     <li>Port Profile에서 Change Profile선택</li>
+     <li>Console Management 선택</li>
+     <li>Apply 클릭</li>
+    </ol>   
+<a href="../resources/images/epics/digisetting.png" data-lightbox="example-1"><img src="../resources/images/epics/digisetting.png" width="50%" height="50%" /></a>
+   <p>
+      마지막으로 Glassman HV장비의 경우 내부 Interlock이 걸려 있다. 만약 Interlock을 해제하지 않으면
+   HV On이 안되고 결과적으로 Voltage를 설정하더라도 출력되지 않으므로 Interlock을 해제하고 사용해야 한다.
+      해제하는 방법은 아래 그림과 같이 기본적으로 제공해주는 DSUB 25pin Connector 3번과 11번을 연결하고
+      장비 뒤 25pin Connector에 꽂으면 된다.
+   </p>
+   </br>
+<a href="../resources/images/epics/j3interlock.png" data-lightbox="example-1"><img src="../resources/images/epics/j3interlock.png" width="50%" height="50%" /></a>
+   <p>
+      하드웨어가 구성되었으면 이제 기본 소프트웨어 구성을 하도록 한다. 우선 EPICS 기본 구조를 만들기
+      앞서 asyn과 StreamDevice를 설치하도록 한다. asyn은 EPICS에서 Serial 통신을 할 수 있도록
+      만들어진 Driver이며 stream은 Serial통신에 필요한 Command Set을 만들 수 있도록 하는 Driver이다.
+      asyn과 stream은 이미 EPICS에서 개발되어 있으므로 쉽게 사용 가능하다.
+   </p>
+   <p>우선 다음 페이지를 참고하여 asyn과 StreamDevice를 설치하도록 한다.</p>
+   <a href="libAsynStream.html">Asyn & Stream Device Driver Installation</a>
+   <p>여기에서는 Driver가 다음 폴더에 설치되어 있다고 가정한다.</p>
+   <p>
+      asyn=${HOME}/epics/modules/synApps_5_7/support/asyn-4-21</br>
+      stream=${HOME}/epics/modules/synApps_5_7/support/stream-2-6
+   </p>
+   <p>필요한 라이브러리가 설치되었으면 이제 siteApps폴더에 EPICS 기본 구조를 만든다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ cd epics/R3.14.12.4/siteApps
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteApps$ mkdir glassman
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteApps$ cd glassman
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteApps/glassman$ makeBaseApp.pl -t ioc glassman
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteApps/glassman$ makeBaseApp.pl -i -t ioc glassman
+The following applications are available:
+    glassman
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name? glassman
+   </pre>
+   <p>
+      코드 작성에 앞서 간단한 명령을 보내보자. 기본적으로 asyn 과 stream이 설치되어 있으면 Serial 통신이
+      가능하다. Glassman 메뉴얼에 보면 Version을 확인 할 수 있는 명령어가 다음과 같이 적혀 있다.
+   </p>
+   <p>
+      Version Request:&nbsp;&nbsp;
+      Ctrl-A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      V&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Enter
+   </p>
+   <p>
+      Response:&nbsp;&nbsp;
+      B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2byte revision level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2byte checksum
+   </p>
+   <p>
+      예를 들어 revision level이 25일 경우 Putty와 같은 시리얼 통신 프로그램을 이용하여
+      Version Request를 보내면 응답으로 B2567 값이 리턴된다. 여기서 B는 명령을 구분하는
+      문자로 Send는 S, Query는 Q와 같이 미리 정해져 있다. 다음 25는 revision level을 의미하며
+      2와 5각각 1byte씩 차지한다. 마지막으로 67은 checksum 값으로 앞의 revision level 값의
+      ASCII 값을 더한 값이 checksum값과 일치해야만 값이 유효하다. 여기서는 2와 5의 ASCII값이
+      각각 32, 35이므로(HEX 값으로 계산한다) 합은 67이며 checksum과 일치한다.
+   </p>
+   <p>
+      위 과정을 EPICS를 이용하여 확인해 보자. 
+      우선  configure/RELEASE 파일을 열어 asyn과 stream위치를 추가해 준다.
+   </p>
+   <pre>
+RELEASE
+
+	# Host- or target-specific settings can be given in files named
+	#  RELEASE.$(EPICS_HOST_ARCH).Common
+	#  RELEASE.Common.$(T_A)
+	#  RELEASE.$(EPICS_HOST_ARCH).$(T_A)
+	#
+	# This file should ONLY define paths to other support modules,
+	# or include statements that pull in similar RELEASE files.
+	# Build settings that are NOT module paths should appear in a
+	# CONFIG_SITE file.
+
+	TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+
+	# If using the sequencer, point SNCSEQ at its top directory:
+	#SNCSEQ=$(EPICS_BASE)/../modules/soft/seq
+
+	# EPICS_BASE usually appears last so other apps can override stuff:
+	<span class="insert">EPICS_BASE=${HOME}/epics/R3.14.12.4/base</span>
+
+	# Set RULES here if you want to take build rules from somewhere
+	# other than EPICS_BASE:
+	#RULES=/path/to/epics/support/module/rules/x-y
+	<span class="insert">
+	ASYN=${HOME}/epics/modules/synApps_5_7/support/asyn-4-21
+	STREAM=${HOME}/epics/modules/synApps_5_7/support/stream-2-6
+	</span>
+   </pre>
+   <p>glassmanApp/src 폴더로 이동한 후 Makefile에 다음과 같이 추가해 준다.</p>
+   <pre>
+Makefile
+
+	TOP=../..
+
+	include $(TOP)/configure/CONFIG
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+	#=============================
+
+	#=============================
+	# Build the IOC application
+
+	PROD_IOC = glassman
+	# glassman.dbd will be created and installed
+	DBD += glassman.dbd
+
+	# glassman.dbd will be made up from these files:
+	glassman_DBD += base.dbd
+	<span class="insert">
+	glassman_DBD += stream.dbd
+	glassman_DBD += drvAsynIPPort.dbd
+	</span>
+	# Include dbd files from all support applications:
+	#glassman_DBD += xxx.dbd
+
+	# Add all the support libraries needed by this IOC
+	#glassman_LIBS += xxx
+
+	# glassman_registerRecordDeviceDriver.cpp derives from glassman.dbd
+	glassman_SRCS += glassman_registerRecordDeviceDriver.cpp
+
+	# Build the main IOC entry point on workstation OSs.
+	glassman_SRCS_DEFAULT += glassmanMain.cpp
+	glassman_SRCS_vxWorks += -nil-
+
+	# Add support from base/src/vxWorks if needed
+	#glassman_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+	# Finally link to the EPICS Base libraries
+	glassman_LIBS += $(EPICS_BASE_IOC_LIBS)
+	<span class="insert">
+	glassman_LIBS += stream
+	glassman_LIBS += asyn
+	</span>
+	#===========================
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <p>glassmanApp/Db로 이동한 후 test.db 파일을 만들고 Makefile에 추가해 준다.</p>
+   <pre>
+test.db
+
+	record(stringin, "version")
+	{
+	  field(DTYP, "stream")
+	  field(INP, "@test.proto get_version T0")
+	  field(SCAN, "1 second")
+	}
+   </pre>
+   <pre>
+Makefile
+
+	TOP=../..
+	include $(TOP)/configure/CONFIG
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+	#----------------------------------------------------
+	#  Optimization of db files using dbst (DEFAULT: NO)
+	#DB_OPT = YES
+
+	#----------------------------------------------------
+	# Create and install (or just install) into <top>/db
+	# databases, templates, substitutions like this
+	#DB += xxx.db
+	<span class="insert">
+	DB += test.db
+	</span>
+	#----------------------------------------------------
+	# If <anyname>.db template is not named <anyname>*.template add
+	# <anyname>_template = <templatename>
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <p>최상위 폴더로 이동 후 proto 폴더와 test.proto 파일을 만든다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman$ mkdir proto
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman$ cd proto
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman/proto$ vi test.proto
+   </pre>
+   <pre>
+test.proto
+
+	Terminator = CR;
+
+	get_version{
+		out "\x01V56";
+		in "%s";
+	}
+   </pre>
+   <p>
+      StreamDevice는 proto파일을 이용하여 문자열을 만들 수 있는데 Terminator 값에 CR(Carriage Return)
+      을 설정하면 명령어 끝에 CR을 붙여 준다. 실제로 키보드의 Enter는 CR과 같은 역할을 한다.
+      get_version 함수는 명령을 보내는 out과 받는 in으로 구성되어 있다. 우선 out에 Version Request
+      명령어를 적는다. 시작이 \x01로 되어있는 것은 HEX값으로 SOH(Start Of Heading)를 의미한다. 
+      이것은  Ctrl-A를 누르는 것과 같은 명령이다. 명령이 제대로 전송되면 장비쪽에서 명령어에 대한
+      응답값을 보내주는데 이 값은 in에 명시되어 있는  변수 타입으로 저장되는데 여기서는 
+      문자열로 저장하였다.
+   </p>
+   <p>모든 준비가 완료되었으므로 최상위 폴더로 이동하여 make를 실행한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman$ make
+   </pre>
+   <p>iocBoot/iocglassman 폴더로 이동 후 st.cmd 파일에 test.db와 test.proto 파일을 추가해 준다.<p>
+   <pre>
+st.cmd
+
+	#!../../bin/linux-x86_64/glassman
+
+	## You may have to change glassman to something else
+	## everywhere it appears in this file
+
+	&lt; envPaths
+
+	cd ${TOP}
+	<span class="insert">
+	epicsEnvSet "STREAM_PROTOCOL_PATH" "../../proto"
+	</span>
+	## Register all support components
+	dbLoadDatabase "dbd/glassman.dbd"
+	glassman_registerRecordDeviceDriver pdbbase
+	<span class="insert">
+	drvAsynIPPortConfigure("T0", "10.1.5.162:2102", 0, 0, 0)
+	</span>
+	## Load record instances
+	#dbLoadRecords("db/xxx.db","user=scwookHost")
+	<span class="insert">dbLoadRecords("db/test.db")</span>
+
+	cd ${TOP}/iocBoot/${IOC}
+	iocInit
+
+	## Start any sequence programs
+	#seq sncxxx,"user=scwookHost"
+   </pre>
+   <p>st.cmd 파일을 실행파일로 변경 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman/iocBoot/iocglassman$ chmod 755 st.cmd
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman/iocBoot/iocglassman$ ./st.cmd
+#!../../bin/linux-x86_64/glassman
+## You may have to change glassman to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iocglassman")
+epicsEnvSet("TOP","/home/scwook/epics/R3.14.12.4/siteApps/glassman")
+cd /home/scwook/epics/R3.14.12.4/siteApps/glassman
+epicsEnvSet "STREAM_PROTOCOL_PATH" "../../proto"
+## Register all support components
+dbLoadDatabase "dbd/glassman.dbd"
+glassman_registerRecordDeviceDriver pdbbase
+drvAsynIPPortConfigure("T0", "10.1.5.162:2102", 0, 0, 0)
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=scwookHost")
+dbLoadRecords("db/test.db")
+cd /home/scwook/epics/R3.14.12.4/siteApps/glassman/iocBoot/iocglassman
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.4 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Sep 17 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=scwookHost"
+epics>
+   </pre>
+   <p>dbpr 명령을 이용하여 version 값을 확인해 본다. 물론 장비의 전원은 켜져있어야 한다.<p>
+   <pre class="shell">
+epics> dbpr version
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: version       SEVR: NO_ALARM      STAT: NO_ALARM      
+SVAL:               TPRO: 0             VAL: B0969 
+   </pre>
+   <p>
+      여기서는 값이 B0969임을 확인 할 수 있다. 즉, 현재 장비의 revision level은 09이며 checksum값은
+      69임을 알 수있다. 0과 9에대한 ASCII 값은 Hex값으로 각각 30, 39이며 합이 checksum값과 같음을
+      알 수 있다. 
+   </p>
+   <p>
+      지금까지 간단한 테스트를 통해 EPICS와 HV장비간에 시리얼 통신이 되는것을 확인하였다.
+      이제 본격적으로 Voltage와 Current를 설정하는 방법에 대하여 알아보자.
+   </p>
+   <p>Glassman 장비의 Serial 명령어 구성은 다음과 같다.</p>
+   <table>
+    <caption>SET Command Byte Contents</caption>
+    <tr>
+     <th>BYTE</th>
+     <th>DESCRIPTION</th>
+    </tr>
+    <tr>
+     <td width="100px">1</td>
+     <td width="600px">Start of message character ("SOH" character: hex 01)</td>
+    </tr>
+    <tr>
+     <td>2</td>
+     <td>Command Identifier Character (S characer, hex 53)</td>
+    </tr>
+    <tr>
+     <td>3 - 5</td>
+     <td>Voltage command (0 - Vamx corresponds to 0 - FFF hex)</td>
+    </tr>
+    <tr>
+     <td>6 - 8</td>
+     <td>Current command (0 - Imax corresponds to 0 - FFF hex)</td>
+    </tr>
+    <tr>
+     <td>9 - 14</td>
+     <td>Not implemented</td>
+    </tr>
+    <tr>
+     <td>15</td>
+     <td>Digital control data (HV On, HV Off, Power Supply Reset)</td>
+    </tr>
+    <tr>
+     <td>16 - 17</td>
+     <td>Modulo 256 Checksum of all previous bytes except start character</td>
+    </tr>
+    <tr>
+     <td>18</td>
+     <td>End of message character (carriage return, hex 0D)</td>
+    </tr>
+   </table>
+   </br>
+   <p>
+      SET Command는 총 18byte로 구성되어 있다. 간단한 예로 Voltage를 10V, Current를 0mA, HV를 On으로
+      할 경우 전체 명령어는 다음과 같다.
+   </p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Ctrl-A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      F&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Enter
+   </p>
+   <p>각각의 byte는 Hex값으로 전송되며 15번째 byte값은 총 8bit중 앞의 4bit만 사용하며 다음과 같이 구성된다.</p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HV Off(Off = 1)</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HV On(On = 1)</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Perform Reset(reset = 1). Sets V = 0, I = 0 & HV Enable = off.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unused
+   </p>
+   <p>
+      참고로 각각의 Bit는 16진수로 1, 2, 4, 8에 해당한다.</br>
+      Chechsum은 2 - 15 byte의 ASCII Hex값 합에서 뒤에 2자리를 사용한다. 즉 다음과 같다
+   </p>
+   <p>
+      53 + 30 + 32 + 38 + 30 + 30 + 30 + 30 + 30 + 30 + 30 + 30 + 30 + 32 = 2CF</br>
+      checksum = 2CF % 100 = CF
+   </p>
+   <p>
+      만약 SET Command가 제대로 전송되면 Acknowledge Packet으로 'A'가 리턴된다. 반면 Command전송에
+      문제가 있으면 다음과 같은 에러 코드가 리턴된다.
+   <p>
+   <table>
+    <caption>Error Code</caption>
+    <tr>
+     <th>Code</th>
+     <th>Description</th>
+    </tr>
+    <tr>
+     <td width="100px">E131</td>
+     <td width="600px">Undefined Command Code</td>
+    </tr>
+    <tr>
+     <td>E232</td>
+     <td>Checksum Error</td>
+    </tr>
+    <tr>
+     <td>E333</td>
+     <td>Extra Byte(s) Received</td>
+    </tr>
+    <tr>
+     <td>E434</td>
+     <td>Illegal Digital Control Byte In Set</td>
+    </tr>
+    <tr>
+     <td>E535</td>
+     <td>Illegal Set Command Received While a Fault is Active</td>
+    </tr>
+    <tr>
+     <td>E636</td>
+     <td>Processing Error</td>
+    </tr>
+   </table>
+   </br>
+   <p>현재 설정된 값을 Monitoring하기 위해서는 Query Command를 전송해다 한다. Query Command는 다음과 같다.</p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Ctrl-A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Enter
+   </p>
+   <p>Query Command가 전송되면 현재 상태에 값을 리턴하는데 Response Packet는 다음과 같다.</p>
+   <table>
+    <caption>Response Packet Byte Contents</caption>
+    <tr>
+     <th>BYTE</th>
+     <th>DESCRIPTION</th>
+    </tr>
+    <tr>
+     <td width="100px">1</td>
+     <td width="600px">Response identifier character "R"</td>
+    </tr>
+    <tr>
+     <td>2 - 4</td>
+     <td>Voltage monitor(0 - Vmax) corresponds to (0 - 3FF) hex</td>
+    </tr>
+    <tr>
+     <td>5 - 7</td>
+     <td>Current monitor(0 - Imax) corresponds to (0 - 3FF) hex</td>
+    </tr>
+    <tr>
+     <td>8 - 10</td>
+     <td>Reserved, Set to 0 decimal = 30 hex</td>
+    </tr>
+    <tr>
+     <td>11 - 13</td>
+     <td>Digital monitors (12 bits encoded in three ASCII bytes)</td>
+    </tr>
+    <tr>
+     <td>14 - 15</td>
+     <td>Modulo 256 checksum of bytes 2 - 13</td>
+    </tr>
+    <tr>
+     <td>16</td>
+     <td>End of message character (carriage return, hex 0D)</td>
+    </tr>
+   </table>
+   </br>
+   <p>
+      Response Packet에는 현재 Voltage, Current를 알 수 있으며 11 - 13번째 byte는 현재 상태를 알 수
+      있는데 12 - 13번째 byte사용하지 않으며 11번째 byte의 8bit중 4bit만 다음과 같이 사용된다.
+   </p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Control Mode: Voltage Mode = 0, Current Mode = 1</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Power Supply Fault(1 = Fault)</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HV On Indicator (1 = on)</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Bit 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unused
+   </p>
+   <p>checksum은 SET Command와 같이 2 - 13 byte의 합에서 뒤에 2자리만 사용한다.</p>
+   <p>이제 실제 명령어를 EPICS로 전송해 보자. db/test.db와 proto/test.proto 파일에 다음과 같이 추가한다.</p>
+   <pre>
+test.db
+
+	record(stringin, "version")
+	{
+	  field(DTYP, "stream")
+	  field(INP, "@test.proto get_version T0")
+	  field(SCAN, "1 second")
+	}
+	<span class="insert">
+	record(stringout, "set_cmd")
+	{
+	  field(DTYP, "stream")
+	  field(OUT, "@test.proto set_command T0")
+	}
+
+	record(stringin, "get_response")
+	{
+	  field(DTYP, "stream")
+	  field(INP, "@test.proto get_response T0")
+	  field(SCAN, "1 second")
+	}
+	</span>
+   </pre>
+   <pre>
+test.proto
+
+	Terminator = CR;
+
+	get_version{
+		out "\x01V56";
+		in "%s";
+	}
+	<span class="insert">
+	set_command{
+		out "\x01%s";
+		in "%s";
+	}
+	get_response{
+		out "\x01Q51";
+		in "%s";
+	}
+	</span>
+   </pre>
+   <p>test.db 파일을 변경할 수 없는 경우 다음과 같이 쓰기 모드로 변경한 후 추가한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman/db$ chmod 644 test.db  
+   </pre>
+   <p>st.cmd를 실행 한 후 명령을 전송해 본다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/~epics/R3.14.12.4/siteApps/glassman/iocBoot/iocglassman$ ./st.cmd
+epics> dbpr get_response
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: get_response  SEVR: NO_ALARM      STAT: NO_ALARM      
+SVAL:               TPRO: 0             VAL: R00000000000040
+epics> dbpf set_cmd S0280000000002CF
+DBR_STRING:          "S0280000000002CF" 
+epics> dbpr get_response
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: set_query     SEVR: NO_ALARM      STAT: NO_ALARM      
+SVAL:               TPRO: 0             VAL: R00A00000040055
+epics>
+   </pre>
+   <p>
+      간단한 테스트가 끝났으므로 이제 본격적인 코드작성에 들어가 보자. 
+      지금까지는 모든 명령어를 사용자가 직접 작성하였다. 즉, SET Command를 사용자가 전압, 전류
+      및 checksum을 직접 계산하여 전송하였다. 하지만 현실적으로 이렇게 매번 명령어를 만드는것은
+      비효율적이다. 게다가 설정하고자 하는 값에 대응하는 Hex값을 직관적으로 알기 힘들다. 일반적으로
+      다음과 같이 전압 또는 전류에 대해 10진수 값으로 설정하는 것이 효율적일 것이다.
+   </p>
+   <pre class="shell">
+epics> dbpf voltage 100
+epics> dbpf current 50
+epics> dbpf HV_On ON
+   </pre>
+   <p>
+      문제는 위와 같이 voltage만 설정할 경우 SET Command의 나머지 byte부분은 기존 값을 이용하여
+      자동으로 만들어져야 한다. 사실 가장 문제가 되는 것은 checksum을 계산하는 것인데 checksum은
+      2 - 15 byte의 ASCII 값을 합한 결과인데 현제 EPICS에서는 ASCII값으로 변화해주는 Record Type이
+      없다. 따라서 10진수 값을 16진수 ASCII 값으로 바꿔주는 새로운 Record Type을 만들 필요가 있다.
+      최종 목표는 다음과 같은 Record Type을 만드는 것이다.
+   </p>
+   <pre>
+	record(gmps, "FJ01N120:SET_CMD")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(OUT, "@glassman.proto set_value M0")
+	  field(INPA, "voltage")
+	  field(INPB, "current")
+	  field(INPC, "onoff")
+	}
+   </pre>
+   <p>
+      gmps Record는 사용자가 설정 가능한 3개(Voltage, Current, HV On/Off)의 INP field를 가지며,
+      내부적으로 SET Command를 만든 후 StreamDevice로 출력한다.
+   </p>
+   <p>
+      코드작성을 위해 glassmanApp/src 폴더로 이동한다.
+      새로운 Record Type를 만들기 위해 gmpsRecord.c 파일을 만들어 다음과 같이 작성한다. 아래 코드를
+      만드는 쉬운 방법은 EPICS 기본구조를 만들 때 ioc 옵션 말고 example옵션으로 생성하면 src폴더 안에
+      예제 파일들이 만들어 진다. 여기서 xxxRecord.c 파일을 gmpsRecord.c로 이름을 변경하고 내부 코드 중
+      xxx를 gmps로 변경하면 된다.
+   </p>
+   <pre>
+gmpsRecord.c
+
+	#include &lt;stddef.h>
+	#include &lt;stdlib.h>
+	#include &lt;stdarg.h>
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+
+	#include "dbDefs.h"
+	#include "epicsPrint.h"
+	#include "alarm.h"
+	#include "dbAccess.h"
+	#include "dbEvent.h"
+	#include "dbFldTypes.h"
+	#include "devSup.h"
+	#include "errMdef.h"
+	#include "recSup.h"
+	#include "recGbl.h"
+	#include "menuOmsl.h"
+	#include "menuIvoa.h"
+	#include "menuYesNo.h"
+
+	#define GEN_SIZE_OFFSET
+	#include "gmpsRecord.h"
+	#undef  GEN_SIZE_OFFSET
+	#include "epicsExport.h"
+
+	/* Create RSET - Record Support Entry Table*/
+	#define report NULL
+	#define initialize NULL
+	static long init_record(gmpsRecord *, int);
+	static long process(gmpsRecord *);
+	#define special NULL
+	#define get_value NULL
+	#define cvt_dbaddr NULL
+	#define get_array_info NULL
+	#define put_array_info NULL
+	#define get_units NULL
+	#define get_precision NULL
+	#define get_enum_str NULL
+	#define get_enum_strs NULL
+	#define put_enum_str NULL
+	#define get_graphic_double NULL
+	#define get_control_double NULL
+	#define get_alarm_double NULL
+
+	rset gmpsRSET={
+		RSETNUMBER,
+		report,
+		initialize,
+		init_record,
+		process,
+		special,
+		get_value,
+		cvt_dbaddr,
+		get_array_info,
+		put_array_info,
+		get_units,
+		get_precision,
+		get_enum_str,
+		get_enum_strs,
+		put_enum_str,
+		get_graphic_double,
+		get_control_double,
+		get_alarm_double
+	};
+	epicsExportAddress(rset,gmpsRSET);
+
+	struct gmpsdset { /* gmps input dset */
+		long		number;
+		DEVSUPFUN	dev_report;
+		DEVSUPFUN	init;
+		DEVSUPFUN	init_record; /*returns: (-1,0)=>(failure,success)*/
+		DEVSUPFUN	get_ioint_info;
+		DEVSUPFUN	write_gmps;/*(-1,0)=>(failure,success)*/
+	};
+	static void monitor(gmpsRecord *);
+	static long writeValue(gmpsRecord *);
+
+	static long init_record(gmpsRecord *prec, int pass)
+	{
+	    STATIC_ASSERT(sizeof(prec->oval)==sizeof(prec->val));
+	    struct gmpsdset *pdset;
+	    long status=0;
+
+	    if (pass==0) return(0);
+
+	    if (prec->siml.type == CONSTANT) {
+		recGblInitConstantLink(&prec->siml,DBF_USHORT,&prec->simm);
+	    }
+
+	    if(!(pdset = (struct gmpsdset *)(prec->dset))) {
+		recGblRecordError(S_dev_noDSET,(void *)prec,"gmps: init_record");
+		return(S_dev_noDSET);
+	    }
+	    /* must have  write_gmps functions defined */
+	    if( (pdset->number &lt; 5) || (pdset->write_gmps == NULL) ) {
+		recGblRecordError(S_dev_missingSup,(void *)prec,"gmps: init_record");
+		return(S_dev_missingSup);
+	    }
+	    /* get the initial value dol is a constant*/
+	    if (prec->dol.type == CONSTANT){
+		if(recGblInitConstantLink(&prec->dol,DBF_STRING,prec->val))
+		    prec->udf=FALSE;
+	    }
+	    if( pdset->init_record ) {
+		if((status=(*pdset->init_record)(prec))) return(status);
+	    }
+	    strcpy(prec->oval,prec->val);
+	    return(0);
+	}
+
+	static long process(gmpsRecord *prec)
+	{
+		struct gmpsdset	*pdset = (struct gmpsdset *)(prec->dset);
+		long		 status=0;
+		unsigned char    pact=prec->pact;
+
+		if( (pdset==NULL) || (pdset->write_gmps==NULL) ) {
+			prec->pact=TRUE;
+			recGblRecordError(S_dev_missingSup,(void *)prec,"write_gmps");
+			return(S_dev_missingSup);
+		}
+		if (!prec->pact
+		&& (prec->dol.type != CONSTANT)
+		&& (prec->omsl == menuOmslclosed_loop)) {
+			status = dbGetLink(&(prec->dol),
+				DBR_STRING,prec->val,0,0);
+			if(prec->dol.type!=CONSTANT && RTN_SUCCESS(status)) prec->udf=FALSE;
+		}
+
+		if(prec->udf == TRUE ){
+			recGblSetSevr(prec,UDF_ALARM,INVALID_ALARM);
+		}
+
+		if (prec->nsev &lt; INVALID_ALARM )
+			status=writeValue(prec); /* write the new value */
+		else {
+			switch (prec->ivoa) {
+			    case (menuIvoaContinue_normally) :
+				status=writeValue(prec); /* write the new value */
+				break;
+			    case (menuIvoaDon_t_drive_outputs) :
+				break;
+			    case (menuIvoaSet_output_to_IVOV) :
+				if(prec->pact == FALSE){
+					strcpy(prec->val,prec->ivov);
+				}
+				status=writeValue(prec); /* write the new value */
+				break;
+			    default :
+				status=-1;
+				recGblRecordError(S_db_badField,(void *)prec,
+					"gmps:process Illegal IVOA field");
+			}
+		}
+
+		/* check if device support set pact */
+		if ( !pact && prec->pact ) return(0);
+
+		prec->pact = TRUE;
+		recGblGetTimeStamp(prec);
+		monitor(prec);
+		recGblFwdLink(prec);
+		prec->pact=FALSE;
+		return(status);
+	}
+
+	static void monitor(gmpsRecord *prec)
+	{
+	    int monitor_mask = recGblResetAlarms(prec);
+
+	    if (strncmp(prec->oval, prec->val, sizeof(prec->val))) {
+		monitor_mask |= DBE_VALUE | DBE_LOG;
+		strncpy(prec->oval, prec->val, sizeof(prec->val));
+	    }
+
+	    if (prec->mpst == stringoutPOST_Always)
+		monitor_mask |= DBE_VALUE;
+	    if (prec->apst == stringoutPOST_Always)
+		monitor_mask |= DBE_LOG;
+
+	    if (monitor_mask)
+		db_post_events(prec, prec->val, monitor_mask);
+	}
+
+	static long writeValue(gmpsRecord *prec)
+	{
+		long		status;
+		struct gmpsdset 	*pdset = (struct gmpsdset *) (prec->dset);
+
+		if (prec->pact == TRUE){
+			status=(*pdset->write_gmps)(prec);
+			return(status);
+		}
+
+		status=dbGetLink(&(prec->siml),DBR_USHORT,
+			&(prec->simm),0,0);
+		if (status)
+			return(status);
+
+		if (prec->simm == menuYesNoNO){
+			status=(*pdset->write_gmps)(prec);
+			return(status);
+		}
+		if (prec->simm == menuYesNoYES){
+			status=dbPutLink(&prec->siol,DBR_STRING,
+				prec->val,1);
+		} else {
+			status=-1;
+			recGblSetSevr(prec,SOFT_ALARM,INVALID_ALARM);
+			return(status);
+		}
+		recGblSetSevr(prec,SIMM_ALARM,prec->sims);
+
+		return(status);
+	}
+   </pre>
+   <p>
+      이제 gmps Record가 가지는 field를 정의하기 위해 gmpsRecord.dbd 파일을 만든다. 기본적으로
+      gmps Record는 문자열을 StreamDevice로 출력하는 Record이므로 EPICS 기본 Record의 stringout과
+      동일하며, 차이가 있다면 3개의 INP field를 가지고 있는 것이다. 따라서 기존 stringout에 INP field
+      를 추가해주면 된다. 이를 위해 base/dbd 폴더에 있는 stringout.dbd 파일을 복사하고 이름을 변경한다.
+   </p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12/siteApps/glassman/glassmanApp/src$ cp $EPICS_BASE/dbd/stringoutRecord.dbd ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12/siteApps/glassman/glassmanApp/src$ mv stringoutRecord.dbd gmpsRecord.dbd
+   </pre>
+   <p>이름이 변경된 gmpsRecord.dbd 파일을 열어 recordtype을 gmps로 변경하고 
+      INPA, INPB, INPC field를 추가해 준다.
+   </p>
+   <pre>
+gmpsRecord.dbd
+
+	menu(stringoutPOST) {
+		choice(stringoutPOST_OnChange,"On Change")
+		choice(stringoutPOST_Always,"Always")
+	}
+	recordtype(<span class="insert">gmps</span>) {
+		include "dbCommon.dbd" 
+		field(VAL,DBF_STRING) {
+			prompt("Current Value")
+			promptgroup(GUI_OUTPUT)
+			asl(ASL0)
+			pp(TRUE)
+			size(40)
+		}
+	<span class="insert">
+		field(INPA,DBF_INLINK) {
+			prompt("Input A")
+			promptgroup(GUI_CALC)
+			interest(1)
+		}
+		field(INPB,DBF_INLINK) {
+			prompt("Input B")
+			promptgroup(GUI_CALC)
+			interest(1)
+		}
+		field(INPC,DBF_INLINK) {
+			prompt("Input C")
+			promptgroup(GUI_CALC)
+			interest(1)
+		}
+	</span>
+		field(OVAL,DBF_STRING) {
+			prompt("Previous Value")
+			special(SPC_NOMOD)
+			interest(3)
+			size(40)
+		}
+		field(DOL,DBF_INLINK) {
+			prompt("Desired Output Loc")
+			promptgroup(GUI_OUTPUT)
+			interest(1)
+		}
+		field(OMSL,DBF_MENU) {
+			prompt("Output Mode Select")
+			promptgroup(GUI_OUTPUT)
+			interest(1)
+			menu(menuOmsl)
+		}
+		field(OUT,DBF_OUTLINK) {
+			prompt("Output Specification")
+			promptgroup(GUI_OUTPUT)
+			interest(1)
+		}
+		field(MPST,DBF_MENU) {
+			prompt("Post Value Monitors")
+			promptgroup(GUI_DISPLAY)
+			interest(1)
+			menu(stringoutPOST)
+		}
+		field(APST,DBF_MENU) {
+			prompt("Post Archive Monitors")
+			promptgroup(GUI_DISPLAY)
+			interest(1)
+			menu(stringoutPOST)
+		}
+		field(SIOL,DBF_OUTLINK) {
+			prompt("Sim Output Specifctn")
+			promptgroup(GUI_INPUTS)
+			interest(1)
+		}
+		field(SIML,DBF_INLINK) {
+			prompt("Sim Mode Location")
+			promptgroup(GUI_INPUTS)
+			interest(1)
+		}
+		field(SIMM,DBF_MENU) {
+			prompt("Simulation Mode")
+			interest(1)
+			menu(menuYesNo)
+		}
+		field(SIMS,DBF_MENU) {
+			prompt("Sim mode Alarm Svrty")
+			promptgroup(GUI_INPUTS)
+			interest(2)
+			menu(menuAlarmSevr)
+		}
+		field(IVOA,DBF_MENU) {
+			prompt("INVALID output action")
+			promptgroup(GUI_OUTPUT)
+			interest(2)
+			menu(menuIvoa)
+		}
+		field(IVOV,DBF_STRING) {
+			prompt("INVALID output value")
+			promptgroup(GUI_OUTPUT)
+			interest(2)
+			size(40)
+		}
+	}
+   </pre>
+   <p>
+      새로운 Record를 만들었으므로 이제 INP field로 부터 받아온 값을 이용하여 SET Command를 만드는
+      코드를 작성한다. gmps는 Device Type를 stream을 사용함으로 기존의 StreamDevice 코드를 이용하면
+      쉽게 만들 수 있다. 우선 stream-2-6/streamDevice/src 폴더에 있는 devstringoutStream.c 파일과
+      devStream.h 파일을 복사한다.
+   </p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12/siteApps/glassman/glassmanApp/src$ cp $STREAM/streamDevice/src/devstringoutStream.c ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12/siteApps/glassman/glassmanApp/src$ cp $STREAM/streamDevice/src/devStream.h ./
+   </pre>
+   <p>여기서 $STREAM은 다음과 같다.</br>STREAM=${HOME}/epics/modules/synApps_5_7/support/stream-2-6</p>
+   <p>복사한 devstringoutStream.c 파일을 열어보면 다음과 같다.</p>
+   <pre>
+devstringoutStream.c
+
+	#include "devStream.h"
+	#include &lt;stringoutRecord.h>
+	#include &lt;epicsExport.h>
+
+	static long readData (dbCommon *record, format_t *format)
+	{
+	    stringoutRecord *so = (stringoutRecord *) record;
+
+	    if (format->type == DBF_STRING)
+	    {
+		return streamScanfN (record, format, so->val, sizeof(so->val));
+	    }
+	    return ERROR;
+	}
+
+	static long writeData (dbCommon *record, format_t *format)
+	{
+	    stringoutRecord *so = (stringoutRecord *) record;
+
+	    if (format->type == DBF_STRING)
+	    {
+		return streamPrintf (record, format, so->val);
+	    }
+	    return ERROR;
+	}
+
+	static long initRecord (dbCommon *record)
+	{
+	    stringoutRecord *so = (stringoutRecord *) record;
+
+	    return streamInitRecord (record, &so->out, readData, writeData) == ERROR ?
+		ERROR : OK;
+	}
+
+	struct {
+	    long number;
+	    DEVSUPFUN report;
+	    DEVSUPFUN init;
+	    DEVSUPFUN init_record;
+	    DEVSUPFUN get_ioint_info;
+	    DEVSUPFUN write;
+	} devstringoutStream = {
+	    5,
+	    streamReport,
+	    streamInit,
+	    initRecord,
+	    streamGetIointInfo,
+	    streamWrite
+	};
+
+	epicsExportAddress(dset,devstringoutStream);
+   </pre>
+   <p>
+      위 코드에서 StreamDevice는 크게 초기화(initRecord), 쓰기(readData), 읽기(writeData)로 
+      구성되어 있는것을 확인할 수 있다. gmps Record는 StreamDevice에 출력하는 Record이므로
+      writeData함수에 SET Command를 만드는 코드를 작성하면 된다.
+   </p>
+   <p>
+      코드 작성에 앞서 우선 파일 이름을 devFj01n120.c로 변경한다. 여기서는 FJ01N120 모델에 대해 만든 후 복사하는 형태로 
+      나머지 모델에 대한 device support를 만들 예정이다. 실제 각 모델의 차이는 Voltage와 Current Range만 다를뿐
+      명령어는 동일하다.
+   </p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12/siteApps/glassman/glassmanApp/src$ mv devstringoutStream.c devFj01n120.c
+   </pre>
+   <p>devFj01n120.c 파일을 열어 헤더부분을 다음과 같이 수정하고 구조체 이름을 devgmpsFj01n120으로 변경한다.</p>
+   <pre>
+devFj01n120.c
+
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+
+	#include "devStream.h"
+	<span class="insert">#include &lt;gmpsRecord.h></span>
+	#include &lt;epicsExport.h>
+   	
+	...
+	...	
+	
+	struct {
+	    long number;
+	    DEVSUPFUN report;
+	    DEVSUPFUN init;
+	    DEVSUPFUN init_record;
+	    DEVSUPFUN get_ioint_info;
+	    DEVSUPFUN write;
+	}<span class="insert"> devgmpsFj01n120</span> = {
+	    5,
+	    streamReport,
+	    streamInit,
+	    initRecord,
+	    streamGetIointInfo,
+	    streamWrite
+	};
+
+	epicsExportAddress(dset,<span class="insert">devgmpsFj01n120</span>);
+   </pre>
+   <p>다음 writeData함수에 INP값을 가져와 저장하는 코드를 작성한다.</p>
+   <pre>
+devFj01n120.c
+
+	static long writeData (dbCommon *record, format_t *format)
+	{
+	    gmpsRecord *pgmps = (gmpsRecord *) record;
+<span class="insert">
+	    double inpa = 0;
+	    double inpb = 0;
+	    long inpc = 0;
+
+	    long status;
+	    status = dbGetLink(&(pgmps->inpa), DBF_DOUBLE, &inpa, 0, 0);
+	    status = dbGetLink(&(pgmps->inpb), DBF_DOUBLE, &inpb, 0, 0);
+	    status = dbGetLink(&(pgmps->inpc), DBF_LONG, &inpc, 0, 0);
+</span>
+	    if (format->type == DBF_STRING)
+	    {
+		return streamPrintf (record, format, pgmps->val);
+	    }
+	    return ERROR;
+	}
+   </pre>
+   <p>
+      여기서 inpa는 voltage, inpb는 current, inpc는 HV On를 나타내는 변수이다. field로 부터
+      값을 가져오기 위해서는 dbGetLink함수를 사용한다. dbGetLink는 Record field로 부터 값을 
+      가져와 지정된 변수에 저장한다.
+   </p>
+   <p>
+      INP field로 부터 가져온 값은 10진수 값으로 SET Command로 만들기 위해서는 16진수로 변환
+      해야한다. 우선 10진수 설정값에 해당하는 16진수 값을 알기위해서 다음과 같은 선형 방정식을
+      사용한다.
+   </p>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+    <mi>Value</mi><mo>=</mo>
+     <mfrac>
+      <mrow>
+       <mi>Max Hex Value</mi><mo>-</mo><mi>Min Hex Value</mi>
+      </mrow>
+      <mrow>
+       <mi>Max HV Value</mi><mo>-</mo><mi>Min HV Value</mi>
+      </mrow>
+     </mfrac>
+     <mo>&times;</mo><mi>Set Value</mi>
+     <mo>=</mo>
+     <mi>Slope</mi><mo>&times;</mo><mi>Set Value</mi>
+    </mrow>
+   </math>
+   <p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Max Hex Value: 16진수 최대값에 해당하는 10진수 값(16진수 최대값은 FFF 이 값은 10진수로 4095)</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Min Hex Value: 16진수 최소값에 해당하는 10진수 값(16진수 10진수 모두 최소값은 0)</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Max HV Value: HV 장비의 최대 설정 가능한 값. 각 모델별 다음과 같다.</br></br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+FJ01N120: Voltage = 1kV, Current = 120mA</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+FJ10N12: Voltage = 10kV, Current = 12mA</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ET50P040: Voltage = 50kV, Current = 40mA</br></br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Min HV Value: HV 장비의 최소 설정 가능한 값. 최소값은 모두 0</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Set Value: 사용자가 설정한 값
+   </p>
+   <p>
+      예를 들어 FJ01N120모델의 경우 Voltage는 0 ~ 1000V까지 설정 가능하며 명령어로는 0 ~ FFF에 대응된다.
+      모든 값은 10진수로 계산하므로 16진수 FFF는 4095로 변환되며 이 값이 Max Hex Value에 해당한다.
+      결과적으로 수식은 다음과 같다.
+   </p>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+    <mi>Value</mi><mo>=</mo>
+     <mfrac>
+      <mrow>
+       <mi>4095</mi><mo>-</mo><mi>0</mi>
+      </mrow>
+      <mrow>  
+       <mi>1000</mi><mo>-</mo><mi>0</mi>
+      </mrow> 
+     </mfrac>
+     <mo>&times;</mo><mi>Set Value</mi>
+     <mo>=</mo>
+     <mi>4.095</mi><mo>&times;</mo><mi>Set Value</mi>
+    </mrow>
+   </math>
+   <p>
+      따라서 기울기는 4.095가 되며,
+      만약 사용자가 10V의 전압을 입력할 경우 Set Value는 10이되며 결과적으로 Value는 40.95가 된다.
+      실제 SET Command는 16진수 값을 사용하므로 40.95는 소수점을 버리면 대략 28Hex 값이된다.
+   </p>
+   <p>
+      이제 계산하는 방법을 알았으므로 코드를 작성한다. 우선 하나의 장비에 대하여 최대 최소값은 고정이
+      므로 상수로 선언한다. 나중에 알겠지만 각 모델별로 이 값만 다르다.
+   </p>
+   <pre>
+devFj01n120.c
+
+	static long writeData (dbCommon *record, format_t *format)
+	{
+	    gmpsRecord *pgmps = (gmpsRecord *) record;
+	<span class="insert">
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+	    const double HV_Max_Voltage = 1000.0;
+	    const double HV_Max_Current = 120;
+        </span>
+	    double inpa = 0;
+	    double inpb = 0;
+	    long inpc = 0;
+
+	    long status;
+	    status = dbGetLink(&(pgmps->inpa), DBF_DOUBLE, &inpa, 0, 0);
+	    status = dbGetLink(&(pgmps->inpb), DBF_DOUBLE, &inpb, 0, 0);
+	    status = dbGetLink(&(pgmps->inpc), DBF_LONG, &inpc, 0, 0);
+
+	    if (format->type == DBF_STRING)
+	    {
+		return streamPrintf (record, format, pgmps->val);
+	    }
+	    return ERROR;
+	}
+   </pre>
+   <p>이제 계산하는 코드를 작성한다.</p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+            gmpsRecord *pgmps = (gmpsRecord *) record;
+
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+	    const double HV_Max_Voltage = 1000.0;
+	    const double HV_Max_Current = 120;
+            
+	    double inpa = 0;
+            double inpb = 0;
+            long inpc = 0;
+
+            long status;
+            status = dbGetLink(&(pgmps->inpa), DBF_DOUBLE, &inpa, 0, 0);
+            status = dbGetLink(&(pgmps->inpb), DBF_DOUBLE, &inpb, 0, 0);
+            status = dbGetLink(&(pgmps->inpc), DBF_LONG, &inpc, 0, 0);
+<span class="insert">	  
+	    double coefV = Voltage_Max_HEX / HV_Max_Voltage;
+    	    double coefC = Current_Max_HEX / HV_Max_Current;
+
+	    int inpaHex = (int)(coefV * inpa);
+	    int inpbHex = (int)(coefC * inpb);
+</span>
+            if (format->type == DBF_STRING)
+            {
+                return streamPrintf (record, format, pgmps->val);
+            }
+            return ERROR;
+        }
+   </pre>
+   <p>
+      이제 계산한 값을 16진수 값으로 저장하는 코드를 작성한다. 여기서 주의할 사항은 
+      SET Command는 전체가 18byte 문자열 이므로 16진수로 값을 저장할 때 문자열로 저장한다.
+      여기서 Voltage와 Current는 각각 3byte씩 사용하므로 다음과 같이 길이가 3인 문자열 배열을
+      만들어 저장한다. 그리고 HV On/Off와 Reset명령으로 사용하는 15번은 1byte 이므로 문자형으로
+      선언하고 '0'으로 초기화 한다.
+   </p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+            gmpsRecord *pgmps = (gmpsRecord *) record;
+            
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+	    const double HV_Max_Voltage = 1000.0;
+	    const double HV_Max_Current = 120;
+
+            double inpa = 0;
+            double inpb = 0;
+            long inpc = 0;
+
+            long status;
+            status = dbGetLink(&(pgmps->inpa), DBF_DOUBLE, &inpa, 0, 0);
+            status = dbGetLink(&(pgmps->inpb), DBF_DOUBLE, &inpb, 0, 0);
+            status = dbGetLink(&(pgmps->inpc), DBF_LONG, &inpc, 0, 0);
+
+            double coefV = Voltage_Max_HEX / HV_Max_Voltage;
+            double coefC = Current_Max_HEX / HV_Max_Current;
+
+            int inpaHex = (int)(coefV * inpa);
+            int inpbHex = (int)(coefC * inpb);
+<span class="insert">
+	    char inpaStr[cmd_len];
+	    char inpbStr[cmd_len];
+	    char inpcStr = '0';
+
+	    sprintf(inpaStr, "%X", inpaHex);
+	    sprintf(inpbStr, "%X", inpbHex);
+</span>
+            if (format->type == DBF_STRING)
+            {
+                return streamPrintf (record, format, pgmps->val);
+            }
+            return ERROR;
+        }
+   </pre>
+   <p>문자열 길이는 고정이므로 다음과 같이 cmd_len을 상수로 선언한다.</p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+            gmpsRecord *pgmps = (gmpsRecord *) record;
+            
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+	    const double HV_Max_Voltage = 1000.0;
+	    const double HV_Max_Current = 120;
+<span class="insert">
+	    const long cmd_len = 3;
+</span>
+	    ...
+	    ...
+        }
+   </pre>
+   <p>
+      다음은 문자열 길이를 맞추도록 한다. 앞서 Voltage와 Current의 최대 Hex값은 FFF로 3자리를 차지한다.
+      만약 10V를 입력할 경우 이 값은 Hex로 28이므로 inpaStr변수에는 28로 저장이 된다.
+      실제로 SET Command에는 028과 같이 3자리 값으로 전송되야 하므로 28앞에 0을 붙이는 작업이 필요하다.
+      (Hex 값이 8과 같이 1자리인 경우 0을 2개 붙여 008로 만들어야 한다) 이 과정을 하기위해 우선
+      문자열로 저장된 Hex값으로 부터 현재 문자열 길이를 알아야 하는데 C 기본 함수중에 strlen함수를
+      사용하면 문자열 길이를 알 수 있다.
+   </p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+	    ...
+	    ...
+
+	    sprintf(inpaStr, "%X", inpaHex);
+	    sprintf(inpbStr, "%X", inpbHex);
+<span class="insert">
+	    long lena = strlen(inpaStr);
+	    long lenb = strlen(inpbStr);
+</span>
+        }
+   </pre>
+   <p>문자열 길이를 알았으므로 0을 붙이는 padding함수를 다음과 같이 만들어 호출 한다.
+      padding함수는 문자열, 문자열 길이, 명령어 길이를 전달 받는데 문자열 길이가 명령어 길이보다
+      작을 경우 나머지 부분을 0으로 채워준다.
+   </p>
+   <pre>
+devFj01n120.c
+	...
+	...
+<span class="insert">
+	void padding(char inpStr[], long len, long tot_len);
+</span>
+	...
+	...
+        static long writeData (dbCommon *record, format_t *format)
+        {
+	    ...
+	    ...
+
+	    sprintf(inpaStr, "%X", inpaHex);
+	    sprintf(inpbStr, "%X", inpbHex);
+
+	    long lena = strlen(inpaStr);
+	    long lenb = strlen(inpbStr);
+<span class="insert">
+	    padding(inpaStr, lena, cmd_len);
+	    padding(inpbStr, lenb, cmd_len);
+</span>
+	    ...
+	    ...
+        }
+
+	...
+	...
+<span class="insert">
+	void padding(char inpStr[], long len, long tot_len)
+	{
+	  if(len > tot_len) return;
+
+	  char tmp[tot_len];
+	  int i;
+	  for(i=0; i&lt;tot_len; i++)
+	    tmp[i] = '0';
+
+	  int stpoint = tot_len - len;
+	  int idx = 0;
+	  for(i=stpoint; i&lt;tot_len; i++)
+	  {
+	    tmp[i] = inpStr[idx];
+
+	    idx++;
+	  }
+	  for(i=0; i&lt;tot_len; i++)
+	    inpStr[i] = tmp[i];
+	}
+</span>
+   </pre>
+   <p>
+    이제 명령어는 만들었으므로 마지막으로 Checksum을 만드는 코드를 작성하자. Checksum 계산은 2 - 13 byte
+    의 ASCII값 합을 구한다. 그리고 앞서 구한 합에서 256(Hex로 계산할 경우 100)로 나눈 나머지를 
+    Hex 값으로 변환하면 된다. 합을 계산 하기 위해서는 모든 값을 ASCII값으로 변환해야 하는데 C 언어는
+    문자를 숫자로 취급할 경우 자동으로 10진수 ASCII값으로 변환하므로 쉽게 구할 수 있다.
+    우선 15번 byte는 0또는 1이므로 이 값을 ASCII 값으로 변환하여 저장한다. 참고로 여기서 ASCII값은
+    모두 10진수 값으로 계산한다.
+   </p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+	    ...
+	    ...
+
+	    padding(inpaStr, lena, cmd_len);
+	    padding(inpbStr, lenb, cmd_len);
+<span class="insert">
+	    int inpcASCII = 49;
+	    if(inpc == 1)
+	    {
+	      inpcStr = '2';
+	      inpcASCII = 50;
+	    }
+	    else
+	    {
+	      inpcStr = '1';
+	      inpcASCII = 49;
+	    }
+</span>
+	    ...
+	    ...
+        }
+
+   </pre>
+   <p>다음은 Voltage와 Current에 대한 ASCII값 합을 구한다.</p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+            ...
+            ...
+
+            int inpcASCII = 49;
+            if(inpc == 1)
+            {
+              inpcStr = '2';
+              inpcASCII = 50;
+            }
+            else
+            {
+              inpcStr = '1';
+              inpcASCII = 49;
+            }
+<span class="insert">
+            int sum = 0;
+
+	    long i;
+	    for(i=0; i&lt;cmd_len; i++)
+	      sum += inpaStr[i];
+
+
+	    for(i=0; i&lt;cmd_len; i++)
+	      sum += inpbStr[i];
+</span>
+            ...
+            ...
+        }
+   </pre>
+   <p>
+      이제 마지막으로 모든 ASCII값을 더한 후 256로 나눈 나머지를 구해 문자열로 저장한다.
+      Checksum도 2자리를 사용하므로 padding함수를 사용해서 길이를 맞춰준다.
+   </p>
+   <pre>
+devFj01n120.c
+
+        static long writeData (dbCommon *record, format_t *format)
+        {
+	    gmpsRecord *pgmps = (gmpsRecord *) record;
+
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+	    const double HV_Max_Voltage = 1000.0;
+ 	    const double HV_Max_Current = 120;
+
+	    const long cmd_len = 3;
+
+<span class="insert">	    const long not_implemented = 6;
+	    const long chk_len = 2;
+</span>
+            ...
+            ...
+
+            int sum = 0;
+
+            long i;
+            for(i=0; i&lt;cmd_len; i++)
+              sum += inpaStr[i];
+
+
+            for(i=0; i&lt;cmd_len; i++)
+              sum += inpbStr[i];
+<span class="insert">
+	    int SASCII = 83;
+	    int zeroASCII = 48;
+
+	    int checkSum = (SASCII + sum + (not_implemented * zeroASCII) + inpcASCII) % 256;
+
+	    char checkSumStr[chk_len];
+	    sprintf(checkSumStr, "%X", checkSum);
+
+	    long lenCheckSum = strlen(checkSumStr);
+	    padding(checkSumStr, lenCheckSum, chk_len);
+</span>
+            ...
+            ...
+        }
+   </pre>
+   <p>마지막으로 모든 명령어를 만들었으므로 SET Command에 순서대로 붙여 전체 명령어를 만든다.</p>
+   <pre>
+devFj01n120.c
+   
+        static long writeData (dbCommon *record, format_t *format)
+        {
+            ...
+            ...
+
+            long lenCheckSum = strlen(checkSumStr);
+            padding(checkSumStr, lenCheckSum, chk_len);
+<span class="insert">
+	    long count = 0;
+	    for(i=0; i&lt;cmd_len; i++)
+	    {
+	      pgmps->val[i] = inpaStr[i];
+	      count++;
+	    }
+
+	    for(i=0; i&lt;cmd_len; i++)
+	    {
+	      pgmps->val[count] = inpbStr[i];
+	      count++;
+	    }
+
+	    for(i=0; i&lt;not_implemented; i++)
+	    {
+	      pgmps->val[count] = '0';
+	      count++;
+	    }
+
+	    pgmps->val[count] = inpcStr;
+	    count++;
+
+	    for(i=0; i&lt;chk_len; i++)
+	    {
+	      pgmps->val[count] = checkSumStr[i];
+	      count++;
+	    }
+</span>
+	    if (format->type == DBF_STRING)
+	    {
+		return streamPrintf (record, format, pgmps->val);
+	    }
+	    return ERROR;
+	}
+
+   </pre>
+   <p>전체 코드는 다음과 같다.</p>
+   <pre>
+devFj01n120.c
+
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+
+	#include "devStream.h"
+	#include &lt;gmpsRecord.h>
+	#include &lt;epicsExport.h>
+
+	void padding(char inpStr[], long len, long tot_len);
+
+	static long readData (dbCommon *record, format_t *format)
+	{
+	    gmpsRecord *so = (gmpsRecord *) record;
+
+	    if (format->type == DBF_STRING)
+	    {
+		return streamScanfN (record, format, so->val, sizeof(so->val));
+	    }
+
+	    return ERROR;
+	}
+
+	static long writeData (dbCommon *record, format_t *format)
+	{
+	    gmpsRecord *pgmps = (gmpsRecord *) record;
+
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+	    const double HV_Max_Voltage = 1000.0;
+	    const double HV_Max_Current = 120;
+
+	    const long cmd_len = 3;
+	    const long not_implemented = 6;
+	    const long chk_len = 2;
+
+	    double inpa = 0;
+	    double inpb = 0;
+	    long inpc = 0;
+
+	    long status;
+	    status = dbGetLink(&(pgmps->inpa), DBF_DOUBLE, &inpa, 0, 0);
+	    status = dbGetLink(&(pgmps->inpb), DBF_DOUBLE, &inpb, 0, 0);
+	    status = dbGetLink(&(pgmps->inpc), DBF_LONG, &inpc, 0, 0);
+
+	    double coefV = Voltage_Max_HEX / HV_Max_Voltage;
+	    double coefC = Current_Max_HEX / HV_Max_Current;
+
+	    int inpaHex = (int)(coefV * inpa);
+	    int inpbHex = (int)(coefC * inpb);
+
+	    char inpaStr[cmd_len];
+	    char inpbStr[cmd_len];
+	    char inpcStr = '0';
+
+	    sprintf(inpaStr, "%X", inpaHex);
+	    sprintf(inpbStr, "%X", inpbHex);
+
+	    long lena = strlen(inpaStr);
+	    long lenb = strlen(inpbStr);
+
+	    padding(inpaStr, lena, cmd_len);
+	    padding(inpbStr, lenb, cmd_len);
+		    
+	    int inpcASCII = 49;
+	    if(inpc == 1)
+	    {
+	      inpcStr = '2';
+	      inpcASCII = 50;
+	    }
+	    else 
+	    {
+	      inpcStr = '1';
+	      inpcASCII = 49;
+	    }
+
+	    int sum = 0;
+
+	    long i;
+	    for(i=0; i&lt;cmd_len; i++)
+	      sum += inpaStr[i];
+
+
+	    for(i=0; i&lt;cmd_len; i++)
+	      sum += inpbStr[i];
+
+	    int SASCII = 83;
+	    int zeroASCII = 48;
+
+	    int checkSum = (SASCII + sum + (not_implemented * zeroASCII) + inpcASCII) % 256;
+		    
+	    char checkSumStr[chk_len];
+	    sprintf(checkSumStr, "%X", checkSum);
+		    
+	    long lenCheckSum = strlen(checkSumStr);
+	    padding(checkSumStr, lenCheckSum, chk_len);
+		     
+	    long count = 0;
+	    for(i=0; i&lt;cmd_len; i++)
+	    {
+	      pgmps->val[i] = inpaStr[i];
+	      count++;
+	    }
+
+	    for(i=0; i&lt;cmd_len; i++)
+	    {
+	      pgmps->val[count] = inpbStr[i];
+	      count++;
+	    }
+
+	    for(i=0; i&lt;not_implemented; i++)
+	    {
+	      pgmps->val[count] = '0';
+	      count++;
+	    }
+
+	    pgmps->val[count] = inpcStr;
+	    count++;
+
+	    for(i=0; i&lt;chk_len; i++)
+	    {
+	      pgmps->val[count] = checkSumStr[i];
+	      count++;
+	    }
+
+	    if (format->type == DBF_STRING)
+	    {
+		return streamPrintf (record, format, pgmps->val);
+	    }
+	    return ERROR;
+	}
+
+	static long initRecord (dbCommon *record)
+	{
+	    gmpsRecord *so = (gmpsRecord *) record;
+
+	    return streamInitRecord (record, &so->out, readData, writeData) == ERROR ?
+		ERROR : OK;
+	}
+
+	struct {
+	    long number;
+	    DEVSUPFUN report;
+	    DEVSUPFUN init;
+	    DEVSUPFUN init_record;
+	    DEVSUPFUN get_ioint_info;
+	    DEVSUPFUN write;
+	} devgmpsFj01n120 = {
+	    5,
+	    streamReport,
+	    streamInit,
+	    initRecord,
+	    streamGetIointInfo,
+	    streamWrite
+	};
+
+	epicsExportAddress(dset,devgmpsFj01n120);
+   </pre>
+   <p>이제 device를 정의하기 위해 devFj01n120.dbd 파일을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+devFJ01n120.dbd
+
+	device(gmps,INST_IO,devgmpsFj01n120,"FJ01N120")
+   </pre>
+   <p>
+       여기까지 하면 FJ01N120 모델에 대한 Device Support는 완료된다. 이제 devFj01n120.c 파일을 devFj10n12.c와 
+   devEt50p40.c 이름으로 복사한 후 다음과 같이 Voltage와 Current Range 및 구조체 이름을 각 모델에 맞게 변경한다.
+   </p>
+   <pre>
+devFj10n12.c
+
+	...
+	...
+
+	static long writeData (dbCommon *record, format_t *format)
+	{
+	    gmpsRecord *pgmps = (gmpsRecord *) record;
+
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+<span class="insert">	    const double HV_Max_Voltage = 10000.0;
+	    const double HV_Max_Current = 12;
+</span>
+	    ...
+	    ...
+	}
+
+	struct {
+	    long number;
+	    DEVSUPFUN report;
+	    DEVSUPFUN init;
+	    DEVSUPFUN init_record;
+	    DEVSUPFUN get_ioint_info;
+	    DEVSUPFUN write;
+	} <span class="insert">devgmpsFj10n12</span> = {
+	    5,
+	    streamReport,
+	    streamInit,
+	    initRecord,
+	    streamGetIointInfo,
+	    streamWrite
+	};
+
+	epicsExportAddress(dset,<span class="insert">devgmpsFj10n12</span>);
+   </pre>
+   <pre>
+devEt50p40.c
+
+	...
+	...
+
+	static long writeData (dbCommon *record, format_t *format)
+	{
+	    gmpsRecord *pgmps = (gmpsRecord *) record;
+
+	    const double Voltage_Max_HEX = 4095.0;
+	    const double Current_Max_HEX = 4095.0;
+<span class="insert">	    const double HV_Max_Voltage = 50000.0;
+	    const double HV_Max_Current = 40;
+</span>
+	    ...
+	    ...
+	}
+
+	struct {
+	    long number;
+	    DEVSUPFUN report;
+	    DEVSUPFUN init;
+	    DEVSUPFUN init_record;
+	    DEVSUPFUN get_ioint_info;
+	    DEVSUPFUN write;
+	} <span class="insert">devgmpsEt50p40</span> = {
+	    5,
+	    streamReport,
+	    streamInit,
+	    initRecord,
+	    streamGetIointInfo,
+	    streamWrite
+	};
+
+	epicsExportAddress(dset,<span class="insert">devgmpsEt50p40</span>);
+   </pre>
+   <p>마찬가지로 devFj01n120.dbd 파일을 devFj10n12.dbd와 devEt50p40.dbd 이름으로 복사한 후 Device Type을 변경한다.</p>
+   <pre>
+devFj10n12.dbd
+
+	device(gmps,INST_IO,devgmpsFj10n12,"FJ10N12")
+   </pre>
+   <pre>
+devEt50p40.dbd
+
+	device(gmps,INST_IO,devgmpsEt50p40,"ET50p40")
+   </pre>
+   <p>최종적으로 Makefile을 열어 파일들을 추가해 주고 make를 실행한다.</p>
+   <pre>
+Makefile
+
+	TOP=../..
+
+	include $(TOP)/configure/CONFIG
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+	#=============================
+
+	#=============================
+	# Build the IOC application
+
+	PROD_IOC = glassman
+	<span class="insert">DBDINC += gmpsRecord</span>
+	
+	# glassman.dbd will be created and installed
+	DBD += glassman.dbd
+
+	# glassman.dbd will be made up from these files:
+	glassman_DBD += base.dbd
+	glassman_DBD += stream.dbd
+	glassman_DBD += drvAsynIPPort.dbd
+	<span class="insert">
+	glassman_DBD += gmpsRecord.dbd
+	glassman_DBD += devFj01n120.dbd
+	glassman_DBD += devFj10n12.dbd
+	glassman_DBD += devEt50p40.dbd
+	</span>
+	# Include dbd files from all support applications:
+	#glassman_DBD += xxx.dbd
+
+	# Add all the support libraries needed by this IOC
+	#glassman_LIBS += xxx
+
+	# glassman_registerRecordDeviceDriver.cpp derives from glassman.dbd
+	glassman_SRCS += glassman_registerRecordDeviceDriver.cpp
+	<span class="insert">
+	glassman_SRCS += gmpsRecord.c
+	glassman_SRCS += devFj01n120.c
+	glassman_SRCS += devFj10n12.c
+	glassman_SRCS += devEt50p40.c
+	</span>
+	# Build the main IOC entry point on workstation OSs.
+	glassman_SRCS_DEFAULT += glassmanMain.cpp
+	glassman_SRCS_vxWorks += -nil-
+
+	# Add support from base/src/vxWorks if needed
+	#glassman_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+	# Finally link to the EPICS Base libraries
+	glassman_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+	glassman_LIBS += stream
+	glassman_LIBS += asyn
+	#===========================
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/home/scwook/epics/R3.14.12.4/siteApps/glassman/glassmanApp/src$ make
+   </pre>
+   <p>테스트를 위해 db/test.db 파일을 다음과 같이 수정한다.</p>
+   <pre>
+test.db
+
+	record(stringin, "FJ01N120:version")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_version T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(stringin, "FJ01N120:get_response")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_response T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(ao, "FJ01N120:voltage")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(ao, "FJ01N120:current")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(bo, "FJ01N120:onoff")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(gmps, "FJ01N120:set_cmd")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(OUT, "@test.proto set_value T0")
+	  field(INPA, "voltage")
+	  field(INPB, "current")
+	  field(INPC, "onoff")
+	}
+   </pre>
+   <p>
+      voltage와 current, onoff Record는 각각 값을 설정한 후 set_cmd Record를 호출 한다. 결과적으로
+      set_cmd는 3개의 Record로 부터 값을 입력 받아 SET Command를 만든 후 StreamDevice로 출력한다.
+   </p>
+   <p>이제 proto/test.proto 파일을 열어 다음과 같이 수정한다.</p>
+   <pre>
+test.proto
+
+	Terminator = CR;
+
+	get_version{
+		out "\x01V56";
+		in "%s";
+	}
+
+	get_response{
+		out "\x01Q51";
+		in "%s";
+	}
+
+	set_cmd{
+		out "\x01S%s";
+		in "%s";
+	}
+   </pre>
+   <p>ioc를 실행한 후 voltage값을 설정하여 제대로 값이 나오는지 확인해 본다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>/home/scwook/epics/R3.14.12.4/siteApps/glassman/iocBoot/iocglassman$ ./st.cmd
+epics> dbl
+FJ01N120:current
+FJ01N120:voltage
+FJ01N120:onoff
+FJ01N120:get_response
+FJ01N120:version
+FJ01N120:set_cmd
+epics> dbpr FJ01N120:get_response
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: FJ01N120:get_response  SEVR: NO_ALARM      STAT: NO_ALARM      
+SVAL:               TPRO: 0             VAL: R00000000000040
+epics> dbpf FJ01N120:voltage 10
+DBR_DOUBLE:         10                  
+epics> dbpf FJ01N120:onoff 1
+DBR_STRING:         
+epics> dbpr FJ01N120:get_response
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: FJ01N120:get_response  SEVR: NO_ALARM      STAT: NO_ALARM      
+SVAL:               TPRO: 0             VAL: R00A00000040055                    
+epics> 
+   </pre>
+<a href="../resources/images/epics/glassman10VTest.png" data-lightbox="example-1"><img src="../resources/images/epics/glassman10VTest.png" width="816" height="105" /></a>
+   </br></br>
+   <h3>Response Packet Processing</h3> 
+   <p>
+      지금까지는 Response Packet을 하나의 문자열로 읽었다. 지금부터는 Response Packet에서 Voltage 및 Current,
+      Mode, Fault, HV 상태를 분리하여 보다 직관적으로 볼 수 있도록 변환해 보자.
+   </p>
+   <p>
+     StreamDevice는 몇가지 Format Flags를 제공하는데 이 중 우리에게 필요한 Flags는
+     '*'이다. '*'는 data를 skip하는 기능으로 읽고자 하는 데이터 Type앞에 '*'를 붙여주면 그 데이터는 읽지 않고 다음
+      데이터로 넘어간다. 간단히 예를 들면 위에서 get_response로 부터 얻은 VAL값 R00A00000040055에서 Voltage에
+      해당하는 2 - 4byte만 읽고자 하면 다음과 같이 적으면 된다.
+   </p>
+   <pre>
+	get_response{
+	        out "\x01Q51";
+	        in "%*c%3x%*11x";
+	}
+   </pre>
+   <p>
+      간단히 해석하면 get_response함수는 출력으로 SOHQ51을 전송한다. 그리고 리턴되는 값 중 첫 번째 문자는
+      무시하고(%*c) 2 ~ 4byte 값을 16진수(%3x)로 저장한다. 그리고 나머지 11개의 16진수 값(%*11x)을 무시한다. 따라서 
+      결과적으로 남는 것은 Voltage에 해당하는 2 ~ 4번째 값만 남게 된다. 여기서 주의 할 사항은 전체 길이와
+      데이터 형식을 맞춰야 된다. Response Packet의 전체 길이는 마지막 Carriage Return을 제외하면 15byte 이므로
+      1+3+11=15 임을 알 수 있다. 데이터 형식 또한 첫 번째 'R'을 제외한 나머지는 16진수 이므로 %x를 사용하였다. 만약
+      Voltage 값을 10진수 형식인 %d를 사용할 경우 16진수 A에 해당하는 값을 문자로 인식하므로 에러가 발생하게 된다.
+   </p>
+   <p>실제 테스트를 통해 확인해보도록 하자. db/test.db와 proto/test.proto 파일을 다음과 같이 수정한다.</p>
+   <pre>
+test.db
+
+	record(stringin, "FJ01N120:version")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_version T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(<span class="insert">ai</span>, "FJ01N120:get_response")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_response T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(ao, "FJ01N120:voltage")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(ao, "FJ01N120:current")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(bo, "FJ01N120:onoff")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(gmps, "FJ01N120:set_cmd")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(OUT, "@test.proto set_cmd T0")
+	  field(INPA, "voltage")
+	  field(INPB, "current")
+	  field(INPC, "onoff")
+	}
+
+   </pre>
+   <pre>
+test.proto
+
+	Terminator = CR;
+
+	get_version{
+		out "\x01V56";
+		in "%s";
+	}
+
+	get_response{
+		out "\x01Q51";
+		<span class="insert">in "%*c%3x%*11x";</span>
+	}
+
+	set_cmd{
+		out "\x01S%s";
+		in "%s";
+	}
+   </pre>
+   <p>ioc를 실행한 후 테스트해 보면 기존과는 달리 VAL 값이 10으로 나오는 것을 확인 할 수 있다.</p>
+   <pre class="shell">
+epics> dbpf FJ01N120:voltage 10
+epics> dbpf FJ01N120:onoff 1
+epics> dbpr FJ01N120:get_response
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: FJ01N120:get_response  RVAL: 10            SEVR: NO_ALARM      
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             VAL: 10
+   </pre>
+   <p>이제 값을 분리하는 방법을 알았으므로 Current와 Digital Monitor 상태를 읽는 부분을 추가해 준다.</p>
+   <pre>
+test.db
+
+	record(stringin, "FJ01N120:version")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_version T0")
+	  field(SCAN, "1 second")
+	}
+	<span class="insert">
+	record(ai, "FJ01N120:Vmon")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_voltage T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(ai, "FJ01N120:Imon")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_current T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(mbbiDirect, "FJ01N120:state")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_state T0")
+	  field(SCAN, "1 second")
+	  field(NOBT, "8")
+	}
+	</span>
+	record(ao, "FJ01N120:voltage")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(ao, "FJ01N120:current")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(bo, "FJ01N120:onoff")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(gmps, "FJ01N120:set_cmd")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(OUT, "@test.proto set_cmd T0")
+	  field(INPA, "voltage")
+	  field(INPB, "current")
+	  field(INPC, "onoff")
+	}
+   </pre>
+   <pre>
+test.proto
+
+	Terminator = CR;
+
+	get_version{
+		out "\x01V56";
+		in "%s";
+	}
+<span class="insert">
+	get_voltage{
+		out "\x01Q51";
+		in "%*c%3x%*11x";
+	}
+
+	get_current{
+		out "\x01Q51";
+		in "%*c%*3x%3x%*8x";
+	}
+
+	get_state{
+		out "\x01Q51";
+		in "%*c%*9x%1x%*4x";
+	}
+</span>
+	set_cmd{
+		out "\x01S%s";
+		in "%s";
+	}
+   </pre>
+   <p>
+       주의할 부분은 proto파일에 정의된 데이터 형식에 맞춰 Record를 변경해 줘야 한다. 기존에는 %s형식의 문자열로
+       저장하였기 때문에 Record Type를 stringin으로 했는데 변경된 값은 16진수 형식의 숫자이므로 Record도
+       ai Record Type으로 변경되었다. 참고로 ai Record에 저장되는 값은 자동으로 10진수 값으로 변경되어 저장된다.
+       state는 Digital Monitor 상태에 대한 정보가 1bit씩 차지하므로 하나의 값으로 읽는거 보다 bit로 읽는 것이
+       편하다. 이 경우 mbbiDirect Record Type로 읽으면 각각의 bit를 읽을 수 있는데 각 bit정보는 B0, B1, B2 순서로
+       저장된다. 예를 들어 state.B0는 첫번째 bit를 state.B1은 두번째 bit를 출력해 준다.
+       (테스트 결과 dbpr로 읽으면 각 bit별로 출력되지 않는다. caget을 이용하면 가능하다.) 
+   </p>
+   <p>
+       값을 제대로 가져왔으면 이제 실제 범위에 맞게 계산한다. Response Packet의 전압과 전류범위는 16진수로
+      0 ~ 3FF로 표현되는데 10진수로는 0 ~ 1023값을 가진다. 이 값이 결과적으로 ai Record에 저장되는 값이 되는데
+      FJ01N120 모델의 경우 0 ~ 1000V의 전압 범위를 가지므로 앞서 SET Command를 만들때와 같이 선형함수를 사용하여
+      Scale를 맞춰야 한다. SET Command와의 차이점은 16진수를 10진수에 맞추는 것이므로 역으로 구해야 한다.
+   </p>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+    <mi>Value</mi><mo>=</mo>
+     <mfrac>
+      <mrow>
+       <mi>1</mi>
+      </mrow>
+      <mrow>
+       <mi>Slope</mi><mo>
+      </mrow>
+     </mfrac>
+     <mo>&times;</mo><mi>Get Value</mi>
+    </mrow>
+   </math>
+   <p>ai Record의 경우 선형함수를 지원하는 Field를 가지고 있는데 다음과 같이 계산된다.</p>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mrow>
+    <mi>Value</mi><mo>=</mo>
+    <mi>ESOL</mi><mo>&times;</mo><mi>Get Value</mi><mo>+</mo><mi>EOFF</mi>
+    </mrow>
+   </math>
+   <p>
+       두 수식을 비교해 보면 ESOL은 1/slope에 해당되고 EOFF는 0임을 알 수 있다. 따라서 FJ01N120 모델의 경우
+       ESOL은 1000/1023 = 0.977517106549364 이므로 다음과 같이 db/test.db에 field를 추가해 준다.
+   </p>
+   <pre>
+test.db
+
+	record(stringin, "FJ01N120:version")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_version T0")
+	  field(SCAN, "1 second")
+	}
+
+	record(ai, "FJ01N120:Vmon")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_voltage T0")
+	  field(SCAN, "1 second")
+	  <span class="insert">field(LINR, "LINEAR")
+	  field(EGUF, "1000")
+	  field(EGUL, "0")
+	  field(EGU, "V")
+	  field(ESLO, "0.977517106549364")
+	  field(EOFF, "0")</span>
+	}
+
+	record(ai, "FJ01N120:Imon")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_current T0")
+	  field(SCAN, "1 second")
+	  <span class="insert">field(LINR, "LINEAR")
+	  field(EGUF, "1000")
+	  field(EGUL, "0")
+	  field(EGU, "mA")
+	  field(ESLO, "0.977517106549364")
+	  field(EOFF, "0")</span>
+	}
+
+	record(mbbiDirect, "FJ01N120:state")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(INP, "@test.proto get_state T0")
+	  field(SCAN, "1 second")
+	  field(NOBT, "8")
+	}
+
+	record(ao, "FJ01N120:voltage")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(ao, "FJ01N120:current")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(bo, "FJ01N120:onoff")
+	{
+	  field(FLNK, "set_cmd")
+	}
+
+	record(gmps, "FJ01N120:set_cmd")
+	{
+	  field(DTYP, "FJ01N120")
+	  field(OUT, "@test.proto set_cmd T0")
+	  field(INPA, "voltage")
+	  field(INPB, "current")
+	  field(INPC, "onoff")
+	}
+   </pre>
+   <p>최종적으로 ioc를 실행하고 테스트해 본다.</p>
+   <pre class="shell">
+epics>dbpf FJ01N120:voltage 10
+epics>dbpf FJ01N120:onoff 1
+epics>dbpr FJ01N120:Vmon
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: FJ01N120:Vmon          RVAL: 10            SEVR: NO_ALARM      
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             
+VAL: 9.77517106549364
+   </pre>
+   </br>
+   <h2>Library 파일로 만들기</h2>
+   <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+   <p>siteLibs 폴더로 이동한 후 glassManPSLib 폴더를 하나 만든다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs $ mkdir glassManPSLib
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs $ cd glassManPSLib
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib $
+   </pre>
+   <p>glassManPSLib 폴더안에 Db, src 폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP = ..
+        include $(TOP)/configure/CONFIG
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+        include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devFj01n120.c ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devFj01n120.dbd ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devFj10n12.c ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devFj10n12.dbd ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devEt50p40.c ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devEt50p40.dbd ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/gmpsRecord.c ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/gmpsRecord.dbd ./
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4/siteLibs/glassManPSLib/src $ cp $EPICS_PATH/siteApps/glassman/glassmanApp/src/devStream.h ./
+   </pre>
+   <p>Makefile을 만들고 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+	TOP = ../..
+	include $(TOP)/configure/CONFIG
+
+	LIBRARY     += glassManPS
+	DBDINC      += gmpsRecord
+	DBD         += gmpsRecord.dbd
+	DBD         += devFj01n120.dbd
+	DBD         += devFj10n12.dbd
+	DBD         += devEt50p40.dbd
+
+	glassManPS_SRCS += devFj01n120.c devFj10n12.dbd devEt50p40.dbd gmpsRecord.c funGmps.c
+
+	include $(TOP)/configure/RULES
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-x86_64 폴더안에 libglassManPS.so 파일이
+      만들어 진다.
+   </p>
+   <p>glassManPSLib/Db 폴더로 이동 후 다음과 같은 glassManPS.db 파일을 만든다.</p>
+   <pre>
+glassManPS.db
+
+	record(ao, "$(PS):VOL")
+	{
+	  field(FLNK, "$(PS):CMD")
+	}
+
+	record(ao, "$(PS):CUR")
+	{
+	  field(FLNK, "$(PS):CMD")
+	}
+
+	record(bo, "$(PS):ON")
+	{
+	  field(FLNK, "$(PS):CMD")
+	}
+
+	record(gmps, "$(PS):CMD")
+	{
+	  field(DTYP, "$(PS)")
+	  field(OUT, "@glassManPS.proto set_value $(P)")
+	  field(INPA, "$(PS):VOL")
+	  field(INPB, "$(PS):CUR")
+	  field(INPC, "$(PS):ON")
+	}
+
+	record(ai, "$(PS):Vmon")
+	{
+	  field(DTYP, "stream")
+	  field(INP, "@glassManPS.proto get_voltage $(P)")
+	  field(LINR, "LINEAR")
+	  field(EGUF, "1000")
+	  field(EGUL, "0")
+	  field(EGU, "V")
+	  field(ESLO, "0.977517106549364")
+	  field(EOFF, "0")
+	  field(SCAN, "1 second")
+	}
+
+	record(ai, "$(PS):Imon")
+	{
+	  field(DTYP, "stream")
+	  field(INP, "@glassManPS.proto get_current $(P)")
+	  field(SCAN, "1 second")
+	  field(LINR, "LINEAR")
+	  field(EGUF, "1000")
+	  field(EGUL, "0")
+	  field(EGU, "mA")
+	  field(ESLO, "0.977517106549364")
+	  field(EOFF, "0")
+	  field(SCAN, "1 second")
+	}
+
+	record(mbbiDirect, "$(PS):ST")
+	{
+	  field(DTYP, "stream")
+	  field(INP, "@glassManPS.proto get_st $(P)")
+	  field(SCAN, "1 second")
+	  field(NOBT, "8")
+	}
+
+	record(stringout, "$(PS):RESET")
+	{
+	  field(DTYP, "stream")
+	  field(OUT, "@glassManPS.proto set_reset $(P)")
+	}
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+	TOP =../..
+	include $(TOP)/configure/CONFIG
+	DB += glassManPS.db
+	include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 glassManPS.db 파일이 생성된다.</p>
+   <p>glassManPSLib 폴더 안에 proto폴더를 만든 후 glassManPS.proto 파일을 다음과 같이 만든다.</p>
+   <pre>
+glassManPS.db
+
+	Terminator = CR;
+
+	set_value{
+		out "\x01S%s";
+	}
+
+	get_voltage{
+		out "\x01Q51";
+		in "%*c%3x%*11x";
+	}
+
+	get_current{
+		out "\x01Q51";
+		in "%*c%*3x%3x%*8x";
+	}
+
+	get_st{
+		out "\x01Q51";
+		in "%*c%*9x%1x%*4x";
+	}
+
+	set_reset{
+		out "\x01S0300000000004CA";
+		in "%s";
+	}
+   </pre>
+   <p>glassManPSLib를 이용한 Application 사용방법은 <a href="appGlassmanHV.html">Glassman High Voltage Application</a>을 참고한다.
+  </section>
+ </body>
+</html>

@@ -1,0 +1,1189 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Raspberry DS1820 Device Support Development</h1>
+   <p>
+     본 메뉴얼에서는 다음과 같은 하드웨어 구성과 EPICS Record를 만들어 DS1820센서의 온도 값을 읽는
+     Library를 만드는 것이다. 여기서 "@1"은 GPIO Pin 번호를 의미한다.
+   </p>
+   <p>하드웨어 구성은 다음과 같다.</p>
+   <ul>
+    <li>Raspberry Pi Model B+</li>
+    <li>DS1820 Sensor</li>
+    <li>4.7k Ohme Register</li>
+   </ul>
+<a class="example-image-link" href="../resources/images/raspberry/ds1820_test.png" data-lightbox="example-1"><img class="example-image" src="../resources/images/raspberry/ds1820_test.png" width="50%" height="50%" /></a>
+   <p>최종 목표는 다음 Record를 만들어 온습도 값을 읽는 것이다.</p>
+   <pre>
+ds1820.db
+
+        record(ai, "ds1820")
+        {
+          field(DTYP, "DS1820")
+          field(SCAN, "1 second")
+          field(INP, "@1")
+        }
+   </pre>
+   <p>모든 작업은 Raspberry Pi에서 하므로 Pi에 접속한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span> ssh pi@10.1.4.207
+   </pre>
+   <p>
+      DS1820 Library는 wiringPi Library를 필요로 한다. 설치되어 있지 않다면 우선 wiringPi를
+      설치하도록 하자.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ git clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>다운받은 wiringPi를 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ cd wiringPi
+<span class="prom">pi@raspberrypi</span> ~/wiringPi$ ./build
+   </pre>
+   <p>siteApps안에 ds1820폴더를 만든 후 Base Application을 생성한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> cd ../epics/R3.14.12.4/siteApps
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps $ mkdir ds1820
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps $ cd ds1820
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820 $ makeBaseApp.pl -t ioc ds1820
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820 $ makeBaseApp.pl -i -t ioc ds1820
+
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    ds1820
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name?
+
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820 $ ls
+conigure  ds1820App  iocBoot Makefile
+   </pre>
+   <p>ds1820App/src 폴더로 이동한 후 devDS1820.c 파일을 만들어 기본 코드를 작성한다.</p>
+   <pre>
+devDS1820.c
+
+        #include &lt;stdio.h>
+        #include &lt;string.h>
+        #include &lt;stdlib.h>
+
+        #include &lt;epicsExport.h>
+        #include &lt;devSup.h>
+        #include &lt;recSup.h>
+        #include &lt;recGbl.h>
+        #include &lt;dbAccess.h>
+        #include &lt;callback.h>
+        #include &lt;aiRecord.h>
+
+        #include &lt;wiringPi.h>
+
+        static long ai_init_record(aiRecord *pai);
+        static long read_ai(aiRecord *pai);
+
+        static long ai_init_record(aiRecord *pai)
+        {
+        }
+
+        static long read_ai(aiRecord *pai)
+        {
+        }
+
+        struct
+        {
+          long num;
+          DEVSUPFUN     report;
+          DEVSUPFUN     init;
+          DEVSUPFUN     init_record;
+          DEVSUPFUN     get_ioint_info;
+          DEVSUPFUN     read_ai;
+          DEVSUPFUN     special_linconv;
+        } devAiDS1820Async = {
+          6,
+          NULL,
+          NULL,
+          ai_init_record,
+          NULL,
+          read_ai,
+          NULL
+        };
+
+        epicsExportAddress(dset,devAiDS1820Async);
+   </pre>
+   <p>
+      기본 구조는 아날로그 입력을 위해 aiRecord를 사용하였으며, 초기화 함수와 센서 값을 읽기 위한
+      함수로 구성되어 있다. 또한 wiringPi Library를 사용하기 위해 헤더파일을 추가하였다.
+      dset을 devAiDS1820Async로 설정하였으므로 devDS1820.dbd 파일을 만들어 다음과 같이 작성한다.
+   </p>
+   <pre>
+devDS1820.dbd
+
+        device(ai, INST_IO, devAiDS1820Async, "DS1820")
+   </pre>
+   <p>
+       이제 실제 코드를 작성하도록 한다. 우선 코드를 Asynchronous 형식으로 만들기 위해 다음과 같이 Callback 함수를 만들고 초기화 한다.
+   </p>
+   <pre>
+devDS1820.c
+
+        #include &lt;stdio.h>
+        #include &lt;string.h>
+        #include &lt;stdlib.h>
+
+        #include &lt;epicsExport.h>
+        #include &lt;devSup.h>
+        #include &lt;recSup.h>
+        #include &lt;recGbl.h>
+        #include &lt;dbAccess.h>
+        #include &lt;callback.h>
+        #include &lt;aiRecord.h>
+
+        #include &lt;wiringPi.h>
+<span class="insert">
+        typedef struct _DS1820_INFO
+        {
+          CALLBACK callback;
+
+        }DS1820_INFO;
+</span>
+        static long ai_init_record(aiRecord *pai);
+        static long read_ai(aiRecord *pai);
+<span class="insert">
+        static void myCallback(CALLBACK *pcallback)
+        {
+          aiRecord *precord;
+          struct rset *prset;
+
+          callbackGetUser(precord, pcallback);
+          prset = (struct rset *)(precord->rset);
+
+          dbScanLock((dbCommon*)precord);
+          (*prset->process)(precord);
+          dbScanUnlock((dbCommon*)precord);
+        }
+</span>
+        static long ai_init_record(aiRecord *pai)
+        {
+<span class="insert">	  DS1820_INFO *ds1820_info = malloc(sizeof(DS1820_INFO));
+
+          callbackSetCallback(myCallback, &ds1820_info->callback);
+          callbackSetPriority(priorityLow, &ds1820_info->callback);
+          callbackSetUser(pai, &ds1820_info->callback);
+
+          pai->dpvt = ds1820_info;</span>
+        }
+
+        static long read_ai(aiRecord *pai)
+        {
+<span class="insert">  	  DS1820_INFO *ds1820_info = pai->dpvt;
+
+          if(pai->pact)
+          {
+            pai->udf = FALSE;
+
+            return 2;
+          }
+
+          pai->pact = TRUE;
+          callbackRequestDelayed(&ds1820_info->callback, pai->disv);
+
+          return 0;
+</span>
+        }
+
+        struct
+        {
+          long num;
+          DEVSUPFUN     report;
+          DEVSUPFUN     init;
+          DEVSUPFUN     init_record;
+          DEVSUPFUN     get_ioint_info;
+          DEVSUPFUN     read_ai;
+          DEVSUPFUN     special_linconv;
+        } devAiDS1820Async = {
+          6,
+          NULL,
+          NULL,
+          ai_init_record,
+          NULL,
+          read_ai,
+          NULL
+        };
+
+        epicsExportAddress(dset,devAiDS1820Async);
+   </pre>
+<p>DS1820_INFO 구조체는 callback 함수의 포인터를 포함하여 센서에 대한 정보를 저장하기 위한 구조체 이다.</p>
+   <p>기본적인 준비가 되었으므로 몇가지 초기화 작업을 다음과 같이 추가한다.</p>
+   <pre>
+devDS1820.c
+
+        static long ai_init_record(aiRecord *pai)
+        {
+          DS1820_INFO *ds1820_info = malloc(sizeof(DS1820_INFO));
+
+          callbackSetCallback(myCallback, &ds1820_info->callback);
+          callbackSetPriority(priorityLow, &ds1820_info->callback);
+          callbackSetUser(pai, &ds1820_info->callback);
+<span class="insert">
+          if(wiringPiSetup() == -1)
+            return 1;
+
+          char *para;
+          int pin_num = 0;
+
+          para = pai-&gt;inp.value.instio.string;
+
+          pin_num = atoi(para);
+</span>
+          pai->dpvt = ds1820_info;
+
+          return 0;
+        }
+   </pre>
+   <p>초기화 코드는 다음과 같이 wiringPi를 먼저 초기화 한다.</p>
+   <pre>
+        if(wiringPiSetup() == -1)
+          return 1;
+   </pre>
+   <p>
+      다음에는 Record에서 설정한 Pin번호를 읽어 변수에 저장한다. 참고로 atoi는 문자열을 정수형으로 
+      변환해주는 C Library 함수이다.
+   </p>
+   <pre>
+        para = pai-&gt;inp.value.instio.string;
+
+        pin_num = atoi(para);
+   </pre>
+   <p>
+      pin_num를 read_ai 함수에서 사용하기 위해 다음과 같이 DS1820_INFO 구조체에 변수를 추가하고 값을 
+      초기화 한다.
+   </p>
+   <pre>
+devDS1820.c
+
+        struct _DS1820_INFO
+        {
+          CALLBACK callback;
+<span class="insert">
+          int pin_num;
+</span>
+        }DS1820_INFO;
+
+        ...
+        ...
+
+        static long ai_init_record(aiRecord *pai)
+        {
+          DS1820_INFO *ds1820_info = malloc(sizeof(DS1820_INFO));
+
+          callbackSetCallback(myCallback, &ds1820_info->callback);
+          callbackSetPriority(priorityLow, &ds1820_info->callback);
+          callbackSetUser(pai, &ds1820_info->callback);
+
+          if(wiringPiSetup() == -1)
+            return 1;
+
+          char *para;
+          int pin_num = 0;
+
+          para = pai-&gt;inp.value.instio.string;
+
+          pin_num = atoi(para);
+
+<span class="insert">
+          ds1820_info-&gt;pin_num = pin_num;
+</span>
+          pai-&gt;dpvt = ds1820_info;
+
+          return 0;
+        }
+   </pre>
+   <p>다음은 read_ai 함수에 실제 값을 읽어 Record 변수에 저장하는 코드를 추가한다.</p>
+   <pre>
+devDS1820.c
+
+        static long read_ai(aiRecord *pai)
+        {
+          DS1820_INFO *ds1820_info = pai->dpvt;
+
+          if(pai->pact)
+          {
+<span class="insert">	  readDS1820(ds1820_info);
+	
+	    pai->val = ds1820_info->temper;
+</span>
+            pai->udf = FALSE;
+
+            return 2;
+          }
+
+          pai->pact = TRUE;
+          callbackRequestDelayed(&dht_info->callback, pai->disv);
+
+          return 0;
+
+        }
+   </pre>
+   <p>readDS1820 함수는 실제 센서로 부터 온습도 값을 읽은 후 DS1820_INFO 구조체에 선언된 온습도 변수에 
+     저장하는 함수로 다음과 같다.
+   </p>
+   <pre>
+devDS1820.c
+
+	void ds1820_read(DS1820_INFO* ds1820_info)
+	{
+	  uint8_t busy = 1;
+	  int pin = ds1820_info->pin_num;
+
+	  onewire_reset(pin);
+	  onewire_write(pin, 0xCC);
+	  onewire_write(pin, 0x44);
+
+	  delay(750);
+	  while(busy == 0)
+	  {
+	    busy = onewire_read(pin);
+	    printf("busy: %d\n", busy);
+	  }
+
+	  onewire_reset(pin);
+	  onewire_write(pin, 0xCC);
+	  onewire_write(pin, 0xBE);
+
+	  uint8_t lsb, msb, th, tl, reserved1, reserved2, count_remain, count_per_c, crc;
+	  float real_temp = 0.0f;
+	  float pre_real_temp = ds1820_info->temper;
+	  signed char temp_read = 0;
+
+	  lsb = onewire_read(pin);
+	  msb = onewire_read(pin);
+	  th = onewire_read(pin);
+	  tl = onewire_read(pin);
+	  reserved1 = onewire_read(pin);
+	  reserved2 = onewire_read(pin);
+	  count_remain = onewire_read(pin);
+	  count_per_c = onewire_read(pin);
+	  crc = onewire_read(pin);
+
+	  uint8_t data[] = {lsb, msb, th, tl, reserved1, reserved2, count_remain, count_per_c};
+
+	  onewire_reset(pin);
+
+	  if(crc_read(data) == crc)
+	  {
+	    temp_read = (signed char)(lsb>>1);
+
+	    if(msb == 255)
+	      temp_read = temp_read | 0x80;
+
+	    real_temp = (float)temp_read + 0.85f - (float)count_remain/(float)count_per_c;
+	    real_temp = (int)(real_temp * 10) / 10.0f;
+
+	    ds1820_info->temper = real_temp;
+	    ds1820_info->pre_temper = real_temp;
+	  }
+	  else
+	    ds1820_info->temper = pre_real_temp;
+
+	}
+   </pre>
+   <p>ds1820_read는 4개의 함수를 내부에서 호출하는데 다음과 같다.</p>
+   <ul>
+    <li>onewire_reset: DS1820 센서를 초기화 한다.</li>
+    <li>onewire_write: 8bit 정보를 센서로 전송한다.</li>
+    <li>onewire_read: 8bit 정보를 센서로 부터 읽는다.</li>
+    <li>crc_read: Cyclical Redundancy Check(CRC) 값을 계산한다.</li>
+   </ul>
+   <p>onewire_reset 함수는 DS1820 센서를 초기화 하는 함수로 다음과 같다.</p>
+   <pre>
+	int onewire_reset(int pin)
+	{
+	  int result;
+
+	  pinMode(pin, OUTPUT);
+
+	  digitalWrite(pin, LOW);
+	  delayMicroseconds(480);
+
+	  pinMode(pin, INPUT);
+	  delayMicroseconds(70);
+
+	  result = digitalRead(pin);
+
+	  delayMicroseconds(410);
+
+	  return result;
+	}
+   </pre>
+   <p>
+     onewire_write 함수는 8bit 정보를 센서로 전송하는 함수로 일정한 Timing에 맞춰 1bit씩 전송 하기위해
+     onewire_write_bit 함수를 호출한다.
+   </p>
+   <pre>
+	void onewire_write(int pin, uint8_t data)
+	{
+	  int loop;
+
+	  for(loop=0; loop&lt;8; loop++)
+	  {
+	    onewire_write_bit(pin, data & 0x01);
+
+	    data >>= 1;
+	  }
+	}
+
+	void onewire_write_bit(int pin, int bit)
+	{
+	  pinMode(pin, OUTPUT);
+
+	  if(bit)
+	  {
+	    digitalWrite(pin, LOW);
+	    delayMicroseconds(6);
+	    digitalWrite(pin, HIGH);
+	    delayMicroseconds(64);
+	  }
+	  else
+	  {
+	    digitalWrite(pin, LOW);
+	    delayMicroseconds(60);
+	    digitalWrite(pin, HIGH);
+	    delayMicroseconds(10);
+	  }
+
+	}
+   </pre>
+   <p>
+     onewire_read 함수는 onewire_write 함수와 반대로 onewire_read_bit 함수를 통해 1bit씩 총 8bit의 
+     정보를 센서로 부터 읽어온다.
+   </p>
+   <pre>
+	uint8_t onewire_read(int pin)
+	{
+	  int loop, result=0;
+
+	  for(loop=0; loop&lt;8; loop++)
+	  {
+	    result >>= 1;
+
+	    if(onewire_read_bit(pin))
+	      result |= 0x80;
+	  }
+
+	  return result;
+	}
+
+	int onewire_read_bit(int pin)
+	{
+	  int result;
+
+	  pinMode(pin, OUTPUT);
+
+	  digitalWrite(pin, LOW);
+	  delayMicroseconds(6);
+
+	  pinMode(pin, INPUT);
+	  delayMicroseconds(9);
+
+	  result = digitalRead(pin) & 0x01;
+	  delayMicroseconds(55);
+
+	  return result;
+	}
+   </pre>
+   <p>
+     crc_read 함수는 데이터의 유효성 Check를 위해 CRC 값을 계산하는 함수로 DS1820 센서는 온도 값 계산을
+     위해 64bit의 데이터와 8bit CRC 값을 전송한다. crc_read 함수는 앞서 전송된 64bit 데이터를 이용하여
+     CRC 계산을 하는 함수로 센서로 부터 전송된 마지막 8bit CRC 값과 crc_read 함수를 통해 계산된 CRC
+     값이 일치하는 경우에만 온도 값이 유효하다. 
+   </p>
+   <pre>
+	uint8_t crc_read(uint8_t *data)
+	{
+	 uint8_t i, crc;
+
+	 crc = 0x00;
+
+	 for(i=0; i&lt;8; i++)
+	  crc = crc_cal(crc, data[i]);
+
+	 return crc;
+	}
+
+	uint8_t crc_cal(uint8_t crc, uint8_t data)
+	{
+	  int j;
+	  for(j=0;j&lt;8;j++) {
+	      if ((data & 0x01 ) ^ (crc & 0x01)) {
+		  // DATA ^ LSB CRC = 1
+		  crc = crc>>1;
+		  // Set the MSB to 1
+		  crc = crc | 0x80;
+		  // Check bit 3
+		  if (crc & 0x04) {
+		      crc = crc & 0xFB; // Bit 3 is set, so clear it
+		  } else {
+		      crc = crc | 0x04; // Bit 3 is clear, so set it
+		  }
+		  // Check bit 4
+		  if (crc & 0x08) {
+		      crc = crc & 0xF7; // Bit 4 is set, so clear it
+		  } else {
+		      crc = crc | 0x08; // Bit 4 is clear, so set it
+		  }
+	      } else {
+		  // DATA ^ LSB CRC = 0
+		  crc = crc>>1;
+		  // clear MSB
+		  crc = crc & 0x7F;
+		  // No need to check bits, with DATA ^ LSB CRC = 0, they will remain unchanged
+	      }
+	      data = data>>1;
+	  }
+
+	  return crc;
+
+	}
+   </pre>
+   <p>구조체 선언 아래에 전체 함수 이름을 선언해 준다.</p>
+   <pre>
+devDS1820.c
+
+	...
+	...
+
+	typedef struct _DS1820_INFO
+	{
+	  CALLBACK callback;
+
+	  int pin_num;
+
+	  float temper;
+	  float pre_temper;
+	}DS1820_INFO;
+<span class="insert">
+	void ds1820_read(DS1820_INFO *ds1820_info);
+	int onewire_reset(int pin);
+	void onewire_write(int pin, uint8_t data);
+	void onewire_write_bit(int pin, int bit);
+	uint8_t onewire_read(int pin);
+	int onewire_read_bit(int pin);
+	uint8_t crc_read();
+	uint8_t crc_cal(uint8_t crc, uint8_t data);
+</span>
+   </pre>
+   <p>전체 코드는 다음과 같다.</p>
+   <pre>
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+	#include &lt;stdlib.h>
+	#include &lt;stdint.h>
+
+	#include &lt;epicsExport.h>
+	#include &lt;devSup.h>
+	#include &lt;recSup.h>
+	#include &lt;recGbl.h>
+	#include &lt;dbAccess.h>
+	#include &lt;callback.h>
+	#include &lt;aiRecord.h>
+
+	#include &lt;wiringPi.h>
+
+	typedef struct _DS1820_INFO
+	{
+	  CALLBACK callback;
+
+	  int pin_num;
+
+	  float temper;
+	  float pre_temper;
+	}DS1820_INFO;
+
+	void ds1820_read(DS1820_INFO *ds1820_info);
+	int onewire_reset(int pin);
+	void onewire_write(int pin, uint8_t data);
+	void onewire_write_bit(int pin, int bit);
+	uint8_t onewire_read(int pin);
+	int onewire_read_bit(int pin);
+	uint8_t crc_read();
+	uint8_t crc_cal(uint8_t crc, uint8_t data);
+
+	static long ai_init_record(aiRecord *pai);
+	static long read_ai(aiRecord *pai);
+
+	static void myCallback(CALLBACK *pcallback)
+	{
+	  aiRecord *precord;
+	  struct rset *prset;
+
+	  callbackGetUser(precord, pcallback);
+	  prset = (struct rset *)(precord->rset);
+
+	  dbScanLock((dbCommon*)precord);
+	  (*prset->process)(precord);
+	  dbScanUnlock((dbCommon*)precord);
+	}
+
+	static long ai_init_record(aiRecord *pai)
+	{
+	  DS1820_INFO *ds1820_info = malloc(sizeof(DS1820_INFO));
+
+	  callbackSetCallback(myCallback, &ds1820_info->callback);
+	  callbackSetPriority(priorityLow, &ds1820_info->callback);
+	  callbackSetUser(pai, &ds1820_info->callback);
+
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  char *para;
+	  int pin_num = 0;
+
+	  para = pai->inp.value.instio.string;
+
+	  pin_num = atoi(para);
+
+	  ds1820_info->temper = 0.0f;
+	  ds1820_info->pre_temper = 0.0f;
+
+	  ds1820_info->pin_num = pin_num;
+
+	  pai->dpvt = ds1820_info;
+
+	  return 0;
+	}
+
+	static long read_ai(aiRecord *pai)
+	{
+	  DS1820_INFO *ds1820_info = pai->dpvt;
+
+	  if(pai->pact)
+	  {
+	    ds1820_read(ds1820_info);
+
+	    pai->val = ds1820_info->temper;
+
+	    pai->udf = FALSE;
+
+	    return 2;
+	  }
+
+	  pai->pact = TRUE;
+	  callbackRequestDelayed(&ds1820_info->callback, pai->disv);
+
+	  return 0;
+	}
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     read_ai;
+	  DEVSUPFUN     special_linconv;
+	} devAiDS1820Async = {
+	  6,
+	  NULL,
+	  NULL,
+	  ai_init_record,
+	  NULL,
+	  read_ai,
+	  NULL
+	};
+
+	epicsExportAddress(dset,devAiDS1820Async);
+
+	void ds1820_read(DS1820_INFO* ds1820_info)
+	{
+	  uint8_t busy = 1;
+	  int pin = ds1820_info->pin_num;
+
+	  onewire_reset(pin);
+	  onewire_write(pin, 0xCC);
+	  onewire_write(pin, 0x44);
+
+	  delay(750);
+	  while(busy == 0)
+	  {
+	    busy = onewire_read(pin);
+	    printf("busy: %d\n", busy);
+	  }
+
+	  onewire_reset(pin);
+	  onewire_write(pin, 0xCC);
+	  onewire_write(pin, 0xBE);
+
+	  uint8_t lsb, msb, th, tl, reserved1, reserved2, count_remain, count_per_c, crc;
+	  float real_temp = 0.0f;
+	  float pre_real_temp = ds1820_info->temper;
+	  signed char temp_read = 0;
+
+	  lsb = onewire_read(pin);
+	  msb = onewire_read(pin);
+	  th = onewire_read(pin);
+	  tl = onewire_read(pin);
+	  reserved1 = onewire_read(pin);
+	  reserved2 = onewire_read(pin);
+	  count_remain = onewire_read(pin);
+	  count_per_c = onewire_read(pin);
+	  crc = onewire_read(pin);
+
+	  uint8_t data[] = {lsb, msb, th, tl, reserved1, reserved2, count_remain, count_per_c};
+
+	  onewire_reset(pin);
+
+	  if(crc_read(data) == crc)
+	  {
+	    temp_read = (signed char)(lsb>>1);
+
+	    if(msb == 255)
+	      temp_read = temp_read | 0x80;
+
+	    real_temp = (float)temp_read + 0.85f - (float)count_remain/(float)count_per_c;
+	    real_temp = (int)(real_temp * 10) / 10.0f;
+
+	    ds1820_info->temper = real_temp;
+	    ds1820_info->pre_temper = real_temp;
+	  }
+	  else
+	    ds1820_info->temper = pre_real_temp;
+
+	}
+
+	int onewire_reset(int pin)
+	{
+	  int result;
+
+	  pinMode(pin, OUTPUT);
+
+	  digitalWrite(pin, LOW);
+	  delayMicroseconds(480);
+
+	  pinMode(pin, INPUT);
+	  delayMicroseconds(70);
+
+	  result = digitalRead(pin);
+
+	  delayMicroseconds(410);
+
+	  return result;
+	}
+
+	void onewire_write(int pin, uint8_t data)
+	{
+	  int loop;
+
+	  for(loop=0; loop&lt;8; loop++)
+	  {
+	    onewire_write_bit(pin, data & 0x01);
+
+	    data >>= 1;
+	  }
+	}
+
+	void onewire_write_bit(int pin, int bit)
+	{
+	  pinMode(pin, OUTPUT);
+
+	  if(bit)
+	  {
+	    digitalWrite(pin, LOW);
+	    delayMicroseconds(6);
+	    digitalWrite(pin, HIGH);
+	    delayMicroseconds(64);
+	  }
+	  else
+	  {
+	    digitalWrite(pin, LOW);
+	    delayMicroseconds(60);
+	    digitalWrite(pin, HIGH);
+	    delayMicroseconds(10);
+	  }
+
+	}
+
+	uint8_t onewire_read(int pin)
+	{
+	  int loop, result=0;
+
+	  for(loop=0; loop&lt;8; loop++)
+	  {
+	    result >>= 1;
+
+	    if(onewire_read_bit(pin))
+	      result |= 0x80;
+	  }
+
+	  return result;
+	}
+
+	int onewire_read_bit(int pin)
+	{
+	  int result;
+
+	  pinMode(pin, OUTPUT);
+
+	  digitalWrite(pin, LOW);
+	  delayMicroseconds(6);
+
+	  pinMode(pin, INPUT);
+	  delayMicroseconds(9);
+
+	  result = digitalRead(pin) & 0x01;
+	  delayMicroseconds(55);
+
+	  return result;
+	}
+
+	uint8_t crc_read(uint8_t *data)
+	{
+	 uint8_t i, crc;
+
+	 crc = 0x00;
+
+	 for(i=0; i&lt;8; i++)
+	  crc = crc_cal(crc, data[i]);
+
+	 return crc;
+	}
+
+	uint8_t crc_cal(uint8_t crc, uint8_t data)
+	{
+	  int j;
+	  for(j=0;j&lt;8;j++) {
+	      if ((data & 0x01 ) ^ (crc & 0x01)) {
+		  // DATA ^ LSB CRC = 1
+		  crc = crc>>1;
+		  // Set the MSB to 1
+		  crc = crc | 0x80;
+		  // Check bit 3
+		  if (crc & 0x04) {
+		      crc = crc & 0xFB; // Bit 3 is set, so clear it
+		  } else {
+		      crc = crc | 0x04; // Bit 3 is clear, so set it
+		  }
+		  // Check bit 4
+		  if (crc & 0x08) {
+		      crc = crc & 0xF7; // Bit 4 is set, so clear it
+		  } else {
+		      crc = crc | 0x08; // Bit 4 is clear, so set it
+		  }
+	      } else {
+		  // DATA ^ LSB CRC = 0
+		  crc = crc>>1;
+		  // clear MSB
+		  crc = crc & 0x7F;
+		  // No need to check bits, with DATA ^ LSB CRC = 0, they will remain unchanged
+	      }
+	      data = data>>1;
+	  }
+
+	  return crc;
+
+	}
+   </pre>
+   <p>마지막으로 Makefile에 다음 코드를 추가한 후 make를 실행한다.</p>
+   <pre>
+Makefile
+
+        TOP=../..
+
+        include $(TOP)/configure/CONFIG
+        #----------------------------------------
+        #  ADD MACRO DEFINITIONS AFTER THIS LINE
+        #=============================
+
+        #=============================
+        # Build the IOC application
+        <span class="insert">
+        USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+        wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+        </span>
+        PROD_IOC = ds1820
+        # dht11.dbd will be created and installed
+        DBD += ds1820.dbd
+
+        # dht11.dbd will be made up from these files:
+        ds1820_DBD += base.dbd
+
+        # Include dbd files from all support applications:
+        #ds1820_DBD += xxx.dbd
+        <span class="insert">ds1820_DBD += devDS1820.dbd</span>
+
+        # Add all the support libraries needed by this IOC
+        #ds1820_LIBS += xxx
+
+        # ds1820_registerRecordDeviceDriver.cpp derives from ds1820.dbd
+        ds1820_SRCS += ds1820_registerRecordDeviceDriver.cpp
+        <span class="insert">ds1820_SRCS += devDS1820.c</span>
+
+        # Build the main IOC entry point on workstation OSs.
+        ds1820_SRCS_DEFAULT += ds1820Main.cpp
+        ds1820_SRCS_vxWorks += -nil-
+
+        # Add support from base/src/vxWorks if needed
+        #ds1820_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+        # Finally link to the EPICS Base libraries
+        ds1820_LIBS += $(EPICS_BASE_IOC_LIBS)
+        <span class="insert">ds1820_LIBS += wiringPi</span>
+
+        #===========================
+
+        include $(TOP)/configure/RULES
+        #----------------------------------------
+        #  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/ds1820App/src $ make
+   </pre>
+   </p>make가 완료되면 bin/linux-arm 폴더에 ds1820 파일이 생성된다.</p>
+   <p>테스트를 위해 ds1820App/Db 폴더로 이동한 후 처음 테스트 하고자 했던 ds1820.db 파일을 만든다.</p>
+   <pre>
+ds1820.db
+
+        record(ai, "ds1820")
+        {
+          field(DTYP, "DS1820")
+          field(SCAN, "1 second")
+          field(INP, "@1")
+        }
+   </pre>
+   <p>Makefile에 dth11.db를 추가한 후 make를 실행한다.</p>
+   <pre>
+Makefile
+
+        TOP=../..
+        include $(TOP)/configure/CONFIG
+        #----------------------------------------
+        #  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+        #----------------------------------------------------
+        #  Optimization of db files using dbst (DEFAULT: NO)
+        #DB_OPT = YES
+
+        #----------------------------------------------------
+        # Create and install (or just install) into <top>/db
+        # databases, templates, substitutions like this
+        #DB += xxx.db
+        <span class="insert">DB += ds1820.db</span>
+
+        #----------------------------------------------------
+        # If <anyname>.db template is not named <anyname>*.template add
+        # <anyname>_template = <templatename>
+
+        include $(TOP)/configure/RULES
+        #----------------------------------------
+        #  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/ds1820App/Db $ make
+   </pre>
+   <p>make가 완료되면 최상위 폴더에 db폴더가 만들어지고 그 안에 ds1820.db파일이 생성된다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/db $ ls
+ds1820.db
+   </pre>
+   <p>이제 ioc를 실행하기 위해 iocBoot/iocds1820 폴더로 이동한다.</p>
+   <p>st.cmd파일을 수정하기 전 make를 실행해서 envPahts파일을 만든다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/iocBoot/iocds1820 $ make
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/iocBoot/iocds1820 $ ls
+envPaths  Makefile  st.cmd
+   </pre>
+   <p>이제 st.cmd파일을 열어 ds1820.db 레코드를 추가해 준다.</p>
+   <pre>
+st.cmd
+
+        #!../../bin/linux-arm/ds1820
+
+        ## You may have to change dht11 to something else
+        ## everywhere it appears in this file
+
+        &lt; envPaths
+
+        cd ${TOP}
+
+        ## Register all support components
+        dbLoadDatabase "dbd/ds1820.dbd"
+        ds1820_registerRecordDeviceDriver pdbbase
+
+        ## Load record instances
+        #dbLoadRecords("db/xxx.db","user=piHost")
+        <span class="insert">dbLoadRecords("db/ds1820.db")</span>
+
+        cd ${TOP}/iocBoot/${IOC}
+        iocInit
+
+        ## Start any sequence programs
+        #seq sncxxx,"user=piHost"
+   </pre>
+   <p>최종적으로 st.cmd 파일을 실행파일로 변경한 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/iocBoot/iocds1820 $ chmod 755 st.cmd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/ds1820/iocBoot/iocds1820 $ sudo ./st.cmd
+#!../../bin/linux-arm/ds1820
+## You may have to change ds1820 to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-arm")
+epicsEnvSet("IOC","iocdht11")
+epicsEnvSet("TOP","/home/pi/epics/R3.14.12.4/siteApps/ds1820")
+epicsEnvSet("EPICS_BASE","/home/pi/epics/R3.14.12.4/base")
+cd /home/pi/epics/R3.14.12.4/siteApps/ds1820
+## Register all support components
+dbLoadDatabase "dbd/ds1820.dbd"
+dht11_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+dbLoadRecords("db/ds1820.db")
+cd /home/pi/epics/R3.14.12.4/siteApps/ds1820/iocBoot/iocds1820
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.4 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Aug 29 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+epics&gt;
+   </pre>
+   <p>온도와 습도값이 제대로 읽어지면 끝!</p>
+   <pre class="shell">
+epics&gt; dbpr ds1820
+ASG:                DESC:               DISA: 0             DISP: 0
+DISV: 1             NAME: tem           RVAL: 0             SEVR: NO_ALARM
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             VAL: 26
+   </pre>
+   </br>
+   <h2>라이브러리 파일로 만들기</h2>
+   <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+   <p>siteLibs 폴더로 이동한 후 raspDS1820Lib 폴더를 하나 만든다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs $ mkdir raspDS1820Lib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs $ cd raspDS1820Lib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspDS1820Lib $
+   </pre>
+   <p>rsapDS1820Lib 폴더안에 Db, src폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP = ..
+        include $(TOP)/configure/CONFIG
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+        include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 devDS1820.c와 devDS1820.dbd 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspDS1820Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/ds1820/ds1820App/src/devDS1820.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspDS1820Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/ds1820/ds1820App/src/devDS1820.dbd ./
+   </pre>
+   <p>Makefile 만들고 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP = ../..
+        include $(TOP)/configure/CONFIG
+
+        LIBRARY_IOC += raspDS1820
+        DBD         += devDS1820.dbd
+        raspDS1820_SRCS += devDS1820.c
+
+        include $(TOP)/configure/RULES
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-arm 폴더안에 libraspDS1820.so
+      파일이 만들어 진다.
+   </p>
+  <p>Library에 대한 db파일 제공을 위해 raspDS1820Libs/Db폴더로 이동한 후 다음과 같은 ds1820.db파일만든다.</p>
+   <pre>
+ds1820.db
+
+        record(ai, "ds1820")
+        {
+          field(DTYP, "DS1820")
+          field(SCAN, "1 second")
+          field(INP, "@1 temperature")
+        }
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+        TOP =../..
+        include $(TOP)/configure/CONFIG
+        DB += ds1820.db
+        include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 ds1820.db파일이 생성된다.</p>
+   <p>Library를 이용한 DS1820 테스트는 EPICS Application에 있는 <a href="appRaspDS1820.html">DS1820 Sensor</a>를 참고하기 바란다.</p>
+  
+  </section>
+ </body>
+</html>

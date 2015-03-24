@@ -1,0 +1,735 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Pi Application</h1>
+    <ul>
+     <li>Wiring Pi 설치</li>
+     <li>GPIO LED 출력 테스트</li>
+     <li>GPIO Button 입력 테스트</li>
+     <li>PRI Motion 센서 테스트</li>
+     <li>DHT11 온습도 센서 테스트</li>
+     <li>DHT22 온습도 센서 테스트</li>
+     <li>DS1820 온도 센서 테스트</li>
+     <li>LCD1602 테스트</li>
+     <li><a href="appBatteryTest.html">Battery 작동 시간 테스트</a></li>
+     <li><a href="appWebStream.html">Camera Web Streaming</a></li>
+     <li><a href="appPWM.html">PWM Output Test</a></li>
+     <li><a href="appL298.html">Step Motor Test with L298 Dual H-Bridge Motor Driver</a></li>
+     <li><a href="appMd5dh14.html">Step Motor Test with MD5-DH14 Motor Driver</a></li>
+    </ul>
+    <p>Raspberry Pi에 관련된 예제는 다음 홈페이지에서 찾을 수 있다. 특히 Raspberry Pi Village를 강추 함.
+</p>
+   <p>
+       Raspberry Pi Village: <a href="http://www.rasplay.org/">http://www.rasplay.org/</a></br>
+       WiringPi Hompage: <a href="http://wiringpi.com/">http://wiringpi.com/</a></br>
+       Adafruit: <a href="https://www.adafruit.com/">https://www.adafruit.com/</a>
+   </p>
+   </br><h3>Wiring Pi 설치</h3>
+    <p>Raspberry Pi는 입출력 신호 제어를 위해 다음과 같은 40pin(Model B의 경우 26pin) 
+       포트를 제공하고 있다.
+    </p>
+    <p>Wiring Pi 설치는 git 서버로 부터 파일을 복사한 후 빌드하면 된다.</p>
+    <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ git clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+    </pre>
+    <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ cd wiringPi
+<span class="prom">pi@raspberrypi</span> ~/wiringPi$ ./build
+    </pre>
+    <p>
+       Pin Layout은 'readall' 명령으로 확인 가능하다. Wiring Pi는 자체적인 Pin Map을 사용하는데
+       wPi로 표시된 부분은 Wiring Pi에서 사용하는 GPIO 핀 번호이다.
+    </p>
+    <pre>
+pi@raspberrypi~$ gpio readall
+
+ +-----+-----+---------+------+---+--B Plus--+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
+ |   2 |   8 |   SDA.1 |   IN | 1 |  3 || 4  |   |      | 5V      |     |     |
+ |   3 |   9 |   SCL.1 |   IN | 1 |  5 || 6  |   |      | 0v      |     |     |
+ |   4 |   7 | GPIO. 7 |   IN | 0 |  7 || 8  | 1 | ALT0 | TxD     | 15  | 14  |
+ |     |     |      0v |      |   |  9 || 10 | 1 | ALT0 | RxD     | 16  | 15  |
+ |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
+ |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
+ |  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
+ |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
+ |  10 |  12 |    MOSI |   IN | 0 | 19 || 20 |   |      | 0v      |     |     |
+ |   9 |  13 |    MISO |   IN | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
+ |  11 |  14 |    SCLK |   IN | 0 | 23 || 24 | 0 | IN   | CE0     | 10  | 8   |
+ |     |     |      0v |      |   | 25 || 26 | 0 | IN   | CE1     | 11  | 7   |
+ |   0 |  30 |   SDA.0 |   IN | 0 | 27 || 28 | 0 | IN   | SCL.0   | 31  | 1   |
+ |   5 |  21 | GPIO.21 |   IN | 0 | 29 || 30 |   |      | 0v      |     |     |
+ |   6 |  22 | GPIO.22 |   IN | 0 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
+ |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
+ |  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
+ |  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
+ |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+--B Plus--+---+------+---------+-----+-----+
+   </pre>
+   </br>
+   <a href="../resources/images/raspberry/pinmapb.png" data-lightbox="example-1"><img src="../resources/images/raspberry/pinmapb.png" width="351px" height="328px" /></a>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="../resources/images/raspberry/pinmapbp.png" data-lightbox="example-1"><img src="../resources/images/raspberry/pinmapbp.png" width="232px" height="328px" /></a>
+   </br>
+   </br>
+   </br>
+   <h3>GPIO LED 출력 테스트</h3>
+   <p>GPIO를 이용하여 간단히 LED를 켜는 테스트를 해보자. 다음과 같이 LED와 저항을 GPIO 1번에 연결한다.</p>
+   </br>
+   <a href="../resources/images/raspberry/ledtest.png" data-lightbox="example-1"><img src="../resources/images/raspberry/ledtest.png" width="50%" height="50%" /></a>
+    <p>다음과 같이 c코드를 작성한다.</p>
+    <pre>
+ledtest.c
+
+	#include &lt;stdio.h&gt;
+	#include &lt;wiringPi.h&gt;
+
+	#define LED1 1
+
+	int main(void)
+	{
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  pinMode(LED1, OUTPUT);
+
+	  digitalWrite(LED1, 1);
+
+	  return 0;
+	}
+    </pre>
+    <p>컴파일시 '-lwiringPi' 를 추가해 준다</p>
+    <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o ledtest ledtest.c -lwiringPi
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./ledtest
+    </pre>
+    <p>LED에 불이 들어오면 성공!</p>   
+   </br><h3>GPIO Button 입력테스트</h3>
+   <p>버튼을 누르면 LED가 켜지는 테스트를 해보자. 다음과 같이 회로를 구성한다.</p>
+   <a href="../resources/images/raspberry/ledbuttontest.png" data-lightbox="example-1"><img src="../resources/images/raspberry/ledbuttontest.png" width="50%" height="50%" /></a>
+   <p>소스코드는 다음과 같다.</p>
+   <pre>
+buttonTest.c                                                      
+
+	#include &lt;stdio.h>
+	#include &lt;wiringPi.h>
+
+	#define LED 4
+	#define BUTTON 1
+
+	int main(void)
+	{
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  pinMode(LED, OUTPUT);
+	  pinMode(BUTTON, INPUT);
+
+	  digitalWrite(LED, 0);
+	  int input = 0;
+
+	  for(;;)
+	  {
+	    if(digitalRead(BUTTON))
+	      digitalWrite(LED, 1);
+	    else
+	      digitalWrite(LED, 0); 
+
+	    delay(100);
+	  }
+
+	  return 0;
+	}
+   </pre>
+   <p>컴파일 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o buttonTest buttonTest.c -lwiringPi
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./buttonTest
+   </pre>
+   <p>버튼을 눌렀을 때 불이 들어오면 성공!</p>
+   </br><h3>PRI Motion 센서 테스트</h3>
+   <p>PIR Motion 센서를 이용하여 동작을 감지해 보자. 다음과 같이 회로를 구성한다.</p>
+<a href="../resources/images/raspberry/pir_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/pir_test.png" width="50%" height="50%" /></a>
+   <p>소스코드는 다음과 같다.</p>
+   <pre>
+pir.c
+
+        #include &lt;stdio.h>
+        #include &lt;wiringPi.h>
+
+        #define PIR 1
+
+        int main(void)
+        {
+          if(wiringPiSetup() == -1)
+            return 1;
+
+          pinMode(PIR, INPUT);
+
+          int input = 0;
+
+          for(;;)
+          {
+            if(digitalRead(PIR))
+	      printf("Motion Detected!\n");
+
+            delay(100);
+          }
+
+          return 0;
+        }
+   </pre>
+   <p>컴파일 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o pir pir.c -lwiringPi
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./pir
+   </pre>
+   <p>Motion이 감지되면 성공!</p>
+   </br><h3>DHT11 온습도테스트</h3>
+   <p>DHT11 센서를 이용하여 온도와 습도를 읽어 보자. 다음과 같이 회로를 구성한다.</p>
+<a href="../resources/images/raspberry/dht11test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/dht11test.png" width="50%" height="50%" /></a>
+   <p>소스코드는 다음과 같다.</p>
+   <pre>
+dht11.c
+
+	#include &lt;wiringPi.h>  
+	#include &lt;stdio.h>  
+	#include &lt;stdlib.h>  
+	#include &lt;stdint.h> 
+ 
+	#define MAX_TIME 85  
+	#define DHT11PIN 1
+
+	int dht11_val[5]={0,0,0,0,0};  
+	  
+	void dht11_read_val()  
+	{  
+	  uint8_t lststate=HIGH;  
+	  uint8_t counter=0;  
+	  uint8_t j=0,i;  
+
+	  for(i=0;i&lt;5;i++)  
+	     dht11_val[i]=0;  
+
+	  pinMode(DHT11PIN,OUTPUT);  
+	  digitalWrite(DHT11PIN,LOW);  
+
+	  delay(18);  
+
+	  digitalWrite(DHT11PIN,HIGH);  
+
+	  delayMicroseconds(40);  
+
+	  pinMode(DHT11PIN,INPUT);  
+	  for(i=0;i&lt;MAX_TIME;i++)  
+	  {  
+	    counter=0;  
+	    while(digitalRead(DHT11PIN)==lststate){  
+	      counter++;  
+	      delayMicroseconds(1);  
+	      if(counter==255)  
+		break;  
+	    }  
+
+	    lststate=digitalRead(DHT11PIN);  
+
+	    if(counter==255)  
+	       break;  
+
+	    // top 3 transistions are ignored  
+	    if((i>=4)&&(i%2==0)){  
+	      dht11_val[j/8]&lt;&lt;=1;  
+	      if(counter>16)  
+		dht11_val[j/8]|=1;  
+	      j++;  
+	    }  
+	  }  
+
+	  // verify cheksum and print the verified data  
+	  if((j>=40)&&(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)))  
+	  {  
+	    farenheit=dht11_val[2]*9./5.+32;  
+	    printf("H = %d.%d\nT = %d.%d\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);  
+	  }  
+	  else  
+	    printf("Invalid Data!!\n");  
+	}  
+	  
+	int main(void)  
+	{  
+	  if(wiringPiSetup()==-1)  
+	    exit(1);  
+	  
+	  while(1)  
+	  {  
+	     dht11_read_val();  
+	       delay(1000);  
+	  }  
+	  
+	  return 0; 
+	}
+   </pre>
+   <p>컴파일 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o dht11 dht11.c -lwiringPi
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./dht11
+   </pre>
+   <p>온습도 값이 출력되면 성공!</p>
+   </br><h3>DHT22 온습도테스트</h3>
+   <p>DHT22 센서를 이용하여 온도와 습도를 읽어 보자. DHT22센서는 DHT11보다 정밀한 센서이다.</p>
+<a href="../resources/images/raspberry/dht22test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/dht22test.png" width="50%" height="50%" /></a>
+   <p>소스코드는 다음과 같다.</p>
+   <pre>
+dht22.c
+
+	#include &lt;wiringPi.h>
+	#include &lt;stdio.h>
+	#include &lt;stdlib.h>
+	#include &lt;stdint.h>
+
+	#define MAX_TIME 85
+	#define DHT22PIN 1
+
+	int dht22_val[5]={0,0,0,0,0};
+
+	void dht22_read_val()
+	{
+	  uint8_t lststate=HIGH;
+	  uint8_t counter=0;
+	  uint8_t j=0,i;
+
+	  for(i=0;i&lt;5;i++)
+	     dht22_val[i]=0;
+
+	  pinMode(DHT22PIN,OUTPUT);
+	  digitalWrite(DHT22PIN,LOW);
+
+	  delay(18);
+
+	  digitalWrite(DHT22PIN,HIGH);
+
+	  delayMicroseconds(40);
+
+	  pinMode(DHT22PIN,INPUT);
+	  for(i=0;i&lt;MAX_TIME;i++)
+	  {
+	    counter=0;
+	    while(digitalRead(DHT22PIN)==lststate){
+	      counter++;
+	      delayMicroseconds(1);
+	      if(counter==255)
+		break;
+	    }
+
+	    lststate=digitalRead(DHT22PIN);
+
+	    if(counter==255)
+	       break;
+
+	    // top 3 transistions are ignored
+	    if((i>=4)&&(i%2==0)){
+	      dht22_val[j/8]<<=1;
+	      if(counter>16)
+		dht22_val[j/8]|=1;
+	      j++;
+	    }
+	  }
+	  // verify cheksum and print the verified data
+	  if((j>=40)&&(dht22_val[4]==((dht22_val[0]+dht22_val[1]+dht22_val[2]+dht22_val[3])& 0xFF)))
+	  {
+	    float t, h;
+
+	    h = (float)dht22_val[0] * 256 + (float)dht22_val[1];
+	    h /= 10;
+
+	    t = (float)(dht22_val[2] & 0x7F)* 256 + (float)dht22_val[3];
+	    t /= 10.0;
+
+	    if ((dht22_val[2] & 0x80) != 0) t *= -1;
+
+	    printf("Humidity = %.2f %% Temperature = %.2f *C \n", h, t );
+	  }
+	  else
+	    printf("Data not good, skip\n");
+	}
+
+	int main(void)
+	{
+
+	  if(wiringPiSetup()==-1)
+	    exit(1);
+
+	  while(1)
+	  {
+	     dht22_read_val();
+	     delay(1000);
+	  }
+
+	  return 0;
+	}
+   </pre>
+   <p>컴파일 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o dht22 dht22.c -lwiringPi
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./dht22
+   </pre>
+   <p>온습도 값이 출력되면 성공!</p>
+   </br><h3>DS1820 온도테스트</h3>
+   <p>DS1820 센서를 이용하여 온도를 읽어 보자.</p>
+<a href="../resources/images/raspberry/ds1820_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/ds1820_test.png" width="50%" height="50%" /></a>
+   <p>소스코드는 다음과 같다.</p>
+   <pre>
+ds1820.c
+
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+	#include &lt;stdlib.h>
+	#include &lt;stdint.h>
+
+	#include &lt;wiringPi.h>
+
+	#define PIN_NUM 1
+
+	float ds1820_read();
+	int onewire_reset();
+	void onewire_write(uint8_t data);
+	void onewire_write_bit(int bit);
+	uint8_t onewire_read();
+	int onewire_read_bit();
+	uint8_t crc_read();
+	uint8_t crc_cal(uint8_t crc, uint8_t data);
+
+	int main()
+	{
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  float temp = 0.0f;
+
+	  while(1)
+	  {
+	    temp = ds1820_read();
+	    printf("%.1f\n", temp);
+
+	   delay(1000);
+	  }
+	}
+	float ds1820_read()
+	{
+	  uint8_t busy = 1;
+
+	  onewire_reset();
+	  onewire_write(0xCC);
+	  onewire_write(0x44);
+
+	  delay(750);
+	  while(busy == 0)
+	  {
+	    busy = onewire_read();
+	    printf("busy: %d\n", busy);
+	  }
+
+	  onewire_reset();
+	  onewire_write(0xCC);
+	  onewire_write(0xBE);
+
+	  uint8_t lsb, msb, th, tl, reserved1, reserved2, count_remain, count_per_c, crc;
+	  float real_temp = 0.0f;
+	  signed char temp_read = 0;
+
+	  lsb = onewire_read();
+	  msb = onewire_read();
+	  th = onewire_read();
+	  tl = onewire_read();
+	  reserved1 = onewire_read();
+	  reserved2 = onewire_read();
+	  count_remain = onewire_read();
+	  count_per_c = onewire_read();
+	  crc = onewire_read();
+
+	  uint8_t data[] = {lsb, msb, th, tl, reserved1, reserved2, count_remain, count_per_c};
+
+	  onewire_reset();
+
+	  if(crc_read(data) == crc)
+	  {
+	    temp_read = (signed char)(lsb>>1);
+
+	    if(msb == 255)
+	      temp_read = temp_read | 0x80;
+
+	    real_temp = (float)temp_read + 0.85f - (float)count_remain/(float)count_per_c;
+	    real_temp = (int)(real_temp * 10) / 10.0f;
+	  }
+	  else
+	    printf("CRC Error  ");
+
+	  return real_temp;
+	}
+
+	int onewire_reset()
+	{
+	  int result;
+
+	  pinMode(PIN_NUM, OUTPUT);
+
+	  digitalWrite(PIN_NUM, LOW);
+	  delayMicroseconds(480);
+
+	  pinMode(PIN_NUM, INPUT);
+	  delayMicroseconds(70);
+
+	  result = digitalRead(PIN_NUM);
+
+	  delayMicroseconds(410);
+
+	  return result;
+	}
+
+	void onewire_write(uint8_t data)
+	{
+	  int loop;
+
+	  for(loop=0; loop&lt;8; loop++)
+	  {
+	    onewire_write_bit(data & 0x01);
+
+	    data >>= 1;
+	  }
+	}
+	void onewire_write_bit(int bit)
+	{
+	  pinMode(PIN_NUM, OUTPUT);
+
+	  if(bit)
+	  {
+	    digitalWrite(PIN_NUM, LOW);
+	    delayMicroseconds(6);
+	    digitalWrite(PIN_NUM, HIGH);
+	    delayMicroseconds(64);
+	  }
+	  else
+	  {
+	    digitalWrite(PIN_NUM, LOW);
+	    delayMicroseconds(60);
+	    digitalWrite(PIN_NUM, HIGH);
+	    delayMicroseconds(10);
+	  }
+
+	}
+
+	uint8_t onewire_read()
+	{
+	  int loop, result=0;
+
+	  for(loop=0; loop&lt;8; loop++)
+	  {
+	    result >>= 1;
+
+	    if(onewire_read_bit())
+	      result |= 0x80;
+	  }
+
+	  return result;
+	}
+
+	int onewire_read_bit()
+	{
+	  int result;
+
+	  pinMode(PIN_NUM, OUTPUT);
+
+	  digitalWrite(PIN_NUM, LOW);
+	  delayMicroseconds(6);
+
+	  pinMode(PIN_NUM, INPUT);
+	  delayMicroseconds(9);
+
+	  result = digitalRead(PIN_NUM) & 0x01;
+	  delayMicroseconds(55);
+
+	  return result;
+	}
+
+	uint8_t crc_read(uint8_t *data)
+	{
+	 uint8_t i, crc;
+
+	 crc = 0x00;
+
+	 for(i=0; i&lt;8; i++)
+	  crc = crc_cal(crc, data[i]);
+
+	 return crc;
+	}
+
+	uint8_t crc_cal(uint8_t crc, uint8_t data)
+	{
+	  int j;
+	  for(j=0;j&lt;8;j++) {
+	      if ((data & 0x01 ) ^ (crc & 0x01)) {
+		  // DATA ^ LSB CRC = 1
+		  crc = crc>>1;
+		  // Set the MSB to 1
+		  crc = crc | 0x80;
+		  // Check bit 3
+		  if (crc & 0x04) {
+		      crc = crc & 0xFB; // Bit 3 is set, so clear it
+		  } else {
+		      crc = crc | 0x04; // Bit 3 is clear, so set it
+		  }
+		  // Check bit 4
+		  if (crc & 0x08) {
+		      crc = crc & 0xF7; // Bit 4 is set, so clear it
+		  } else {
+		      crc = crc | 0x08; // Bit 4 is clear, so set it
+		  }
+	      } else {
+		  // DATA ^ LSB CRC = 0
+		  crc = crc>>1;
+		  // clear MSB
+		  crc = crc & 0x7F;
+		  // No need to check bits, with DATA ^ LSB CRC = 0, they will remain unchanged
+	      }
+	      data = data>>1;
+	  }
+
+	  return crc;
+	}
+   </pre>
+   <p>컴파일 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o ds1820 ds1820.c -lwiringPi
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./ds1820
+   </pre>
+   <p>온도 값이 출력되면 성공!</p>
+   </br><h3>LCD1602 테스트</h3>
+   <p>Character LCD를 이용하여 날짜 및 시간을 출력해 보자.</p>
+<a href="../resources/images/raspberry/lcd1602_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/lcd1602_test.png" width="50%" height="50%" /></a>
+   <p>소스코드는 다음과 같다.</p>
+   <pre>
+lcd.c
+
+	#include <stdio.h>
+	#include <wiringPi.h>
+	#include <lcd.h>
+	#include <time.h>
+
+	#define TRUE 1
+	#define FALSE 0
+
+	int main(void)
+	{
+	  if(wiringPiSetup() == -1)
+	  {
+	    printf("Unable to start wiringPi\n");
+	    return 1;
+	  }
+
+	  int fd;
+
+	  fd = lcdInit(2, 16, 4, 4,5, 0,1,2,3,0,0,0,0);
+
+	  printf("%d\n", fd);
+
+	  lcdHome(fd);
+	  lcdCursor(fd, TRUE);
+	  lcdCursorBlink(fd, FALSE);
+
+	  struct tm *t;
+	  time_t timer;
+
+	  while(TRUE)
+	  {
+	    timer = time(NULL);
+	    t = localtime(&timer);
+
+	    lcdPosition(fd, 0,0);
+	    lcdPrintf(fd, "%4d.%02d.%02d", t->tm_year+1900, t->tm_mon+1, t->tm_mday);
+
+	    lcdPosition(fd, 0,1);
+	    lcdPrintf(fd, "%02d:%02d:%02d", t->tm_hour, t->tm_min, t->tm_sec);
+
+	    delay(100);
+	  }
+	  return 0;
+	}
+   </pre>
+   <p>컴파일 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ gcc -o lcd lcd.c -lwiringPi -lwiringPiDev
+<span class="prom">pi@raspberrypi</span> ~$ sudo ./lcd
+   </pre>
+   <p>날짜와 시간이 출력되면 성공!</p>
+  </section>
+ </body>
+</html>

@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+   <aside>
+   <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+  <h1>Wireless Network Configuration</h1>
+  <p>Raspberry Pi를 무선 네트워크로 구성하기 위해 다음 하드웨어를 사용하였다.</p>
+  <ul>
+   <li>Raspberry Pi Model B+</li>
+   <li>무선 랜카드 ipTime N100mini</li>
+   <li>무선 공유기 ipTime mini</li>
+  </ul>
+  <p>최종 목적은 다음과 같이 Raspberry Pi에 설정 된 고정 IP를 무선 공유기를 이용하여 내부 네트워크 망에 연결하는 것이다.</p>
+  <a href="../resources/images/raspberry/rasp_wifi_setting.png" data-lightbox="example-1"><img src="../resources/images/raspberry/rasp_wifi_setting.png" width="50%" height="50%" /></a>
+  <p>공유기 설정을 위해 192.168.0.1로 접속한다.</p>
+  <p>
+           참고로 공유기 설정 모드로 들어가기 위해서는 공유기로 부터 자동으로 IP를 할당 받아야 접속이 가능하다. 자동으로 IP를 받기 위해서는
+           랜카드의 IP를 DHCP로 설정하면 된다.
+  </p>
+  <p>무선 보안 설정을 위해 고급설정 - 무선랜 관리 - 무선 설정/보안 메뉴로 들어간 후 다음과 같이 설정한다.</p>
+  <ul>
+   <li>네트워크 이름: CTRLTEAM</li>
+   <li>SSID(네트워크이름)알림: 사용하지 않음</li>
+   <li>인증방법: WPA2PSK</li>
+   <li>암호화방법: TKIP/AES</li>
+   <li>네트워크키: [네트워크 비밀번호]</li>
+  </ul>
+  <a href="../resources/images/raspberry/iptime_wifi.png" data-lightbox="example-1"><img src="../resources/images/raspberry/iptime_wifi.png" width="50%" height="50%" /></a>
+  <p>이제 공유기를 허브 모드로 바꾸기 위해 고급설정 - 시스템 관리 - 기타 설정 메뉴로 들어간 후 유선 포트 모드를 LAN포트로 변경한다.</p>
+  <a href="../resources/images/raspberry/iptime_hubmode.png" data-lightbox="example-1"><img src="../resources/images/raspberry/iptime_hubmode.png" width="50%" height="50%" /></a>
+  <p>무선 공유기를 허브 모드로 바꾸면 IP할당이 자동으로 이루어 지지 않으므로 추후 설정 메뉴로 접속하기 위해서는 IP주소를 다음과 같이 설정 하면 된다.</p>
+  <ul>
+   <li>IP Address: 192.168.0.10</li>
+   <li>Netmask: 255.255.255.0</li>
+   <li>Gateway: 192.168.0.1</li>
+  </ul>
+  <p>공유기 설정이 끝났으면 Raspberry Pi에 접속한 후 /etc/network/interfaces 파일을 열어 다음과 같이 변경한다.</p>
+  <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ ssh pi@10.1.4.206
+<span class="prom">pi@raspberrypi</span>~$ sudo nano /etc/network/interfaces
+  </pre>
+  <pre>
+interfaces
+
+	auto lo
+
+	iface lo inet loopback
+	iface eth0 inet dhcp
+
+	allow-hotplug wlan0
+	iface wlan0 inet static
+		address 10.1.4.206
+		netmask 255.255.255.0
+		network 10.1.4.0
+		broadcast 10.1.4.255
+		gateway 10.1.4.254
+		dns-nameservers 10.1.5.11 10.1.2.240
+		wpa-scan-ssid 1
+		wpa-ap-ssid 1
+		wpa-key-mgmt WPA-PSK
+		wpa-proto RSN WPA
+		wpa-pairwise CCMP TKIP
+		wpa-group CCMP TKIP
+		wpa-ssid "CTRLTEAM"
+		wpa-psk "rkthrrlwpdj"
+  </pre>
+  <p>여기서 wpa-psk값은 네트워크 비밀번호를 적으면 된다.</p>
+  <p>설정이 완료되었으면 무선 랜카드를 장착한 후 재부팅 한다.</p>
+  </section>
+ </body>
+</html>

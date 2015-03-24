@@ -1,0 +1,346 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Asyn & Stream Device Driver Installation</h1>
+   <p>This manual is based on the following web-site</p>
+   <p><a href="http://www.slac.stanford.edu/grp/cd/soft/epics/site/streamdevice/">http://www.slac.stanford.edu/grp/cd/soft/epics/site/streamdevice/</a></br>
+   <a href="http://www.aps.anl.gov/epics/modules/soft/asyn/HowToDoSerial_StreamDevice.html">http://www.aps.anl.gov/epics/modules/soft/asyn/HowToDoSerial_StreamDevice.html</a></p>
+   <p>Download synApps_5_7(http://www.aps.anl.gov/bcda/synApps/index.php) and unpack</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules$ tar -zxvf synApps_5_7.tar.gz
+...
+...
+...
+synApps_5_7/support/LICENSE
+we need following modules
+ipac-2-12
+seq-2-1-13
+asyn-4-21
+sscan-2-9
+calc-3-2
+stream-2-6
+   </pre>
+   <p>In order to compile, you need to edit each RELEASE file.</p>
+   <p>just change SUPPORT and EPICS_BASE to your synApps and EPICS base path.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules$ cd synApps_5_7/support
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi configure/RELEASE
+   </pre>
+   <pre>
+RELEASE
+
+	#FILENAME:      RELEASE
+	#USAGE:         Specify directory paths to synApps support modules
+	#Version:       $Revision: 16643 $
+	#Modified By:   $Author: mooney $
+	#Last Modified: $Date: 2013-06-25 14:06:40 -0500 (Tue, 25 Jun 2013) $
+	#HeadURL:       $URL: https://subversion.xray.aps.anl.gov/synApps/configure/tags/synApps_5_7/RELEASE $
+
+	#NOTES
+	#     - To remove modules from the build, delete or comment out the
+	#       module name.
+
+	SUPPORT=/home/scwook/epics/module/synApps_5_7/support
+	-include $(TOP)/configure/SUPPORT.$(EPICS_HOST_ARCH)
+	EPICS_BASE=/home/scwook/epics/base
+	-include $(TOP)/configure/EPICS_BASE
+	-include $(TOP)/configure/EPICS_BASE.$(EPICS_HOST_ARCH)
+
+	#/usr/local/iocapps/cvsroot/modules/bus/allenBradley
+	ALLEN_BRADLEY=$(SUPPORT)/allenBradley-2-2
+	AREA_DETECTOR=$(SUPPORT)/areaDetector-1-9-1
+	#https://svn.aps.anl.gov/epics/asyn/
+	ASYN=$(SUPPORT)/asyn-4-21
+	AUTOSAVE=$(SUPPORT)/autosave-5-1
+	BUSY=$(SUPPORT)/busy-1-6
+	CALC=$(SUPPORT)/calc-3-2
+	CAMAC=$(SUPPORT)/camac-2-7
+	DAC128V=$(SUPPORT)/dac128V-2-7
+	DELAYGEN=$(SUPPORT)/delaygen-1-1-0
+	#http://www.slac.stanford.edu/grp/cd/soft/epics/site/devIocStats/
+	DEVIOCSTATS=$(SUPPORT)/devIocStats-3-1-7
+	DXP=$(SUPPORT)/dxp-3-2
+	IP=$(SUPPORT)/ip-2-14
+	IP330=$(SUPPORT)/ip330-2-7
+	#https://svn.aps.anl.gov/epics/ipac/
+	#IPAC=$(SUPPORT)/ipac-2-11
+	# (V2-12? have outstanding commits since V2-11)
+	IPAC=$(SUPPORT)/ipac-2-12
+	IPUNIDIG=$(SUPPORT)/ipUnidig-2-9
+	LOVE=$(SUPPORT)/love-3-2-5
+	MCA=$(SUPPORT)/mca-7-4
+	MEASCOMP=$(SUPPORT)/measComp-1-0
+	MODBUS=$(SUPPORT)/modbus-2-4
+	MOTOR=$(SUPPORT)/motor-6-8
+	OPTICS=$(SUPPORT)/optics-2-9-1
+	QUADEM=$(SUPPORT)/quadEM-4-0
+	#http://www-csr.bessy.de/control/SoftDist/sequencer
+	SNCSEQ=$(SUPPORT)/seq-2-1-13
+	SOFTGLUE=$(SUPPORT)/softGlue-2-3
+	SSCAN=$(SUPPORT)/sscan-2-9
+	STD=$(SUPPORT)/std-3-2
+	#http://epics.web.psi.ch/software/streamdevice/
+	STREAM=$(SUPPORT)/stream-2-6
+	VAC=$(SUPPORT)/vac-1-4-1
+	VME=$(SUPPORT)/vme-2-8-1
+	XXX=$(SUPPORT)/xxx-5-7-1
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi ipac-2-12/configure/RELEASE
+    </pre>
+    <pre>
+RELEASE
+
+	#RELEASE Location of external products
+	# Run "gnumake clean uninstall install" in the application
+	# top directory each time this file is changed.
+
+	EPICS_BASE=/home/scwook/epics/base
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi seq-2-1-13/configure/RELEASE
+    </pre>
+    <pre>
+RELEASE
+
+	# RELEASE - Location of external products
+
+	# You should do a "gnumake clean uninstall install" in the application
+	# top directory each time changes are made to this file
+
+	# EPICS_BASE=/opt/Epics/R3.14.8/base/3-14-8-2-0
+	# EPICS_BASE=/opt/Epics/R3.14.10/base/3-14-10-0-3
+	EPICS_BASE=/home/scwook/epics/base
+	# EPICS_BASE=/home/franksen/ctl/epics/base/head
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi asyn-4-21/configure/RELEASE
+    </pre>
+    <pre>
+RELEASE
+
+	#RELEASE Location of external products
+
+	SUPPORT=/home/scwook/epics/module/synApps_5_7/support
+	-include $(TOP)/../configure/SUPPORT.$(EPICS_HOST_ARCH)
+
+	#  IPAC is only necessary if support for Greensprings IP488 is required
+	#  IPAC release V2-7 or later is required.
+	IPAC=$(SUPPORT)/ipac-2-12
+
+	# SEQ is required for testIPServer
+	SNCSEQ=$(SUPPORT)/seq-2-1-13
+
+	#  EPICS_BASE 3.14.6 or later is required
+	LINUX_GPIB=NO
+	EPICS_BASE=/home/scwook/epics/base
+	-include $(TOP)/../configure/EPICS_BASE.$(EPICS_HOST_ARCH)
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi sscan-2-9/configure/RELEASE
+    </pre>
+    <pre>
+RELEASE
+
+	#RELEASE Location of external products
+	# Run "gnumake clean uninstall install" in the application
+	# top directory each time this file is changed.
+
+	TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+
+	SUPPORT=/home/scwook/epics/module/synApps_5_7/support
+	-include $(TOP)/../configure/SUPPORT.$(EPICS_HOST_ARCH)
+
+	#If using the sequencer, point SNCSEQ at its top directory:
+	SNCSEQ=$(SUPPORT)/seq-2-1-13
+
+	# EPICS_BASE usually appears last so other apps can override stuff:
+	EPICS_BASE=/home/scwook/epics/base
+	-include $(TOP)/../configure/EPICS_BASE.$(EPICS_HOST_ARCH)
+
+	#Capfast users may need the following definitions
+	#CAPFAST_TEMPLATES=
+	#SCH2EDIF_PATH=
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi calc-3-2/configure/RELEASE
+    </pre>
+    <pre>
+RELEASE
+
+	#RELEASE Location of external products
+	# Run "gnumake clean uninstall install" in the application
+	# top directory each time this file is changed.
+
+	TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+
+	SUPPORT=/home/scwook/epics/module/synApps_5_7/support
+	-include $(TOP)/../configure/SUPPORT.$(EPICS_HOST_ARCH)
+
+	# Need SSCAN module only to build the swait record (recDynLink library)
+	# If you comment this definition out, the module will just decline to
+	# build the swait record.
+	SSCAN=$(SUPPORT)/sscan-2-9
+
+	# EPICS_BASE usually appears last so other apps can override stuff:
+	EPICS_BASE=/home/scwook/epics/base
+	-include $(TOP)/../configure/EPICS_BASE.$(EPICS_HOST_ARCH)
+
+	#Capfast users may need the following definitions
+	#CAPFAST_TEMPLATES=
+	#SCH2EDIF_PATH=
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ vi stream-2-6/configure/RELEASE
+    </pre>
+    <pre>
+RELEASE
+
+	#RELEASE Location of external products
+	# Run "gnumake clean uninstall install" in the application
+	# top directory each time this file is changed.
+	#
+	# NOTE: The build does not check dependancies on files
+	# external to this application. Thus you should run
+	# "gnumake clean uninstall install" in the top directory
+	# each time EPICS_BASE, SNCSEQ, or any other external
+	# module defined in the RELEASE file is rebuilt.
+ 
+	SUPPORT=/home/scwook/epics/module/synApps_5_7/support
+	-include $(TOP)/../configure/SUPPORT.$(EPICS_HOST_ARCH)
+ 
+	ASYN=$(SUPPORT)/asyn-4-21
+	CALC=$(SUPPORT)/calc-3-2
+	SSCAN=$(SUPPORT)/sscan-2-9
+ 
+	# EPICS_BASE usually appears last so other apps can override stuff:
+	EPICS_BASE=/home/scwook/epics/base
+	-include $(TOP)/../configure/EPICS_BASE.$(EPICS_HOST_ARCH)
+ 
+	TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+
+	Build each <Top> directory
+    </pre>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support$ cd ipac-2-12
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/ipac-2-12$ make
+...
+...
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/ipac-2-12$ cd ../seq-2-1-13
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/seq-2-13$ make
+...
+...
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/ipac-2-12$ cd ../asyn-4-21
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/asyn-4-21$ make
+...
+...
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/asyn-4-21$ cd ../sscan-2-9
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/sscan-2-9$ make
+...
+...
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/sscan-2-9$ cd  ../calc-3-2
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/calc-3-2$ make
+...
+...
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/calc-3-2$ cd ../stream-2-6
+<span class="prom">scwook@scwook:</span>~/epics/modules/synApps_5_7/support/stream-2-6$ make
+...
+...
+    </pre>
+    <p>For ioc application test, create example application and edit configureation file.</p>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics$ mkdir serialTest
+<span class="prom">scwook@scwook:</span>~/epics$ cd serialTest
+<span class="prom">scwook@scwook:</span>~/epics/serialTest$ ../base/bin/linux-x86/makeBaseApp.pl -t example serialTest
+<span class="prom">scwook@scwook:</span>~/epics/serialTest$ ../base/bin/linux-x86/makeBaseApp.pl -i -t example serialTest
+    </pre>
+    <p>Add following lines in configure/RELEASE file.</p>
+    <pre>
+RELEASE
+
+	ASYN=&lt;asyn path&gt;
+	CALC=&lt;calc path&gt;
+	STREAM=&lt;stream path&gt;
+    </pre>
+    <p>in my example</p>
+    <pre>
+RELEASE
+
+	ASYN=/home/scwook/epics/module/synApps_5_7/support/asyn-4-21
+	CALC=/home/scwook/epics/module/synApps_5_7/support/calc-3-2
+	STREAM=/home/scwook/epics/module/synApps_5_7/support/stream-2-6
+    </pre>
+    <p>Add following lines in serialTestApp/src/Makefile.</p>
+    <pre>
+Makefile
+
+	serialTest_DBD += stream.dbd
+	serialTest_DBD += drvAsynSerialPort.dbd
+	serialTest_LIBS += stream
+	serialTest_LIBS += asyn
+    </pre> 
+    <p>Build application</p>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/serialTest$ make
+...
+...
+    </pre>
+    <p>Now you can use asyn and stream device.</p>
+  </section>
+ </body>
+</html>

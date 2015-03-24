@@ -1,0 +1,45 @@
+@import url("common.css");
+
+pre {
+	background:#426881;
+}
+
+#reg {
+	color:black;
+        left:50%;
+        width:350px;
+        min-height:390px;
+        border:1px solid #dcdcdc;
+        background:#f2f2f2;
+        border-radius:9px;
+}
+
+#reg > * { margin:15px 20px; }
+
+#reg label { display:block; }
+
+#reg input {
+        width:15em;
+        border:1px solid #cdcdcd;
+        padding:0.5em 0.5em 0.5em 2.5em;
+        background:#f8f8f8 url(../images/u_icons_splite.png) no-repeat 0 4px;
+        border-radius:5px;
+}
+
+#reg input:focus{
+        width:17em;
+        background-color:#fff;
+        border-color:#7ccbe8;
+}
+
+#reg #u_name            { background-position: 0 4px; }
+#reg #u_name:focus      { background-position: 0 -24px; }
+#reg #u_phone            { background-position: 0 -52px; }
+#reg #u_phone:focus      { background-position: 0 -80px; }
+#reg #u_email            { background-position: 0 -108px; }
+#reg #u_email:focus      { background-position: 0 -136px; }
+#reg #u_site            { background-position: 0 -164px; }
+#reg #u_site:focus      { background-position: 0 -192px; }
+#reg #u_pass            { background-position: 0 -220px; }
+#reg #u_pass:focus      { background-position: 0 -248px; }
+

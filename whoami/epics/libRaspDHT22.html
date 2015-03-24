@@ -1,0 +1,1157 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Raspberry Pi DHT22 Device Support Development</h1>
+   <p>
+       여기에서는 DHT11과 마찬가지로 DHT22센서에 대한 EPICS Record Library를 만드는 것이다. 모든 과정은 DHT11과 동일하며
+   readDHT함수에서 값을 처리하는 부분에 차이가 있다. 참고로 DHT22는 DHT11보다 정밀도가 향상된 센서이다.
+   </p>
+   <p>하드웨어 구성은 다음과 같다.</p>
+   <ul>
+    <li>Raspberry Pi Model B+</li>
+    <li>DHT22 Sensor</li>
+   </ul>
+<a class="example-image-link" href="../resources/images/raspberry/dht22test.png" data-lightbox="example-1"><img class="example-image" src="../resources/images/raspberry/dht22test.png" width="50%" height="50%" /></a>
+   <p>최종 목표는 다음 Record를 만들어 온습도 값을 읽는 것이다.</p>
+   <pre>
+dht22.db
+
+	record(ai, "tem")
+	{
+	  field(DTYP, "DHT22")
+	  field(SCAN, "1 second")
+	  field(INP, "@1 temperature")
+	}
+
+	record(ai, "hum")
+	{
+	  field(DTYP, "DHT22")
+	  field(SCAN, "1 second")
+	  field(INP, "@1 humidity")
+	}
+   </pre>
+   <p>모든 작업은 Raspberry Pi에서 하므로 Pi에 접속한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span> ssh pi@10.1.4.207
+   </pre>
+   <p>
+      DHT22 Library는 wiringPi Library를 필요로 한다. 설치되어 있지 않다면 우선 wiringPi를
+      설치하도록 하자.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~$ git clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>다운받은 wiringPi를 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~$ cd wiringPi
+<span class="prom">pi@ctrlpi3</span> ~/wiringPi$ ./build
+   </pre>
+   <p>siteApps안에 dht22폴더를 만든 후 Base Application을 생성한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> cd ../epics/R3.14.12.4/siteApps
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps $ mkdir dht22
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps $ cd dht22
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22 $ makeBaseApp.pl -t ioc dht22
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22 $ makeBaseApp.pl -i -t ioc dht22
+
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    dht22
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name?
+
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22 $ ls
+conigure  dht22App  iocBoot Makefile 
+   </pre>
+   <p>dht22App/src 폴더로 이동한 후 devDHT22.c 파일을 만들어 기본 코드를 작성한다.</p>
+   <pre>
+devDHT22.c
+
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+	#include &lt;stdlib.h>
+
+	#include &lt;epicsExport.h>
+	#include &lt;devSup.h>
+	#include &lt;recSup.h>
+	#include &lt;recGbl.h>
+	#include &lt;dbAccess.h>
+	#include &lt;callback.h>
+	#include &lt;aiRecord.h>
+	
+	#include &lt;wiringPi.h>
+
+	static long ai_init_record(aiRecord *pai);
+	static long read_ai(aiRecord *pai);
+
+	static long ai_init_record(aiRecord *pai)
+	{
+        }
+        	
+ 	static long read_ai(aiRecord *pai)
+        {
+        }
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     read_ai;
+	  DEVSUPFUN     special_linconv;
+	} devAiDHT22Async = {
+	  6,
+	  NULL,
+	  NULL,
+	  ai_init_record,
+	  NULL,
+	  read_ai,
+	  NULL
+	};
+
+	epicsExportAddress(dset,devAiDHT22Async);
+   </pre>
+   <p>
+      기본 구조는 아날로그 입력을 위해 aiRecord를 사용하였으며, 초기화 함수와 센서 값을 읽기 위한 
+      함수로 구성되어 있다. 또한 wiringPi Library를 사용하기 위해 헤더파일을 추가하였다. 
+      dset을 devAiDHT22Async로 설정하였으므로 devDHT22.dbd 파일을 만들어 다음과 같이 작성한다.
+   </p>
+   <pre>
+devDHT22.dbd
+
+	device(ai, INST_IO, devAiDHT22Async, "DHT22")
+   </pre>
+   <p>
+       이제 실제 코드를 작성하도록 한다. 우선 코드를 Asynchronous 형식으로 만들기 위해 다음과 같이 Callback 함수를 만들고
+       초기화 한다.
+   </p>
+   <pre>
+devDHT22.c
+
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+	#include &lt;stdlib.h>
+
+	#include &lt;epicsExport.h>
+	#include &lt;devSup.h>
+	#include &lt;recSup.h>
+	#include &lt;recGbl.h>
+	#include &lt;dbAccess.h>
+	#include &lt;callback.h>
+	#include &lt;aiRecord.h>
+	
+	#include &lt;wiringPi.h>
+<span class="insert">
+	typedef struct _DHT_INFO
+	{
+	  CALLBACK callback;
+
+	}DHT_INFO;
+</span>
+	static long ai_init_record(aiRecord *pai);
+	static long read_ai(aiRecord *pai);
+<span class="insert">
+	static void myCallback(CALLBACK *pcallback)
+	{
+	  aiRecord *precord;
+	  struct rset *prset;
+
+	  callbackGetUser(precord, pcallback);
+	  prset = (struct rset *)(precord->rset);
+
+	  dbScanLock((dbCommon*)precord);
+	  (*prset->process)(precord);
+	  dbScanUnlock((dbCommon*)precord);
+	}
+</span>
+	static long ai_init_record(aiRecord *pai)
+	{
+<span class="insert">	  DHT_INFO *dht_info = malloc(sizeof(DHT_INFO));
+
+	  callbackSetCallback(myCallback, &dht_info->callback);
+	  callbackSetPriority(priorityLow, &dht_info->callback);
+	  callbackSetUser(pai, &dht_info->callback);
+
+	  pai->dpvt = dht_info;</span>
+        }
+        	
+ 	static long read_ai(aiRecord *pai)
+        {
+<span class="insert">	  DHT_INFO *dht_info = pai->dpvt;
+
+	  if(pai->pact)
+	  {
+	    pai->udf = FALSE;
+
+	    return 2;
+	  }
+
+	  pai->pact = TRUE;
+	  callbackRequestDelayed(&dht_info->callback, pai->disv);
+
+	  return 0;
+</span>
+        }
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     read_ai;
+	  DEVSUPFUN     special_linconv;
+	} devAiDHT22Async = {
+	  6,
+	  NULL,
+	  NULL,
+	  ai_init_record,
+	  NULL,
+	  read_ai,
+	  NULL
+	};
+
+	epicsExportAddress(dset,devAiDHT22Async);
+   </pre>
+   <p>DHT_INFO 구조체는 callback 함수의 포인터를 포함하여 센서에 대한 정보를 저장하기 위한 구조체 이다.</p>
+   <p>기본적인 준비가 되었으므로 몇가지 초기화 작업을 다음과 같이 추가한다.</p>
+   <pre>
+devDHT22.c
+
+	static long ai_init_record(aiRecord *pai)
+	{
+	  DHT_INFO *dht_info = malloc(sizeof(DHT_INFO));
+
+	  callbackSetCallback(myCallback, &dht_info->callback);
+	  callbackSetPriority(priorityLow, &dht_info->callback);
+	  callbackSetUser(pai, &dht_info->callback);
+<span class="insert">
+    	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  char *para;
+	  char *sensor;
+	  int pin_num = 0;
+	  int mode = 0;
+
+	  para = pai-&gt;inp.value.instio.string;
+
+	  pin_num = atoi(strtok(para, " "));
+	  sensor = strtok(NULL, " ");
+
+	  if(strcmp(sensor, "humidity") == 0)
+	    mode = 0;
+	  else
+	    mode = 1;
+</span>
+	  pai->dpvt = dht_info;
+	  
+	  return 0;
+	}
+   </pre>
+   <p>초기화 코드는 다음과 같이 wiringPi를 먼저 초기화 한다.</p>
+   <pre>
+	if(wiringPiSetup() == -1)
+          return 1;
+   </pre>
+   <p>
+      다음에는 Record에서 설정한 Pin번호와 Read Type(Humidity 또는 Temperature)를 읽어 공백을 기준으로
+      분리해서 각각 변수에 저장한다. 참고로 atoi는 문자열을 정수형으로 변환해주는 C Library 함수이고,
+      strtok는 문자열을 분리 문자를 기준으로 문자를 분리해서 반환시켜 준다. 자세한 사용방법은 인테넷을
+      찾으면 많이 나온다.
+   </p>
+   <pre>
+        para = pai-&gt;inp.value.instio.string;
+
+        pin_num = atoi(strtok(para, " "));
+        sensor = strtok(NULL, " ");
+   </pre>
+   <p>이제 분리된 문자중 Read Type에 따라 mode 값을 설정한다.</p>
+   <pre>
+        if(strcmp(sensor, "humidity") == 0)
+          mode = 0;
+        else
+          mode = 1;
+   </pre>
+   <p>
+      지금까지 저장된 pin_num과 mode값을 read_ai 함수에서 사용하기 위해 다음과 같이 DHT_INFO 구조체에 변수를 추가하고
+     값을 Pin Number와 Mode로 초기화 한다.
+   </p>
+   <pre>
+devDHT22.c
+
+	struct _DHT_INFO
+	{	
+	  CALLBACK callback;
+<span class="insert">
+	  int pin_num;
+	  int pin_mode;
+</span>
+	}DHT_INFO;
+
+	...
+	...
+
+        static long ai_init_record(aiRecord *pai)
+        {
+	  DHT_INFO *dht_info = malloc(sizeof(DHT_INFO));
+
+	  callbackSetCallback(myCallback, &dht_info->callback);
+	  callbackSetPriority(priorityLow, &dht_info->callback);
+	  callbackSetUser(pai, &dht_info->callback);
+
+          if(wiringPiSetup() == -1)
+            return 1;
+
+          char *para;
+          char *sensor;
+          int pin_num = 0;
+          int mode = 0;
+
+          para = pai-&gt;inp.value.instio.string;
+
+          pin_num = atoi(strtok(para, " "));
+          sensor = strtok(NULL, " ");
+
+          if(strcmp(sensor, "humidity") == 0)
+            mode = 0;
+          else
+            mode = 1;
+<span class="insert">
+	  dht_info-&gt;pin_num = pin_num;
+	  dht_info-&gt;pin_mode = mode;
+</span>
+	  pai-&gt;dpvt = dht_info;
+
+          return 0;
+        }
+   </pre>
+   <p>다음은 read_ai 함수에 실제 값을 읽어 Record 변수에 저장하는 코드를 추가한다.</p>
+   <pre>
+devDHT22.c
+
+	static long read_ai(aiRecord *pai)
+	{
+	  DHT_INFO *dht_info = pai->dpvt;
+
+	  if(pai->pact)
+	  {
+<span class="insert">	    readDHT22(dht_info);
+
+	    if(dht_info->pin_mode == 0)
+	      pai->val = dht_info->val_h;
+	    else
+	      pai->val = dht_info->val_t;
+</span>
+	    pai->udf = FALSE;
+
+	    return 2;
+	  }
+
+	  pai->pact = TRUE;
+	  callbackRequestDelayed(&dht_info->callback, pai->disv);
+
+	  return 0;
+
+	}
+   </pre>
+   <p>readDHT22 함수는 실제 센서로 부터 온습도 값을 읽은 후 DHT_INFO 구조체에 선언된 온습도 변수에 저장하는 함수로 다음과 같다.</p>
+   <pre>
+devDHT22.c
+
+	void readDHT22(DHT_INFO *dht_info)
+	{
+	  int pin = dht_info->pin_num;
+	  int mode = dht_info->pin_mode;
+	  
+	  int i=0;
+	  for(i=0;i&lt;5;i++)
+	      dht22_val[i]=0;
+
+	  epicsUInt8 lststate=HIGH;
+	  epicsUInt8 counter=0;
+	  epicsUInt8 j=0,i;
+
+	  pinMode(pin,OUTPUT);
+	  digitalWrite(pin,LOW);
+	  delay(18);
+	  digitalWrite(pin,HIGH);
+	  delayMicroseconds(40);
+	  pinMode(pin,INPUT);
+
+	  int j=0;
+	  for(i=0;i&lt;MAX_TIME;i++)
+	  {
+	    counter=0;
+	    while(digitalRead(pin)==lststate)
+	    {
+	      counter++;
+	      delayMicroseconds(1);
+	      if(counter==255)
+	        break;
+	    }
+
+	    lststate=digitalRead(pin);
+	    if(counter==255)
+	       break;
+	    // top 3 transistions are ignored
+	    if((i&gt;=4)&&(i%2==0))
+            {
+	      dht22_val[j/8]&lt;&lt;=1;
+	      if(counter&gt;16)
+	        dht22_val[j/8]|=1;
+	      j++;
+	    }
+	  }
+
+	  float t = 0.0f;
+	  float h = 0.0f;
+
+	  h = (float)dht22_val[0] * 256 + (float)dht22_val[1];
+	  h /= 10;
+
+          dht_info->val_h = h;
+
+	  t = (float)(dht22_val[2] & 0x7F)* 256 + (float)dht22_val[3];
+	  t /= 10.0;
+
+	  if ((dht22_val[2] & 0x80) != 0) t *= -1;
+
+          dht_info->val_t = t;
+
+	  return val;
+	}
+   </pre>
+   <p>
+    dht22_val배열, 함수이름, MAX_TIME를 헤더 선언 아래에 추가해 주고 온습도 값을 저장하는 변수를 DHT_INFO구조체 안에 선언해
+         준다.  초기화 함수에는 dht22_val 배열과 구조체 변수를 0으로 초기화 하는 코드를 추가한다.
+   </p>
+   <pre>
+devDHT22.c
+
+	#include &lt;wiringPi.h&gt;
+<span class="insert">
+	#define MAX_TIME 85
+
+	int dht22_val[5];
+</span>
+	typedef struct _DHT_INFO
+	{
+	  CALLBACK callback;
+
+	  int pin_num;
+	  int pin_mode;
+<span class="insert">
+	  float val_h;
+	  float val_t;
+</span>
+	}DHT_INFO;
+<span class="insert">
+	void readDHT22(DHT_INFO *dht_info);
+</span>     
+	static long ai_init_record(aiRecord *pai);
+	static long read_ai(aiRecord *pai);
+
+	static long ai_init_record(aiRecord *pai)
+        {
+	  ...
+	  ...
+
+          if(strcmp(sensor, "humidity") == 0)
+            mode = 0;
+          else
+            mode = 1;
+<span class="insert">
+	  int i;
+	  for(i=0;i&lt;5;i++)
+ 	  {
+	    dht22_val[i] = 0;
+ 	  }
+
+	  dht_info->val_h = 0.0f;
+	  dht_info->val_t = 0.0f;
+</span>
+	...
+	...
+
+        }
+
+   </pre>
+   <p>
+      지금까지 작성한 readDHT22 함수는 유효성 검사가 빠져있다. 따라서 잘못된 온습도 센서 값이  읽어지면 그대로 출력하는 문제점이 
+      있다. 이러한 문제를 해결하기 위해 유효성 검사코드를 추가한다. 유효성 검사는 dth22_val 배열의 마지막 checksum 값이 
+      나머지 4개의 값의 합과 같은 경우에만 올바른 값으로 볼 수 있다. 만약 checksum 값과 차이가 발생 할 경우 이전 값을 유지하도록 한다.
+      참고로 checksum을 검사하는 방법은 센서 또는 장비마다 다르므로 메뉴얼을 참고한다.
+   </p>
+   <pre>
+devDHT22.c
+
+	void readDHT22(DHT_INFO *dht_info)
+	{
+	  int pin = dht_info->pin_num;
+	  int mode = dht_info->pin_mode;
+	  
+	  int i=0;
+	  for(i=0;i&lt;5;i++)
+	      dht22_val[i]=0;
+
+	  epicsUInt8 lststate=HIGH;
+	  epicsUInt8 counter=0;
+	  epicsUInt8 j=0,i;
+
+	  pinMode(pin,OUTPUT);
+	  digitalWrite(pin,LOW);
+	  delay(18);
+	  digitalWrite(pin,HIGH);
+	  delayMicroseconds(40);
+	  pinMode(pin,INPUT);
+
+	  int j=0;
+	  for(i=0;i&lt;MAX_TIME;i++)
+	  {
+	    counter=0;
+	    while(digitalRead(pin)==lststate)
+	    {
+	      counter++;
+	      delayMicroseconds(1);
+	      if(counter==255)
+	        break;
+	    }
+
+	    lststate=digitalRead(pin);
+	    if(counter==255)
+	       break;
+	    // top 3 transistions are ignored
+	    if((i>=4)&&(i%2==0))
+            {
+	      dht22_val[j/8]<<=1;
+	      if(counter>16)
+	        dht22_val[j/8]|=1;
+	      j++;
+	    }
+	  }
+
+	  float t = 0.0f;
+	  float h = 0.0f;
+<span class="insert">	  if((j>=40)&&(dht22_val[4]==((dht22_val[0]+dht22_val[1]+dht22_val[2]+dht22_val[3])& 0xFF)))
+	  {</span>
+	    h = (float)dht22_val[0] * 256 + (float)dht22_val[1];
+	    h /= 10;
+
+	    dht_info->val_h = h;
+<span class="insert">	    dht_info->pre_val_h = h;
+</span>
+	    t = (float)(dht22_val[2] & 0x7F)* 256 + (float)dht22_val[3];
+	    t /= 10.0;
+
+	    if ((dht22_val[2] & 0x80) != 0) t *= -1;
+
+	    dht_info->val_t = t;
+<span class="insert">	    dht_info->pre_val_t = t;
+	  }
+	  else
+	  {
+	    if(mode == 0)
+	      dht_info->val_h = dht_info->pre_val_h;
+	    else
+	      dht_info->val_t = dht_info->pre_val_t;
+	  }
+</span>
+	}
+   </pre>
+   <p>
+      pre_val_h와 pre_val_t 변수는 이전 온습도 값을 가지고 있어 유효성 검사가 실패할 경우 이전 값을 다시
+      돌려준다.  두 변수를 DHT_INFO 구조체 안에 선언해 주고 초기화 코드를 넣는다.
+   <p>
+   <pre>
+devDHT11.c
+
+        #include &lt;wiringPi.h&gt;
+        #define MAX_TIME 85
+
+	int dht22_val[5];
+
+	typedef struct _DHT_INFO
+	{
+	  CALLBACK callback;
+
+	  int pin_num;
+	  int pin_mode;
+
+	  float val_h;
+	  float val_t;
+	<span class="insert">
+	  float pre_val_h;
+	  float pre_val_t;
+	</span>
+	}DHT_INFO;
+
+        ...
+        ...
+
+        static long ai_init_record(aiRecord *pai)
+        {
+          ...
+          ...
+
+          if(strcmp(sensor, "humidity") == 0)
+            mode = 0;
+          else
+            mode = 1;
+
+          int i;
+	  for(i=0;i&lt;5;i++)
+	  {
+  	    dht22_val[i] = 0;
+	  }
+	  
+	  dht_info->val_h = 0.0f;
+  	  dht_info->val_t = 0.0f;
+          <span class="insert">dht_info->pre_val_h = 0.0f;
+	  dht_info->pre_val_t = 0.0f;</span>
+
+          ...
+          ...
+
+        }
+   </pre>
+   <p>전체 코드는 아래와 같다.</p>
+   <pre>
+devDHT22.c
+
+	#include &lt;stdio.h>
+	#include &lt;string.h>
+	#include &lt;stdlib.h>
+
+	#include &lt;epicsExport.h>
+	#include &lt;devSup.h>
+	#include &lt;recSup.h>
+	#include &lt;recGbl.h>
+	#include &lt;dbAccess.h>
+	#include &lt;callback.h>
+	#include &lt;aiRecord.h>
+
+	#include &lt;wiringPi.h>
+
+	#define MAX_TIME 85
+
+	int dht22_val[5];
+
+	typedef struct _DHT_INFO
+	{
+	  CALLBACK callback;
+
+	  int pin_num;
+	  int pin_mode;
+
+	  float val_h;
+	  float val_t;
+
+	  float pre_val_h;
+	  float pre_val_t;
+	}DHT_INFO;
+
+	void readDHT22(DHT_INFO *dht_info);
+
+	static long ai_init_record(aiRecord *pai);
+	static long read_ai(aiRecord *pai);
+
+	static void myCallback(CALLBACK *pcallback)
+	{
+	  aiRecord *precord;
+	  struct rset *prset;
+
+	  callbackGetUser(precord, pcallback);
+	  prset = (struct rset *)(precord->rset);
+
+	  dbScanLock((dbCommon*)precord);
+	  (*prset->process)(precord);
+	  dbScanUnlock((dbCommon*)precord);
+	}
+
+	static long ai_init_record(aiRecord *pai)
+	{
+	  DHT_INFO *dht_info = malloc(sizeof(DHT_INFO));
+
+	  callbackSetCallback(myCallback, &dht_info->callback);
+	  callbackSetPriority(priorityLow, &dht_info->callback);
+	  callbackSetUser(pai, &dht_info->callback);
+
+	  if(wiringPiSetup() == -1)
+	    return 1;
+
+	  char *para;
+	  char *sensor;
+	  int pin_num = 0;
+	  int mode = 0;
+
+	  para = pai->inp.value.instio.string;
+
+	  pin_num = atoi(strtok(para, " "));
+	  sensor = strtok(NULL, " ");
+
+	  if(strcmp(sensor, "humidity") == 0)
+	    mode = 0;
+	  else
+	    mode = 1;
+
+	  int i;
+	  for(i=0;i&lt;5;i++)
+	    dht22_val[i] = 0;
+
+	  dht_info->val_h = 0.0f;
+	  dht_info->val_t = 0.0f;
+	  dht_info->pre_val_h = 0.0f;
+	  dht_info->pre_val_t = 0.0f;
+
+	  dht_info->pin_num = pin_num;
+	  dht_info->pin_mode = mode;
+
+	  pai->dpvt = dht_info;
+
+	  return 0;
+	}
+
+	static long read_ai(aiRecord *pai)
+	{
+	  DHT_INFO *dht_info = pai->dpvt;
+
+	  if(pai->pact)
+	  {
+	    readDHT22(dht_info);
+
+	    if(dht_info->pin_mode == 0)
+	      pai->val = dht_info->val_h;
+	    else
+	      pai->val = dht_info->val_t;
+
+	    pai->udf = FALSE;
+
+	    return 2;
+	  }
+
+	  pai->pact = TRUE;
+	  callbackRequestDelayed(&dht_info->callback, pai->disv);
+
+	  return 0;
+	}
+
+	struct
+	{
+	  long num;
+	  DEVSUPFUN     report;
+	  DEVSUPFUN     init;
+	  DEVSUPFUN     init_record;
+	  DEVSUPFUN     get_ioint_info;
+	  DEVSUPFUN     read_ai;
+	  DEVSUPFUN     special_linconv;
+	} devAiDHT22Async = {
+	  6,
+	  NULL,
+	  NULL,
+	  ai_init_record,
+	  NULL,
+	  read_ai,
+	  NULL
+	};
+
+	epicsExportAddress(dset,devAiDHT22Async);
+
+	void readDHT22(DHT_INFO *dht_info)
+	{
+	  int pin = dht_info->pin_num;
+	  int mode = dht_info->pin_mode;
+
+	  int i=0;
+	  for(i=0;i&lt;5;i++)
+	      dht22_val[i]=0;
+
+	  epicsUInt8 lststate=HIGH;
+	  epicsUInt8 counter=0;
+
+	  pinMode(pin,OUTPUT);
+	  digitalWrite(pin,LOW);
+	  delay(18);
+	  digitalWrite(pin,HIGH);
+	  delayMicroseconds(40);
+	  pinMode(pin,INPUT);
+
+	  int j=0;
+	  for(i=0;i&lt;MAX_TIME;i++)
+	  {
+	    counter=0;
+	    while(digitalRead(pin)==lststate)
+	    {
+	      counter++;
+	      delayMicroseconds(1);
+	      if(counter==255)
+		break;
+	    }
+
+	    lststate=digitalRead(pin);
+	    if(counter==255)
+	       break;
+	    // top 3 transistions are ignored
+	    if((i>=4)&&(i%2==0))
+	    {
+	      dht22_val[j/8]<<=1;
+	      if(counter>16)
+		dht22_val[j/8]|=1;
+	      j++;
+	    }
+	  }
+
+	  float t = 0.0f;
+	  float h = 0.0f;
+	  if((j>=40)&&(dht22_val[4]==((dht22_val[0]+dht22_val[1]+dht22_val[2]+dht22_val[3])& 0xFF)))
+	  {
+	    h = (float)dht22_val[0] * 256 + (float)dht22_val[1];
+	    h /= 10;
+
+	    dht_info->val_h = h;
+	    dht_info->pre_val_h = h;
+
+	    t = (float)(dht22_val[2] & 0x7F)* 256 + (float)dht22_val[3];
+	    t /= 10.0;
+
+	    if ((dht22_val[2] & 0x80) != 0) t *= -1;
+
+	    dht_info->val_t = t;
+	    dht_info->pre_val_t = t;
+	  }
+	  else
+	  {
+	    if(mode == 0)
+	      dht_info->val_h = dht_info->pre_val_h;
+	    else
+	      dht_info->val_t = dht_info->pre_val_t;
+	  }
+	}
+   </pre>
+   <p>마지막으로 Makefile에 다음 코드를 추가한 후 make를 실행한다.</p>
+   <pre>
+Makefile
+
+	TOP=../..
+
+	include $(TOP)/configure/CONFIG
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+	#=============================
+
+	#=============================
+	# Build the IOC application
+	<span class="insert">
+	USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+	wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+	</span>
+	PROD_IOC = dht22
+	# dht22.dbd will be created and installed
+	DBD += dht22.dbd
+
+	# dht22.dbd will be made up from these files:
+	dht22_DBD += base.dbd
+
+	# Include dbd files from all support applications:
+	#dht22_DBD += xxx.dbd
+	<span class="insert">dht22_DBD += devDHT22.dbd</span>
+
+	# Add all the support libraries needed by this IOC
+	#dht22_LIBS += xxx
+
+	# dht22_registerRecordDeviceDriver.cpp derives from dht22.dbd
+	dht22_SRCS += dht22_registerRecordDeviceDriver.cpp
+	<span class="insert">dht22_SRCS += devDHT22.c</span>
+
+	# Build the main IOC entry point on workstation OSs.
+	dht22_SRCS_DEFAULT += dht22Main.cpp
+	dht22_SRCS_vxWorks += -nil-
+
+	# Add support from base/src/vxWorks if needed
+	#dht22_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+	# Finally link to the EPICS Base libraries
+	dht22_LIBS += $(EPICS_BASE_IOC_LIBS)
+	<span class="insert">dht22_LIBS += wiringPi</span>
+
+	#===========================
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/dht22App/src $ make
+   </pre>
+   </p>make가 완료되면 bin/linux-arm 폴더에 dht22 파일이 생성된다.</p>
+   <p>테스트를 위해 dht22App/Db 폴더로 이동한 후 처음 테스트 하고자 했던 dht22.db 파일을 만든다.</p>
+   <pre>
+dht22.db
+
+	record(ai, "tem")
+	{
+	  field(DTYP, "DHT22")
+	  field(SCAN, "1 second")
+	  field(INP, "@1 temperature")
+	}
+
+	record(ai, "hum")
+	{
+	  field(DTYP, "DHT22")
+	  field(SCAN, "1 second")
+	  field(INP, "@1 humidity")
+	}
+   </pre>
+   <p>Makefile에 dth11.db를 추가한 후 make를 실행한다.</p>
+   <pre>
+Makefile
+	
+	TOP=../..
+	include $(TOP)/configure/CONFIG
+	#----------------------------------------
+	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+	#----------------------------------------------------
+	#  Optimization of db files using dbst (DEFAULT: NO)
+	#DB_OPT = YES
+
+	#----------------------------------------------------
+	# Create and install (or just install) into <top>/db
+	# databases, templates, substitutions like this
+	#DB += xxx.db
+	<span class="insert">DB += dht22.db</span>
+
+	#----------------------------------------------------
+	# If <anyname>.db template is not named <anyname>*.template add
+	# <anyname>_template = <templatename>
+
+	include $(TOP)/configure/RULES
+	#----------------------------------------
+	#  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/dht22App/Db $ make
+   </pre>
+   <p>make가 완료되면 최상위 폴더에 db폴더가 만들어지고 그 안에 dht22.db파일이 생성된다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/db $ ls
+dht22.db
+   </pre>
+   <p>이제 ioc를 실행하기 위해 iocBoot/iocdht22 폴더로 이동한다.</p>
+   <p>st.cmd파일을 수정하기 전 make를 실행해서 envPahts파일을 만든다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/iocBoot/iocdht22 $ make
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/iocBoot/iocdht22 $ ls
+envPaths  Makefile  st.cmd
+   </pre>
+   <p>이제 st.cmd파일을 열어 dht22.db 레코드를 추가해 준다.</p>
+   <pre>
+st.cmd
+
+	#!../../bin/linux-arm/dht22
+
+	## You may have to change dht22 to something else
+	## everywhere it appears in this file
+
+	&lt; envPaths
+
+	cd ${TOP}
+
+	## Register all support components
+	dbLoadDatabase "dbd/dht22.dbd"
+	dht22_registerRecordDeviceDriver pdbbase
+
+	## Load record instances
+	#dbLoadRecords("db/xxx.db","user=piHost")
+	<span class="insert">dbLoadRecords("db/dht22.db")</span>
+
+	cd ${TOP}/iocBoot/${IOC}
+	iocInit
+
+	## Start any sequence programs
+	#seq sncxxx,"user=piHost"
+   </pre>
+   <p>최종적으로 st.cmd 파일을 실행파일로 변경한 후 실행한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/iocBoot/iocdht22 $ chmod 755 st.cmd
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteApps/dht22/iocBoot/iocdht22 $ sudo ./st.cmd
+#!../../bin/linux-arm/dht22
+## You may have to change dht22 to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-arm")
+epicsEnvSet("IOC","iocdht22")
+epicsEnvSet("TOP","/home/pi/epics/R3.14.12.4/siteApps/dht22")
+epicsEnvSet("EPICS_BASE","/home/pi/epics/R3.14.12.4/base")
+cd /home/pi/epics/R3.14.12.4/siteApps/dht22
+## Register all support components
+dbLoadDatabase "dbd/dht22.dbd"
+dht22_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+dbLoadRecords("db/dht22.db")
+cd /home/pi/epics/R3.14.12.4/siteApps/dht22/iocBoot/iocdht22
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.4 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Aug 29 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+epics&gt; 
+   </pre>
+   <p>온도와 습도값이 제대로 읽어지면 끝!</p>
+   <pre class="shell">
+epics&gt; dbpr tem
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: tem           RVAL: 0             SEVR: NO_ALARM      
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             VAL: 26     
+epics&gt; dbpr hum
+ASG:                DESC:               DISA: 0             DISP: 0             
+DISV: 1             NAME: hum           RVAL: 57            SEVR: NO_ALARM      
+STAT: NO_ALARM      SVAL: 0             TPRO: 0             VAL: 57 
+   </pre>
+   </br>
+   <h2>라이브러리 파일로 만들기</h2>
+   <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+   <p>siteLibs 폴더로 이동한 후 raspDHT22Lib 폴더를 하나 만든다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs $ mkdir raspDHT22Lib
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs $ cd raspDHT22Lib
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/raspDHT22Lib $
+   </pre>
+   <p>rsapDHT22Lib 폴더안에 Db, src폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+	TOP = ..
+	include $(TOP)/configure/CONFIG
+	DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+	DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+	DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+	DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+	include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 devDHT22.c와 devDHT22.dbd 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/raspDHT22Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/dht22/dht22App/src/devDHT22.c ./
+<span class="prom">pi@ctrlpi3</span> ~/epics/R3.14.12.4/siteLibs/raspDHT22Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/dht22/dht22App/src/devDHT22.dbd ./
+   </pre>
+   <p>Makefile 만들고 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+
+	TOP = ../..
+	include $(TOP)/configure/CONFIG
+
+	LIBRARY_IOC += raspDHT22
+	DBD         += devDHT22.dbd
+	raspDHT22_SRCS += devDHT22.c
+
+	include $(TOP)/configure/RULES
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-arm 폴더안에 libraspDHT22.so
+      파일이 만들어 진다.
+   </p>
+   <p>Library에 대한 db파일 제공을 위해 raspDHT22Libs/Db폴더로 이동한 후 다음과 같은 dht22.db파일만든다.</p>
+   <pre>
+dht22.db
+
+	record(ai, "tem")
+	{
+	  field(DTYP, "DHT22")
+	  field(SCAN, "1 second")
+	  field(INP, "@1 temperature")
+	}
+
+	record(ai, "hum")
+	{
+	  field(DTYP, "DHT22")
+	  field(SCAN, "1 second")
+	  field(INP, "@1 humidity")
+	}
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+Makefile
+	
+	TOP =../..
+	include $(TOP)/configure/CONFIG
+	DB += dht22.db
+	include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 dht22.db파일이 생성된다.</p>
+   <p>Library를 이용한 DHT22 테스트는 EPICS Application에 있는 <a href="appRaspDHT22.html">DHT22 Sensor</a>를 참고하기 바란다.</p>
+  </section>
+ </body>
+</html>

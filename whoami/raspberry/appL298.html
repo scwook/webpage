@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/style.css" media="screen">
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <script src="../resources/js/mediaelement-and-player.min.js"></script>
+  <script>
+   $(document).ready(function() {
+    $('video').mediaelementplayer({
+     alwaysShowControls: false,
+     features: ['playpause','progress','fullscreen']
+    });
+   });
+  </script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+   <aside>
+   <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>Step Motor Test with L298 Dual H-Bridge Motor Driver</h1>
+   <p>
+      Step Motor은 모터 종류에 따라 구동 방식이 다르다. 여기서는 Raspberry Pi와 L298 Dual H-Bridge Motor Driver를 이용
+             하여 4 Wire 2Phase Step Motor를 작동하는 테스트를 하였다.
+   </p>
+   <p>테스트는 다음 사이트를 참고 하였다.</p>
+   <p>
+    <a href="http://www.geekonfire.com/wiki/index.php?title=Dual_H-Bridge_Motor_Driver">http://www.geekonfire.com/wiki/index.php?title=Dual_H-Bridge_Motor_Driver</a></br>
+    <a href="http://www.raspberrypi.org/forums/viewtopic.php?f=49&t=55580">http://www.raspberrypi.org/forums/viewtopic.php?f=49&t=55580</a>
+   </p>
+   <p>사용된 하드웨어와 구성은 다음과 같다.</p>
+   <ul>
+    <li>Raspberry Pi Model B+</li>
+    <li>L298 Dual H-Bridge Motor Driver</li>
+    <li>5V Power Supply</li>
+    <li>스텝모터 (42HS40-1704A05)</li>
+   </ul>
+   </br>
+   <a href="../resources/images/raspberry/L298Test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/L298Test.png" width="50%" height="50%"/></a>
+   </br></br>
+   <p>
+             코드 작성에 앞서 기본적인 작동 방식을 알아보자. 4wire 2Phase Step Motor의 경우 다음과 같이 4개의 코일로 구성되어 있으며
+             2개의 코일이 같은 wire로 연결되다. 따라서 전류가 흐를 때 2개의 코일은 항상 반대 극성을 만들어 낸다. 
+   </p>
+   <a href="../resources/images/raspberry/stepMotor4wire2phase1.png" data-lightbox="example-1"><img src="../resources/images/raspberry/stepMotor4wire2phase1.png" width="50%" height="50%"/></a>
+   <p>
+              보통 스텝모터의 회전축은 영구자석으로 되어있으므로 다음과 같이 극성을 만들어 주면 모터가 회전하게 된다. 그림에는 
+              한 step당  90도 회전을 하지만 코일의 수를 늘이고 영구자석을 톱니모양으로 만들면 좀더 미세한 각도로 회전한다. 
+              일반적으로 많이 쓰이는 Step Motor의 Step 각도는 1.8도이다.</p>
+   </br>
+   <a href="../resources/images/raspberry/stepMotor4wire2phase2.png" data-lightbox="example-1"><img src="../resources/images/raspberry/stepMotor4wire2phase2.png" /></a>
+   </br></br>
+   <p>참고로 실제 모터 구조와 작동 방법은 다음 그림에 가깝다.</p>
+             그림 출처: <a href="http://www.orientalmotor.com/technology/articles/2phase-v-5phase.html">http://www.orientalmotor.com/technology/articles/2phase-v-5phase.html</a>
+   </p>
+   <a href="../resources/images/raspberry/2-ph-fullstep.jpg" data-lightbox="example-1"><img src="../resources/images/raspberry/2-ph-fullstep.jpg" /></a>
+   <p>
+             실제로 위 그림과 같이 극성을 만들기 위해서는 코일에 전류를 순차적으로 흘러줘야 하는데 Motor Driver가 외부 입력에 따라
+             모터에 전류를 공급한다. L298 Dual H-Bridge Motor Driver는 2개의 DC Motor 제어가 가능하다. 간단히 설명하면
+             총 6개의 입력신호 중 EA, IN1, IN2가 첫 번째 모터를, EB, IN3, IN4가 두 번째 모터를 제어한다. EA, EB는 모터를
+      Enable 시키는 신호이며, IN1 ~ IN4는 모터의 전류 방향을 결정한다. 즉, IN1과 IN2신호에 따라 전류 방향이 바뀌며 
+      IN3와 IN4도 마찬가지 이다. 이걸 이용하면 4Wire 2Phase Step Motor에 순차적으로 전류를 흘러줄 수 있다. 참고로 
+      Step Motor의 경우 L298 Motor Driver에 있는 2개의 Motor 출력핀에 직접 연결해도 되고 Step Motor 출력핀에
+             바로 연결해도 동일하게 동작한다.
+   </p>
+   <p>이제 위 조건에 맞게 신호를 만드는 코드를 다음과 같이 작성한다.</p>
+   <pre>
+step.c
+
+	#include &lt;stdio.h>
+	#include &lt;wiringPi.h>
+
+	#define TRUE 1
+	#define FALSE 0
+	#define DELAY 1800
+
+	#define EA 15
+	#define EB 4
+	#define IN1 16
+	#define IN2 1
+	#define IN3 5
+	#define IN4 6
+
+	void setStep(int a, int b, int c, int d)
+	{
+	   digitalWrite(IN1, a);
+	   digitalWrite(IN2, b);
+	   digitalWrite(IN3, c);
+	   digitalWrite(IN4, d);
+	}
+
+	int main(void)
+	{
+	  if(wiringPiSetup() == -1)
+	  {
+	    printf("Init Error\n");
+	    return 1;
+	  }
+
+	  pinMode(EA, OUTPUT);
+	  pinMode(IN1, OUTPUT);
+	  pinMode(IN2, OUTPUT);
+	  pinMode(EB, OUTPUT);
+	  pinMode(IN3, OUTPUT);
+	  pinMode(IN4, OUTPUT);
+
+	  digitalWrite(EA, TRUE);
+	  digitalWrite(EB, TRUE);
+
+	  int i;
+	  int loop;
+
+	  for(;;)
+	  {
+	    for(i=0; i&lt;500; i++)
+	    {
+	      setStep(1,0,1,0);
+	      delayMicroseconds(DELAY);
+	      setStep(0,1,1,0);
+	      delayMicroseconds(DELAY);
+	      setStep(0,1,0,1);
+	      delayMicroseconds(DELAY);
+	      setStep(1,0,0,1);
+	      delayMicroseconds(DELAY);
+	    }
+
+	    delay(1000);
+
+	    for(i=0; i&lt;500; i++)
+	    {
+	      setStep(1,0,0,1);
+	      delayMicroseconds(DELAY);
+	      setStep(0,1,0,1);
+	      delayMicroseconds(DELAY);
+	      setStep(0,1,1,0);
+	      delayMicroseconds(DELAY);
+	      setStep(1,0,1,0);
+	      delayMicroseconds(DELAY);
+	    }
+
+	    delay(1000);
+
+	  }
+
+	  digitalWrite(EA, FALSE);
+	  digitalWrite(EB, FALSE);
+   </pre>
+   <p>
+             위 코드에서 setStep함수는 IN신호를 만드는 함수로 총 4번의 Step이 1Cycle이 된다. 1Step당 1.8도씩 회전하며 
+            총 회전수는 반복문을 통해 제어 가능하다. 따라서 모터를 1회전 하고자 하면 반복 횟수를 50(360 / 1.8 / 4)으로 하면 된다.
+            모터 속도는 DELAY시간에 따라 바뀌는데 시간이 너무 짧은 경우 회전하지 않는다. 모통 모터마다 최대 응답속도가 있으므로
+            그에 맞게 조절해야 한다. 테스트한 모터의 경우 1.8ms(대략 167rpm)보다 짧은 경우 불규칙적인 회전을 보인다.
+     Step신호를 반대로 주면 순서가 반대로 작용하므로 모터 방향이 바뀐다. 모터의 방향은 Step순서를 반대로 하면 된다.
+   </p>
+   <p>테스트 결과는 다음과 같다.</p>
+   <div class="videoFrame">
+   <video width="640" height="480" >
+    <source src="../resources/images/raspberry/stepMotorTest1.mp4" type="video/mp4">
+   </video>
+   </div>
+  </section>
+ </body>
+</html>

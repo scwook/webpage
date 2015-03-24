@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="db_side db_menu">
+    <ul>
+     <li><a href="../database/Mysql.html">MySQL</a></li>
+     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+    </ul>
+  </nav>
+  <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="Configuration.html">Configuration</a></li>
+     <li><a href="Library.html">Library</a></li>
+     <li><a href="Application.html">Application</a></li>
+     <li><a href="Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+   <h1>EPICS Configuration Guide</h1>
+   <p>git에서 EPICS script를 받기위해 우선 git을 설치한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ sudo aptitude install git
+   </pre>
+   <p>git으로 부터 EPICS script를 받운 받는다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ git clone https://github.com/jeonghanlee/scripts_for_epics.git
+Cloning into 'scripts_for_epics'...
+remote: Counting objects: 99, done.
+remote: Total 99 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (99/99), done.
+   </pre>
+   <p>EPICS 설치 script를 실행하기 전 필요한 library를 설치한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ sudo aptitude install libreadline-dev g++ libxt-dev lesstif2-dev x11proto-print-dev libxmu-headers libxp-dev libxmu-dev
+libxmu6  libxpm-dev libxmuu-dev libxmuu1 libxmu6
+   </pre>
+   <p>EPICS script를 실행한다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ cd scripts_for_epics
+<span class="prom">scwook@scwook:</span>~/scripts_for_epics$ bash epics_default_installation.sh
+   </pre>
+   <p>EPICS 설치를 마쳤으면 siteLibs과 siteApps를 git에서 다운 받는다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~$ cd epics/R3.14.12.4
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4$ git clone https://github.com/RaonControl/siteLibs_test siteLibs
+Cloning into 'siteLibs'...
+Username for 'https://github.com': scwook
+Password for 'https://scwook@github.com': 
+remote: Counting objects: 791, done.
+remote: Total 791 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (791/791), 969.98 KiB | 313 KiB/s, done.
+Resolving deltas: 100% (191/191), done.
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4$ git clone https://github.com/RaonControl/siteApps_test siteApps
+Cloning into 'siteApps'...
+Username for 'https://github.com': scwook
+Password for 'https://scwook@github.com': 
+remote: Counting objects: 323, done.
+remote: Total 323 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (323/323), 155.42 KiB | 128 KiB/s, done.
+Resolving deltas: 100% (91/91), done.
+   </pre>
+   <p>svn에서도 다운 받을 수 있다. 이 경우 코드 수정 및 업데이트를 할 수 있다.</p>
+   <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.4$ svn co svn://10.1.5.14/raon/trunk/ .
+   </pre>
+  </section>
+ </body>
+</html>
