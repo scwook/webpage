@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+   <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="de_side de_menu">
+    <ul>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
+    </ul>
+  </nav>
+ <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+  <h1>UART Configuration</h1>
+  <p>
+      UART(Universal asynchronous receiver/transmitter)는 일반적으로 RS-232와 같은 시리얼 통신을 5V Level의 
+      TTL신호로 전송한다. 따라서 UART 통신을 하는 센서는 Raspberry Pi나 Arduino 바로 연결하여 사용이 가능하다. 여기서
+      주의할 사항은 PC의 경우 Serial 통신의 전압 Level이 -12 ~ 12v이므로 센서와 바로 연결해서는 안되며 MAX232와 같은 Level Convert를
+      사용하여 전압 Level을 맞춰야 한다.
+   </p>
+  <p>
+    Raspberry Pi에서 UART는 기본적으로 콘솔출력용으로 지정되어 있다. 따라서 일반적인 목적으로 사용하기 위해서는 /boot/cmdline.txt와
+      /etc/inittab 파일을 수정해야 한다.
+   </p>
+   <p>/boot/cmdline.txt 파일을 열어 "console=ttyAMA0,115200" 부분을 삭제 한다.</p>
+   <pre>
+dwc_otg.lpm_enable=0 <span class="insert">console=ttyAMA0,115200</span> console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait
+   </pre>
+   <p>/etc/inittab 파일을 열어 마지막 라인에 있는 "T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100" 앞에 '#'을 넣어 주석 처리한다</p>
+   <pre>
+# /etc/inittab: init(8) configuration.
+# $Id: inittab,v 1.91 2002/01/25 13:35:21 miquels Exp $
+
+# The default runlevel.
+id:2:initdefault:
+
+# Boot-time system configuration/initialization script.
+# This is run first except when booting in emergency (-b) mode.
+si::sysinit:/etc/init.d/rcS
+
+# What to do in single-user mode.
+~~:S:wait:/sbin/sulogin
+
+# /etc/init.d executes the S and K scripts upon change
+# of runlevel.
+#
+# Runlevel 0 is halt.
+# Runlevel 1 is single-user.
+# Runlevels 2-5 are multi-user.
+# Runlevel 6 is reboot.
+
+l0:0:wait:/etc/init.d/rc 0
+l1:1:wait:/etc/init.d/rc 1
+l2:2:wait:/etc/init.d/rc 2
+l3:3:wait:/etc/init.d/rc 3
+l4:4:wait:/etc/init.d/rc 4
+l5:5:wait:/etc/init.d/rc 5
+l6:6:wait:/etc/init.d/rc 6
+# Normally not reached, but fallthrough in case of emergency.
+z6:6:respawn:/sbin/sulogin
+
+# What to do when CTRL-ALT-DEL is pressed.
+ca:12345:ctrlaltdel:/sbin/shutdown -t1 -a -r now
+
+# Action on special keypress (ALT-UpArrow).
+#kb::kbrequest:/bin/echo "Keyboard Request--edit /etc/inittab to let this work."
+
+# What to do when the power fails/returns.
+pf::powerwait:/etc/init.d/powerfail start
+pn::powerfailnow:/etc/init.d/powerfail now
+po::powerokwait:/etc/init.d/powerfail stop
+
+# /sbin/getty invocations for the runlevels.
+#
+# The "id" field MUST be the same as the last
+# characters of the device (after "tty").
+#
+# Format:
+#  &lt;id>:&lt;runlevels>:&lt;action>:&lt;process>
+#
+# Note that on most Debian systems tty7 is used by the X Window System,
+# so if you want to add more getty's go ahead but skip tty7 if you run X.
+#
+1:2345:respawn:/sbin/getty --noclear 38400 tty1
+2:23:respawn:/sbin/getty 38400 tty2
+3:23:respawn:/sbin/getty 38400 tty3
+4:23:respawn:/sbin/getty 38400 tty4
+5:23:respawn:/sbin/getty 38400 tty5
+6:23:respawn:/sbin/getty 38400 tty6
+
+# Example how to put a getty on a serial line (for a terminal)
+#
+#T0:23:respawn:/sbin/getty -L ttyS0 9600 vt100
+#T1:23:respawn:/sbin/getty -L ttyS1 9600 vt100
+
+# Example how to put a getty on a modem line.
+#
+#T3:23:respawn:/sbin/mgetty -x0 -s 57600 ttyS3
+
+#Spawn a getty on Raspberry Pi serial line
+<span class="insert">#T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100</span>
+   </pre>
+   <p>설정을 마쳤으면 재부팅 한다. </p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span>~$ sudo reboot
+   </pre>
+   <p>재부팅이 완료되면 UART를 사용할 수 있다. 참고로 Raspberry Pi에서는 UART device는 /etc/ttyAMA0에 할당되어 있다</p>
+  </section>
+ </body>
+</html>

@@ -4,8 +4,10 @@
  <head>
   <title>Who am I</title>
   <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
   <script src="../resources/js/jquery-2.1.1.js"></script>
   <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
   <style>
    body { background:#BC1142; }
   </style>
@@ -13,20 +15,21 @@
  <body>
   <header>
   </header>
-  <aside>
-    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+   <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
     <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
     <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
     <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
     <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
   </aside>
-  <nav class="db_side db_menu">
+  <nav class="de_side de_menu">
     <ul>
-     <li><a href="../database/Mysql.html">MySQL</a></li>
-     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
     </ul>
   </nav>
-  <nav class="ep_side ep_menu">
+ <nav class="ep_side ep_menu">
     <ul>
      <li><a href="../epics/Configuration.html">Configuration</a></li>
      <li><a href="../epics/Library.html">Library</a></li>
@@ -36,9 +39,9 @@
   </nav>
   <nav class="ra_side ra_menu">
     <ul>
-     <li><a href="Configuration.html">Configuration</a></li>
-     <li><a href="Application.html">Application</a></li>
-     <li><a href="Camera.html">Camera</a></li>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
     </ul>
   </nav>
   <nav class="ht_side ht_menu">
@@ -60,6 +63,8 @@
     <ul>
      <li><a href="configWiFi.html">Wireless Network Configuration</a></li>
      <li><a href="configCamera.html">Camera Configuration</a></li>
+     <li><a href="configUART.html">UART Configuration</a></li>
+     <li><a href="configI2C.html">I2C Configuration</a></li>
     </ul>
     </br>
     <h3>Raspbian 설치</h3>
@@ -101,18 +106,16 @@
      <h3>NETWORK SETTING</h3>
       <p>네트워크 설정을 위해 /etc/network/interface 파일을 열어 수정한다.</p>
       <pre>
-/etc/network/interface
+auto lo
 
-	auto lo
-
-	auto eth0
-	iface eth0 inet static
-	address 10.1.4.207
-	netmask 255.255.255.0
-	network 10.1.4.0
-	broadcast 10.1.4.255
-	gateway 10.1.4.254
-	dns-namesrvers 10.1.5.11 10.1.2.240
+auto eth0
+iface eth0 inet static
+address 10.1.4.207
+netmask 255.255.255.0
+network 10.1.4.0
+broadcast 10.1.4.255
+gateway 10.1.4.254
+dns-namesrvers 10.1.2.240
       </pre>
       <p>변경된 설정이 적용되도록 네트워크를 재시작한다.</p>
       <pre class="shell">

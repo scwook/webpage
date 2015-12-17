@@ -10,19 +10,19 @@ body {
 	background:white;
 }
 
-#database, #epics, #raspberry, #html5, #java{
+#debian, #epics, #raspberry, #html5, #java{
 	float:left;
 	width:20%;
 	height:100%;
 }
 
-#database{ background:#9ACD32; }
+#debian{ background:#A9A9A9; }
 #epics { background:#9932CC; }
 #raspberry { background:#BC1142; }
 #html5 { background:#E44D26; }
 #java {	background:#5382A1; }
 
-#database_icon, #epics_icon, #raspberry_icon, #html5_icon, #java_icon{
+#debian_icon, #epics_icon, #raspberry_icon, #html5_icon, #java_icon{
         position:relative;
         top:50%;
         left:50%;

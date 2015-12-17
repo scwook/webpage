@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  $(".db_side").hover(function() {
-    $(".db_menu").stop().animate({"opacity":1});
-    $(".db_menu").css("display","block");
+  $(".de_side").hover(function() {
+    $(".de_menu").stop().animate({"opacity":1});
+    $(".de_menu").css("display","block");
    }, function() {
-          $(".db_menu").stop().animate({"opacity":0});
-          $(".db_menu").css("display","none");
+          $(".de_menu").stop().animate({"opacity":0});
+          $(".de_menu").css("display","none");
      });
   
   $(".ep_side").hover(function() {

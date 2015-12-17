@@ -3,7 +3,7 @@
 <html>
  <head>
   <title>Who am I</title>
-  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
   <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
   <script src="../resources/js/jquery-2.1.1.js"></script>
   <script src="../resources/js/common.js"></script>
@@ -15,21 +15,21 @@
  <body>
   <header>
   </header>
-   <aside>
-   <aside>
-    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+  <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
     <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
     <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
     <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
     <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
   </aside>
-  <nav class="db_side db_menu">
+  <nav class="de_side de_menu">
     <ul>
-     <li><a href="../database/Mysql.html">MySQL</a></li>
-     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
     </ul>
   </nav>
-  <nav class="ep_side ep_menu">
+ <nav class="ep_side ep_menu">
     <ul>
      <li><a href="../epics/Configuration.html">Configuration</a></li>
      <li><a href="../epics/Library.html">Library</a></li>
@@ -39,9 +39,9 @@
   </nav>
   <nav class="ra_side ra_menu">
     <ul>
-     <li><a href="Configuration.html">Configuration</a></li>
-     <li><a href="Application.html">Application</a></li>
-     <li><a href="Camera.html">Camera</a></li>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
     </ul>
   </nav>
   <nav class="ht_side ht_menu">
@@ -266,7 +266,7 @@ st.cmd
 <span class="prom">scwook@scwook:</span> camonitor SS:GPIO:INP24
 SS:GPIO:INP24                        2014-10-18 07:37:30.337722 FALSE
    </pre>
-   <p>camonitor 접속이 끝어지면 시간을 기록한다.</p>
+   <p>camonitor 접속이 끊어지면 시간을 기록한다.</p>
    <pre class="shell">
 CA.Client.Exception...............................................
     Warning: "Virtual circuit unresponsive"

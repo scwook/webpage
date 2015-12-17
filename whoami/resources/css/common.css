@@ -47,16 +47,15 @@ a:active {
     color: #0000FF;
 }
 */
-
-#db, #ep, #ra, #ht, #ja{ height:80px }
-
-#db{ background:#9ACD32; }
+/* Menu Color */
+#de, #ep, #ra, #ht, #ja{ height:80px }
+#de{ background:#737373; }
 #ep{ background:#9932CC; }
 #ra{ background:#BC1142; }
 #ht{ background:#E44D26; }
 #ja{ background:#5382A1; }
 
-#db_img, #ep_img, #ra_img, #ht_img, #ja_img { position:relative; top:16px; left:16px; }
+#de_img, #ep_img, #ra_img, #ht_img, #ja_img { position:relative; top:16px; left:16px; }
 
 section {
 	width:1024px;
@@ -70,7 +69,7 @@ section h1 {
 }
 
 /*Left Content Mennu*/
-nav.db_side, nav.ep_side, nav.ra_side, nav.ht_side, nav.ja_side {
+nav.de_side, nav.ep_side, nav.ra_side, nav.ht_side, nav.ja_side {
   position: absolute;
   left:80px;
   z-index: 100;
@@ -80,13 +79,13 @@ nav.db_side, nav.ep_side, nav.ra_side, nav.ht_side, nav.ja_side {
   height: 100%;
 }
 
-nav.db_side { top: 80px; }
+nav.de_side { top: 80px; }
 nav.ep_side { top: 160px; }
 nav.ra_side { top: 240px; }
 nav.ht_side { top: 320px; }
 nav.ja_side { top: 400px; }
 
-nav.db_side ul, nav.ep_side ul, nav.ra_side ul, nav.ht_side ul, nav.ja_side ul {
+nav.de_side ul, nav.ep_side ul, nav.ra_side ul, nav.ht_side ul, nav.ja_side ul {
     list-style: none;
     height: 200px;
     padding: 0;
@@ -95,13 +94,14 @@ nav.db_side ul, nav.ep_side ul, nav.ra_side ul, nav.ht_side ul, nav.ja_side ul {
 
 }
 
-nav.db_side ul { background-color: #AED75B; }
+/* Sub Menu Color */
+nav.de_side ul { background-color: #8c8c8c; }
 nav.ep_side ul { background-color: #AD5BD6; }
 nav.ra_side ul { background-color: #C94168; }
 nav.ht_side ul { background-color: #E97151; }
 nav.ja_side ul { background-color: #759BB4; }
 
-nav.db_side ul > li, nav.ep_side ul > li, nav.ra_side ul > li, nav.ht_side ul > li, nav.ja_side ul > li {
+nav.de_side ul > li, nav.ep_side ul > li, nav.ra_side ul > li, nav.ht_side ul > li, nav.ja_side ul > li {
       display: table;
       text-align: center;
       float: left;
@@ -109,7 +109,7 @@ nav.db_side ul > li, nav.ep_side ul > li, nav.ra_side ul > li, nav.ht_side ul > 
       height: 20.2%;
 }
 
-nav.db_side ul > li > a,
+nav.de_side ul > li > a,
 nav.ep_side ul > li > a,
 nav.ra_side ul > li > a,
 nav.ht_side ul > li > a,
@@ -125,7 +125,7 @@ nav.ja_side ul > li > a
 
 }
 
-nav.db_side ul > li > a:hover,
+nav.de_side ul > li > a:hover,
 nav.ep_side ul > li > a:hover,
 nav.ra_side ul > li > a:hover,
 nav.ht_side ul > li > a:hover,

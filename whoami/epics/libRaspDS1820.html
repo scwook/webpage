@@ -16,24 +16,25 @@
   <header>
   </header>
   <aside>
-    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
     <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
     <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
     <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
     <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
   </aside>
-  <nav class="db_side db_menu">
+  <nav class="de_side de_menu">
     <ul>
-     <li><a href="../database/Mysql.html">MySQL</a></li>
-     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
     </ul>
   </nav>
-  <nav class="ep_side ep_menu">
+ <nav class="ep_side ep_menu">
     <ul>
-     <li><a href="Configuration.html">Configuration</a></li>
-     <li><a href="Library.html">Library</a></li>
-     <li><a href="Application.html">Application</a></li>
-     <li><a href="Extensition.html">Extensition</a></li>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
     </ul>
   </nav>
   <nav class="ra_side ra_menu">
@@ -69,7 +70,7 @@
     <li>DS1820 Sensor</li>
     <li>4.7k Ohme Register</li>
    </ul>
-<a class="example-image-link" href="../resources/images/raspberry/ds1820_test.png" data-lightbox="example-1"><img class="example-image" src="../resources/images/raspberry/ds1820_test.png" width="50%" height="50%" /></a>
+<a href="../resources/images/raspberry/ds1820_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/ds1820_test.png" width="50%" height="50%" /></a>
    <p>최종 목표는 다음 Record를 만들어 온습도 값을 읽는 것이다.</p>
    <pre>
 ds1820.db
@@ -1089,13 +1090,13 @@ st.cmd
 ## everywhere it appears in this file
 &lt; envPaths
 epicsEnvSet("ARCH","linux-arm")
-epicsEnvSet("IOC","iocdht11")
+epicsEnvSet("IOC","iocds1820")
 epicsEnvSet("TOP","/home/pi/epics/R3.14.12.4/siteApps/ds1820")
 epicsEnvSet("EPICS_BASE","/home/pi/epics/R3.14.12.4/base")
 cd /home/pi/epics/R3.14.12.4/siteApps/ds1820
 ## Register all support components
 dbLoadDatabase "dbd/ds1820.dbd"
-dht11_registerRecordDeviceDriver pdbbase
+ds1820_registerRecordDeviceDriver pdbbase
 ## Load record instances
 #dbLoadRecords("db/xxx.db","user=piHost")
 dbLoadRecords("db/ds1820.db")

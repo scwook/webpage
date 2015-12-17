@@ -1,0 +1,1087 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="de_side de_menu">
+    <ul>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
+    </ul>
+  </nav>
+ <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+  <h1>Character LCD1602, LCD1604 EPICS Library Development for Raspberry Pi</h1>
+  <p>
+     본 문서는 LCD1602 또는 LCD1604에 대한 EPICS Library 개발을 목표로 한다. 
+  </p>
+  <p>테스트를 위한 하드웨어 구성은 다음과 같다. </p>
+  <ul>
+   <li>Raspberry Pi 2 Model B</li>
+   <li>LCD1604 5v</li>
+   <li>1 ~ 10k Ohme 가변저항</li>
+  </ul>
+<a href="../resources/images/raspberry/lcd1604_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/lcd1604_test.png" width="50%" height="50%" /></a>
+  <p>최종 목표는 다음과 같은 charlcd.db를 만들어 LCD에 원하는 값을 출력하는 것이다.</p>
+  <pre>
+record(ao, "LCD:A")
+{
+  field(FLNK, "LCD:STR")
+}
+record(ao, "LCD:B")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:C")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:D")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(lcdout, "LCD:STR")
+{
+  field(DTYP, "HD44780U")
+  field(OUT, "@2 16 4 28 29 26 21 22 23")
+  field(DIRS, "1")
+  field(INPA, "LCD:A")
+  field(STRA, "StringA")
+  field(UNIA, "Ua")
+  field(INPB, "LCD:B")
+  field(STRB, "StringB")
+  field(UNIB, "Ub")
+  field(INPC, "LCD:C")
+  field(STRC, "StringC")
+  field(UNIC, "Uc")
+  field(INPD, "LCD:D")
+  field(STRD, "StringD")
+  field(UNID, "Ud")
+}
+  </pre>
+  <p>
+     위 DB에서 실제 LCD로 출력하는 Record는 lcdout이며 총 4개의 INP field를 통해 한줄씩 
+     값을 출력한다. STR과 UNI field는 출력되는 값 과 단위를 표현하기 위한 문자열이다.
+     결과적으로 LCD에 출력되는 형식은 다음과 같다.
+ </p>
+  <p>
+     STR INP UNI
+  </p>
+  <p>
+    예를 들어 INPA값 즉 LCD:A Record 값이 30이고 STRA 및 UNIA가 각각 "Humidity", "%"
+    로 되어있을 경우 LCD에 출력되는 값은 다음과 같다.
+  </p>
+  <p>Humidity 30 %</p>
+  <p>INPB, C, D의 경우도 동일하며 각각 2,3,4번째 줄에 출력된다.</p>
+  <p>DIRS field는 값이 1일 때 INP field값과 상관 없이 사용자 입력한 문자를 LCD로 바로 출력하기 위한 field이다.</p>
+  <p>LCD1602 및 LCD1604는 HD44780U 칩을 사용하는데 이는 wiringPi Library에서 기본적으로 지원한다.</p>
+  <p>코드 작성에 앞서 wiringPi를 설치한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ git clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>
+      LCD1604의 경우 wiringPi의 코드 수정이 필요하다. 현재 2.29v wiringPi에서 
+      lcd offset 주소가 맞지 않는데, 결과적으로 3번째 Line부터 제대로 
+      출력되지 않는 문제점이 있다. 따라서 코드를 수정한 후 사용하도록 한다. 
+   </p>
+   <p>wiringPi/devLib/lcd.c 파일을 열어 lcdPosition 함수를 다음과 같이 수정한다.</p>
+   <pre class="shell">
+void lcdPosition (const int fd, int x, int y)
+{
+  static unsigned char rowOff [4] ;
+  struct lcdDataStruct *lcd = lcds [fd] ;
+
+  if ((x > lcd->cols) || (x < 0))
+    return ;
+  if ((y > lcd->rows) || (y < 0))
+    return ;
+
+  if (lcd->rows == 4 && lcd->cols == 16)
+  {
+    rowOff[0] = 0x00; rowOff[1] = 0x40; rowOff[2] = 0x10; rowOff[3] = 0x50;
+  }
+  else
+  {
+    rowOff[0] = 0x00; rowOff[1] = 0x40; rowOff[2] = 0x14; rowOff[3] = 0x54;
+  }
+
+   putCommand (lcd, x + (LCD_DGRAM | rowOff [y])) ;
+
+  lcd->cx = x ;
+  lcd->cy = y ;
+}
+   </pre>
+   <p>코드를 수정했으면 wiringPi를 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/wiringPi$ ./build
+   </pre>
+   <p>
+      빌드가 완료되면 기본적인 준비가 끝이난다. 다음은 EPICS IOC를 만들기 위한 작업으로
+      다음 환경변수를 기본으로 하고 있다.
+   </p>
+   <pre>
+export EPICS_HOST_ARCH=linux-arm
+export EPICS_PATH=/home/pi/epics/R3.14.12.4
+export EPICS_BASE=/home/pi/epics/R3.14.12.4/base
+export EPICS_EXTENSIONS=/home/pi/epics/R3.14.12.4/extensions
+
+export EPICS_SYNAPPS=/home/pi/epics/R3.14.12.4/epicsLibs/synApps_5_8/support
+export RAON_SITELIBS=/home/pi/epics/R3.14.12.4/siteLibs
+export RAON_SITEAPPS=/home/pi/epics/R3.14.12.4/siteApps
+   </pre>
+   <p>siteApps안에 폴더를 만든 후 Base Application을 생성한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> cd ../epics/R3.14.12.4/siteApps
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps $ mkdir charlcd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps $ cd charlcd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd $ makeBaseApp.pl -t ioc charlcd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd $ makeBaseApp.pl -i -t ioc charlcd
+
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    charlcd
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name?
+
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd $ ls
+conigure  charlcdApp  iocBoot Makefile
+   </pre>
+   <p>코드 작성을 위해 charlcdApp/src 폴더로 이동한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd $ cd charlcdApp/src
+   </pre>
+   <p>lcdout이름을 가진 새로운 Record를 만들기 위해 lcdoutRecord.c 파일을 만들고 다음 코드를 작성한다.</p>
+   <pre>
+#include &lt;stddef.h>
+#include &lt;stdlib.h>
+#include &lt;stdarg.h>
+#include &lt;stdio.h>
+#include &lt;string.h>
+
+#include "dbDefs.h"
+#include "epicsPrint.h"
+#include "alarm.h"
+#include "dbAccess.h"
+#include "dbEvent.h"
+#include "dbFldTypes.h"
+#include "devSup.h"
+#include "errMdef.h"
+#include "recSup.h"
+#include "recGbl.h"
+#include "menuOmsl.h"
+#include "menuIvoa.h"
+#include "menuYesNo.h"
+
+#define GEN_SIZE_OFFSET
+#include "lcdoutRecord.h"
+#undef  GEN_SIZE_OFFSET
+#include "epicsExport.h"
+
+/* Create RSET - Record Support Entry Table*/
+#define report NULL
+#define initialize NULL
+static long init_record(lcdoutRecord *, int);
+static long process(lcdoutRecord *);
+#define special NULL
+#define get_value NULL
+#define cvt_dbaddr NULL
+#define get_array_info NULL
+#define put_array_info NULL
+#define get_units NULL
+#define get_precision NULL
+#define get_enum_str NULL
+#define get_enum_strs NULL
+#define put_enum_str NULL
+#define get_graphic_double NULL
+#define get_control_double NULL
+#define get_alarm_double NULL
+
+rset lcdoutRSET={
+	RSETNUMBER,
+	report,
+	initialize,
+	init_record,
+	process,
+	special,
+	get_value,
+	cvt_dbaddr,
+	get_array_info,
+	put_array_info,
+	get_units,
+	get_precision,
+	get_enum_str,
+	get_enum_strs,
+	put_enum_str,
+	get_graphic_double,
+	get_control_double,
+	get_alarm_double
+};
+epicsExportAddress(rset,lcdoutRSET);
+
+struct lcdoutdset { /* lcdout input dset */
+	long		number;
+	DEVSUPFUN	dev_report;
+	DEVSUPFUN	init;
+	DEVSUPFUN	init_record; /*returns: (-1,0)=>(failure,success)*/
+	DEVSUPFUN	get_ioint_info;
+	DEVSUPFUN	write_lcdout;/*(-1,0)=>(failure,success)*/
+};
+static void monitor(lcdoutRecord *);
+static long writeValue(lcdoutRecord *);
+
+
+static long init_record(lcdoutRecord *prec, int pass)
+{
+    STATIC_ASSERT(sizeof(prec->oval)==sizeof(prec->val));
+    struct lcdoutdset *pdset;
+    long status=0;
+
+    if (pass==0) return(0);
+
+    if (prec->siml.type == CONSTANT) {
+	recGblInitConstantLink(&prec->siml,DBF_USHORT,&prec->simm);
+    }
+
+    if(!(pdset = (struct lcdoutdset *)(prec->dset))) {
+	recGblRecordError(S_dev_noDSET,(void *)prec,"lcdout: init_record");
+	return(S_dev_noDSET);
+    }
+    /* must have  write_lcdout functions defined */
+    if( (pdset->number < 5) || (pdset->write_lcdout == NULL) ) {
+	recGblRecordError(S_dev_missingSup,(void *)prec,"lcdout: init_record");
+	return(S_dev_missingSup);
+    }
+    /* get the initial value dol is a constant*/
+    if (prec->dol.type == CONSTANT){
+	if(recGblInitConstantLink(&prec->dol,DBF_STRING,prec->val))
+	    prec->udf=FALSE;
+    }
+    if( pdset->init_record ) {
+	if((status=(*pdset->init_record)(prec))) return(status);
+    }
+    strcpy(prec->oval,prec->val);
+    return(0);
+}
+
+static long process(lcdoutRecord *prec)
+{
+	struct lcdoutdset *pdset = (struct lcdoutdset *)(prec->dset);
+	long		 status=0;
+	unsigned char    pact=prec->pact;
+
+	if( (pdset==NULL) || (pdset->write_lcdout==NULL) ) {
+		prec->pact=TRUE;
+		recGblRecordError(S_dev_missingSup,(void *)prec,"write_lcdout");
+		return(S_dev_missingSup);
+	}
+        if (!prec->pact
+        && (prec->dol.type != CONSTANT)
+        && (prec->omsl == menuOmslclosed_loop)) {
+		status = dbGetLink(&(prec->dol),
+			DBR_STRING,prec->val,0,0);
+		if(prec->dol.type!=CONSTANT && RTN_SUCCESS(status)) prec->udf=FALSE;
+	}
+
+        if(prec->udf == TRUE ){
+                recGblSetSevr(prec,UDF_ALARM,INVALID_ALARM);
+        }
+
+        if (prec->nsev < INVALID_ALARM )
+                status=writeValue(prec); /* write the new value */
+        else {
+                switch (prec->ivoa) {
+                    case (menuIvoaContinue_normally) :
+                        status=writeValue(prec); /* write the new value */
+                        break;
+                    case (menuIvoaDon_t_drive_outputs) :
+                        break;
+                    case (menuIvoaSet_output_to_IVOV) :
+                        if(prec->pact == FALSE){
+                                strcpy(prec->val,prec->ivov);
+                        }
+                        status=writeValue(prec); /* write the new value */
+                        break;
+                    default :
+                        status=-1;
+                        recGblRecordError(S_db_badField,(void *)prec,
+                                "lcdout:process Illegal IVOA field");
+                }
+        }
+
+	/* check if device support set pact */
+	if ( !pact && prec->pact ) return(0);
+
+	prec->pact = TRUE;
+	recGblGetTimeStamp(prec);
+	monitor(prec);
+	recGblFwdLink(prec);
+	prec->pact=FALSE;
+	return(status);
+}
+
+static void monitor(lcdoutRecord *prec)
+{
+    int monitor_mask = recGblResetAlarms(prec);
+
+    if (strncmp(prec->oval, prec->val, sizeof(prec->val))) {
+        monitor_mask |= DBE_VALUE | DBE_LOG;
+        strncpy(prec->oval, prec->val, sizeof(prec->val));
+    }
+
+    if (prec->mpst == stringoutPOST_Always)
+        monitor_mask |= DBE_VALUE;
+    if (prec->apst == stringoutPOST_Always)
+        monitor_mask |= DBE_LOG;
+
+    if (monitor_mask)
+        db_post_events(prec, prec->val, monitor_mask);
+}
+
+static long writeValue(lcdoutRecord *prec)
+{
+	long		status;
+        struct lcdoutdset 	*pdset = (struct lcdoutdset *) (prec->dset);
+
+	if (prec->pact == TRUE){
+		status=(*pdset->write_lcdout)(prec);
+		return(status);
+	}
+
+	status=dbGetLink(&(prec->siml),DBR_USHORT,
+		&(prec->simm),0,0);
+	if (status)
+		return(status);
+
+	if (prec->simm == menuYesNoNO){
+		status=(*pdset->write_lcdout)(prec);
+		return(status);
+	}
+	if (prec->simm == menuYesNoYES){
+		status=dbPutLink(&prec->siol,DBR_STRING,
+			prec->val,1);
+	} else {
+		status=-1;
+		recGblSetSevr(prec,SOFT_ALARM,INVALID_ALARM);
+		return(status);
+	}
+        recGblSetSevr(prec,SIMM_ALARM,prec->sims);
+
+	return(status);
+}
+   </pre>
+   <p>
+      위 코드를 만드는 방법 중 하나는 stringout Record를 이용하는 것이다. LCD로 출력되는 
+      데이터는 문자열 타입을 기본으로 하기 때문에 EPICS Base로 있는 stringout Record를
+      사용하면 쉽게 원하는 Record를 만들 수 있다. 따라서 epics/R3.14.12.5/base/src/rec
+      에 위치해 있는 stringoutRecord.c 파일을 복사한 후 이름을 lcdoutRecord.c 로 변경한다.
+      그리고 파일을 열어 stringout을 lcdout으로 바꾸면 위와 같은 코드가 만들어 진다. 실제로
+      위 코드도 이러한 방법으로 만든 코드이다.
+   </p>
+   <p>
+      이와 같이 만들어진 lcdout Record에 INP 및 STR, UNI field를 추가하기 위해 
+      lcdoutRecord.dbd 파일을 만들고 다음 코드를 작성한다. 다음 코드 역시 stringoutRecord.dbd
+      를 가져와 stringout을 lcdout으로 바꾸고 필요한 field를 추가하여 만든 코드이다.
+   </p>
+   <pre>
+menu(stringoutPOST) {
+	choice(stringoutPOST_OnChange,"On Change")
+	choice(stringoutPOST_Always,"Always")
+}
+recordtype(lcdout) {
+	include "dbCommon.dbd" 
+	field(VAL,DBF_STRING) {
+		prompt("Current Value")
+		promptgroup(GUI_OUTPUT)
+		asl(ASL0)
+		pp(TRUE)
+		size(40)
+	}
+<span class="insert">        field(INPA,DBF_INLINK) {
+                prompt("Input A")
+                promptgroup(GUI_INPUTS)
+                interest(1)
+        }
+        field(INPB,DBF_INLINK) {
+                prompt("Input B")
+                promptgroup(GUI_INPUTS)
+                interest(1)
+        }
+        field(INPC,DBF_INLINK) {
+                prompt("Input C")
+                promptgroup(GUI_INPUTS)
+                interest(1)
+        }
+        field(INPD,DBF_INLINK) {
+                prompt("Input D")
+                promptgroup(GUI_INPUTS)
+                interest(1)
+        }
+	field(STRA,DBF_STRING) {
+                prompt("Line1 String")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)	
+	}
+        field(STRB,DBF_STRING) {
+                prompt("Line2 String")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+        field(STRC,DBF_STRING) {
+                prompt("Line3 String")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+        field(STRD,DBF_STRING) {
+                prompt("Line4 String")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+
+        field(UNIA,DBF_STRING) {
+                prompt("Line1 Unit")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+        field(UNIB,DBF_STRING) {
+                prompt("Line2 Unit")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+        field(UNIC,DBF_STRING) {
+                prompt("Line3 Unit")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+        field(UNID,DBF_STRING) {
+                prompt("Line4 Unit")
+                special(SPC_NOMOD)
+                interest(3)
+                size(40)
+        }
+        field(DIRS,DBF_ULONG) {
+                prompt("Direct print")
+                promptgroup(GUI_OUTPUT)
+                interest(1)
+        }
+</span>
+	field(OVAL,DBF_STRING) {
+		prompt("Previous Value")
+		special(SPC_NOMOD)
+		interest(3)
+		size(40)
+	}
+
+	field(DOL,DBF_INLINK) {
+		prompt("Desired Output Loc")
+		promptgroup(GUI_OUTPUT)
+		interest(1)
+	}
+	field(OMSL,DBF_MENU) {
+		prompt("Output Mode Select")
+		promptgroup(GUI_OUTPUT)
+		interest(1)
+		menu(menuOmsl)
+	}
+	field(OUT,DBF_OUTLINK) {
+		prompt("Output Specification")
+		promptgroup(GUI_OUTPUT)
+		interest(1)
+	}
+	field(MPST,DBF_MENU) {
+		prompt("Post Value Monitors")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+		menu(stringoutPOST)
+	}
+	field(APST,DBF_MENU) {
+		prompt("Post Archive Monitors")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+		menu(stringoutPOST)
+	}
+	field(SIOL,DBF_OUTLINK) {
+		prompt("Sim Output Specifctn")
+		promptgroup(GUI_INPUTS)
+		interest(1)
+	}
+	field(SIML,DBF_INLINK) {
+		prompt("Sim Mode Location")
+		promptgroup(GUI_INPUTS)
+		interest(1)
+	}
+	field(SIMM,DBF_MENU) {
+		prompt("Simulation Mode")
+		interest(1)
+		menu(menuYesNo)
+	}
+	field(SIMS,DBF_MENU) {
+		prompt("Sim mode Alarm Svrty")
+		promptgroup(GUI_INPUTS)
+		interest(2)
+		menu(menuAlarmSevr)
+	}
+	field(IVOA,DBF_MENU) {
+		prompt("INVALID output action")
+		promptgroup(GUI_OUTPUT)
+		interest(2)
+		menu(menuIvoa)
+	}
+	field(IVOV,DBF_STRING) {
+		prompt("INVALID output value")
+		promptgroup(GUI_OUTPUT)
+		interest(2)
+		size(40)
+	}
+}
+   </pre>
+   <p>다음은 실제 LCD로 출력하는 코드 작성을 위해 다음과 같은 devCharLCD.c 파일을 만든다.</p>
+   <pre>
+#include &lt;stdio.h>
+#include &lt;string.h>
+#include &lt;stdlib.h>
+
+#include &lt;epicsExport.h>
+#include &lt;devSup.h>
+#include &lt;recSup.h>
+#include &lt;recGbl.h>
+#include &lt;dbAccess.h>
+#include &lt;lcdoutRecord.h>
+
+#include &lt;wiringPi.h>
+#include &lt;lcd.h>
+
+static long init_record(lcdoutRecord *pstrout);
+static long write_lcdout(lcdoutRecord *pstrout);
+
+struct Pin_Info
+{
+  int handle;
+  int bits;
+};
+
+static long init_record(lcdoutRecord *pstrout)
+{
+  struct Pin_Info *pin_info = malloc(sizeof(struct Pin_Info));
+
+  if(wiringPiSetup() == -1)
+    return 1;
+
+  int rows = 2;
+  int cols = 16;
+  int bits = 4;
+  int rs = 4;
+  int strb = 5; 
+  int data[8] = {0,1,2,3,0,0,0,0};
+
+  char *para = pstrout->out.value.instio.string;
+  rows = atoi(strtok(para, " "));
+  cols = atoi(strtok(NULL, " "));
+  bits = atoi(strtok(NULL, " "));
+  rs = atoi(strtok(NULL, " "));
+  strb = atoi(strtok(NULL, " "));
+
+  pinMode(rs, OUTPUT);
+  pinMode(strb, OUTPUT);
+
+  int i;
+  for(i=0; i<bits; i++)
+  {
+    data[i] = atoi(strtok(NULL, " "));
+    pinMode(data[i], OUTPUT);
+  }
+
+  int handle = -1;
+
+  handle = lcdInit(rows,cols,bits,rs,strb,data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7]);
+
+  pin_info->bits = bits;
+  pin_info->handle = handle;
+
+  pstrout->dpvt = pin_info;
+
+  return 0;
+}
+
+static long write_lcdout(lcdoutRecord *pstrout)
+{
+  struct Pin_Info *pin_info = pstrout->dpvt;
+
+  int handle = pin_info->handle;
+  int bits = pin_info->bits;
+
+  lcdHome(handle);
+  lcdClear(handle);
+
+  int dirs = pstrout->dirs;
+
+  if(dirs == 1)
+  {
+    char *val = pstrout->val;
+
+    lcdPuts(handle, val);
+  }
+  else
+  { 
+    double inpa = 0.0;
+    double inpb = 0.0;
+    double inpc = 0.0;
+    double inpd = 0.0;
+
+    long status;
+    status = dbGetLink(&(pstrout->inpa), DBF_DOUBLE, &inpa, 0, 0);
+    status = dbGetLink(&(pstrout->inpb), DBF_DOUBLE, &inpb, 0, 0);
+    status = dbGetLink(&(pstrout->inpc), DBF_DOUBLE, &inpc, 0, 0);
+    status = dbGetLink(&(pstrout->inpd), DBF_DOUBLE, &inpd, 0, 0);
+
+    char *stra = pstrout->stra;
+    char *strb = pstrout->strb;
+    char *strc = pstrout->strc;
+    char *strd = pstrout->strd;
+
+    char *unia = pstrout->unia;
+    char *unib = pstrout->unib;
+    char *unic = pstrout->unic;
+    char *unid = pstrout->unid;
+
+    lcdPosition(handle, 0,0);
+    lcdPrintf(handle, "%s%.2f%s", stra, inpa, unia);
+
+    lcdPosition(handle, 0,1);
+    lcdPrintf(handle, "%s%.2f%s", strb, inpb, unib);
+
+    if(bits > 2)
+    { 
+      lcdPosition(handle, 0,2);
+      lcdPrintf(handle, "%s%.2f%s", strc, inpc, unic);
+
+      lcdPosition(handle, 0,3);
+      lcdPrintf(handle, "%s%.2f%s", strd, inpd, unid);
+    }
+  }
+
+  return 0;
+}
+
+struct
+{
+  long num;
+  DEVSUPFUN     report;
+  DEVSUPFUN     init;
+  DEVSUPFUN     init_record;
+  DEVSUPFUN     get_ioint_info;
+  DEVSUPFUN     write_stringout;
+  DEVSUPFUN     special_linconv;
+} devLcdout = {
+  6,
+  NULL,
+  NULL,
+  init_record,
+  NULL,
+  write_lcdout,
+  NULL
+};
+
+epicsExportAddress(dset,devLcdout);
+   </pre>
+   <p>
+      devCharLCD.c 코드는 크게 초기화를 위한 init_record와 LCD로 값을 출력하는 
+      write_lcdout 함수로 이루어져 있다.
+   </p>
+   <p>
+      init_record 에서는 OUT field에서 입력받은 문자열을 순서대로 자른 후 정수로 변환하여
+      각각의 변수에 저장한다. 이 변수들은 초기화를 하기 위한 값으로 다음과 같다.
+   </p>
+   <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows: LCD 가로 라인 수</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols: LCD 세로 칸 수</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bits: bit 수 (LCD1602는 4bit, LCD1604는 8bit)</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rs: </br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strb: </br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data: Data Pin이 연결된 GPIO 번호(4bit는 뒤쪽 4개, 8bit는 8개)</br>
+   </p>
+   <p> 
+      각 변수들을 통해 lcdInit함수는 LCD 장치에 대한 초기화를 수행한다. handle 은 
+      LCD 장치에 접근하기 위한 인자로 다수의 장치가 연결되어 있을 경우 handle을 통해 장치를
+      구별 한다.
+   </p>
+   <p>
+      write_lcdout 에서는 실제 LCD 장치에 출력 값을 설정하는 코드로 lcdHome과 lcdClear
+      함수를 통해 초기 화면을 설정한다. 다음은 출력을 위한 부분으로 dirs 변수를 통해 2가지
+      출력방식으로 나누어 진다. dir=1 일경우 사용자가 입력한 문자열을 LCD로 바로 출력하는데
+      lcdPuts 함수가 사용된다. dir이 다른 값을 가지면 PV Link를 통해 입력되는 PV 값들을 LCD로
+      출력하는데 dbGetLink 함수를 통해 다른 Record의 PV 값을 읽어온다. 각각의 PV 값은
+      lcdPrintf 함수를 통해 LCD로 출력되는데 lcdPosition 함수를 사용하여  LCD에 출력되는 
+      위치를 다음 Line로 변경한다.
+   </p>
+   <p>
+      다음이 앞서 작성한 record와 device 코드를 연결시켜 주기 위한 devCharLCD.dbd 파일을
+      만든다.
+   </p>
+   <pre>
+device(lcdout, INST_IO, devLcdout, "HD44780U")
+   </pre>
+   <p>
+      device는 순서대로 Record Type, Link Type, Device Support Struct, Device Type을 인자로
+      각각의 의미는 다음과 같다.
+   </p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Record Type: 사용하는 Record 이름, 여기서는 새로만든 lcdout을 사용한다.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Link Type: EPICS Base에 정의된 Link Type중 하나, INST_IO는 문자열 하나를 받는 Link Type 이다.
+   </br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Device Support Struct: 함수 주소를 가진 구조체 이름, devCharLCD.c에서 사용한 구조체 이름을 적는다.</br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Device Type: DTYP field에서 사용할 이름, 보통 Protocol 또는 Device 이름을 사용한다.</br>
+   </p>
+   <p>모든 코드가 준비되었으면 Makefile을 열어 파일들을 추가해주고 make를 실행한다.</p>
+   <pre>
+TOP=../..
+
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
+
+#=============================
+# Build the IOC application
+
+PROD_IOC = charlcd
+<span class="insert">DBDINC += lcdoutRecord</span>
+
+# charlcd.dbd will be created and installed
+DBD += charlcd.dbd
+
+# charlcd.dbd will be made up from these files:
+charlcd_DBD += base.dbd<span class="insert">charlcd_DBD += lcdoutRecord.dbd</span>
+<span class="insert">charlcd_DBD += lcdoutRecord.dbd</span>
+<span class="insert">charlcd_DBD += devCharLCD.dbd</span>
+
+# Include dbd files from all support applications:
+#charlcd_DBD += xxx.dbd
+
+# Add all the support libraries needed by this IOC
+#charlcd_LIBS += xxx
+
+# charlcd_registerRecordDeviceDriver.cpp derives from glassman.dbd
+charlcd_SRCS += glassman_registerRecordDeviceDriver.cpp
+<span class="insert">charlcd_SRCS += lcdoutRecord.c</span>
+<span class="insert">charlcd_SRCS += devCharLCD.c</span>
+
+# Build the main IOC entry point on workstation OSs.
+charlcd_SRCS_DEFAULT += charlcdMain.cpp
+charlcd_SRCS_vxWorks += -nil-
+
+# Add support from base/src/vxWorks if needed
+#charlcd_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+# Finally link to the EPICS Base libraries
+charlcd_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+#===========================
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/charlcdApp/src $ make
+   </pre>
+   <p>make가 완료되면 bin/linux-arm 폴더에 charlcd 파일이 생성된다.</p>
+   <p>테스트를 위해 charlcdApp/Db 폴더로 이동한 후 처음 테스트 하고자 했던 charlcd.db 파일을 만든다.</p>
+   <pre>
+record(ao, "LCD:A")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:B")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:C")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:D")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(lcdout, "LCD:STR")
+{
+  field(DTYP, "HD44780U")
+  field(OUT, "@2 16 4 28 29 26 21 22 23")
+  field(DIRS, "1")
+  field(INPA, "LCD:A")
+  field(STRA, "StringA")
+  field(UNIA, "Ua")
+  field(INPB, "LCD:B")
+  field(STRB, "StringB")
+  field(UNIB, "Ub")
+  field(INPC, "LCD:C")
+  field(STRC, "StringC")
+  field(UNIC, "Uc")
+  field(INPD, "LCD:D")
+  field(STRD, "StringD")
+  field(UNID, "Ud")
+
+}
+  </pre>
+  <p>Makefile에 charlcd.db를 추가한 후 make를 실행한다.</p>
+  <pre>
+TOP=../..
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+#----------------------------------------------------
+#  Optimization of db files using dbst (DEFAULT: NO)
+#DB_OPT = YES
+
+#----------------------------------------------------
+# Create and install (or just install) into /db
+# databases, templates, substitutions like this
+#DB += xxx.db
+<span class="insert">DB += charlcd.db</span>
+
+#----------------------------------------------------
+# If .db template is not named *.template add
+# _template = 
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+  </pre>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/charlcdApp/Db/ $ make
+  </pre>
+  <p>make가 완료되면 최상의 폴더에 db폴더가 만들어지고 그 안에 charlcd.db파일이 생성된다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/db/ $ ls
+charlcd.db
+  </pre>
+  <p>이제 ioc를 실행하기 위해 iocBoot/ioccharlcd 폴더로 이동한다.</p>
+  <p>st.cmd파일을 수정하기 전 make를 실행해서 envPaths파일을 만든다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/iocBoot/ioccharlcd/ $ make
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/iocBoot/ioccharlcd/ $ ls
+envPaths  Makefile  st.cmd
+  </pre>
+  <p>이제 st.cmd 파일을 열어 charlcd.db 레코드를 추가 한다.</p>
+  <pre>
+#!../../bin/linux-arm/charlcd
+
+## You may have to change dht11 to something else
+## everywhere it appears in this file
+
+&lt; envPaths
+
+cd ${TOP}
+
+## Register all support components
+dbLoadDatabase "dbd/charlcd.dbd"
+charlcd_registerRecordDeviceDriver pdbbase
+
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+<span class="insert">dbLoadRecords("db/charlcd.db")</span>
+
+cd ${TOP}/iocBoot/${IOC}
+iocInit
+
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+  </pre>
+  <p>최종적으로 st.cmd 파일을 실행파일로 변경한 후 실행한다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/iocBoot/ioccharlcd $ chmod 755 st.cmd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/charlcd/iocBoot/ioccharlcd $ sudo ./st.cmd
+#!../../bin/linux-arm/charlcd
+## You may have to change charlcd to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-arm")
+epicsEnvSet("IOC","ioccharlcd")
+epicsEnvSet("TOP","/home/pi/epics/R3.14.12.4/siteApps/charlcd")
+epicsEnvSet("EPICS_BASE","/home/pi/epics/R3.14.12.4/base")
+cd /home/pi/epics/R3.14.12.4/siteApps/charlcd
+## Register all support components
+dbLoadDatabase "dbd/charlcd.dbd"
+charlcd_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+dbLoadRecords("db/charlcd.db")
+cd /home/pi/epics/R3.14.12.4/siteApps/ds1820/iocBoot/ioccharlcd
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.4 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Aug 29 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+epics&gt;
+  </pre>
+  </br>
+  <h2>라이브러리 파일로 만들기</h2>
+  <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+  <p>siteLibs 폴더로 이동한 후 raspCharLCDLib 폴더를 하나 만든다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs $ mkdir raspCharLCDLib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs $ cd raspCharLCDLib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspCharLCDLib $
+  </pre>
+  <p>raspCharLCDLib 폴더안에 Db, src 폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+  <pre>
+Makefile
+
+        TOP = ..
+        include $(TOP)/configure/CONFIG
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+        DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+        include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 devCharLCD.c devCharLCD.dbd lcdoutRecord.c lcdoutRecord.dbd 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspCharLCDLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/charlcd/charlcdApp/src/devCharLCD.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspCharLCDLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/charlcd/charlcdApp/src/devCharLCD.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspCharLCDLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/charlcd/charlcdApp/src/lcdoutRecord.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteLibs/raspCharLCDLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/charlcd/charlcdApp/src/lcdoutRecord.dbd ./
+   </pre>
+   <p>Makefile 만들고 다음과 같이 작성한다.</p>
+   <pre>
+TOP = ../..
+include $(TOP)/configure/CONFIG
+
+LIBRARY	+= raspCharLCD
+DBDINC	+= lcdoutRecord
+DBD	+= lcdoutRecord.dbd devCharLCD.dbd
+
+raspCharLCD_SRCS += lcdoutRecord.c devCharLCD.c
+
+include $(TOP)/configure/RULES
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-arm 폴더안에 libraspCharLCD.so 파일이 만들어 진다.
+   </p>
+  <p>Library에 대한 db파일 제공을 위해 raspCharLCDLibs/Db폴더로 이동한 후 다음과 같은 charlcd.db파일만든다.</p>
+   <pre>
+record(ao, "LCD:A")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:B")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:C")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(ao, "LCD:D")
+{
+  field(FLNK, "LCD:STR")
+}
+
+record(lcdout, "LCD:STR")
+{
+  field(DTYP, "HD44780U")
+  field(OUT, "@2 16 4 28 29 26 21 22 23")
+  field(DIRS, "1")
+  field(INPA, "LCD:A")
+  field(STRA, "StringA")
+  field(UNIA, "Ua")
+  field(INPB, "LCD:B")
+  field(STRB, "StringB")
+  field(UNIB, "Ub")
+  field(INPC, "LCD:C")
+  field(STRC, "StringC")
+  field(UNIC, "Uc")
+  field(INPD, "LCD:D")
+  field(STRD, "StringD")
+  field(UNID, "Ud")
+
+}
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+TOP =../..
+include $(TOP)/configure/CONFIG
+DB += charlcd.db
+include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 charlcd.db파일이 생성된다.</p>
+   <p>Library를 이용한 LCD1604 테스트는 EPICS Application에 있는 <a href="appRaspLCD1604.html">LCD1604 Display</a>를 참고하기 바란다.</p>
+  </section>
+ </body>
+</html>

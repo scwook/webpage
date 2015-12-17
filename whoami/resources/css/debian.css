@@ -1,0 +1,33 @@
+@import url("common.css");
+
+pre{
+        background:#7A28A3;
+        padding-left:10px;
+        padding-top:10px;
+/*        font-family:"Nanum Gothic", serif;
+        font-size:15px;
+*/
+}
+
+th{
+        background:#8A00B8;
+}
+
+td{
+        background:#9900CC;
+        height:30px;
+        padding-left:10px;
+}
+
+.shell {
+        background:black;
+}
+
+.prom {
+        color:#7CFC00;
+}
+
+.insert {
+        color:red;
+}
+

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/raspberry.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#BC1142; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+   <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="de_side de_menu">
+    <ul>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
+    </ul>
+  </nav>
+ <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+  <h1>I2C Configuration</h1>
+  <p>
+     I2C(Inter-Integrated Circuit)는 필립스에서 개발한 통신 프로토콜이며,  클럭 동기화를 위한 SCL(Serial Clock)과 
+     데이터 전송을 위한 SDA(Serial Data)로 구성되어 있다. I2C는 속도가 느리지만 하나의 버스에 많은 수의 장치를 
+     연결할 수 있는 장점이 있다.
+  </p>
+  <p>
+     Raspberry Pi는 2개의 I2C Port를 지원하는데 이를 사용하기 위해서는 I2C를 활성화 시켜줘야 된다. 우선 Configuration Tool을 실행한 후 Advanced Options을 선택한다.
+  </p>
+  <a href="../resources/images/raspberry/i2c_config1.png" data-lightbox="example-1"><img src="../resources/images/raspberry/i2c_config1.png" width="75%" height="75%" /></a>
+  <p>I2C를 선택한다</p>
+  <a href="../resources/images/raspberry/i2c_config2.png" data-lightbox="example-1"><img src="../resources/images/raspberry/i2c_config2.png" width="75%" height="75%" /></a>
+  <p>Yes를 선택한 후 재부팅한다.</p>
+  <a href="../resources/images/raspberry/i2c_config3.png" data-lightbox="example-1"><img src="../resources/images/raspberry/i2c_config3.png" width="50%" height="50%" /></a>
+  <p>부팅이 완료되면 /etc/modules 파일을 열어 i2c-dev 라인을 추가한다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ sudo nano /etc/modules
+  </pre>
+  <pre>
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+# Parameters can be specified after the module name.
+
+snd-bcm2835
+<span class="insert">i2c-dev</span>
+  </pre>
+  <p>설정을 마치고 재부팅하면 i2c를 사용할 수 있다.</p>
+  <p> 테스트를 위해 i2c-tools를 설치하자</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ sudo aptitute install i2c-tools
+  </pre>
+  <p>설치가 완료되면 i2cdetect 명령어를 통해 연결된 Device의 주소를 알 수 있다.</p>
+  <p>다음은 BME280 Sensor를 연결했을 경우 출력되는 주소이다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> sudo i2cdetect -y 1
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- 76 --  
+  </pre>
+  </section>
+ </body>
+</html>

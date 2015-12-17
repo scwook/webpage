@@ -1,0 +1,1368 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="de_side de_menu">
+    <ul>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
+    </ul>
+  </nav>
+ <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+  <h1>SHT7x Sensor Library Development for Raspberry Pi</h1>
+  <p>
+     본 문서는 SHT71, SHT75 Sensor에 대한 EPICS Library 개발을 목표로 한다.
+  </p>
+  <p>테스트를 위한 하드웨어 구성은 다음과 같다. </p>
+  <ul>
+   <li>Raspberry Pi 2 Model B</li>
+   <li>SHT71 Temperature & Humidity Sensor</li>
+   <li>10k Ohme 저항</li>
+  </ul>
+<a href="../resources/images/raspberry/sht71_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/sht71_test.png" width="50%" height="50%" /></a>
+  <p>최종 목표는 다음과 같은 sht7x.db를 만들어 온도 및 습도 값을 읽는 것이다.</p>
+  <pre>
+record(sht, "SHT7x:SHT")
+{
+  field(DTYP, "SHT71")
+  field(INP, "@4 5")
+  field(SCAN, "1 second")
+  field(FLNK, "SHT7x:FAN")
+}
+
+record(fanout, "SHT7x:FAN")
+{
+  field(LNK1, "SHT7x:TEM")
+  field(LNK2, "SHT7x:HUM")
+}
+
+record(calc, "SHT7x:TEM")
+{
+  field(INPA, "SHT7x:SHT.TEM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "SHT7x:HUM")
+{
+  field(INPA, "SHT7x:SHT.HUM")
+  field(CALC, "A")
+  field(PREC, "2")
+}  
+  </pre>
+  <p>
+     위 DB에서 새롭게 정의된 sht record type은 온도 값을 나타내는 TEM field와 습도 값을 
+     나타내는 HUM field를 가지고 있다. 이러한 2개의 field는 fanout을 통해 각각 SHT7x:TEM 과 
+     SHT7x:HUM PV로 분리되어 읽어 진다.
+  </p>
+  <p>SHT71 과 SHT75 Sensor는 동기화를 위한 SCK 와 데이터 전송을 위한 DATA 선으로 구성되어
+     있으며 Raspberry Pi의 GPIO와 연결된다. 
+  <p>GPIO 사용을 위해 wiringPi를 설치한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ git clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>파일 다운로드가 완료되면 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/wiringPi$ ./build
+   </pre>
+   <p>
+      빌드가 완료되면 기본적인 준비가 끝이난다. 다음은 EPICS IOC를 만들기 위한 작업으로
+      다음 환경변수를 기본으로 하고 있다.
+   </p>
+   <pre>
+export EPICS_HOST_ARCH=linux-arm
+export EPICS_PATH=/home/pi/epics/R3.14.12.5
+export EPICS_BASE=/home/pi/epics/R3.14.12.5/base
+export EPICS_EXTENSIONS=/home/pi/epics/R3.14.12.5/extensions
+
+export EPICS_SYNAPPS=/home/pi/epics/R3.14.12.5/epicsLibs/synApps_5_8/support
+export RAON_SITELIBS=/home/pi/epics/R3.14.12.5/siteLibs
+export RAON_SITEAPPS=/home/pi/epics/R3.14.12.5/siteApps
+   </pre>
+   <p>siteApps안에 폴더를 만든 후 Base Application을 생성한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> cd ../epics/R3.14.12.5/siteApps
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps $ mkdir sht7x
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps $ cd sht7x
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x $ makeBaseApp.pl -t ioc sht7x
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x $ makeBaseApp.pl -i -t ioc sht7x
+
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    sht7x
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name?
+
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x $ ls
+conigure  sht7xApp  iocBoot Makefile
+   </pre>
+   <p>코드 작성을 위해 sht7xApp/src 폴더로 이동한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x $ cd sht7xApp/src
+   </pre>
+   <p>sht이름을 가진 새로운 Record를 만들기 위해 shtRecord.c 파일을 만들고 다음 코드를 작성한다.</p>
+   <pre>
+/* shtRecord.c */
+/* Example record support module */
+  
+#include &lt;stddef.h>
+#include &lt;stdlib.h>
+#include &lt;stdio.h>
+#include &lt;string.h>
+
+#include "epicsMath.h"
+#include "alarm.h"
+#include "dbAccess.h"
+#include "recGbl.h"
+#include "dbEvent.h"
+#include "dbDefs.h"
+#include "dbAccess.h"
+#include "devSup.h"
+#include "errMdef.h"
+#include "recSup.h"
+#include "special.h"
+#define GEN_SIZE_OFFSET
+#include "shtRecord.h"
+#undef  GEN_SIZE_OFFSET
+#include "epicsExport.h"
+
+/* Create RSET - Record Support Entry Table */
+#define report NULL
+#define initialize NULL
+static long init_record();
+static long process();
+#define special NULL
+#define get_value NULL
+#define cvt_dbaddr NULL
+#define get_array_info NULL
+#define put_array_info NULL
+static long get_units();
+static long get_precision();
+#define get_enum_str NULL
+#define get_enum_strs NULL
+#define put_enum_str NULL
+static long get_graphic_double();
+static long get_control_double();
+static long get_alarm_double();
+ 
+rset shtRSET={
+	RSETNUMBER,
+	report,
+	initialize,
+	init_record,
+	process,
+	special,
+	get_value,
+	cvt_dbaddr,
+	get_array_info,
+	put_array_info,
+	get_units,
+	get_precision,
+	get_enum_str,
+	get_enum_strs,
+	put_enum_str,
+	get_graphic_double,
+	get_control_double,
+	get_alarm_double
+};
+epicsExportAddress(rset,shtRSET);
+
+typedef struct shtset { /* sht input dset */
+	long		number;
+	DEVSUPFUN	dev_report;
+	DEVSUPFUN	init;
+	DEVSUPFUN	init_record; /*returns: (-1,0)=>(failure,success)*/
+	DEVSUPFUN	get_ioint_info;
+	DEVSUPFUN	read_sht;
+}shtdset;
+
+static void checkAlarms(shtRecord *prec);
+static void monitor(shtRecord *prec);
+
+static long init_record(void *precord,int pass)
+{
+    shtRecord	*prec = (shtRecord *)precord;
+    shtdset	*pdset;
+    long	status;
+
+    if (pass==0) return(0);
+
+    if(!(pdset = (shtdset *)(prec->dset))) {
+	recGblRecordError(S_dev_noDSET,(void *)prec,"sht: init_record");
+	return(S_dev_noDSET);
+    }
+    /* must have read_sht function defined */
+    if( (pdset->number < 5) || (pdset->read_sht == NULL) ) {
+	recGblRecordError(S_dev_missingSup,(void *)prec,"sht: init_record");
+	return(S_dev_missingSup);
+    }
+
+    if( pdset->init_record ) {
+	if((status=(*pdset->init_record)(prec))) return(status);
+    }
+    return(0);
+}
+
+static long process(void *precord)
+{
+	shtRecord	*prec = (shtRecord *)precord;
+	shtdset		*pdset = (shtdset *)(prec->dset);
+	long		 status;
+	unsigned char    pact=prec->pact;
+
+	if( (pdset==NULL) || (pdset->read_sht==NULL) ) {
+		prec->pact=TRUE;
+		recGblRecordError(S_dev_missingSup,(void *)prec,"read_sht");
+		return(S_dev_missingSup);
+	}
+
+	/* pact must not be set until after calling device support */
+	status=(*pdset->read_sht)(prec);
+	/* check if device support set pact */
+	if ( !pact && prec->pact ) return(0);
+	prec->pact = TRUE;
+
+	recGblGetTimeStamp(prec);
+	/* check for alarms */
+	checkAlarms(prec);
+	/* check event list */
+	monitor(prec);
+	/* process the forward scan link record */
+        recGblFwdLink(prec);
+
+	prec->pact=FALSE;
+	return(status);
+}
+
+static long get_units(DBADDR *paddr, char *units)
+{
+    shtRecord	*prec=(shtRecord *)paddr->precord;
+
+    strncpy(units,prec->egu,DB_UNITS_SIZE);
+    return(0);
+}
+
+static long get_precision(DBADDR *paddr, long *precision)
+{
+    shtRecord	*prec=(shtRecord *)paddr->precord;
+
+    *precision = prec->prec;
+    if(paddr->pfield == (void *)&prec->val) return(0);
+    recGblGetPrec(paddr,precision);
+    return(0);
+}
+
+static long get_graphic_double(DBADDR *paddr,struct dbr_grDouble *pgd)
+{
+    shtRecord	*prec=(shtRecord *)paddr->precord;
+    int		fieldIndex = dbGetFieldIndex(paddr);
+
+    if(fieldIndex == shtRecordVAL
+    || fieldIndex == shtRecordHIHI
+    || fieldIndex == shtRecordHIGH
+    || fieldIndex == shtRecordLOW
+    || fieldIndex == shtRecordLOLO
+    || fieldIndex == shtRecordHOPR
+    || fieldIndex == shtRecordLOPR) {
+        pgd->upper_disp_limit = prec->hopr;
+        pgd->lower_disp_limit = prec->lopr;
+    } else recGblGetGraphicDouble(paddr,pgd);
+    return(0);
+}
+
+static long get_control_double(DBADDR *paddr,struct dbr_ctrlDouble *pcd)
+{
+    shtRecord	*prec=(shtRecord *)paddr->precord;
+    int		fieldIndex = dbGetFieldIndex(paddr);
+
+    if(fieldIndex == shtRecordVAL
+    || fieldIndex == shtRecordHIHI
+    || fieldIndex == shtRecordHIGH
+    || fieldIndex == shtRecordLOW
+    || fieldIndex == shtRecordLOLO) {
+	pcd->upper_ctrl_limit = prec->hopr;
+	pcd->lower_ctrl_limit = prec->lopr;
+    } else recGblGetControlDouble(paddr,pcd);
+    return(0);
+}
+
+static long get_alarm_double(DBADDR *paddr,struct dbr_alDouble *pad)
+{
+    shtRecord	*prec=(shtRecord *)paddr->precord;
+    int		fieldIndex = dbGetFieldIndex(paddr);
+
+    if(fieldIndex == shtRecordVAL) {
+        pad->upper_alarm_limit = prec->hhsv ? prec->hihi : epicsNAN;
+        pad->upper_warning_limit = prec->hsv ? prec->high : epicsNAN;
+        pad->lower_warning_limit = prec->lsv ? prec->low : epicsNAN;
+        pad->lower_alarm_limit = prec->llsv ? prec->lolo : epicsNAN;
+    } else recGblGetAlarmDouble(paddr,pad);
+    return(0);
+}
+
+static void checkAlarms(shtRecord *prec)
+{
+	double		val;
+	float		hyst, lalm, hihi, high, low, lolo;
+	unsigned short	hhsv, llsv, hsv, lsv;
+
+	if(prec->udf == TRUE ){
+		recGblSetSevr(prec,UDF_ALARM,INVALID_ALARM);
+		return;
+	}
+	hihi = prec->hihi; lolo = prec->lolo; high = prec->high; low = prec->low;
+	hhsv = prec->hhsv; llsv = prec->llsv; hsv = prec->hsv; lsv = prec->lsv;
+	val = prec->val; hyst = prec->hyst; lalm = prec->lalm;
+
+	/* alarm condition hihi */
+	if (hhsv && (val >= hihi || ((lalm==hihi) && (val >= hihi-hyst)))){
+	        if (recGblSetSevr(prec,HIHI_ALARM,prec->hhsv)) prec->lalm = hihi;
+		return;
+	}
+
+	/* alarm condition lolo */
+	if (llsv && (val <= lolo || ((lalm==lolo) && (val <= lolo+hyst)))){
+	        if (recGblSetSevr(prec,LOLO_ALARM,prec->llsv)) prec->lalm = lolo;
+		return;
+	}
+
+	/* alarm condition high */
+	if (hsv && (val >= high || ((lalm==high) && (val >= high-hyst)))){
+	        if (recGblSetSevr(prec,HIGH_ALARM,prec->hsv)) prec->lalm = high;
+		return;
+	}
+
+	/* alarm condition low */
+	if (lsv && (val <= low || ((lalm==low) && (val <= low+hyst)))){
+	        if (recGblSetSevr(prec,LOW_ALARM,prec->lsv)) prec->lalm = low;
+		return;
+	}
+
+	/* we get here only if val is out of alarm by at least hyst */
+	prec->lalm = val;
+	return;
+}
+
+static void monitor(shtRecord *prec)
+{
+	unsigned short	monitor_mask;
+	double		delta;
+
+        monitor_mask = recGblResetAlarms(prec);
+	/* check for value change */
+	delta = prec->mlst - prec->val;
+	if(delta<0.0) delta = -delta;
+	if (delta > prec->mdel) {
+		/* post events for value change */
+		monitor_mask |= DBE_VALUE;
+		/* update last value monitored */
+		prec->mlst = prec->val;
+	}
+
+	/* check for archive change */
+	delta = prec->alst - prec->val;
+	if(delta<0.0) delta = -delta;
+	if (delta > prec->adel) {
+		/* post events on value field for archive change */
+		monitor_mask |= DBE_LOG;
+		/* update last archive value monitored */
+		prec->alst = prec->val;
+	}
+
+	/* send out monitors connected to the value field */
+	if (monitor_mask){
+		db_post_events(prec,&prec->val,monitor_mask);
+	}
+	return;
+}
+   </pre>
+   <p>
+      위 코드를 만드는 방법 중 하나는 ai Record를 이용하는 것이다. 온습도 값은 double형 type의
+      값을 가지기 때문에 EPICS Base로 있는 ai Record를 사용하면 쉽게 원하는 Record를 만들 수
+      있다. 따라서 epics/R3.14.12.5/base/src/rec에 위치해 있는 aiRecord.c 파일을 현재 위치로
+      복사한 후 이름을 shtRecord.c로 변경한다. 그리고 파일을 열어 ai를 sht로 바꾸면 위와 
+      같은 코드가 만들어 진다.
+   </p>
+   <p>
+      이와 같이 만들어진 sht Record에 온도 및 습도값을 나타내기 위해서는 2개 새로운 field를         추가해야 한다. 가장 간단한 방법은 앞서 진행했던 것과 동일하게 aiRecord.dbd를 이용하는 
+      것이다. epics/R3.14.12.5/base/src/rec에 위치한 aiRecord.dbd 파일을 현재 위치로 복사한 후      shtRecord.dbd로 이름을 바꾼다. 그리고 파일을 열어 TEM field와 HUM field를 추가한다.
+   </p>
+   <pre>
+recordtype(sht) {
+	include "dbCommon.dbd" 
+	field(VAL,DBF_DOUBLE) {
+		prompt("Current Sensor Value")
+		asl(ASL0)
+		pp(TRUE)
+	}
+	field(INP,DBF_INLINK) {
+		prompt("Input Specification")
+		promptgroup(GUI_INPUTS)
+		special(SPC_NOMOD)
+		interest(1)
+	}
+	field(PREC,DBF_SHORT) {
+		prompt("Display Precision")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(EGU,DBF_STRING) {
+		prompt("Engineering Units")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+		size(16)
+	}
+	field(HOPR,DBF_FLOAT) {
+		prompt("High Operating Range")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(LOPR,DBF_FLOAT) {
+		prompt("Low Operating Range")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(HIHI,DBF_FLOAT) {
+		prompt("Hihi Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(LOLO,DBF_FLOAT) {
+		prompt("Lolo Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(HIGH,DBF_FLOAT) {
+		prompt("High Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(LOW,DBF_FLOAT) {
+		prompt("Low Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(HHSV,DBF_MENU) {
+		prompt("Hihi Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(LLSV,DBF_MENU) {
+		prompt("Lolo Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(HSV,DBF_MENU) {
+		prompt("High Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(LSV,DBF_MENU) {
+		prompt("Low Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(HYST,DBF_DOUBLE) {
+		prompt("Alarm Deadband")
+		promptgroup(GUI_ALARMS)
+		interest(1)
+	}
+	field(ADEL,DBF_DOUBLE) {
+		prompt("Archive Deadband")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(MDEL,DBF_DOUBLE) {
+		prompt("Monitor Deadband")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(LALM,DBF_DOUBLE) {
+		prompt("Last Value Alarmed")
+		special(SPC_NOMOD)
+		interest(3)
+	}
+	field(ALST,DBF_DOUBLE) {
+		prompt("Last Value Archived")
+		special(SPC_NOMOD)
+		interest(3)
+	}
+	field(MLST,DBF_DOUBLE) {
+		prompt("Last Val Monitored")
+		special(SPC_NOMOD)
+		interest(3)
+	}
+<span class="insert">        field(TEM,DBF_DOUBLE) {
+                prompt("Temperautre Value")
+        }
+        field(HUM,DBF_DOUBLE) {
+                prompt("Humidity Value")
+        }
+</span>
+}
+   </pre>
+   <p>
+      sht Record가 만들어 졌으면 Record Process에 의해 호출 되는 Device Support 코드를
+      만들어야 한다. 결과적으로 Device Support 코드는 Sensor로 부터 값을 읽고 Record에 
+      전달하는 코드로 구성이 되어 있다. 코드 작성을 위해 devSHT7x.c 파일을 만들고 다음과 
+      같이 작성한다.
+   </p>
+   <pre>
+#include &lt;stdio.h>
+#include &lt;string.h>
+#include &lt;stdlib.h>
+
+#include &lt;epicsExport.h>
+#include &lt;devSup.h>
+#include &lt;recSup.h>
+#include &lt;recGbl.h>
+#include &lt;dbAccess.h>
+#include &lt;callback.h>
+#include &lt;shtRecord.h>
+
+#include "RPi_SHT1x.h"
+
+static long init_record(shtRecord *psht);
+static long read_sht(shtRecord *psht);
+
+typedef struct Sht_Info
+{
+  CALLBACK *callback;
+
+  int spin;
+  int dpin;
+
+  double temp;
+  double humi;
+
+}SHT_INFO;
+
+void readSHT7x(SHT_INFO *sht_info);
+
+
+static void myCallback(CALLBACK *pcallback)
+{
+  shtRecord *precord;
+  struct rset *prset;
+
+  callbackGetUser(precord, pcallback);
+  prset = (struct rset *)(precord->rset);
+
+  dbScanLock((dbCommon*)precord);
+  (*prset->process)(precord);
+  dbScanUnlock((dbCommon*)precord);
+}
+
+static long init_record(shtRecord *psht)
+{
+  SHT_INFO *sht_info = malloc(sizeof(SHT_INFO));
+  CALLBACK *pcallback = (CALLBACK *)(calloc(1, sizeof(CALLBACK)));
+
+  callbackSetCallback(myCallback, pcallback);
+  callbackSetPriority(priorityLow, pcallback);
+  callbackSetUser(psht, pcallback);
+
+  if(wiringPiSetup() == -1)
+    return 1;
+
+  int spin = 0;
+  int dpin = 1;
+
+  char *para = psht->inp.value.instio.string;
+  spin = atoi(strtok(para, " "));
+  dpin = atoi(strtok(NULL, " "));
+
+  sht_info->spin = spin;
+  sht_info->dpin = dpin;
+  sht_info->callback = pcallback;
+
+  psht->dpvt = sht_info;
+
+  return 0;
+}
+
+static long read_sht(shtRecord *psht)
+{
+  SHT_INFO *sht_info = psht->dpvt;
+  CALLBACK *pcallback = (CALLBACK *)sht_info->callback;
+
+  if(psht->pact)
+  {
+    readSHT7x(sht_info);
+
+    psht->val = sht_info->temp;
+    psht->tem = sht_info->temp;
+    psht->hum = sht_info->humi;
+
+    psht->udf = FALSE;
+
+    return 2;
+  }
+  else
+  {
+    psht->pact = TRUE;
+    callbackRequestDelayed(pcallback, 0.5);
+
+    return 0;
+  }
+
+}
+
+struct
+{
+  long num;
+  DEVSUPFUN     report;
+  DEVSUPFUN     init;
+  DEVSUPFUN     init_record;
+  DEVSUPFUN     get_ioint_info;
+  DEVSUPFUN     read_sht;
+  DEVSUPFUN     special_linconv;
+} devShtin = {
+  6,
+  NULL,
+  NULL,
+  init_record,
+  NULL,
+  read_sht,
+  NULL
+};
+
+epicsExportAddress(dset,devShtin);
+
+void readSHT7x(SHT_INFO *sht_info)
+{
+        unsigned char noError = 1;
+        value humi_val,temp_val;
+
+        int spin = sht_info->spin;
+        int dpin = sht_info->dpin;
+
+        // Wait at least 11ms after power-up (chapter 3.1)
+        delay(20); 
+
+        // Set up the SHT1x Data and Clock Pins
+        SHT1x_InitPins(spin, dpin);
+
+        // Reset the SHT1x
+        SHT1x_Reset(spin, dpin);
+
+        // Request Temperature measurement
+        noError = SHT1x_Measure_Start( spin, dpin ,SHT1xMeaT );
+        if (!noError) {
+                printf("Measure Start Error1\n");
+                return;
+                }
+
+        // Read Temperature measurement
+        noError = SHT1x_Get_Measure_Value( spin, dpin, (unsigned short int*) &temp_val.i );
+        if (!noError) {
+                printf("Measure Value Error1\n");
+                return;
+                }
+
+        // Request Humidity Measurement
+        noError = SHT1x_Measure_Start( spin, dpin, SHT1xMeaRh );
+        if (!noError) {
+                printf("Measure Start Error2\n");
+                return;
+                }
+
+        // Read Humidity measurement
+        noError = SHT1x_Get_Measure_Value( spin, dpin, (unsigned short int*) &humi_val.i );
+        if (!noError) {
+                printf("Measure Value Error2\n");
+                return;
+                }
+
+        // Convert intergers to float and calculate true values
+        temp_val.f = (float)temp_val.i;
+        humi_val.f = (float)humi_val.i;
+
+       // Calculate Temperature and Humidity
+        SHT1x_Calc(&humi_val.f, &temp_val.f);
+
+	sht_info->temp = (double)temp_val.f;
+	sht_info->humi = (double)humi_val.f;
+}
+   </pre>
+   <p>
+      devSHT7x.c 코드는 크게 초기화를 위한 init_record와 Sensor로 부터 값을 읽는  
+      read_sht 함수로 이루어져 있다.
+   </p>
+   <p>
+      Iinit_record 에서는 INP field를 통해 전달받은 2개의 GPIO Pin 번호를 정수형으로 변환한다.
+      각각의 Pin은 Sensor와 연결되는 SCK, DATA Pin으로 공백으로 구분되는 하나의 문자열로
+      구성되 있는데 이를 2개의 정수형으로 분리하기 위해 strtok 함수와 atoi 함수를 사용하였다.
+      여기서 strtok 함수는 문자열을 자르는 함수이고 atoi는 문자열을 정수형으로 변환하는 함수
+      이다.
+   </p>
+   <p>
+      read_sht 에서는 Sensor로 부터 값을 읽어 Record에 저장하는데 실제 Sensor로 부터 값을
+      읽는 과정은 readSHT7x 함수에서 진행된다. readSHT7x 함수는 Sensor를 초기화 하는
+      부분과 값을 읽는 부분으로 구성 되어 있으며 외부 Library로 RPi_SHT1x.c를 사용한다.
+   </p>
+   <p>다음은 RPi_SHT.c Library 코드이다.</p>
+   <pre>
+/*
+Raspberry Pi SHT1x communication library.
+By:      John Burns (www.john.geek.nz)
+Date:    14 August 2012
+License: CC BY-SA v3.0 - http://creativecommons.org/licenses/by-sa/3.0/
+
+This is a derivative work based on
+	Name: Nice Guy SHT11 library
+	By: Daesung Kim
+	Date: 04/04/2011
+	Source: http://www.theniceguy.net/2722
+*/
+
+#include "RPi_SHT1x.h"
+
+/* Global variables of the SHT1x sensor */
+unsigned char SHT1x_crc;
+unsigned char SHT1x_status_reg = 0;
+
+void SHT1x_Crc_Check(unsigned char value) 
+{
+	unsigned char i;
+
+	for (i=8; i; i--)
+	{
+		if ((SHT1x_crc ^ value) & 0x80)
+		{
+			SHT1x_crc <<= 1;
+			SHT1x_crc ^= 0x31;
+		}
+		else
+		{
+			SHT1x_crc <<= 1;
+		}
+		value <<=1;
+	}
+}
+
+void SHT1x_InitPins( int spin, int dpin ) 
+{
+	int RPI_GPIO_SHT1x_SCK = spin;
+	int RPI_GPIO_SHT1x_DATA = dpin;
+
+	// SCK line as output but set to low first
+		digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);
+		pinMode(RPI_GPIO_SHT1x_SCK, OUTPUT);
+		digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);
+
+	// DATA to input. External pull up.
+	// Set PORT to 0 => pull data line low by setting port as output
+		pullUpDnControl(RPI_GPIO_SHT1x_DATA, PUD_OFF);
+		digitalWrite(RPI_GPIO_SHT1x_DATA,LOW);
+		pinMode(RPI_GPIO_SHT1x_DATA, OUTPUT);
+		pullUpDnControl(RPI_GPIO_SHT1x_DATA, PUD_OFF);
+		digitalWrite(RPI_GPIO_SHT1x_DATA,LOW);
+}
+
+void SHT1x_Reset(int spin, int dpin) 
+{
+        int RPI_GPIO_SHT1x_SCK = spin;
+        int RPI_GPIO_SHT1x_DATA = dpin;
+
+	// Chapter 3.4
+	unsigned char i;
+	pinMode(RPI_GPIO_SHT1x_DATA, INPUT);
+	SHT1x_DELAY;
+	for (i=9; i; i--)
+	{
+		digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;
+		digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY;
+	}
+	SHT1x_Transmission_Start(spin, dpin);
+	SHT1x_Sendbyte(spin, dpin, SHT1x_RESET);  // Soft reset
+}
+
+void SHT1x_Transmission_Start( int spin, int dpin ) 
+{
+        int RPI_GPIO_SHT1x_SCK = spin;
+        int RPI_GPIO_SHT1x_DATA = dpin;
+
+	// Chapter 3.2
+	digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;
+	digitalWrite(RPI_GPIO_SHT1x_DATA, LOW);
+   	pinMode(RPI_GPIO_SHT1x_DATA, OUTPUT);	SHT1x_DELAY;
+	digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY;
+	digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;
+	pinMode(RPI_GPIO_SHT1x_DATA, INPUT);	SHT1x_DELAY;
+	digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY;
+
+	// Reset crc calculation. Start value is the content of the status register.
+	SHT1x_crc = SHT1x_Mirrorbyte( SHT1x_status_reg & 0x0F );
+}
+
+unsigned char SHT1x_Mirrorbyte(unsigned char value) 
+{
+	unsigned char ret=0, i;
+
+	for (i=0x80; i ; i>>=1)
+	{
+		if(value & 0x01)
+			ret |= i;
+
+		value >>= 1;
+	}
+
+	return ret;
+}
+
+unsigned char SHT1x_Readbyte( int spin, int dpin, unsigned char send_ack ) 
+{
+        int RPI_GPIO_SHT1x_SCK = spin;
+        int RPI_GPIO_SHT1x_DATA = dpin;
+
+	unsigned char mask;
+	unsigned char value = 0;
+
+	// SCK is low here !
+	for(mask=0x80; mask; mask >>= 1 )
+	{
+		digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;  	// SCK hi
+		if( digitalRead(RPI_GPIO_SHT1x_DATA) != 0 )  	// and read data
+			value |= mask;
+
+		digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY; // SCK lo => sensor puts new data
+	}
+
+	/* send ACK if required */
+	if ( send_ack )
+	{
+		digitalWrite(RPI_GPIO_SHT1x_DATA, LOW);
+		pinMode(RPI_GPIO_SHT1x_DATA, OUTPUT);
+		SHT1x_DELAY; // Get DATA line
+	}
+	
+	digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;    // give a clock pulse
+	digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY; 
+	
+	if ( send_ack )
+	{       // Release DATA line
+		pinMode(RPI_GPIO_SHT1x_DATA, INPUT);	SHT1x_DELAY; 
+	}
+
+	return value;
+}
+
+unsigned char SHT1x_Sendbyte( int spin, int dpin, unsigned char value ) 
+{
+        int RPI_GPIO_SHT1x_SCK = spin;
+        int RPI_GPIO_SHT1x_DATA = dpin;
+
+	unsigned char mask;
+	unsigned char ack;
+
+	for(mask = 0x80; mask; mask>>=1)
+	{
+		digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY;
+
+		if( value & mask )
+		{  
+			pinMode(RPI_GPIO_SHT1x_DATA, INPUT); 	SHT1x_DELAY;
+		}
+		else
+		{
+			digitalWrite(RPI_GPIO_SHT1x_DATA, LOW);
+	                pinMode(RPI_GPIO_SHT1x_DATA, OUTPUT);
+			SHT1x_DELAY;
+		}
+
+		digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;  // SCK hi => sensor reads data
+	}
+	digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY;
+
+	// Release DATA line
+	pinMode(RPI_GPIO_SHT1x_DATA, INPUT);	SHT1x_DELAY;
+	digitalWrite(RPI_GPIO_SHT1x_SCK, HIGH);	SHT1x_DELAY;
+
+	ack = 0;
+
+	if(!digitalRead(RPI_GPIO_SHT1x_DATA))
+		ack = 1;
+
+	digitalWrite(RPI_GPIO_SHT1x_SCK, LOW);	SHT1x_DELAY;
+
+	SHT1x_Crc_Check(value);   // crc calculation
+
+	return ack;
+}
+
+unsigned char SHT1x_Measure_Start( int spin, int dpin, SHT1xMeasureType type ) 
+{
+	// send a transmission start and reset crc calculation
+	SHT1x_Transmission_Start(spin, dpin);
+	// send command. Crc gets updated!
+	return SHT1x_Sendbyte( spin, dpin, (unsigned char) type );
+}
+
+unsigned char SHT1x_Get_Measure_Value( int spin, int dpin, unsigned short int * value ) 
+{
+        int RPI_GPIO_SHT1x_SCK = spin;
+        int RPI_GPIO_SHT1x_DATA = dpin;
+
+	unsigned char * chPtr = (unsigned char*) value;
+	unsigned char checksum;
+	unsigned char delay_count=62;  /* delay is 62 * 5ms */
+
+	/* Wait for measurement to complete (DATA pin gets LOW) */
+	/* Raise an error after we waited 250ms without success (210ms + 15%) */
+	while( digitalRead(RPI_GPIO_SHT1x_DATA) )
+	{
+		delayMicroseconds(5000);			// $$$$$$$$$$$$$$$$$$ 1 ms not working $$$$$$$$$$$$$$$$$$$$$$$$
+	
+		delay_count--;
+		if (delay_count == 0)
+			return FALSE;
+	}
+
+	*(chPtr + 1) = SHT1x_Readbyte( spin, dpin, TRUE );  // read hi byte
+	SHT1x_Crc_Check(*(chPtr + 1));  		// crc calculation
+	*chPtr = SHT1x_Readbyte( spin, dpin, TRUE );    	// read lo byte
+	SHT1x_Crc_Check(* chPtr);    			// crc calculation
+
+	checksum = SHT1x_Readbyte( spin, dpin, FALSE );   // crc calculation
+	// compare it.
+	return SHT1x_Mirrorbyte( checksum ) == SHT1x_crc ? TRUE : FALSE;
+}
+
+
+
+//----------------------------------------------------------------------------------------
+void SHT1x_Calc(float *p_humidity ,float *p_temperature)
+//----------------------------------------------------------------------------------------
+{
+	const float C1=-4.0;              		// for 12 Bit
+	const float C2=+0.0405;           		// for 12 Bit
+	const float C3=-0.0000028;        		// for 12 Bit
+	const float T1=+0.01;             		// for 14 Bit @ 5V
+	const float T2=+0.00008;           		// for 14 Bit @ 5V	
+
+	float rh = *p_humidity;             	// rh:      Humidity [Ticks] 12 Bit 
+	float t = *p_temperature;          		// t:       Temperature [Ticks] 14 Bit
+	float rh_lin;                     		// rh_lin:  Humidity linear
+	float rh_true;                    		// rh_true: Temperature compensated humidity
+	float t_C;                        		// t_C   :  Temperature [C]
+
+	t_C = t*0.01 - 40;                  	// calc. temperature from ticks to [C]
+	rh_lin = C3*rh*rh + C2*rh + C1;     	// calc. humidity from ticks to [%RH]
+	rh_true = (t_C-25)*(T1+T2*rh)+rh_lin;   // calc. temperature compensated humidity [%RH]
+	if(rh_true>100)	rh_true=100;       		// cut if the value is outside of
+	if(rh_true<0.1)	rh_true=0.1;       		// the physical possible range
+	*p_temperature = t_C;               	// return temperature [C]
+	*p_humidity = rh_true;              	// return humidity[%RH]
+}
+   </pre>
+   <p>다음은 RPi_SHT1x.c 에서 필요한 RPi_SHT1x.h 코드이다.</p>
+   <pre>
+/*
+Raspberry Pi SHT1x communication library.
+By:      John Burns (www.john.geek.nz)
+Date:    14 August 2012
+License: CC BY-SA v3.0 - http://creativecommons.org/licenses/by-sa/3.0/
+
+This is a derivative work based on
+	Name: Nice Guy SHT11 library
+	By: Daesung Kim
+	Date: 04/04/2011
+	Source: http://www.theniceguy.net/2722
+*/
+
+#ifndef RPI_SHT1x_H_
+#define	RPI_SHT1x_H_
+
+// Includes
+#include &lt;wiringPi.h>
+#include &lt;stdio.h>
+
+// Defines
+#define	TRUE	1
+#define	FALSE	0
+
+#define SHT1x_DELAY delayMicroseconds(2)
+
+/* Definitions of all known SHT1x commands */
+#define SHT1x_MEAS_T	0x03			// Start measuring of temperature.
+#define SHT1x_MEAS_RH	0x05			// Start measuring of humidity.
+#define SHT1x_STATUS_R	0x07			// Read status register.
+#define SHT1x_STATUS_W	0x06			// Write status register.
+#define SHT1x_RESET	0x1E			// Perform a sensor soft reset.
+
+/* Enum to select between temperature and humidity measuring */
+typedef enum _SHT1xMeasureType {
+	SHT1xMeaT	= SHT1x_MEAS_T,		// Temperature
+	SHT1xMeaRh	= SHT1x_MEAS_RH		// Humidity
+} SHT1xMeasureType;
+
+typedef union 
+{
+	unsigned short int i;
+	float f;
+} value;
+
+/* Public Functions ----------------------------------------------------------- */
+void SHT1x_Transmission_Start( int spin, int dpin );
+unsigned char SHT1x_Readbyte( int spin, int dpin, unsigned char sendAck );
+unsigned char SHT1x_Sendbyte( int spin, int dpin, unsigned char value );
+void SHT1x_InitPins( int spin, int dpin );
+unsigned char SHT1x_Measure_Start( int spin, int dpin, SHT1xMeasureType type );
+unsigned char SHT1x_Get_Measure_Value(int spin, int dpin, unsigned short int * value );
+void SHT1x_Reset(int spin, int dpin);
+unsigned char SHT1x_Mirrorbyte(unsigned char value);
+void SHT1x_Xrc_check(int pin, unsigned char value);
+void SHT1x_Calc(float *p_humidity ,float *p_temperature);
+#endif
+   </pre>
+   <p>
+      다음은 앞서 작성한 record와 device 코드를 연결시켜 주기 위한 devSHT7x.dbd 파일을
+      만든다.
+   </p>
+   <pre>
+device(sht, INST_IO, devShtin, "SHT71")
+   </pre>
+   <p>
+      device는 순서대로 Record Type, Link Type, Device Support Struct, Device Type을 인자로
+      각각의 의미는 다음과 같다.
+   </p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Record Type: 사용하는 Record 이름, 여기서는 새로만든 sht를 사용한다.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Link Type: EPICS Base에 정의된 Link Type중 하나, INST_IO는 문자열 하나를 받는 Link Type 이다.
+   </br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Device Support Struct: 함수 주소를 가진 구조체 이름, devSHT7x.c에서 사용한 구조체 이름을 적는다.</br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Device Type: DTYP field에서 사용할 이름, 보통 Protocol 또는 Device 이름을 사용한다.</br>
+   </p>
+   <p>모든 코드가 준비되었으면 Makefile을 열어 파일들을 추가해주고 make를 실행한다.</p>
+   <pre>
+TOP=../..
+
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
+
+#=============================
+# Build the IOC application
+
+PROD_IOC = sht7x
+<span class="insert">DBDINC += shtRecord</span>
+
+# sht7x.dbd will be created and installed
+DBD += sht7x.dbd
+
+# sht7x.dbd will be made up from these files:
+sht7x_DBD += base.dbd<span class="insert">charlcd_DBD += shtRecord.dbd</span>
+<span class="insert">sht7x_DBD += shtRecord.dbd</span>
+<span class="insert">sht7x_DBD += devSHT7x.dbd</span>
+
+# Include dbd files from all support applications:
+#sht7x_DBD += xxx.dbd
+
+# Add all the support libraries needed by this IOC
+#sht7x_LIBS += xxx
+
+# sht7x_registerRecordDeviceDriver.cpp derives from glassman.dbd
+sht7x_SRCS += glassman_registerRecordDeviceDriver.cpp
+<span class="insert">sht7x_SRCS += shtRecord.c</span>
+<span class="insert">sht7x_SRCS += devSHT7x.c</span>
+
+# Build the main IOC entry point on workstation OSs.
+sht7x_SRCS_DEFAULT += sht7xMain.cpp
+sht7x_SRCS_vxWorks += -nil-
+
+# Add support from base/src/vxWorks if needed
+#sht7x_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+# Finally link to the EPICS Base libraries
+sht7x_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+#===========================
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/sht7xApp/src $ make
+   </pre>
+   <p>make가 완료되면 bin/linux-arm 폴더에 sht7x 파일이 생성된다.</p>
+   <p>테스트를 위해 sht7xApp/Db 폴더로 이동한 후 처음 테스트 하고자 했던 sht7x.db 파일을 만든다.</p>
+   <pre>
+record(sht, "SHT7x:SHT")
+{
+  field(DTYP, "SHT71")
+  field(INP, "@4 5")
+  field(SCAN, "1 second")
+  field(FLNK, "SHT7x:FAN")
+}
+
+record(fanout, "SHT7x:FAN")
+{
+  field(LNK1, "SHT7x:TEM")
+  field(LNK2, "SHT7x:HUM")
+}
+
+record(calc, "SHT7x:TEM")
+{
+  field(INPA, "SHT7x:SHT.TEM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "SHT7x:HUM")
+{
+  field(INPA, "SHT7x:SHT.HUM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+  </pre>
+  <p>Makefile에 sht7x.db를 추가한 후 make를 실행한다.</p>
+  <pre>
+TOP=../..
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+#----------------------------------------------------
+#  Optimization of db files using dbst (DEFAULT: NO)
+#DB_OPT = YES
+
+#----------------------------------------------------
+# Create and install (or just install) into /db
+# databases, templates, substitutions like this
+#DB += xxx.db
+<span class="insert">DB += sht7x.db</span>
+
+#----------------------------------------------------
+# If .db template is not named *.template add
+# _template = 
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+  </pre>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/sht7xApp/Db/ $ make
+  </pre>
+  <p>make가 완료되면 최상의 폴더에 db폴더가 만들어지고 그 안에 sht7x.db파일이 생성된다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/db/ $ ls
+sht7x.db
+  </pre>
+  <p>ioc 실행을 위해 iocBoot/iocsht7x 폴더로 이동한다.</p>
+  <p>st.cmd파일을 수정하기 전 make를 실행해서 envPaths파일을 만든다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/iocBoot/iocsht7x/ $ make
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/iocBoot/iocsht7x/ $ ls
+envPaths  Makefile  st.cmd
+  </pre>
+  <p>이제 st.cmd 파일을 열어 sht7x.db 레코드를 추가 한다.</p>
+  <pre>
+#!../../bin/linux-arm/sht7x
+
+## You may have to change sht7x to something else
+## everywhere it appears in this file
+
+&lt; envPaths
+
+cd ${TOP}
+
+## Register all support components
+dbLoadDatabase "dbd/sht7x.dbd"
+sht7x_registerRecordDeviceDriver pdbbase
+
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+<span class="insert">dbLoadRecords("db/sht7x.db")</span>
+
+cd ${TOP}/iocBoot/${IOC}
+iocInit
+
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+  </pre>
+  <p>최종적으로 st.cmd 파일을 실행파일로 변경한 후 실행한다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/iocBoot/iocsht7x $ chmod 755 st.cmd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/sht7x/iocBoot/iocsht7x $ sudo ./st.cmd
+#!../../bin/linux-arm/sht7x
+## You may have to change sht7x to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-arm")
+epicsEnvSet("IOC","iocsht7x")
+epicsEnvSet("TOP","/home/pi/epics/R3.14.12.5/siteApps/sht7x")
+epicsEnvSet("EPICS_BASE","/home/pi/epics/R3.14.12.5/base")
+cd /home/pi/epics/R3.14.12.5/siteApps/sht7x
+## Register all support components
+dbLoadDatabase "dbd/sht7x.dbd"
+sht7x_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+dbLoadRecords("db/sht7x.db")
+cd /home/pi/epics/R3.14.12.5/siteApps/sht7x/iocBoot/iocsht7x
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.5 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Aug 29 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+epics&gt;
+  </pre>
+  </br>
+  <h2>라이브러리 파일로 만들기</h2>
+  <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+  <p>siteLibs 폴더로 이동한 후 raspSHT7xLib 폴더를 하나 만든다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs $ mkdir raspSHT7xLib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs $ cd raspSHT7xLib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLib $
+  </pre>
+  <p>raspSHT7xLib 폴더안에 Db, src 폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+  <pre>
+TOP = ..
+include $(TOP)/configure/CONFIG
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 devSHT7x.c devCharLCD.dbd lcdoutRecord.c lcdoutRecord.dbd 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/devCharLCD.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/devCharLCD.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/lcdoutRecord.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/lcdoutRecord.dbd ./
+   </pre>
+   <p>Makefile 만들고 다음과 같이 작성한다.</p>
+   <pre>
+TOP = ../..
+include $(TOP)/configure/CONFIG
+
+LIBRARY	+= raspSHT7x
+DBDINC	+= shtRecord
+DBD	+= shtRecord.dbd devSHT7x.dbd
+
+raspSHT7x_SRCS += shtRecord.c devSHT7x.c
+
+include $(TOP)/configure/RULE
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-arm 폴더안에 libraspSHT7x.so 파일이 만들어 진다.
+   </p>
+  <p>Library에 대한 db파일 제공을 위해 raspSHT7xLibs/Db폴더로 이동한 후 다음과 같은 sht7x.db파일만든다.</p>
+   <pre>
+record(sht, "SHT7x:SHT")
+{
+  field(DTYP, "SHT71")
+  field(INP, "@4 5")
+  field(SCAN, "1 second")
+  field(FLNK, "SHT7x:FAN")
+}
+
+record(fanout, "SHT7x:FAN")
+{
+  field(LNK1, "SHT7x:TEM")
+  field(LNK2, "SHT7x:HUM")
+}
+
+record(calc, "SHT7x:TEM")
+{
+  field(INPA, "SHT7x:SHT.TEM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "SHT7x:HUM")
+{
+  field(INPA, "SHT7x:SHT.HUM")
+  field(CALC, "A")
+  field(PREC, "2")
+}   
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+TOP =../..
+include $(TOP)/configure/CONFIG
+DB += sht7x.db
+include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 sht7x.db파일이 생성된다.</p>
+   <p>Library를 이용한 Sensor 테스트는 EPICS Application에 있는 <a href="appRaspSHT7x.html">SHT71 Sensor</a>를 참고하기 바란다.</p>
+  </section>
+ </body>
+</html>

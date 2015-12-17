@@ -16,24 +16,25 @@
   <header>
   </header>
   <aside>
-    <div id="db" class="db_side"><a href="#"><img id="db_img" src="../resources/images/db_icon.png" width="48" height="48" /></a></div>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
     <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
     <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
     <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
     <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
   </aside>
-  <nav class="db_side db_menu">
+  <nav class="de_side de_menu">
     <ul>
-     <li><a href="../database/Mysql.html">MySQL</a></li>
-     <li><a href="../database/Postgresql.html">PostgreSQL</a></li>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
     </ul>
   </nav>
-  <nav class="ep_side ep_menu">
+ <nav class="ep_side ep_menu">
     <ul>
-     <li><a href="Configuration.html">Configuration</a></li>
-     <li><a href="Library.html">Library</a></li>
-     <li><a href="Application.html">Application</a></li>
-     <li><a href="Extensition.html">Extensition</a></li>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
     </ul>
   </nav>
   <nav class="ra_side ra_menu">
@@ -66,105 +67,10 @@
    </p>
    <p>테스트에 사용된 하드웨어 구성은 다음과 같다.</p>
    <a href="../resources/images/epics/PM1001Test.png" data-lightbox="example-1"><img src="../resources/images/epics/PM1001Test.png" width="50%" height="50%" /></a>
-   <p>
-      PM1001의 경우 UART 통신을 통해  데이터를 전송하므로 Raspberry Pi의 UART 포트와 연결이 가능하다. 
-             참고로 UART(Universal asynchronous receiver/transmitter)는 일반적으로 RS-232와 같은 시리얼 통신을 5V Level의 
-      TTL신호로 전송한다.  따라서 Raspberry Pi나 Arduino와 같이 UART를 지원하는 보드에서는 바로 연결하여 사용이 가능하다. 여기서
-             주의할 사항은 PC의 경우 Serial 통신의 전압 Level이 -12 ~ 12v이므로 센서와 바로 연결해서는 안되며 MAX232와 같은 Level Convert를
-             사용하여 전압 Level을 맞춰야 한다.  여기서는 Raspberry Pi에 바로 연결하여 테스트 하였으므로 별도의 Convert를 사용하지 않았다.
+   <p> PM1001 센서는 UART 통신을 사용하므로 다음 링크를 참고하여 Raspberry Pi의 UART설정을 변경한다. 
    </p>
-   <p>
-      Raspberry Pi에서 UART는 기본적으로 콘솔출력용으로 지정되어 있다. 따라서 일반적인 목적으로 사용하기 위해서는 /boot/cmdline.txt와
-      /etc/inittab 파일을 수정해야 한다.
-   </p>
-   <p>/boot/cmdline.txt 파일을 열어 "console=ttyAMA0,115200" 부분을 삭제 한다.</p>
-   <pre>
-cmdline.txt
-	dwc_otg.lpm_enable=0 <span class="insert">console=ttyAMA0,115200</span> console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=de$
-   </pre>
-   <p>/etc/inittab 파일을 열어 마지막 라인에 있는 "T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100" 앞에 '#'을 넣어 주석 처리한다</p>
-   <pre>
-inittab
-
-	# /etc/inittab: init(8) configuration.
-	# $Id: inittab,v 1.91 2002/01/25 13:35:21 miquels Exp $
-
-	# The default runlevel.
-	id:2:initdefault:
-
-	# Boot-time system configuration/initialization script.
-	# This is run first except when booting in emergency (-b) mode.
-	si::sysinit:/etc/init.d/rcS
-
-	# What to do in single-user mode.
-	~~:S:wait:/sbin/sulogin
-
-	# /etc/init.d executes the S and K scripts upon change
-	# of runlevel.
-	#
-	# Runlevel 0 is halt.
-	# Runlevel 1 is single-user.
-	# Runlevels 2-5 are multi-user.
-	# Runlevel 6 is reboot.
-
-	l0:0:wait:/etc/init.d/rc 0
-	l1:1:wait:/etc/init.d/rc 1
-	l2:2:wait:/etc/init.d/rc 2
-	l3:3:wait:/etc/init.d/rc 3
-	l4:4:wait:/etc/init.d/rc 4
-	l5:5:wait:/etc/init.d/rc 5
-	l6:6:wait:/etc/init.d/rc 6
-	# Normally not reached, but fallthrough in case of emergency.
-	z6:6:respawn:/sbin/sulogin
-
-	# What to do when CTRL-ALT-DEL is pressed.
-	ca:12345:ctrlaltdel:/sbin/shutdown -t1 -a -r now
-
-	# Action on special keypress (ALT-UpArrow).
-	#kb::kbrequest:/bin/echo "Keyboard Request--edit /etc/inittab to let this work."
-
-	# What to do when the power fails/returns.
-	pf::powerwait:/etc/init.d/powerfail start
-	pn::powerfailnow:/etc/init.d/powerfail now
-	po::powerokwait:/etc/init.d/powerfail stop
-
-	# /sbin/getty invocations for the runlevels.
-	#
-	# The "id" field MUST be the same as the last
-	# characters of the device (after "tty").
-	#
-	# Format:
-	#  &lt;id>:&lt;runlevels>:&lt;action>:&lt;process>
-	#
-	# Note that on most Debian systems tty7 is used by the X Window System,
-	# so if you want to add more getty's go ahead but skip tty7 if you run X.
-	#
-	1:2345:respawn:/sbin/getty --noclear 38400 tty1
-	2:23:respawn:/sbin/getty 38400 tty2
-	3:23:respawn:/sbin/getty 38400 tty3
-	4:23:respawn:/sbin/getty 38400 tty4
-	5:23:respawn:/sbin/getty 38400 tty5
-	6:23:respawn:/sbin/getty 38400 tty6
-
-	# Example how to put a getty on a serial line (for a terminal)
-	#
-	#T0:23:respawn:/sbin/getty -L ttyS0 9600 vt100
-	#T1:23:respawn:/sbin/getty -L ttyS1 9600 vt100
-
-	# Example how to put a getty on a modem line.
-	#
-	#T3:23:respawn:/sbin/mgetty -x0 -s 57600 ttyS3
-
-
-	#Spawn a getty on Raspberry Pi serial line
-	<span class="insert">#T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100</span>
-   </pre>
-   <p>설정을 마쳤으면 재부팅 한다. </p>
-   <pre class="shell">
-<span class="prom">pi@raspberrypi</span>~$ sudo reboot
-   </pre>
-   <p>재부팅이 완료되면 UART를 사용할 수 있다. 참고로 Raspberry Pi에서는 UART device는 /etc/ttyAMA0에 할당되어 있다</p>
-   <p> PM1001 센서는 시리얼 통신을 사용하므로 EPICS Asyn과 StreamDevice Library를 설치한다. </p>
+   <a href="../raspberry/configUART.html">UART Configuration</a>
+   <p>EPICS에서 시리얼 통신을 하기위해 Asyn과 StreamDevice Library를 설치한다.</p>
    <p>우선 stieLibs로 이동한다. siteLibs가 없다면 svn에서 내려 받는다.</p>
    <pre class="shell">
 <span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4 $ svn co svn://10.1.5.14/raon/trunk/siteLibs
@@ -197,136 +103,129 @@ Application name? pm1001
    </pre>
    <p>pm1001/configure/RELEASE 파일에 asyn과 stream Library위치를 추가해 준다.</p>
    <pre>
-RELEASE
+# RELEASE - Location of external support modules
+#
+# IF YOU MAKE ANY CHANGES to this file you must subsequently
+# do a "gnumake rebuild" in this application's top level
+# directory.
+#
+# The build process does not check dependencies against files
+# that are outside this application, thus you should do a
+# "gnumake rebuild" in the top level directory after EPICS_BASE
+# or any other external module pointed to below is rebuilt.
+#
+# Host- or target-specific settings can be given in files named
+#  RELEASE.$(EPICS_HOST_ARCH).Common
+#  RELEASE.Common.$(T_A)
+#  RELEASE.$(EPICS_HOST_ARCH).$(T_A)
+#
+# This file should ONLY define paths to other support modules,
+# or include statements that pull in similar RELEASE files.
+# Build settings that are NOT module paths should appear in a
+# CONFIG_SITE file.
 
-	# RELEASE - Location of external support modules
-	#
-	# IF YOU MAKE ANY CHANGES to this file you must subsequently
-	# do a "gnumake rebuild" in this application's top level
-	# directory.
-	#
-	# The build process does not check dependencies against files
-	# that are outside this application, thus you should do a
-	# "gnumake rebuild" in the top level directory after EPICS_BASE
-	# or any other external module pointed to below is rebuilt.
-	#
-	# Host- or target-specific settings can be given in files named
-	#  RELEASE.$(EPICS_HOST_ARCH).Common
-	#  RELEASE.Common.$(T_A)
-	#  RELEASE.$(EPICS_HOST_ARCH).$(T_A)
-	#
-	# This file should ONLY define paths to other support modules,
-	# or include statements that pull in similar RELEASE files.
-	# Build settings that are NOT module paths should appear in a
-	# CONFIG_SITE file.
+TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
 
-	TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+# If using the sequencer, point SNCSEQ at its top directory:
+#SNCSEQ=$(EPICS_BASE)/../modules/soft/seq
 
-	# If using the sequencer, point SNCSEQ at its top directory:
-	#SNCSEQ=$(EPICS_BASE)/../modules/soft/seq
+# EPICS_BASE usually appears last so other apps can override stuff:
+EPICS_BASE=/home/pi/epics/R3.14.12.4/base
 
-	# EPICS_BASE usually appears last so other apps can override stuff:
-	EPICS_BASE=/home/pi/epics/R3.14.12.4/base
-
-	# Set RULES here if you want to take build rules from somewhere
-	# other than EPICS_BASE:
-	#RULES=/path/to/epics/support/module/rules/x-y
-	<span class="insert">
-	ASYN=$(EPICS_PATH)/siteLibs
-	STREAM=$(EPICS_PATH)/siteLibs
-	</span>
+# Set RULES here if you want to take build rules from somewhere
+# other than EPICS_BASE:
+#RULES=/path/to/epics/support/module/rules/x-y
+<span class="insert">
+ASYN=$(EPICS_PATH)/siteLibs
+STREAM=$(EPICS_PATH)/siteLibs
+</span>
    </pre>
    <p>pm1001App/src 폴더로 이동하면 pm1001Main.cpp와 Makefile이 있다. Makefile에 다음 코드를 추가한다.</p>
    <pre>
-Makefile
+TOP=../..
 
-	TOP=../..
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
 
-	include $(TOP)/configure/CONFIG
-	#----------------------------------------
-	#  ADD MACRO DEFINITIONS AFTER THIS LINE
-	#=============================
+#=============================
+# Build the IOC application
 
-	#=============================
-	# Build the IOC application
+PROD_IOC = pm1001
+# pm1001.dbd will be created and installed
+DBD += pm1001.dbd
 
-	PROD_IOC = pm1001
-	# pm1001.dbd will be created and installed
-	DBD += pm1001.dbd
+# pm1001.dbd will be made up from these files:
+pm1001_DBD += base.dbd
 
-	# pm1001.dbd will be made up from these files:
-	pm1001_DBD += base.dbd
-
-	# Include dbd files from all support applications:
-	#pm1001_DBD += xxx.dbd
+# Include dbd files from all support applications:
+#pm1001_DBD += xxx.dbd
 <span class="insert">
-	pm1001_DBD += stream.dbd
-	pm1001_DBD += drvAsynSerialPort.dbd
+pm1001_DBD += stream.dbd
+pm1001_DBD += drvAsynSerialPort.dbd
 </span>
-	# Add all the support libraries needed by this IOC
-	#pm1001_LIBS += xxx
+# Add all the support libraries needed by this IOC
+#pm1001_LIBS += xxx
 <span class="insert">
-	pm1001_LIBS += stream
-	pm1001_LIBS += asyn
+pm1001_LIBS += stream
+pm1001_LIBS += asyn
 </span>
-	# pm1001_registerRecordDeviceDriver.cpp derives from pm1001.dbd
-	pm1001_SRCS += pm1001_registerRecordDeviceDriver.cpp
+# pm1001_registerRecordDeviceDriver.cpp derives from pm1001.dbd
+pm1001_SRCS += pm1001_registerRecordDeviceDriver.cpp
 
-	# Build the main IOC entry point on workstation OSs.
-	pm1001_SRCS_DEFAULT += pm1001Main.cpp
-	pm1001_SRCS_vxWorks += -nil-
+# Build the main IOC entry point on workstation OSs.
+pm1001_SRCS_DEFAULT += pm1001Main.cpp
+pm1001_SRCS_vxWorks += -nil-
 
-	# Add support from base/src/vxWorks if needed
-	#pm1001_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+# Add support from base/src/vxWorks if needed
+#pm1001_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
 
-	# Finally link to the EPICS Base libraries
-	pm1001_LIBS += $(EPICS_BASE_IOC_LIBS)
+# Finally link to the EPICS Base libraries
+pm1001_LIBS += $(EPICS_BASE_IOC_LIBS)
 
-	#===========================
+#===========================
 
-	include $(TOP)/configure/RULES
-	#----------------------------------------
-	#  ADD RULES AFTER THIS LINE
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
    </pre>
    <p>
-             이제 필요한 Library는 사용준비가 되었으므로 db와 proto 파일을 만들도록 한다.  pm1001App/Db 폴더로 이동하여 pm1001.db 파일을 만들고
-      Makefile에 추가해 준다.
+      이제 필요한 Library는 사용준비가 되었으므로 db와 proto 파일을 만들도록 한다.  pm1001App/Db 폴더로 이동하여 pm1001.db 파일을 만들고
+      다음 record를 작성한다.
    </p>
    <pre>
-pm1001.db
-
-	record(ai,"SS:DUST")
-	{
-	  field(DTYP, "stream")
-	  field(INP, "@sensor.proto get_dust UART")
-	  field(SCAN, "1 second")
-	}
+record(ai,"SS:DUST")
+{
+  field(DTYP, "stream")
+  field(INP, "@sensor.proto get_dust UART")
+  field(SCAN, "1 second")
+}
    </pre>
+   <p>작성한 db파일을 Makefile에 추가해 준다.</p>
    <pre>
-Makefile
+TOP=../..
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
 
-	TOP=../..
-	include $(TOP)/configure/CONFIG
-	#----------------------------------------
-	#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#----------------------------------------------------
+#  Optimization of db files using dbst (DEFAULT: NO)
+#DB_OPT = YES
 
-	#----------------------------------------------------
-	#  Optimization of db files using dbst (DEFAULT: NO)
-	#DB_OPT = YES
+#----------------------------------------------------
+# Create and install (or just install) into <top>/db
+# databases, templates, substitutions like this
+#DB += xxx.db드
+<span class="insert">DB += pm1001.db</span>
 
-	#----------------------------------------------------
-	# Create and install (or just install) into <top>/db
-	# databases, templates, substitutions like this
-	#DB += xxx.db드
-	<span class="insert">DB += pm1001.db</span>
+#----------------------------------------------------
+# If <anyname>.db template is not named <anyname>*.template add
+# <anyname>_template = <templatename>
 
-	#----------------------------------------------------
-	# If <anyname>.db template is not named <anyname>*.template add
-	# <anyname>_template = <templatename>
-
-	include $(TOP)/configure/RULES
-	#----------------------------------------
-	#  ADD RULES AFTER THIS LINE
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
    </pre>
    <p>proto 파일을 만들기 앞서 pm1001 센서의  통신 명령어를 알아야 한다. 메뉴얼을 참고하면 통신 명령어가 다음과 같음을 알 수 있다.</p>
    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SEND: [IP] [LB] [CMD] [DF] [CS]</p>
@@ -352,12 +251,10 @@ Makefile
 <span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.4/siteApps/pm1001 $ cd proto
    </pre>
    <pre>
-pm1001.proto
-
-	get_dust{
-		out "\x11\x01\x01\xED";
-		in "%*3r%4r%*4r%*4r%*1r";
-	}
+get_dust{
+	out "\x11\x01\x01\xED";
+	in "%*3r%4r%*4r%*4r%*1r";
+}
    </pre>
    <p>
       get_dust 함수는 out을 통해 먼지 값을 읽어오는 명령을 전송한다. pm1001 센서는 응답 값으로 총 16byte의 값을 리턴하는데 이 중 먼지 데이터는
@@ -366,25 +263,25 @@ pm1001.proto
             만약 DF0 ~ DF3을 따로 읽고자 하면 다음과 같이 1byte씩 읽으면 된다.
    </p>
    <pre>
-	get_d0{
-		out "\x11\x01\x01\xED";
-		in "%*3r%1r%*3r%*4r%*4r%*1r";
-	}
+get_d0{
+	out "\x11\x01\x01\xED";
+	in "%*3r%1r%*3r%*4r%*4r%*1r";
+}
 
-	get_d1{
-		out "\x11\x01\x01\xED";
-		in "%*3r%*1r%1r%*2r%*4r%*4r%*1r";
-	}
+get_d1{
+	out "\x11\x01\x01\xED";
+	in "%*3r%*1r%1r%*2r%*4r%*4r%*1r";
+}
 
-	get_d2{
-		out "\x11\x01\x01\xED";
-		in "%*3r%*2r%1r%*1r%*4r%*4r%*1r";
-	}
+get_d2{
+	out "\x11\x01\x01\xED";
+	in "%*3r%*2r%1r%*1r%*4r%*4r%*1r";
+}
 
-	get_d3{
-		out "\x11\x01\x01\xED";
-		in "%*3r%*3r%1r%*4r%*4r%*1r";
-	}
+get_d3{
+	out "\x11\x01\x01\xED";
+	in "%*3r%*3r%1r%*4r%*4r%*1r";
+}
    </pre>
    <p>이제 pm1001폴더로 이동하여 make를 실행하자</p>
    <pre class="shell">
@@ -392,38 +289,35 @@ pm1001.proto
    </pre>
    <p>ioc를 실행하기 위해 iocBoot/iocpm1001로 이동 후 st.cmd 파일에 다음과 같이 추가 한다.</p>
    <pre>
-st.cmd
+#!../../bin/linux-arm/pm1001
 
-	#!../../bin/linux-arm/pm1001
+## You may have to change pm1001 to something else
+## everywhere it appears in this file
 
-	## You may have to change pm1001 to something else
-	## everywhere it appears in this file
+&lt; envPaths
 
-	&lt; envPaths
+cd ${TOP}
 
-	cd ${TOP}
+epicsEnvSet "STREAM_PROTOCOL_PATH" "../../proto"
 
-	epicsEnvSet "STREAM_PROTOCOL_PATH" "../../proto"
-
-	## Register all support components
-	dbLoadDatabase "dbd/pm1001.dbd"
-	pm1001_registerRecordDeviceDriver pdbbase
+## Register all support components
+dbLoadDatabase "dbd/pm1001.dbd"
+pm1001_registerRecordDeviceDriver pdbbase
 <span class="insert">
-	drvAsynSerialPortConfigure "UART" "/dev/ttyAMA0"
+drvAsynSerialPortConfigure "UART" "/dev/ttyAMA0"
 
-	asynSetOption("UART", 0, "baud", "9600")
-	asynSetOption("UART", 0, "bits", "8")
-	asynSetOption("UART", 0, "parity", "none")
+asynSetOption("UART", 0, "baud", "9600")
+asynSetOption("UART", 0, "bits", "8")
+asynSetOption("UART", 0, "parity", "none")
 </span>
-	## Load record instances
-	#dbLoadRecords("db/xxx.db","user=piHost")
-	<span class="insert">dbLoadRecords("db/pm1001.db")</span>
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+<span class="insert">dbLoadRecords("db/pm1001.db")</span>
 
-	cd ${TOP}/iocBoot/${IOC}
-	iocInit
+cd ${TOP}/iocBoot/${IOC}
+iocInit
 
-	## Start any sequence programs
-	#seq sncxxx,"user=piHost"
+#seq sncxxx,"user=piHost"
    </pre>
    <p>st.cmd를 실행파일로 변경한 후 실행한다.</p>
    <pre class="shell">

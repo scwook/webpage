@@ -1,10 +1,10 @@
-function databaseMouseOver() {
-  document.getElementById("database").style.background="white";
-  document.getElementById("database_img").src="resources/images/color_db_200.png";
+function debianMouseOver() {
+  document.getElementById("debian").style.background="white";
+  document.getElementById("debian_img").src="resources/images/color_debian_200.png";
 }
-function databaseMouseOut() {
-  document.getElementById("database").style.background="#9ACD32";
-  document.getElementById("database_img").src="resources/images/db_200.png";
+function debianMouseOut() {
+  document.getElementById("debian").style.background="#A9A9A9";
+  document.getElementById("debian_img").src="resources/images/debian_200.png";
 }
 
 function epicsMouseOver() {
@@ -12,7 +12,7 @@ function epicsMouseOver() {
   document.getElementById("epics_img").src="resources/images/color_epics_200.png";
 }
 function epicsMouseOut() {
-  document.getElementById("epics").style.background="#9932CC";
+  document.getElementById("epics").style.background="#AB32CC";
   document.getElementById("epics_img").src="resources/images/epics_200.png";
 }
 

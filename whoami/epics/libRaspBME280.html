@@ -1,0 +1,1234 @@
+﻿<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+ <head>
+  <title>Who am I</title>
+  <link rel="stylesheet" href="../resources/css/epics.css" type="text/css" />
+  <link rel="stylesheet" href="../resources/css/lightbox.css" type="text/css" />
+  <script src="../resources/js/jquery-2.1.1.js"></script>
+  <script src="../resources/js/common.js"></script>
+  <script src="../resources/js/lightbox.min.js"></script>
+  <style>
+   body { background:#9932CC; }
+  </style>
+ </head>
+ <body>
+  <header>
+  </header>
+  <aside>
+    <div id="de" class="de_side"><a href="#"><img id="de_img" src="../resources/images/debian_icon.png" width="48" height="48" /></a></div>
+    <div id="ep" class="ep_side"><a href="#"><img id="ep_img" src="../resources/images/epics_icon.png" width="48" height="48" /></a></div>
+    <div id="ra" class="ra_side"><a href="#"><img id="ra_img" src="../resources/images/pi_icon.png" width="48" height="48" /></a></div>
+    <div id="ht" class="ht_side"><a href="#"><img id="ht_img" src="../resources/images/html5_icon.png" width="48" height="48" /></a></div>
+    <div id="ja" class="ja_side"><a href="#"><img id="ja_img" src="../resources/images/java_icon.png" width="48" height="48" /></a></div>
+  </aside>
+  <nav class="de_side de_menu">
+    <ul>
+     <li><a href="../debian/Command.html">Command</a></li>
+     <li><a href="../debian/Script.html">Script</a></li>
+     <li><a href="../debian/Application.html">Application</a></li>
+    </ul>
+  </nav>
+ <nav class="ep_side ep_menu">
+    <ul>
+     <li><a href="../epics/Configuration.html">Configuration</a></li>
+     <li><a href="../epics/Library.html">Library</a></li>
+     <li><a href="../epics/Application.html">Application</a></li>
+     <li><a href="../epics/Extensition.html">Extensition</a></li>
+    </ul>
+  </nav>
+  <nav class="ra_side ra_menu">
+    <ul>
+     <li><a href="../raspberry/Configuration.html">Configuration</a></li>
+     <li><a href="../raspberry/Application.html">Application</a></li>
+     <li><a href="../raspberry/Camera.html">Camera</a></li>
+    </ul>
+  </nav>
+  <nav class="ht_side ht_menu">
+    <ul>
+     <li><a href="../html/HTML.html">HTML5</a></li>
+     <li><a href="../html/CSS.html">CSS</a></li>
+     <li><a href="../html/Script.html">Script</a></li>
+    </ul>
+  </nav>
+  <nav class="ja_side ja_menu">
+    <ul>
+     <li><a href="../java/JAVA.html">JAVA</a></li>
+     <li><a href="../java/JDBC.html">JDBC</a></li>
+     <li><a href="../java/Application.html">Web Application</a></li>
+    </ul>
+  </nav>
+  <section>
+  <h1>BME280 Sensor Library Development for Raspberry Pi</h1>
+  <p>
+     본 문서는 BME280 Sensor에 대한 EPICS Library 개발을 목표로 한다.
+  </p>
+  <p>
+     Bosch BME280은 현재(2015.12) LGA 타입의 Chip으로 판매되고 있으며 여러 Vendor에서 BME280
+     을 탑재한 Sensor를 출시하고 있다. BEM280은 통신을 위한 Interface로 I2C와 SPI를 지원하는데
+     본 문서에서 I2C를 사용하는 Embedded Adventures MOD-1022 제품으로 테스트 하였다.
+     테스트를 위한 하드웨어 구성은 다음과 같다.
+  </p>
+  <ul>
+   <li>Raspberry Pi 2 Model B</li>
+   <li>MOD-1022 BME280 Multi Sensor</li>
+  </ul>
+<a href="../resources/images/raspberry/bme280_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/bme280_test.png" width="50%" height="50%" /></a>
+  <p>최종 목표는 다음과 같은 bme280.db를 만들어 온도 및 습도 값을 읽는 것이다.</p>
+  <pre>
+record(bme, "BME280:BME")
+{
+  field(DTYP, "BME280")
+  field(INP, "@1")
+  field(SCAN, "2 second")
+  field(FLNK, "BME280:FAN")
+}
+
+record(fanout, "BME280:FAN")
+{
+  field(LNK1, "BME280:TEM")
+  field(LNK2, "BME280:HUM")
+  field(LNK2, "BME280:PRE")
+}
+
+record(calc, "BME280:TEM")
+{
+  field(INPA, "BME280:BME.TEM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "BME280:HUM")
+{
+  field(INPA, "BME280:BME.HUM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "BME280:PRE")
+{
+  field(INPA, "BME280:BME.PRE")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+  </pre>
+  <p>
+     위 DB에서 새롭게 정의된 bme record type은 온도 값을 나타내는 TEM field와 습도 값을 
+     나타내는 HUM field, 압력 값을 나타내는 PRE field를 가지고 있다. 이러한 3개의 field는 
+     fanout을 통해 각각 BME280:TEM, BME280:HUM, BME280:PRE PV로 분리되어 읽어 진다.
+  </p>
+  <p>
+     Embedded Adventures MOD-1022는 BME280과 통신을 위한 Interface로 I2C만을 제공한다. I2C는
+     클럭 동기활를 위한 SCL(Serial Clock)과 데이터 전송을 위한 SDA(Serial Data)로 구성되어
+     있으며 Raspberry Pi와 통신은 I2C 전용 Pin을 통해 이루어 진다. 전용 Pin은 Pi2 Model B에서
+     Physical Pin 번호를 기준으로 3, 5번과(I2C 1) 27, 28번(I2C 0)에 해당하며 총 2개의 I2C 
+     통신을 제공한다.
+  </p>
+  <p>wiringPi는 기본적으로 I2C 통신을 위한 Library를 제공하므로 wiringPi를 먼저 설치한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~$ git clone git://git.drogon.net/wiringPi
+Cloning into 'wiringPi'...
+remote: Counting objects: 657, done.
+remote: Compressing objects: 100% (599/599), done.
+remote: Total 657 (delta 476), reused 95 (delta 58)
+Receiving objects: 100% (657/657), 247.61 KiB | 94 KiB/s, done.
+Resolving deltas: 100% (476/476), done.
+   </pre>
+   <p>파일 다운로드가 완료되면 빌드한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/wiringPi$ ./build
+   </pre>
+   <p>
+      빌드가 완료되면 기본적인 준비가 끝이난다. 다음은 EPICS IOC를 만들기 위한 작업으로
+      다음 환경변수를 기본으로 하고 있다.
+   </p>
+   <pre>
+export EPICS_HOST_ARCH=linux-arm
+export EPICS_PATH=/home/pi/epics/R3.14.12.5
+export EPICS_BASE=/home/pi/epics/R3.14.12.5/base
+export EPICS_EXTENSIONS=/home/pi/epics/R3.14.12.5/extensions
+
+export EPICS_SYNAPPS=/home/pi/epics/R3.14.12.5/epicsLibs/synApps_5_8/support
+export RAON_SITELIBS=/home/pi/epics/R3.14.12.5/siteLibs
+export RAON_SITEAPPS=/home/pi/epics/R3.14.12.5/siteApps
+   </pre>
+   <p>siteApps안에 폴더를 만든 후 Base Application을 생성한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> cd ../epics/R3.14.12.5/siteApps
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps $ mkdir bme280
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps $ cd bme280
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280 $ makeBaseApp.pl -t ioc bme280
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280 $ makeBaseApp.pl -i -t ioc bme280
+
+Using target architecture linux-arm (only one available)
+The following applications are available:
+    bme280
+What application should the IOC(s) boot?
+The default uses the IOC's name, even if not listed above.
+Application name?
+
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280 $ ls
+conigure  bme280App  iocBoot Makefile
+   </pre>
+   <p>코드 작성을 위해 bme280App/src 폴더로 이동한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280 $ cd bme280App/src
+   </pre>
+   <p>bme이름을 가진 새로운 Record를 만들기 위해 bmeRecord.c 파일을 만들고 다음 코드를 작성한다.</p>
+   <pre>
+/* bmeRecord.c */
+/* Example record support module */
+  
+#include &lt;stddef.h>
+#include &lt;stdlib.h>
+#include &lt;stdio.h>
+#include &lt;string.h>
+
+#include "epicsMath.h"
+#include "alarm.h"
+#include "dbAccess.h"
+#include "recGbl.h"
+#include "dbEvent.h"
+#include "dbDefs.h"
+#include "dbAccess.h"
+#include "devSup.h"
+#include "errMdef.h"
+#include "recSup.h"
+#include "special.h"
+#define GEN_SIZE_OFFSET
+#include "bmeRecord.h"
+#undef  GEN_SIZE_OFFSET
+#include "epicsExport.h"
+
+/* Create RSET - Record Support Entry Table */
+#define report NULL
+#define initialize NULL
+static long init_record();
+static long process();
+#define special NULL
+#define get_value NULL
+#define cvt_dbaddr NULL
+#define get_array_info NULL
+#define put_array_info NULL
+static long get_units();
+static long get_precision();
+#define get_enum_str NULL
+#define get_enum_strs NULL
+#define put_enum_str NULL
+static long get_graphic_double();
+static long get_control_double();
+static long get_alarm_double();
+ 
+rset bmeRSET={
+	RSETNUMBER,
+	report,
+	initialize,
+	init_record,
+	process,
+	special,
+	get_value,
+	cvt_dbaddr,
+	get_array_info,
+	put_array_info,
+	get_units,
+	get_precision,
+	get_enum_str,
+	get_enum_strs,
+	put_enum_str,
+	get_graphic_double,
+	get_control_double,
+	get_alarm_double
+};
+epicsExportAddress(rset,bmeRSET);
+
+typedef struct bmeset { /* bme input dset */
+	long		number;
+	DEVSUPFUN	dev_report;
+	DEVSUPFUN	init;
+	DEVSUPFUN	init_record; /*returns: (-1,0)=>(failure,success)*/
+	DEVSUPFUN	get_ioint_info;
+	DEVSUPFUN	read_bme;
+}bmedset;
+
+static void checkAlarms(bmeRecord *prec);
+static void monitor(bmeRecord *prec);
+
+static long init_record(void *precord,int pass)
+{
+    bmeRecord	*prec = (bmeRecord *)precord;
+    bmedset	*pdset;
+    long	status;
+
+    if (pass==0) return(0);
+
+    if(!(pdset = (bmedset *)(prec->dset))) {
+	recGblRecordError(S_dev_noDSET,(void *)prec,"bme: init_record");
+	return(S_dev_noDSET);
+    }
+    /* must have read_bme function defined */
+    if( (pdset->number < 5) || (pdset->read_bme == NULL) ) {
+	recGblRecordError(S_dev_missingSup,(void *)prec,"bme: init_record");
+	return(S_dev_missingSup);
+    }
+
+    if( pdset->init_record ) {
+	if((status=(*pdset->init_record)(prec))) return(status);
+    }
+    return(0);
+}
+
+static long process(void *precord)
+{
+	bmeRecord	*prec = (bmeRecord *)precord;
+	bmedset		*pdset = (bmedset *)(prec->dset);
+	long		 status;
+	unsigned char    pact=prec->pact;
+
+	if( (pdset==NULL) || (pdset->read_bme==NULL) ) {
+		prec->pact=TRUE;
+		recGblRecordError(S_dev_missingSup,(void *)prec,"read_bme");
+		return(S_dev_missingSup);
+	}
+
+	/* pact must not be set until after calling device support */
+	status=(*pdset->read_bme)(prec);
+	/* check if device support set pact */
+	if ( !pact && prec->pact ) return(0);
+	prec->pact = TRUE;
+
+	recGblGetTimeStamp(prec);
+	/* check for alarms */
+	checkAlarms(prec);
+	/* check event list */
+	monitor(prec);
+	/* process the forward scan link record */
+        recGblFwdLink(prec);
+
+	prec->pact=FALSE;
+	return(status);
+}
+
+static long get_units(DBADDR *paddr, char *units)
+{
+    bmeRecord	*prec=(bmeRecord *)paddr->precord;
+
+    strncpy(units,prec->egu,DB_UNITS_SIZE);
+    return(0);
+}
+
+static long get_precision(DBADDR *paddr, long *precision)
+{
+    bmeRecord	*prec=(bmeRecord *)paddr->precord;
+
+    *precision = prec->prec;
+    if(paddr->pfield == (void *)&prec->val) return(0);
+    recGblGetPrec(paddr,precision);
+    return(0);
+}
+
+static long get_graphic_double(DBADDR *paddr,struct dbr_grDouble *pgd)
+{
+    bmeRecord	*prec=(bmeRecord *)paddr->precord;
+    int		fieldIndex = dbGetFieldIndex(paddr);
+
+    if(fieldIndex == bmeRecordVAL
+    || fieldIndex == bmeRecordHIHI
+    || fieldIndex == bmeRecordHIGH
+    || fieldIndex == bmeRecordLOW
+    || fieldIndex == bmeRecordLOLO
+    || fieldIndex == bmeRecordHOPR
+    || fieldIndex == bmeRecordLOPR) {
+        pgd->upper_disp_limit = prec->hopr;
+        pgd->lower_disp_limit = prec->lopr;
+    } else recGblGetGraphicDouble(paddr,pgd);
+    return(0);
+}
+
+static long get_control_double(DBADDR *paddr,struct dbr_ctrlDouble *pcd)
+{
+    bmeRecord	*prec=(bmeRecord *)paddr->precord;
+    int		fieldIndex = dbGetFieldIndex(paddr);
+
+    if(fieldIndex == bmeRecordVAL
+    || fieldIndex == bmeRecordHIHI
+    || fieldIndex == bmeRecordHIGH
+    || fieldIndex == bmeRecordLOW
+    || fieldIndex == bmeRecordLOLO) {
+	pcd->upper_ctrl_limit = prec->hopr;
+	pcd->lower_ctrl_limit = prec->lopr;
+    } else recGblGetControlDouble(paddr,pcd);
+    return(0);
+}
+
+static long get_alarm_double(DBADDR *paddr,struct dbr_alDouble *pad)
+{
+    bmeRecord	*prec=(bmeRecord *)paddr->precord;
+    int		fieldIndex = dbGetFieldIndex(paddr);
+
+    if(fieldIndex == bmeRecordVAL) {
+        pad->upper_alarm_limit = prec->hhsv ? prec->hihi : epicsNAN;
+        pad->upper_warning_limit = prec->hsv ? prec->high : epicsNAN;
+        pad->lower_warning_limit = prec->lsv ? prec->low : epicsNAN;
+        pad->lower_alarm_limit = prec->llsv ? prec->lolo : epicsNAN;
+    } else recGblGetAlarmDouble(paddr,pad);
+    return(0);
+}
+
+static void checkAlarms(bmeRecord *prec)
+{
+	double		val;
+	float		hyst, lalm, hihi, high, low, lolo;
+	unsigned short	hhsv, llsv, hsv, lsv;
+
+	if(prec->udf == TRUE ){
+		recGblSetSevr(prec,UDF_ALARM,INVALID_ALARM);
+		return;
+	}
+	hihi = prec->hihi; lolo = prec->lolo; high = prec->high; low = prec->low;
+	hhsv = prec->hhsv; llsv = prec->llsv; hsv = prec->hsv; lsv = prec->lsv;
+	val = prec->val; hyst = prec->hyst; lalm = prec->lalm;
+
+	/* alarm condition hihi */
+	if (hhsv && (val >= hihi || ((lalm==hihi) && (val >= hihi-hyst)))){
+	        if (recGblSetSevr(prec,HIHI_ALARM,prec->hhsv)) prec->lalm = hihi;
+		return;
+	}
+
+	/* alarm condition lolo */
+	if (llsv && (val <= lolo || ((lalm==lolo) && (val <= lolo+hyst)))){
+	        if (recGblSetSevr(prec,LOLO_ALARM,prec->llsv)) prec->lalm = lolo;
+		return;
+	}
+
+	/* alarm condition high */
+	if (hsv && (val >= high || ((lalm==high) && (val >= high-hyst)))){
+	        if (recGblSetSevr(prec,HIGH_ALARM,prec->hsv)) prec->lalm = high;
+		return;
+	}
+
+	/* alarm condition low */
+	if (lsv && (val <= low || ((lalm==low) && (val <= low+hyst)))){
+	        if (recGblSetSevr(prec,LOW_ALARM,prec->lsv)) prec->lalm = low;
+		return;
+	}
+
+	/* we get here only if val is out of alarm by at least hyst */
+	prec->lalm = val;
+	return;
+}
+
+static void monitor(bmeRecord *prec)
+{
+	unsigned short	monitor_mask;
+	double		delta;
+
+        monitor_mask = recGblResetAlarms(prec);
+	/* check for value change */
+	delta = prec->mlst - prec->val;
+	if(delta<0.0) delta = -delta;
+	if (delta > prec->mdel) {
+		/* post events for value change */
+		monitor_mask |= DBE_VALUE;
+		/* update last value monitored */
+		prec->mlst = prec->val;
+	}
+
+	/* check for archive change */
+	delta = prec->alst - prec->val;
+	if(delta<0.0) delta = -delta;
+	if (delta > prec->adel) {
+		/* post events on value field for archive change */
+		monitor_mask |= DBE_LOG;
+		/* update last archive value monitored */
+		prec->alst = prec->val;
+	}
+
+	/* send out monitors connected to the value field */
+	if (monitor_mask){
+		db_post_events(prec,&prec->val,monitor_mask);
+	}
+	return;
+}
+   </pre>
+   <p>
+      위 코드를 만드는 방법 중 하나는 ai Record를 이용하는 것이다. Sensor 값은 double형 type의
+      값을 가지기 때문에 EPICS Base로 있는 ai Record를 사용하면 쉽게 원하는 Record를 만들 수
+      있다. 따라서 epics/R3.14.12.5/base/src/rec에 위치해 있는 aiRecord.c 파일을 현재 위치로
+      복사한 후 이름을 bmeRecord.c로 변경한다. 그리고 파일을 열어 ai를 bme로 바꾸면 위와 
+      같은 코드가 만들어 진다.
+   </p>
+   <p>
+      이와 같이 만들어진 bme Record에 Sensor값을 나타내기 위해서는 3개 새로운 field를 추가해야
+      한다. 가장 간단한 방법은 앞서 진행했던 것과 동일하게 aiRecord.dbd를 이용하는 것이다. 
+      epics/R3.14.12.5/base/src/rec에 위치한 aiRecord.dbd 파일을 현재 위치로 복사한 후 
+      bmeRecord.dbd로 이름을 바꾼다. 그리고 파일을 열어 TEM, HUM, PRE field를 추가한다.
+   </p>
+   <pre>
+recordtype(bme) {
+	include "dbCommon.dbd" 
+	field(VAL,DBF_DOUBLE) {
+		prompt("Current Sensor Value")
+		asl(ASL0)
+		pp(TRUE)
+	}
+	field(INP,DBF_INLINK) {
+		prompt("Input Specification")
+		promptgroup(GUI_INPUTS)
+		special(SPC_NOMOD)
+		interest(1)
+	}
+	field(PREC,DBF_SHORT) {
+		prompt("Display Precision")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(EGU,DBF_STRING) {
+		prompt("Engineering Units")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+		size(16)
+	}
+	field(HOPR,DBF_FLOAT) {
+		prompt("High Operating Range")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(LOPR,DBF_FLOAT) {
+		prompt("Low Operating Range")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(HIHI,DBF_FLOAT) {
+		prompt("Hihi Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(LOLO,DBF_FLOAT) {
+		prompt("Lolo Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(HIGH,DBF_FLOAT) {
+		prompt("High Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(LOW,DBF_FLOAT) {
+		prompt("Low Alarm Limit")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+	}
+	field(HHSV,DBF_MENU) {
+		prompt("Hihi Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(LLSV,DBF_MENU) {
+		prompt("Lolo Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(HSV,DBF_MENU) {
+		prompt("High Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(LSV,DBF_MENU) {
+		prompt("Low Severity")
+		promptgroup(GUI_ALARMS)
+		pp(TRUE)
+		interest(1)
+		menu(menuAlarmSevr)
+	}
+	field(HYST,DBF_DOUBLE) {
+		prompt("Alarm Deadband")
+		promptgroup(GUI_ALARMS)
+		interest(1)
+	}
+	field(ADEL,DBF_DOUBLE) {
+		prompt("Archive Deadband")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(MDEL,DBF_DOUBLE) {
+		prompt("Monitor Deadband")
+		promptgroup(GUI_DISPLAY)
+		interest(1)
+	}
+	field(LALM,DBF_DOUBLE) {
+		prompt("Last Value Alarmed")
+		special(SPC_NOMOD)
+		interest(3)
+	}
+	field(ALST,DBF_DOUBLE) {
+		prompt("Last Value Archived")
+		special(SPC_NOMOD)
+		interest(3)
+	}
+	field(MLST,DBF_DOUBLE) {
+		prompt("Last Val Monitored")
+		special(SPC_NOMOD)
+		interest(3)
+	}
+<span class="insert">        field(TEM,DBF_DOUBLE) {
+                prompt("Temperautre Value")
+        }
+        field(HUM,DBF_DOUBLE) {
+                prompt("Humidity Value")
+        }
+        field(PRE,DBF_DOUBLE) {
+                prompt("Pressure Value")
+        }</span>
+}
+   </pre>
+   <p>
+      bme Record가 만들어 졌으면 Record Process에 의해 호출 되는 Device Support 코드를
+      만들어야 한다. 결과적으로 Device Support 코드는 Sensor로 부터 값을 읽고 Record에 
+      전달하는 코드로 구성이 되어 있다. 코드 작성을 위해 devBME280.c 파일을 만들고 다음과 
+      같이 작성한다.
+   </p>
+   <pre>
+#include &lt;stdio.h>
+#include &lt;string.h>
+#include &lt;stdlib.h>
+
+#include &lt;epicsExport.h>
+#include &lt;devSup.h>
+#include &lt;recSup.h>
+#include &lt;recGbl.h>
+#include &lt;dbAccess.h>
+#include &lt;callback.h>
+#include &lt;bmeRecord.h>
+
+#include &lt;wiringPi.h>
+#include &lt;wiringPiI2C.h>
+
+#define DEV_ADDR 0x76
+
+int digT[3];
+int digP[9];
+int digH[6];
+double t_fine;
+
+void writeReg(int fd, int reg_address, int data);
+void reset(int fd);
+void setup(int fd);
+void getCalbParm(int fd);
+
+double compensate_T(int adc_T);
+double compensate_P(int adc_P);
+double compensate_H(int adc_H);
+
+
+static long init_record(bmeRecord *pbme);
+static long read_bme(bmeRecord *pbme);
+
+typedef struct Bme_Info
+{
+  CALLBACK *callback;
+
+  int fd;
+
+  double temp;
+  double humi;
+  double pres;
+
+}BME_INFO;
+
+void readBME(BME_INFO *bme_info);
+
+static void myCallback(CALLBACK *pcallback)
+{
+  bmeRecord *precord;
+  struct rset *prset;
+
+  callbackGetUser(precord, pcallback);
+  prset = (struct rset *)(precord->rset);
+
+  dbScanLock((dbCommon*)precord);
+  (*prset->process)(precord);
+  dbScanUnlock((dbCommon*)precord);
+}
+
+static long init_record(bmeRecord *pbme)
+{
+  BME_INFO *bme_info = malloc(sizeof(BME_INFO));
+  CALLBACK *pcallback = (CALLBACK *)(calloc(1, sizeof(CALLBACK)));
+
+  callbackSetCallback(myCallback, pcallback);
+  callbackSetPriority(priorityLow, pcallback);
+  callbackSetUser(pbme, pcallback);
+
+  if(wiringPiSetup() == -1)
+  {
+    printf("Unable to start wiringPi\n");
+    return 1;
+  }
+
+  int fd = wiringPiI2CSetup(DEV_ADDR);
+
+  if(fd == -1)
+  {
+    printf("Can't open i2c device\n");
+    return 1;
+  }
+
+  reset(fd);
+  setup(fd);
+  getCalbParm(fd);
+
+  bme_info->fd = fd;
+  bme_info->callback = pcallback;
+
+  pbme->dpvt = bme_info;
+
+  return 0;
+}
+
+static long read_bme(bmeRecord *pbme)
+{
+  BME_INFO *bme_info = pbme->dpvt;
+  CALLBACK *pcallback = (CALLBACK *)bme_info->callback;
+
+  if(pbme->pact)
+  {
+    readBME(bme_info);
+
+    pbme->val = bme_info->temp;
+    pbme->tem = bme_info->temp;
+    pbme->hum = bme_info->humi;
+    pbme->pre = bme_info->pres;
+
+    pbme->udf = FALSE;
+
+    return 2;
+  }
+  else
+  {
+    pbme->pact = TRUE;
+    callbackRequestDelayed(pcallback, 0.5);
+
+    return 0;
+  }
+}
+
+struct
+{
+  long num;
+  DEVSUPFUN     report;
+  DEVSUPFUN     init;
+  DEVSUPFUN     init_record;
+  DEVSUPFUN     get_ioint_info;
+  DEVSUPFUN     read_bme;
+  DEVSUPFUN     special_linconv;
+} devBmeAsyn = {
+  6,
+  NULL,
+  NULL,
+  init_record,
+  NULL,
+  read_bme,
+  NULL
+};
+
+epicsExportAddress(dset,devBmeAsyn);
+
+void writeReg(int fd, int reg_address, int data)
+{
+  wiringPiI2CWriteReg8(fd, reg_address, data);
+}
+
+void reset(int fd)
+{
+  writeReg(fd, 0xE0, 0xB6);
+}
+
+void setup(int fd)
+{
+  unsigned char osrs_t = 1;
+  unsigned char osrs_p = 1;                      //Pressure oversampling x 1
+  unsigned char osrs_h = 1;                      //Humidity oversampling x 1
+  unsigned char mode   = 3;                      //Normal mode
+  unsigned char t_sb   = 5;                      //Tstandby 1000ms
+  unsigned char filter = 0;                      //Filter off
+  unsigned char spi3w_en = 0;                    //3-wire SPI Disable
+
+  unsigned char ctrl_meas_reg = (osrs_t << 5) | (osrs_p << 2) | mode;
+  unsigned char config_reg    = (t_sb << 5) | (filter << 2) | spi3w_en;
+  unsigned char ctrl_hum_reg  = osrs_h;
+
+  writeReg(fd, 0xF2,ctrl_hum_reg);
+  writeReg(fd, 0xF4,ctrl_meas_reg);
+  writeReg(fd, 0xF5,config_reg);
+}
+
+void getCalbParm(int fd)
+{
+  int calib[32];
+  int reg = 0x88;
+
+  int i;
+  for(i = 0; i < 24; i++)
+    calib[i] = wiringPiI2CReadReg8(fd, reg+i);
+
+  calib[24] = wiringPiI2CReadReg8(fd, 0xA1);
+
+  for(i = 0; i < 7; i++)
+    calib[i+25] = wiringPiI2CReadReg8(fd, 0xE1+i);
+
+  digT[0] = calib[1] << 8 | calib[0];
+  digT[1] = calib[3] << 8 | calib[2];
+  digT[2] = calib[5] << 8 | calib[4];
+  digP[0] = calib[7] << 8 | calib[6];
+  digP[1] = calib[9] << 8 | calib[8];
+  digP[2] = calib[11] << 8 | calib[10];
+  digP[3] = calib[13] << 8 | calib[12];
+  digP[4] = calib[15] << 8 | calib[14];
+  digP[5] = calib[17] << 8 | calib[16];
+  digP[6] = calib[19] << 8 | calib[18];
+  digP[7] = calib[21] << 8 | calib[20];
+  digP[8] = calib[23] << 8 | calib[22];
+  digH[0] = calib[24];
+  digH[1] = calib[26] << 8 | calib[25];
+  digH[2] = calib[27];
+  digH[3] = calib[28] << 4 | (0x0F & calib[29]);
+  digH[4] = calib[30] << 4 | ((calib[29] >> 4) & 0x0F);
+  digH[5] = calib[31];
+
+  for(i = 1; i < 2; i++)
+    if(digT[i] & 0x8000) digT[i] = (-digT[i] ^ 0xFFFF) + 1;
+
+  for(i = 1; i < 8; i++)
+    if(digP[i] & 0x8000) digP[i] = (-digP[i] ^ 0xFFFF) + 1;
+
+  for(i = 0; i < 6; i++)
+    if(digH[i] & 0x8000) digH[i] = (-digH[i] ^ 0xFFFF) + 1;
+}
+
+void readBME(BME_INFO *bme_info)
+{
+  int fd = bme_info->fd;
+
+  int data[8];
+  int reg = 0xF7;
+
+  double temp;
+  double humi;
+  double pres;
+
+  int i;
+  for(i = 0; i < 8; i++)
+    data[i] = wiringPiI2CReadReg8(fd, reg+i);
+
+  int pres_raw = data[0] << 12 | data[1] << 4 | data[2] >> 4;
+  int temp_raw = data[3] << 12 | data[4] << 4 | data[5] >> 4;
+  int hum_raw = data[6] << 8 | data[7];
+
+  temp = compensate_T(temp_raw);
+  humi = compensate_H(hum_raw);
+  pres = compensate_P(pres_raw);
+
+  bme_info->temp = temp;
+  bme_info->humi = humi;
+  bme_info->pres = pres;
+}
+
+double compensate_P(int adc_P)
+{
+  double pressure = 0.0;
+  double var1, var2;
+
+  var1 = (t_fine / 2.0) - 64000.0;
+  var2 = (((var1 / 4.0) * (var1 / 4.0)) / 2048) * digP[5];
+  var2 = var2 + ((var1 * digP[4]) * 2.0);
+  var2 = (var2 / 4.0) + (digP[3] * 65536.0);
+  var1 = (((digP[2] * (((var1 / 4.0) * (var1 / 4.0)) / 8192)) / 8) + ((digP[1] * var1) / 2.0)) / 262144;
+  var1 = (32768 + var1) * digP[0] / 32768;
+
+  if(var1 == 0) return 9876.0;
+
+  pressure = ((1048576 - adc_P) - (var2 / 4096)) * 3125;
+
+  if(pressure < 0x80000000) pressure = (pressure * 2.0) / var1;
+  else
+    pressure = (pressure / var1) * 2.0;
+
+  var1 = (digP[8] * (((pressure / 8.0) * (pressure / 8.0)) / 8192.0)) / 4096;
+  var2 = ((pressure / 4.0) * digP[7]) / 8192.0;
+  pressure = pressure + ((var1 + var2 + digP[6]) / 16.0);
+
+  return pressure / 100;
+
+}
+
+
+double compensate_T(int adc_T)
+{
+  double var1, var2, T;
+  var1 = (adc_T / 16384.0 - digT[0] / 1024.0) * digT[1];
+  var2 = (adc_T / 131072.0 - digT[0] / 8192.0) * (adc_T / 131072.0 - digT[0] / 8192.0) * digT[2];
+  t_fine = var1 + var2;
+  T = t_fine / 5120.0;
+
+  return T;
+}
+
+double compensate_H(int adc_H)
+{
+  double var_h;
+
+  var_h = t_fine - 76800.0;
+
+  if(var_h != 0)
+    var_h = (adc_H - (digH[3] * 64.0 + digH[4]/16384.0 * var_h)) * (digH[1] / 65536.0 * (1.0 + digH[5] / 67108864.0 * var_h * (1.0 + digH[2] / 67108864.0 * var_h)));
+  else return 9876.0;
+
+  var_h = var_h * (1.0 - digH[0] * var_h / 524288.0);
+
+  if(var_h > 100.0) var_h = 100.0;
+  else if(var_h < 0.0) var_h = 0.0;
+
+  return var_h;
+}
+
+   </pre>
+   <p>
+      devBME280.c 코드는 크게 초기화를 위한 init_record와 Sensor로 부터 값을 읽는  
+      read_bme 함수로 이루어져 있다.
+   </p>
+   <p>
+      Iinit_record 에서는 I2C 통신을 위한 Device 초기화 작업이 이루어 진다. wiringPi Library는
+      DEV_ADDR을 인자로 받는 wiringPiI2CSetup 함수를 통해 I2C Port 초기화를 한다. DEV_ADDR은
+      연결된 Device Address를 의미하는데 이 값은 i2cdetect 명령을 통해 확인 가능하다. 참고로
+      i2cdetect 명령은 i2c-tools가 설치되어 있어야 된다.
+   </p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> sudo i2cdetect -y 1
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- --
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+70: -- -- -- -- -- -- 76 --
+   </pre>
+   <p>
+      wiringPiI2CSetup함수는 device에 대한 handle값을 return하는데 이 값을 통해 device에 대한
+      명령을 수행한다. I2C Port 초기화가 완료되면 reset, setup, getCalParm함수를 차례대로 
+      호출한다. reset함수는 BME280 Sensor에 대한 초기화를 수행하는 함수로 reset register에 
+      해당하는 0xE0에 0xB6값을 쓰면 된다. setup 함수는 sampling 방법등에 대한 기본적인 설정이
+      이루어 진다. 마지막으로 getCalParm 함수는 Data에 대한 Calibration값을 읽어온다. 
+   </p>
+   <p>
+      read_bme 에서는 Sensor로 부터 값을 읽어 Record에 저장하는데 최종 값은 0xF7 ~ 0xFE 
+      register에 저장된 raw data를 compensation formula에 적용하여 구해진다.
+   </p>
+   <p>
+      다음은 앞서 작성한 record와 device 코드를 연결시켜 주기 위한 devBME280.dbd 파일을
+      만든다.
+   </p>
+   <pre>
+device(bme, INST_IO, devBmeAsyn, "BME280")   
+   </pre>
+   <p>
+      device는 순서대로 Record Type, Link Type, Device Support Struct, Device Type을 인자로
+      각각의 의미는 다음과 같다.
+   </p>
+   <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Record Type: 사용하는 Record 이름, 여기서는 새로만든 bme를 사용한다.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Link Type: EPICS Base에 정의된 Link Type중 하나, INST_IO는 문자열 하나를 받는 Link Type 이다.
+   </br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Device Support Struct: 함수 주소를 가진 구조체 이름, devBME280.c에서 사용한 구조체 이름을 적는다.</br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Device Type: DTYP field에서 사용할 이름, 보통 Protocol 또는 Device 이름을 사용한다.</br>
+   </p>
+   <p>모든 코드가 준비되었으면 Makefile을 열어 파일들을 추가해주고 make를 실행한다.</p>
+   <pre>
+TOP=../..
+
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
+
+#=============================
+# Build the IOC application
+
+PROD_IOC = bme280
+<span class="insert">DBDINC += shtRecord</span>
+
+# bme280.dbd will be created and installed
+DBD += bme280.dbd
+
+# bme280.dbd will be made up from these files:
+bme280_DBD += base.dbd<span class="insert">bme280_DBD += bmeRecord.dbd</span>
+<span class="insert">bme280_DBD += bmeRecord.dbd</span>
+<span class="insert">bme280_DBD += devBME280.dbd</span>
+
+# Include dbd files from all support applications:
+#bme280_DBD += xxx.dbd
+
+# Add all the support libraries needed by this IOC
+#bme280_LIBS += xxx
+
+# bme280_registerRecordDeviceDriver.cpp derives from glassman.dbd
+bme280_SRCS += glassman_registerRecordDeviceDriver.cpp
+<span class="insert">bme280_SRCS += bmeRecord.c</span>
+<span class="insert">bme280_SRCS += devBME280.c</span>
+
+# Build the main IOC entry point on workstation OSs.
+bme280_SRCS_DEFAULT += sht7xMain.cpp
+bme280_SRCS_vxWorks += -nil-
+
+# Add support from base/src/vxWorks if needed
+#bme280_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+# Finally link to the EPICS Base libraries
+bme280_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+#===========================
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+   </pre>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/bme280App/src $ make
+   </pre>
+   <p>make가 완료되면 bin/linux-arm 폴더에 bme280 파일이 생성된다.</p>
+   <p>테스트를 위해 bme280App/Db 폴더로 이동한 후 처음 테스트 하고자 했던 bme280.db 파일을 만든다.</p>
+   <pre>
+record(bme, "BME280:BME")
+{
+  field(DTYP, "BME280")
+  field(INP, "@1")
+  field(SCAN, "2 second")
+  field(FLNK, "BME280:FAN")
+}
+
+record(fanout, "BME280:FAN")
+{
+  field(LNK1, "BME280:TEM")
+  field(LNK2, "BME280:HUM")
+  field(LNK2, "BME280:PRE")
+}
+
+record(calc, "BME280:TEM")
+{
+  field(INPA, "BME280:BME.TEM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "BME280:HUM")
+{
+  field(INPA, "BME280:BME.HUM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "BME280:PRE")
+{
+  field(INPA, "BME280:BME.PRE")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+  </pre>
+  <p>Makefile에 bme280.db를 추가한 후 make를 실행한다.</p>
+  <pre>
+TOP=../..
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+
+#----------------------------------------------------
+#  Optimization of db files using dbst (DEFAULT: NO)
+#DB_OPT = YES
+
+#----------------------------------------------------
+# Create and install (or just install) into /db
+# databases, templates, substitutions like this
+#DB += xxx.db
+<span class="insert">DB += bme280.db</span>
+
+#----------------------------------------------------
+# If .db template is not named *.template add
+# _template = 
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+  </pre>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/bme280App/Db/ $ make
+  </pre>
+  <p>make가 완료되면 최상의 폴더에 db폴더가 만들어지고 그 안에 bme280.db파일이 생성된다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/db/ $ ls
+bme280.db
+  </pre>
+  <p>ioc 실행을 위해 iocBoot/iocbme280 폴더로 이동한다.</p>
+  <p>st.cmd파일을 수정하기 전 make를 실행해서 envPaths파일을 만든다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/iocBoot/iocbme280/ $ make
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/iocBoot/iocbme280/ $ ls
+envPaths  Makefile  st.cmd
+  </pre>
+  <p>이제 st.cmd 파일을 열어 bme280.db 레코드를 추가 한다.</p>
+  <pre>
+#!../../bin/linux-arm/bme280
+
+## You may have to change bme280 to something else
+## everywhere it appears in this file
+
+&lt; envPaths
+
+cd ${TOP}
+
+## Register all support components
+dbLoadDatabase "dbd/bme280.dbd"
+bme280_registerRecordDeviceDriver pdbbase
+
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+<span class="insert">dbLoadRecords("db/bme280.db")</span>
+
+cd ${TOP}/iocBoot/${IOC}
+iocInit
+
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+  </pre>
+  <p>최종적으로 st.cmd 파일을 실행파일로 변경한 후 실행한다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/iocBoot/iocbme280 $ chmod 755 st.cmd
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteApps/bme280/iocBoot/iocbme280 $ sudo ./st.cmd
+#!../../bin/linux-arm/bme280
+## You may have to change bme280 to something else
+## everywhere it appears in this file
+&lt; envPaths
+epicsEnvSet("ARCH","linux-arm")
+epicsEnvSet("IOC","iocbme280")
+epicsEnvSet("TOP","/home/pi/epics/R3.14.12.5/siteApps/bme280")
+epicsEnvSet("EPICS_BASE","/home/pi/epics/R3.14.12.5/base")
+cd /home/pi/epics/R3.14.12.5/siteApps/bme280
+## Register all support components
+dbLoadDatabase "dbd/bme280.dbd"
+bme280_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadRecords("db/xxx.db","user=piHost")
+dbLoadRecords("db/bme280.db")
+cd /home/pi/epics/R3.14.12.5/siteApps/bme280/iocBoot/iocbme280
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.14.12.5 $Date: Mon 2013-12-16 15:51:45 -0600$
+## EPICS Base built Aug 29 2014
+############################################################################
+iocRun: All initialization complete
+## Start any sequence programs
+#seq sncxxx,"user=piHost"
+epics&gt;
+  </pre>
+  </br>
+  <h2>라이브러리 파일로 만들기</h2>
+  <p>지금까지 만든 코드를 Library로 만들어 보자.</p>
+  <p>siteLibs 폴더로 이동한 후 raspBME280Lib 폴더를 하나 만든다.</p>
+  <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs $ mkdir raspBME280Lib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs $ cd raspBME280Lib
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Lib $
+  </pre>
+  <p>raspBME280Lib 폴더안에 Db, src 폴더를 만들고 Makefile을 생성한 후 다음과 같이 작성한다.</p>
+  <pre>
+TOP = ..
+include $(TOP)/configure/CONFIG
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *src*))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Src*))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
+include $(TOP)/configure/RULES_DIRS
+   </pre>
+   <p>src 폴더로 이동 후 지금까지 만든 devBME280.c devCharLCD.dbd lcdoutRecord.c lcdoutRecord.dbd 파일을 복사한다.</p>
+   <pre class="shell">
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/devCharLCD.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/devCharLCD.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/lcdoutRecord.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/lcdoutRecord.dbd ./
+   </pre>
+   <p>Makefile 만들고 다음과 같이 작성한다.</p>
+   <pre>
+TOP = ../..
+include $(TOP)/configure/CONFIG
+
+LIBRARY	+= raspBME280
+DBDINC	+= bmeRecord
+DBD	+= bmeRecord.dbd devBME280.dbd
+
+raspBME280_SRCS += bmeRecord.c devBME280.c
+
+include $(TOP)/configure/RULE
+   </pre>
+   <p>
+      src 폴더안에서 make를 실행한다. make가 완료되면 siteLibs/lib/linux-arm 폴더안에 libraspBME280.so 파일이 만들어 진다.
+   </p>
+  <p>Library에 대한 db파일 제공을 위해 raspBME280Libs/Db폴더로 이동한 후 다음과 같은 bme280.db파일만든다.</p>
+   <pre>
+record(bme, "BME280:BME")
+{
+  field(DTYP, "BME280")
+  field(INP, "@1")
+  field(SCAN, "2 second")
+  field(FLNK, "BME280:FAN")
+}
+
+record(fanout, "BME280:FAN")
+{
+  field(LNK1, "BME280:TEM")
+  field(LNK2, "BME280:HUM")
+  field(LNK2, "BME280:PRE")
+}
+
+record(calc, "BME280:TEM")
+{
+  field(INPA, "BME280:BME.TEM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "BME280:HUM")
+{
+  field(INPA, "BME280:BME.HUM")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+
+record(calc, "BME280:PRE")
+{
+  field(INPA, "BME280:BME.PRE")
+  field(CALC, "A")
+  field(PREC, "2")
+}
+   </pre>
+   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <pre>
+TOP =../..
+include $(TOP)/configure/CONFIG
+DB += bme280.db
+include $(TOP)/configure/RULES
+   </pre>
+   <p>make를 실행하면 siteLibs/db 폴더안에 bme280.db파일이 생성된다.</p>
+   <p>Library를 이용한 Sensor 테스트는 EPICS Application에 있는 <a href="appRaspBME280.html">BME280 Sensor</a>를 참고하기 바란다.</p>
+  </section>
+ </body>
+</html>
