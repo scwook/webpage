@@ -67,6 +67,8 @@
      Bosch BME280은 현재(2015.12) LGA 타입의 Chip으로 판매되고 있으며 여러 Vendor에서 BME280
      을 탑재한 Sensor를 출시하고 있다. BEM280은 통신을 위한 Interface로 I2C와 SPI를 지원하는데
      본 문서에서 I2C를 사용하는 Embedded Adventures MOD-1022 제품으로 테스트 하였다.
+  </p>
+  <p>
      테스트를 위한 하드웨어 구성은 다음과 같다.
   </p>
   <ul>
@@ -74,7 +76,7 @@
    <li>MOD-1022 BME280 Multi Sensor</li>
   </ul>
 <a href="../resources/images/raspberry/bme280_test.png" data-lightbox="example-1"><img src="../resources/images/raspberry/bme280_test.png" width="50%" height="50%" /></a>
-  <p>최종 목표는 다음과 같은 bme280.db를 만들어 온도 및 습도 값을 읽는 것이다.</p>
+  <p>최종 목표는 다음과 같은 bme280.db를 만들어 온도, 습도, 압력 값을 읽는 것이다.</p>
   <pre>
 record(bme, "BME280:BME")
 {
@@ -907,7 +909,7 @@ double compensate_H(int adc_H)
       read_bme 함수로 이루어져 있다.
    </p>
    <p>
-      Iinit_record 에서는 I2C 통신을 위한 Device 초기화 작업이 이루어 진다. wiringPi Library는
+      init_record 에서는 I2C 통신을 위한 Device 초기화 작업이 이루어 진다. wiringPi Library는
       DEV_ADDR을 인자로 받는 wiringPiI2CSetup 함수를 통해 I2C Port 초기화를 한다. DEV_ADDR은
       연결된 Device Address를 의미하는데 이 값은 i2cdetect 명령을 통해 확인 가능하다. 참고로
       i2cdetect 명령은 i2c-tools가 설치되어 있어야 된다.
@@ -963,9 +965,13 @@ include $(TOP)/configure/CONFIG
 
 #=============================
 # Build the IOC application
+<span class="insert">
+USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+</span>
 
 PROD_IOC = bme280
-<span class="insert">DBDINC += shtRecord</span>
+<span class="insert">DBDINC += bmeRecord</span>
 
 # bme280.dbd will be created and installed
 DBD += bme280.dbd
@@ -995,6 +1001,7 @@ bme280_SRCS_vxWorks += -nil-
 
 # Finally link to the EPICS Base libraries
 bme280_LIBS += $(EPICS_BASE_IOC_LIBS)
+<span class="insert">bme280_LIBS += wiringPi</span>
 
 #===========================
 
@@ -1159,12 +1166,12 @@ DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *db*))
 DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Db*))
 include $(TOP)/configure/RULES_DIRS
    </pre>
-   <p>src 폴더로 이동 후 지금까지 만든 devBME280.c devCharLCD.dbd lcdoutRecord.c lcdoutRecord.dbd 파일을 복사한다.</p>
+   <p>src 폴더로 이동 후 지금까지 만든 devBME280.c devBME280.dbd bmeRecord.c bmeRecord.dbd 파일을 복사한다.</p>
    <pre class="shell">
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/devCharLCD.c ./
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/devCharLCD.dbd ./
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/lcdoutRecord.c ./
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/charlcdApp/src/lcdoutRecord.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/bme280App/src/devBME280.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/bme280App/src/devBME280.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/bme280App/src/bmeRecord.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspBME280Libs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/bme280/bme280App/src/bmeRecord.dbd ./
    </pre>
    <p>Makefile 만들고 다음과 같이 작성한다.</p>
    <pre>
@@ -1220,7 +1227,7 @@ record(calc, "BME280:PRE")
   field(PREC, "2")
 }
    </pre>
-   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <p>Makefile을 만들고 다음과 같이 작성한다.</p>
    <pre>
 TOP =../..
 include $(TOP)/configure/CONFIG

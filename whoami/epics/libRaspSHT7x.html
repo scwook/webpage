@@ -1113,6 +1113,10 @@ include $(TOP)/configure/CONFIG
 
 #=============================
 # Build the IOC application
+<span class="insert">
+USR_INCLUDES += -I/home/pi/wiringPi/wiringPi
+wiringPi_DIR += /home/pi/wiringPi/wiringPi /home/pi/wiringPi/devLib
+</span>
 
 PROD_IOC = sht7x
 <span class="insert">DBDINC += shtRecord</span>
@@ -1145,6 +1149,7 @@ sht7x_SRCS_vxWorks += -nil-
 
 # Finally link to the EPICS Base libraries
 sht7x_LIBS += $(EPICS_BASE_IOC_LIBS)
+<span class="insert">sht7x_LIBS += wiringPi</span>
 
 #===========================
 
@@ -1303,10 +1308,10 @@ include $(TOP)/configure/RULES_DIRS
    </pre>
    <p>src 폴더로 이동 후 지금까지 만든 devSHT7x.c devCharLCD.dbd lcdoutRecord.c lcdoutRecord.dbd 파일을 복사한다.</p>
    <pre class="shell">
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/devCharLCD.c ./
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/devCharLCD.dbd ./
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/lcdoutRecord.c ./
-<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/charlcdApp/src/lcdoutRecord.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/sht7xApp/src/devSHT7x.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/sht7xApp/src/devSHT7x.dbd ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/sht7xApp/src/shtRecord.c ./
+<span class="prom">pi@raspberrypi</span> ~/epics/R3.14.12.5/siteLibs/raspSHT7xLibs/src $ cp /home/pi/epics/R3.14.12.4/siteApps/sht7x/sht7xApp/src/shtRecord.dbd ./
    </pre>
    <p>Makefile 만들고 다음과 같이 작성한다.</p>
    <pre>
@@ -1354,7 +1359,7 @@ record(calc, "SHT7x:HUM")
   field(PREC, "2")
 }   
    </pre>
-   <p>Makefile을 만들어 다음과 같이 작성한다.</p>
+   <p>Makefile을 만들고 다음과 같이 작성한다.</p>
    <pre>
 TOP =../..
 include $(TOP)/configure/CONFIG
