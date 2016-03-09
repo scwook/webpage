@@ -775,12 +775,12 @@ void readDHT(DHT_INFO *dht_info)
 }
    </pre>
    <p>
-      devDHT11.c 코드는 크게 초기활르 위한 init_record와 Sensor로 부터 값을 읽는 read_dht
+      devDHT11.c 코드는 크게 초기화를 위한 init_record와 Sensor로 부터 값을 읽는 read_dht
       함수로 이루어져 있다.
    </p>
    <p>
       init_record 에서는 INP field를 통해 전달받은 GPIO Pin 번호를 정수형으로 변환한다. 여기서
-      atoi한수는 문자열을 정수형으로 변환하는 C Library 함수이다.
+      atoi함수는 문자열을 정수형으로 변환하는 C Library 함수이다.
    </p>
    <p>
       read_dht에서는 Sensor로 부터 값을 읽어 Record에 저장하는데 실제 Sensor에서 값을 읽는 
