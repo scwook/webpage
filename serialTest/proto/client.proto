@@ -1,0 +1,7 @@
+Terminator = CR LF;
+
+request_data{
+        out "\$1";
+        in "%f";
+}
+
