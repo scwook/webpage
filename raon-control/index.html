@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<body style="background-color:black">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <div class="demo" style="position:relative; display:block; margin-left:auto; margin-right:auto; width:50%">
+        <p id="first" style="color:white; font-size: 3vmax">scw</p>
+    </div>
+    <div class="demo" style="position:relative; display:block; margin-left:auto; margin-right:auto; width:50%">
+        <p id="second" style="color:white; font-size: 3vmax"></p>
+    </div>
+    <div class="demo" style="position:relative; display:block; margin-left:auto; margin-right:auto; width:50%">
+        <p id="third" style="color:white; font-size: 3vmax"></p>
+    </div>
+
+    <script>
+        var myVar = setInterval(loadDoc, 1000);
+        function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var jsonValue = JSON.parse(this.responseText);
+                    document.getElementById("first").innerHTML = "asbd";
+                }
+            };
+            xhttp.open("GET", "scwook", true);
+            xhttp.send();
+        }
+    </script>
+
+</body>
+
+</html>
