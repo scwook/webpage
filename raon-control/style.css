@@ -1,0 +1,30 @@
+
+.control {
+    position: relative;
+    display: block;
+    background-color: black;
+    margin: 5px;
+}
+
+.contents-box {
+    margin: 5px;
+    width: 300px;
+    height: 300px;
+    float: left;
+    background-color: #1d1d1d;
+}
+
+.wide-box {
+    margin: 5px;
+    width: 610px;
+    height: 300px;
+    float: left;
+    background-color: #1d1d1d;
+}
+
+.data {
+    color: white;
+    font-size: 70px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,20 +1,169 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="chart/Chart.js"></script>
+<script src="chart/samples/utils.js"></script>
 
 <body style="background-color:black">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <div class="demo" style="position:relative; display:block; margin-left:auto; margin-right:auto; width:50%">
-        <p id="first" style="color:white; font-size: 3vmax">scw</p>
-    </div>
-    <div class="demo" style="position:relative; display:block; margin-left:auto; margin-right:auto; width:50%">
-        <p id="second" style="color:white; font-size: 3vmax"></p>
-    </div>
-    <div class="demo" style="position:relative; display:block; margin-left:auto; margin-right:auto; width:50%">
-        <p id="third" style="color:white; font-size: 3vmax"></p>
+    <div style="height:100px; background-color: dodgerblue; margin: 5px">
+        <p style="text-align:center; font-family:Arial, Helvetica, sans-serif; color:white; font-size: 60px;">
+            Accelerator Control Monitoring</p>
     </div>
 
+    <div class="contents-box">
+        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Temperature</p>
+        <p class="data">26.5&#8451</p>
+        </div>
+
+    <div class="contents-box">
+        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Humidity</p>
+        <p class="data">50.6%</p>
+    </div>
+
+    <div class="contents-box">
+        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Pressure</p>
+        <p class="data">1002.7</p>
+    </div>
+
+    <div class="contents-box">
+        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Dust</p>
+        <p class="data">45.7</p>
+    </div>
+
+    <div class="contents-box">
+        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Dust</p>
+        <p class="data">45.7</p>
+    </div>
+
+    <div class="wide-box">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="contents-box">
+        <canvas id="storage" width="300" height="300"></canvas>
+    </div>
+
+    <div class="contents-box">
+        <canvas id="database" width="300" height="300"></canvas>
+    </div>
+<!--
+    <div class="contents-box">
+        <svg width="300" height="300">
+            <circle cx="150" cy="150" r="80" style="stroke:gray; stroke-width:30; fill:none"/>
+            <circle cx="150" cy="150" r="80" style="stroke:dodgerblue; stroke-width:30; fill:none; stroke-linecap:round"/>
+            <text fill="#ffffff" font-size="30" font-family="Verdana" x="120" y="160">SVG</text> 
+        </svg>
+    </div>
+-->
+    <script>
+
+        function doughnutChart(canvas, value){
+            var c = document.getElementById(canvas);
+            var cx = c.getContext("2d");
+            cx.beginPath();
+            cx.arc(150,150,90,0,2*Math.PI);
+            cx.lineWidth = 25;
+            cx.strokeStyle = "gray";
+            cx.stroke();
+
+            var angle = 1.5;
+            cx.beginPath();
+            cx.lineWidth = 25;
+            cx.lineCap = "round"
+            cx.strokeStyle = "dodgerblue";  
+            cx.arc(150,150,90,-0.5*Math.PI,-0.5*Math.PI + angle);
+            cx.stroke();
+
+            strValue = value + "TB";
+            cx.font = "50px Arial";
+            cx.fillStyle = "white";
+            cx.fillText(strValue, 90, 170);
+        }
+        
+        function lineChart() {
+
+        }
+        
+        var dd = [
+            randomScalingFactor(), 
+            randomScalingFactor(), 
+            randomScalingFactor(), 
+            randomScalingFactor(), 
+            randomScalingFactor(), 
+            randomScalingFactor(),
+            randomScalingFactor()
+            ];
+        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var config = {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: window.chartColors.red,
+                    borderColor: window.chartColors.red,
+                    data: dd,
+                    fill: false,
+                }, {
+                    label: 'My Second dataset',
+                    fill: false,
+                    backgroundColor: window.chartColors.blue,
+                    borderColor: window.chartColors.blue,
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: true,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myLine = new Chart(ctx, config);
+
+            doughnutChart('storage', 86);
+        };
+    </script>
+<!--
     <script>
         var myVar = setInterval(loadDoc, 1000);
         function loadDoc() {
@@ -22,14 +171,14 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var jsonValue = JSON.parse(this.responseText);
-                    document.getElementById("first").innerHTML = "asbd";
+                    document.getElementById("control:temp").innerHTML = "asbd";
                 }
             };
             xhttp.open("GET", "scwook", true);
             xhttp.send();
         }
     </script>
-
+-->
 </body>
 
 </html>
