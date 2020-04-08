@@ -307,43 +307,72 @@ RELEASE
     </pre>
     <p>For ioc application test, create example application and edit configureation file.</p>
     <pre class="shell">
-<span class="prom">scwook@scwook:</span>~/epics$ mkdir serialTest
-<span class="prom">scwook@scwook:</span>~/epics$ cd serialTest
-<span class="prom">scwook@scwook:</span>~/epics/serialTest$ ../base/bin/linux-x86/makeBaseApp.pl -t example serialTest
-<span class="prom">scwook@scwook:</span>~/epics/serialTest$ ../base/bin/linux-x86/makeBaseApp.pl -i -t example serialTest
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5$ mkdir serialTest
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5$ cd serialTest
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5/serialTest$ makeBaseApp.pl -t ioc serialTest
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5/serialTest$ makeBaseApp.pl -i -t ioc serialTest
     </pre>
     <p>Add following lines in configure/RELEASE file.</p>
     <pre>
-RELEASE
-
 	ASYN=&lt;asyn path&gt;
 	CALC=&lt;calc path&gt;
 	STREAM=&lt;stream path&gt;
     </pre>
     <p>in my example</p>
     <pre>
-RELEASE
-
-	ASYN=/home/scwook/epics/module/synApps_5_7/support/asyn-4-21
-	CALC=/home/scwook/epics/module/synApps_5_7/support/calc-3-2
-	STREAM=/home/scwook/epics/module/synApps_5_7/support/stream-2-6
+	ASYN=/home/scwook/epics/R3.14.12.5/epicsLibs/synApps_5_7/support/asyn-4-21
+	STREAM=/home/scwook/epics/R3.14.12.5/epicsLibs/synApps_5_7/support/stream-2-6
     </pre>
     <p>Add following lines in serialTestApp/src/Makefile.</p>
     <pre>
-Makefile
-
 	serialTest_DBD += stream.dbd
 	serialTest_DBD += drvAsynSerialPort.dbd
 	serialTest_LIBS += stream
 	serialTest_LIBS += asyn
-    </pre> 
+    </pre>
+
+    <p>Create "serialTest.db" file in serialTest/src/Db and add record</p>
+    <pre class="shell">
+    record(ai, "getReadValue")
+    {
+      field(DTYP, "stream")
+      field(INP, "@serialTest.proto TTYS0")
+      field(SCAN, "1 second")
+    }
+    </pre>
+    
+    <p>Create "serialTest.proto file in serialTest/proto and add stream device protocol</p>
+    <pre class="shell">
+    Terminator = LF;
+
+    getRead{
+        out "READ?";
+        in "%f";
+    }
+    </pre>
+    
+    <p>add following lines at "st.cmd" in iocBoot/iocserialTest
+    <pre class="shell">
+    epicsEnvSet "STREAM_PROTOCOL_PATH" "../../proto"
+
+    drvAsynSerialPortConfigure "TTYS0" "/dev/ttyS0"
+    asynSetOption("TTYS0", 0, "baud", "9600")
+    asynSetOption("TTYS0", 0, "bits", "1")
+    asynSetOption("TTYS0", 0, "parity", "non")
+
+    dbLoadRecords("db/serialTest.db")
+    </pre>
+
     <p>Build application</p>
     <pre class="shell">
-<span class="prom">scwook@scwook:</span>~/epics/serialTest$ make
-...
-...
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5/serialTest$ make
     </pre>
-    <p>Now you can use asyn and stream device.</p>
+    <p>Run "st.cmd" at serialTest/iocBoot/iocserialTest</p>
+    <pre class="shell">
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5/serialTest/iocBoot/iocserialTest$ chmod +x st.cmd
+<span class="prom">scwook@scwook:</span>~/epics/R3.14.12.5/serialTest/iocBoot/iocserialTest$ ./st.cmd
+    </pre>
+
   </section>
  </body>
 </html>

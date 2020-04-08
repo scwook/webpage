@@ -2,27 +2,42 @@ import time
 
 from pvaccess import *
 
-provider = ProviderType.CA
+class ChannelMonitor:
+    def __init__(self, name):
+        self.name = name
 
-def writeChannelToFile(x):
-	f = open(x, 'w')
-	f.write(x)
-	f.close()
+    def monitor(self, data):
+	jsonData = data.toJSON(False)
+	self.writeDataToFile(self.name, jsonData)
+#        dataDic[self.name] = str(data['value'])
 
-def channelMonitor(field):
-	print(field)
+    def writeDataToFile(self, fileName, data):
+        f = open(fileName, 'w')
+        f.write(data)
+        f.close()
+
+#def channelMonitor(field):
+#	print(field)
 #	print(x.toJSON(False))
 #	writeChannelToFile(x.toJSON(False))
 
 ### Read Channel List
-pvListSet = set(line.strip() for line in open('pvList'))
+pvList = list(line.strip() for line in open('pvList'))
 
-ch = {}
+pvListLen = len(pvList)
 
-for x in pvListSet:
-	ch[x] = Channel(x, provider)
-	ch[x].subscribe(x, channelMonitor)
-	ch[x].startMonitor()
+channelList = list()
+monitoringList = list()
+#dataDic = dict()
+
+index = 0
+for name in pvList:
+	print(index)
+	channelList.append(Channel(name, ProviderType.CA))
+	monitoringList.append(ChannelMonitor(name))
+
+	channelList[index].monitor(monitoringList[index].monitor)
+	index += 1
 
 #print(ch)
 ### Single Channel
@@ -34,7 +49,8 @@ for x in pvListSet:
 #d.subscribe('scwook:ai2', channelMonitor)
 #d.startMonitor('value')
 
-time.sleep(1000)
+while 1:
+    time.sleep(0.1)
 
 
 #print c.get()
