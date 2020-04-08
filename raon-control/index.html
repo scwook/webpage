@@ -18,29 +18,29 @@
     <br>
 
     <div class="contents-box">
-        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Temperature</p>
-        <p class="data" id="scwook1">26.5&#8451</p>
+        <p class="title">Temperature</p>
+        <p class="data" id="scwook-ai1">Not Assigned</p>
         <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
     </div>
 
     <div class="contents-box">
-        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Humidity</p>
-        <p class="data" id="scwook2">50.6%</p>
+        <p class="title">Humidity</p>
+        <p class="data" id="scwook-ai2">Not Assigned</p>
     </div>
 
     <div class="contents-box">
-        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Pressure</p>
-        <p class="data">1002.7</p>
+        <p class="title">Pressure</p>
+        <p class="data" id="scwook-ai3">Not Assigned</p>
     </div>
 
     <div class="contents-box">
-        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Dust</p>
-        <p class="data">45.7</p>
+        <p class="title">Dust</p>
+        <p class="data">Not Assigned</p>
     </div>
 
     <div class="contents-box">
-        <p style="color:white; font-size:20px; text-align:center; font-family:monospace">Dust</p>
-        <p class="data">45.7</p>
+        <p class="title">Dust</p>
+        <p class="data">Not Assigned</p>
     </div>
 
     <div class="wide-box">
@@ -169,17 +169,33 @@
 
         function monitoring() {
 
-            var pvList = ["scwook1", "scwook2"];
+            var pvList = ["scwook-ai1", "scwook-ai2", "scwook-ai3"];
             requests = new Array(pvList.length);
 
             for(let i = 0; i < pvList.length; i++) {
                 requests[i] = new XMLHttpRequest();
                 requests[i].open("GET", pvList[i], true);
+
                 requests[i].onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         var jsonValue = JSON.parse(requests[i].responseText);
-                        document.getElementById(pvList[i]).innerHTML = jsonValue.value;                  
-                        console.log(pvList[i]);    
+                        document.getElementById(pvList[i]).innerHTML = jsonValue.value;
+
+                        alarmStatus = jsonValue.alarm.severity;
+                        switch(alarmStatus) {
+                            case 0:
+                                document.getElementById(pvList[i]).style.color = "white";
+                                break;
+
+                            case 1:
+                                document.getElementById(pvList[i]).style.color = "Gold";
+                                break;
+                            
+                            case 2:
+                                document.getElementById(pvList[i]).style.color = "OrangeRed";
+                                break;
+                        }
+
                     }
                 }
                 requests[i].send();
@@ -195,9 +211,8 @@
             var myVar = setInterval(timer, 1000);
             var startMonitoring = setInterval(monitoring, 1000);
         }
-
-
     </script>
+
 </body>
 
 </html>

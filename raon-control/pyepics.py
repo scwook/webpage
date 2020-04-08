@@ -9,10 +9,12 @@ class ChannelMonitor:
     def monitor(self, data):
 	jsonData = data.toJSON(False)
 	self.writeDataToFile(self.name, jsonData)
+	print(jsonData)
 #        dataDic[self.name] = str(data['value'])
 
     def writeDataToFile(self, fileName, data):
-        f = open(fileName, 'w')
+	newFileName = fileName.replace(":", "-")
+        f = open(newFileName, 'w')
         f.write(data)
         f.close()
 
