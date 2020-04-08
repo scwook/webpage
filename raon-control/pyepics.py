@@ -24,15 +24,12 @@ class ChannelMonitor:
 ### Read Channel List
 pvList = list(line.strip() for line in open('pvList'))
 
-pvListLen = len(pvList)
-
 channelList = list()
 monitoringList = list()
 #dataDic = dict()
 
 index = 0
 for name in pvList:
-	print(index)
 	channelList.append(Channel(name, ProviderType.CA))
 	monitoringList.append(ChannelMonitor(name))
 
