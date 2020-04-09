@@ -52,7 +52,18 @@
     </div>
 
     <div class="contents-box">
-        <canvas id="database" width="300" height="300"></canvas>
+        <div class="widget-box">
+            <img id="img" src="image1.svg" width="150" height="150">
+        </div>
+        <div class="widget-box">
+            <img src="image1.svg" width="150" height="150">
+        </div>
+        <div class="widget-box">
+            <img src="image1.svg" width="150" height="150">
+        </div>
+        <div class="widget-box">
+            <img src="image1.svg" width="150" height="150">
+        </div>
     </div>
 <!--
     <div class="contents-box">
@@ -203,6 +214,20 @@
 
         }
 
+        var count = 0;
+        function changeImage() {
+
+            if ( count == 0) {
+                document.getElementById("img").src = "change.svg";
+                count = 1;
+            }
+            else {
+                document.getElementById("img").src = "image1.svg";
+                count = 0;
+            }
+        }
+
+
         window.onload = function () {
             var ctx = document.getElementById('canvas').getContext('2d');
             window.myLine = new Chart(ctx, config);
@@ -210,6 +235,7 @@
             doughnutChart('storage', 86);
             var myVar = setInterval(timer, 1000);
             var startMonitoring = setInterval(monitoring, 1000);
+            var change = setInterval(changeImage, 500);
         }
     </script>
 

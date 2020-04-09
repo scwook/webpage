@@ -7,6 +7,15 @@
     border: 2px solid black;
 }
 
+.double-contents-box {
+    margin: 5px;
+    width: 614px;
+    height: 614px;
+    float: left;
+    background-color: #1d1d1d;
+    border: 2px solid black;
+}
+
 .wide-box {
     margin: 5px;
     width: 614px;
@@ -15,6 +24,17 @@
     background-color: #1d1d1d;    
     border: 2px solid black;
 }
+
+.widget-box {
+    float: left;
+    margin-bottom: -4px;
+}
+
+.double-widget-box {
+    float: left;
+    margin-bottom: -4px;
+}
+
 
 .title {
     color: white;
