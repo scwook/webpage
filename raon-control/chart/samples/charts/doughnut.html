@@ -34,27 +34,21 @@
 			data: {
 				datasets: [{
 					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
+						10,
+						20,
+
 					],
 					backgroundColor: [
 						window.chartColors.red,
-						window.chartColors.orange,
-						window.chartColors.yellow,
-						window.chartColors.green,
-						window.chartColors.blue,
+						window.chartColors.gray,
+
 					],
 					label: 'Dataset 1'
 				}],
 				labels: [
 					'Red',
-					'Orange',
-					'Yellow',
-					'Green',
-					'Blue'
+					'Gray',
+
 				]
 			},
 			options: {
@@ -65,6 +59,11 @@
 				title: {
 					display: true,
 					text: 'Chart.js Doughnut Chart'
+				},
+				elements: {
+					arc: {
+						borderWidth: 0
+					},
 				},
 				animation: {
 					animateScale: true,

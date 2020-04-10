@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td, th {
+		border: 1px solid #cccccc;
+		padding: 8px;
+	}
+
+	th {
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	tr:nth-child(even) {
+		background-color: #dddddd;
+	}
+
+	tr:hover {
+		background-color: black;
+		color: white;
+	}
+
+</style>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+		</thead>
+
+		<tbody id="tableData"></tbody>
+	</table>
+
+	<div id="demo"></div>
+</body>
+
+<script>
+	let sortDirection = false;
+	let personData = [
+		{name: 'Dylan', age: 31},
+		{name: 'Christopher', age: 30},
+		{name: 'Israel', age: 29},
+		{name: 'ThugNasty', age: 14},
+		{name: 'scwook', age: 31},
+	];
+
+	window.onload = () => {
+		loadTableData(personData);
+		makeCorsRequest();
+	}
+
+	loadTableData(personData);
+
+	function loadTableData(tableData) {
+		const tableBody = document.getElementById('tableData');
+		let dataHtml = '';
+
+		for(let person of personData) {
+			dataHtml += `<tr><td>${person.name}</td><td>${person.age}</td></tr>`;
+		}
+
+		console.log(dataHtml)
+		tableBody.innerHTML = dataHtml;
+	}
+
+		// Create the XHR object.
+	function createCORSRequest(method, url) {
+		var xhr = new XMLHttpRequest();
+		if ("withCredentials" in xhr) {
+			// XHR for Chrome/Firefox/Opera/Safari.
+			xhr.open(method, url, true);
+		} else if (typeof XDomainRequest != "undefined") {
+			// XDomainRequest for IE.
+			xhr = new XDomainRequest();
+			xhr.open(method, url);
+		} else {
+			// CORS not supported.
+			xhr = null;
+		}
+		return xhr;
+	}
+
+		// Helper method to parse the title tag from the response.
+	function getTitle(text) {
+		return text.match('<title>(.*)?</title>')[1];
+	}
+
+		// Make the actual CORS request.
+	function makeCorsRequest() {
+		// This is a sample server that supports CORS.
+		var url = 'http://192.168.68.126:17665/mgmt/bpl/getPVStatus?pv=*';
+
+		var xhr = createCORSRequest('GET', url);
+		if (!xhr) {
+			alert('CORS not supported');
+			return;
+		}
+
+		// Response handlers.
+		xhr.onload = function() {
+			var text = xhr.responseText;
+			var title = getTitle(text);
+			alert('Response from CORS request to ' + url + ': ' + title);
+		};
+
+		xhr.onerror = function() {
+				alert('Woops, there was an error making the request.');
+		};
+
+		xhr.send();
+	}
+
+
+
+
+</script>
+
+
+</html>

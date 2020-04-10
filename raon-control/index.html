@@ -179,6 +179,51 @@
         };
 
 
+        var configDoughnut = {
+            type: 'doughnut',
+			data: {
+                radius: "50%",
+				datasets: [{
+					data: [
+						10,
+						20,
+
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.gray,
+
+					],
+					label: 'Dataset 1'
+				}],
+				labels: [
+					'Red',
+					'Gray',
+
+				]
+			},
+			options: {
+				responsive: true,
+				legend: {
+					display: false,
+				},
+				title: {
+					display: true,
+					text: 'Chart.js Doughnut Chart'
+				},
+				elements: {
+					arc: {
+						borderWidth: 0
+					},
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+                },
+                cutoutPercentage: 80
+			}
+		};
+
         function timer() {
             var d = new Date();
             document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
@@ -217,7 +262,25 @@
                 }
                 requests[i].send();
             }
+        }
 
+        function chartMonitoring() {
+
+            var pvList = ["scwook-ai1", "scwook-ai2", "scwook-ai3"];
+            requests = new Array(pvList.length);
+
+            for(let i = 0; i < pvList.length; i++) {
+                requests[i] = new XMLHttpRequest();
+                requests[i].open("GET", pvList[i], true);
+
+                requests[i].onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var jsonValue = JSON.parse(requests[i].responseText);
+                        document.getElementById(pvList[i]).innerHTML = jsonValue.value;
+                    }
+                }
+                requests[i].send();
+            }
         }
 
         var count = 0;
@@ -233,11 +296,15 @@
             }
         }
 
+        var cwData = 0;
         window.onload = function () {
             var ctx = document.getElementById('canvas').getContext('2d');
-	        window.myChart = new Chart(ctx, config);
+	        window.myChart1 = new Chart(ctx, config);
 
-            doughnutChart('storage', 86);
+            var ctx2 = document.getElementById('storage').getContext('2d');
+            window.myChart2 = new Chart(ctx2, configDoughnut);
+            
+            // doughnutChart('storage', 86);
             var myVar = setInterval(timer, 1000);
             var startMonitoring = setInterval(monitoring, 1000);
             var change = setInterval(changeImage, 500);
