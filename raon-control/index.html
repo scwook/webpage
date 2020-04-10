@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" type="text/css" href="style.css">
-<script src="chart/Chart.js"></script>
-<script src="chart/samples/utils.js"></script>
+<script src="moment.js"></script>
+<script src="live-chart/chart.js@2.8.0"></script>
+<script src="chartjs-plugin-streaming/chartjs-plugin-streaming.js"></script>
+
 
 <body style="background-color:black">
     <meta charset="UTF-8">
@@ -99,79 +101,83 @@
             cx.fillText(strValue, 90, 170);
         }
         
-        function lineChart() {
+        var chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
 
+        function randomScalingFactor() {
+            return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
         }
-        
-        var dd = [
-            1,
-            2,
-            5,
-            10,
-            -10,
-            -20,
-            0.0000001
-        ];
 
-        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        function onRefresh(chart) {
+            chart.config.data.datasets.forEach(function(dataset) {
+                dataset.data.push({
+                    x: Date.now(),
+                    y: randomScalingFactor()
+                });
+            });
+        }
+
+        var color = Chart.helpers.color;
         var config = {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: window.chartColors.red,
-                    borderColor: window.chartColors.red,
-                    data: dd,
+                    label: 'Dataset  (cubic interpolation)',
+                    backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: chartColors.blue,
                     fill: false,
-                }, {
-                    label: 'My Second dataset',
-                    fill: false,
-                    backgroundColor: window.chartColors.blue,
-                    borderColor: window.chartColors.blue,
-                    data: [
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor()
-                    ],
+                    cubicInterpolationMode: 'monotone',
+                    data: []
                 }]
             },
             options: {
-                responsive: true,
                 title: {
                     display: true,
-                    text: 'Chart.js Line Chart'
+                    text: 'Line chart (hotizontal scroll) sample'
                 },
-                tooltips: {
-                    mode: 'index',
-                    intersect: true,
+                legend: {
+                    display: false
                 },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
+                layout: {
+                    padding: {
+                        bottom: 10
+                    }
                 },
                 scales: {
                     xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Month'
+                        type: 'realtime',
+                        realtime: {
+                            duration: 20000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: onRefresh
                         }
                     }],
                     yAxes: [{
-                        display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Value'
+                            labelString: 'value'
                         }
                     }]
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
                 }
             }
-        }
+        };
+
 
         function timer() {
             var d = new Date();
@@ -227,10 +233,9 @@
             }
         }
 
-
         window.onload = function () {
             var ctx = document.getElementById('canvas').getContext('2d');
-            window.myLine = new Chart(ctx, config);
+	        window.myChart = new Chart(ctx, config);
 
             doughnutChart('storage', 86);
             var myVar = setInterval(timer, 1000);
