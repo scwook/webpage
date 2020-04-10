@@ -28,6 +28,10 @@
 
 </style>
 <body>
+	<input id="gsearch" value="pv name">
+	<button type="button" id="myBtn" onclick="loadSearch()">search</button>
+
+
 	<table>
 		<thead>
 			<tr>
@@ -43,6 +47,20 @@
 </body>
 
 <script>
+	function loadSearch() {
+		var searchText = document.getElementById("gsearch").value;
+		loadDoc(searchText);
+	}
+
+	var input = document.getElementById("gsearch");
+		input.addEventListener("keyup", function(event) {
+			if (event.keyCode === 13) {
+			event.preventDefault();
+			document.getElementById("myBtn").click();
+		}
+	});
+
+
 	let sortDirection = false;
 	let personData = [
 		{name: 'Dylan', age: 31},
@@ -54,7 +72,7 @@
 
 	window.onload = () => {
 		loadTableData(personData);
-		makeCorsRequest();
+		//loadDoc();
 	}
 
 	loadTableData(personData);
@@ -71,6 +89,33 @@
 		tableBody.innerHTML = dataHtml;
 	}
 
+
+
+	function loadDoc(retrievalName) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+				
+				var pvData = '';
+				for(var i = 0; i < jsonValue.length; i++) {
+					//document.getElementById("demo").innerHTML = jsonValue.length;
+					console.log(jsonValue[i].pvName);
+					pvData += `<tr><td>${jsonValue[i].pvName}</td><td>${jsonValue[i].connectionState}</td></tr>`
+
+				}
+
+			}
+
+			document.getElementById("tableData").innerHTML = pvData;
+		};
+		var rName = "http://localhost:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
+		console.log(rName);
+		xhttp.open("GET", rName, true);
+		xhttp.send();
+	}
+
+/*
 		// Create the XHR object.
 	function createCORSRequest(method, url) {
 		var xhr = new XMLHttpRequest();
@@ -96,7 +141,7 @@
 		// Make the actual CORS request.
 	function makeCorsRequest() {
 		// This is a sample server that supports CORS.
-		var url = 'http://192.168.68.126:17665/mgmt/bpl/getPVStatus?pv=*';
+		var url = 'http://localhost:17665/mgmt/bpl/getPVStatus?pv=*';
 
 		var xhr = createCORSRequest('GET', url);
 		if (!xhr) {
@@ -117,7 +162,7 @@
 
 		xhr.send();
 	}
-
+*/
 
 
 
