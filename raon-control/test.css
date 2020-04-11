@@ -1,0 +1,50 @@
+.search-box {
+    background-color: black;
+    margin: auto;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+.search-box #input {
+    padding: 10px;
+    font-size: 25px;
+    border: 1px solid #1d1d1d;
+    float: left;
+    width: 80%;
+    background: #1d1d1d;
+    color: white
+}
+
+.search-box #button {
+    float: left;
+    width: 10%;
+    padding: 10px;
+    background: #1d1d1d;
+    color: white;
+    font-size: 25px;
+    border: 1px solid #1d1d1d;
+    border-left: none;
+    cursor: pointer;
+}
+
+#retriveData {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 1000px;
+    margin: auto;
+    border-spacing: 15px;
+}
+
+#retriveData th {
+    color: white;
+    background-color: dodgerblue;
+    font-size: 20px;
+    height: 40px;
+}
+
+#retriveData td {
+    color: white;
+    background-color: #1d1d1d;
+    font-size: 20px;
+    height: 40px;
+}

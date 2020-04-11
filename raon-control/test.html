@@ -1,82 +1,74 @@
 <!DOCTYPE html>
 <html>
-<style>
-	table {
-		font-family: arial, sans-serif;
-		border-collapse: collapse;
-		width: 100%;
-	}
+<link rel="stylesheet" type="text/css" href="test.css">
+<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
 
-	td, th {
-		border: 1px solid #cccccc;
-		padding: 8px;
-	}
+<body style="background-color:black">
+	<br><br><br><br><br><br>
+	
+	<div class="search-box">
+		<input type="text" id="input" placeholder="Process Variable">
+		<button type="button" id="button" onclick="loadSearch()">
+			<i class="fa fa-search"></i>
+		</button>
+	</div>
 
-	th {
-		font-weight: bold;
-		text-transform: uppercase;
-	}
+	<br><br><br><br><br><br>
 
-	tr:nth-child(even) {
-		background-color: #dddddd;
-	}
-
-	tr:hover {
-		background-color: black;
-		color: white;
-	}
-
-</style>
-<body>
-	<input id="gsearch" value="pv name">
-	<button type="button" id="myBtn" onclick="loadSearch()">search</button>
-
-
-	<table>
-		<thead>
-			<tr>
-				<th>PV Name</th>
-				<th>Status</th>
-				<th>Connected</th>
-			</tr>
-		</thead>
-
-		<tbody id="tableData"></tbody>
+	<table id="retriveData">
+		<tr>
+			<th>PV Name</th>
+			<th>Status</th>
+			<th>Connected</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>5</td>
+			<td>6</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>8</td>
+			<td>9</td>
+		</tr>
 	</table>
-
-	<div id="demo"></div>
 </body>
 
 <script>
 	function loadSearch() {
-		var searchText = document.getElementById("gsearch").value;
-		loadDoc(searchText);
+		var searchText = document.getElementById("input").value;
+		//loadDoc(searchText);
 	}
 
-	var input = document.getElementById("gsearch");
+	var input = document.getElementById("input");
 		input.addEventListener("keyup", function(event) {
 			if (event.keyCode === 13) {
 			event.preventDefault();
-			document.getElementById("myBtn").click();
+			document.getElementById("button").click();
 		}
 	});
 
 
 	let sortDirection = false;
 	let personData = [
-		{name: 'Dylan', age: 31},
-		{name: 'Christopher', age: 30},
-		{name: 'Israel', age: 29},
-		{name: 'ThugNasty', age: 14},
-		{name: 'scwook', age: 31},
+		{name: 'Dylan', age: 31, a: 31},
+		{name: 'Christopher', age: 30, b: 31},
+		{name: 'Israel', age: 29, c: 31},
+		{name: 'ThugNasty', age: 14, d: 31},
+		{name: 'scwook', age: 31, e: 31},
 	];
 
 	window.onload = () => {
-		loadTableData(personData);
+		//loadTableData(personData);
 		//loadDoc();
 	}
 
-	loadTableData(personData);
+	//loadTableData(personData);
 
 	function loadTableData(tableData) {
 		const tableBody = document.getElementById('tableData');
@@ -98,7 +90,6 @@
 				
 				var pvData = '';
 				for(var i = 0; i < jsonValue.length; i++) {
-					//document.getElementById("demo").innerHTML = jsonValue.length;
 					console.log(jsonValue[i].pvName);
 					pvData += `<tr>
 						<td>${jsonValue[i].pvName}</td>
