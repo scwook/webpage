@@ -35,8 +35,9 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Age</th>
+				<th>PV Name</th>
+				<th>Status</th>
+				<th>Connected</th>
 			</tr>
 		</thead>
 
@@ -89,8 +90,6 @@
 		tableBody.innerHTML = dataHtml;
 	}
 
-
-
 	function loadDoc(retrievalName) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
@@ -101,7 +100,11 @@
 				for(var i = 0; i < jsonValue.length; i++) {
 					//document.getElementById("demo").innerHTML = jsonValue.length;
 					console.log(jsonValue[i].pvName);
-					pvData += `<tr><td>${jsonValue[i].pvName}</td><td>${jsonValue[i].connectionState}</td></tr>`
+					pvData += `<tr>
+						<td>${jsonValue[i].pvName}</td>
+						<td>${jsonValue[i].status}</td>
+						<td>${jsonValue[i].connectionState}</td>
+						</tr>`
 
 				}
 
@@ -109,7 +112,7 @@
 
 			document.getElementById("tableData").innerHTML = pvData;
 		};
-		var rName = "http://localhost:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
+		var rName = "http://192.168.68.126:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
 		console.log(rName);
 		xhttp.open("GET", rName, true);
 		xhttp.send();
