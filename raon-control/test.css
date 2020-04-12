@@ -2,16 +2,14 @@
     margin: 5px;
     width: 548px;
     height: 300px;
-    background-color: black;
-    border: 1px solid white;
+    background-color: dodgerblue;
 }
 
 .avatar {
-    margin: 10px;
+    margin: 5px;
     width: 100px;
     height: 100px;
     background-color: #1d1d1d;
-    border: 1px solid white;
 }
 
 .member-info {
@@ -20,9 +18,8 @@
     width: 400px;
     height: 100px;
     background-color: #1d1d1d;
-    border: 1px solid white;
     color: white;
-    padding: 20x;
+    padding: 5x;
 }
 
 .member-work {
@@ -30,7 +27,6 @@
     width: 524px;
     height: 150px;
     background-color: #1d1d1d;
-    border: 1px solid white;
     color: white
 }
 .test {
