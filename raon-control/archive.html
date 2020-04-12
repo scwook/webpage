@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="archive.css">
+<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+
+<body style="background-color:black">
+	<br><br><br><br><br><br>
+	
+	<div class="search-box">
+		<input type="text" id="input" placeholder="Process Variable">
+		<button type="button" id="button" onclick="loadSearch()">
+			<i class="fa fa-search"></i>
+		</button>
+	</div>
+
+	<br><br><br><br><br><br>
+
+	<table id="retriveData">
+		<thead>
+			<tr>
+				<th>PV Name</th>
+				<th>Status</th>
+				<th>Connected</th>
+				<th>Monitored</th>
+				<th>Sampling Period</th>
+				<th>Last Event</th>
+			</tr>
+		</thead>
+		<tbody id="tableData">
+			<tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+<script>
+	function loadSearch() {
+		var searchText = document.getElementById("input").value;
+		loadDoc(searchText);
+	}
+
+	var input = document.getElementById("input");
+		input.addEventListener("keyup", function(event) {
+			if (event.keyCode === 13) {
+			event.preventDefault();
+			document.getElementById("button").click();
+		}
+	});
+
+
+	let sortDirection = false;
+	let personData = [
+		{pvName: 'SYS-SUBSYS:DEV-SUBDEV:SIGNAL', status: 'Being archived', connectionState: 'true', monitored: 'true', samplingPeriod: '1.0', lastEvent: 'Apr/11/2020 07:26:40 +09:00'},
+
+	];
+
+	window.onload = () => {
+		loadTableData(personData);
+		//loadDoc();
+	}
+
+	//loadTableData(personData);
+
+	function loadTableData(tableData) {
+		const tableBody = document.getElementById('tableData');
+		let dataHtml = '';
+
+		for(let person of personData) {
+			dataHtml += `<tr>
+				<td>${person.pvName}</td>
+				<td>${person.status}</td>
+				<td>${person.connectionState}</td>
+				<td>${person.monitored}</td>
+				<td>${person.samplingPeriod}</td>
+				<td>${person.lastEvent}</td>
+				</tr>`;
+		}
+
+		console.log(dataHtml)
+		tableBody.innerHTML = dataHtml;
+	}
+
+	function loadDoc(retrievalName) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+				
+				var pvData = '';
+				for(var i = 0; i < jsonValue.length; i++) {
+					pvData += `<tr>
+						<td>${jsonValue[i].pvName}</td>
+						<td>${jsonValue[i].status}</td>
+						<td>${jsonValue[i].connectionState}</td>
+						<td>${jsonValue[i].isMonitored}</td>
+						<td>${jsonValue[i].samplingPeriod}</td>
+						<td>${jsonValue[i].lastEvent}</td>
+						</tr>`
+
+				}
+
+			}
+
+			document.getElementById("tableData").innerHTML = pvData;
+		};
+		var rName = "http://192.168.68.126:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
+		console.log(rName);
+		xhttp.open("GET", rName, true);
+		xhttp.send();
+	}
+
+/*
+		// Create the XHR object.
+	function createCORSRequest(method, url) {
+		var xhr = new XMLHttpRequest();
+		if ("withCredentials" in xhr) {
+			// XHR for Chrome/Firefox/Opera/Safari.
+			xhr.open(method, url, true);
+		} else if (typeof XDomainRequest != "undefined") {
+			// XDomainRequest for IE.
+			xhr = new XDomainRequest();
+			xhr.open(method, url);
+		} else {
+			// CORS not supported.
+			xhr = null;
+		}
+		return xhr;
+	}
+
+		// Helper method to parse the title tag from the response.
+	function getTitle(text) {
+		return text.match('<title>(.*)?</title>')[1];
+	}
+
+		// Make the actual CORS request.
+	function makeCorsRequest() {
+		// This is a sample server that supports CORS.
+		var url = 'http://localhost:17665/mgmt/bpl/getPVStatus?pv=*';
+
+		var xhr = createCORSRequest('GET', url);
+		if (!xhr) {
+			alert('CORS not supported');
+			return;
+		}
+
+		// Response handlers.
+		xhr.onload = function() {
+			var text = xhr.responseText;
+			var title = getTitle(text);
+			alert('Response from CORS request to ' + url + ': ' + title);
+		};
+
+		xhr.onerror = function() {
+				alert('Woops, there was an error making the request.');
+		};
+
+		xhr.send();
+	}
+*/
+
+
+
+</script>
+
+
+</html>
