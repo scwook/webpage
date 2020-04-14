@@ -11,34 +11,70 @@
     }
 }
 
-#ma {
+@keyframes example2 {
+    from { 
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(1080deg);
+    }
+}
+
+#img4{
+    animation-name: example2;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: reverse;
+}
+
+#img5 {
     animation-name: example;
-    animation-duration: 8s;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#img9 {
+    animation-name: example;
+    animation-duration: 20s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     animation-direction: reverse;
 }
 
-#ro {
-    animation-name: example;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+.image-box {
+    position: absolute;
 }
 
 </style>
 </head>
-<body>
-    <div style="position: relative;">
-
-        <div id="ma" style="position: absolute;">
-            <div style="position: relative; top: 0; left: 0;"><img src="circle1.svg"></img></div>
-        </div>
-
-        <div id="ro" style="position: absolute;">
-            <div style="position: relative; top: 0; left: 0;"><img src="circle2.svg"></img></div>
-        </div>    
+<body style="background-color:black">
+    <div style="margin:auto; position: relative; margin: auto; width:1920px; height:100px;">
+        <div class="line-box"><img id="line1" src="images/line1.svg"></img></div>
     </div>
 
+    <!--
+    <div style="margin:auto; position: relative; margin: auto; width:500px; height:500px;">
+        <div class="image-box"><img id="img1" src="images/img1.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img2" src="images/img2.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img3" src="images/img3.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img4" src="images/img4.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img5" src="images/img5.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img6" src="images/img6.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img7" src="images/img7.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img8" src="images/img8.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img9" src="images/img9.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img10" src="images/img10.svg" style="position: relative; width:500; height:500;"></img></div>
+        <div class="image-box"><img id="img11" src="images/img11.svg" style="position: relative; width:500; height:500;"></img></div>
+    </div>
+-->
+    <script>
+        window.onload = function () {
+
+            //document.getElementById('img4').style.animationDuration = "5s";
+        }
+
+    </script>
 </body>
 </html>
