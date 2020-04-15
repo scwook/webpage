@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@font-face {
+    font-family: "Roboto-Thin" ;
+    src: url(fonts/Roboto-Thin.ttf);
+}
+
+@keyframes example {
+    from { 
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes example2 {
+    from { 
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(1080deg);
+    }
+}
+
+#img4{
+    animation-name: example2;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: reverse;
+    animation-direction: alternate;
+}
+
+#img5 {
+    animation-name: example;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#img9 {
+    animation-name: example;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+}
+
+.image-box {
+    position: absolute;
+    top:80px;
+}
+
+.status-box {
+    position: absolute;
+    color: white;
+    font-family: "Roboto-Thin";
+    font-size: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+}
+
+.line1-box {
+    position: absolute;
+
+}
+
+.line2-box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.raon-box {
+    position: absolute;
+    left:10px;
+    top:20px;
+}
+
+#time-stamp {
+    background-color: black; 
+    width: 300px;
+    height: 50px; 
+    color:white; 
+    margin: auto;
+    padding: 20px; 
+    text-align: center; 
+    font-size: 60px; 
+    font-family: "Roboto-Thin";
+}
+
+.contens {
+    background-color: dodgerblue;
+    width: 320px;
+    height: 320px;
+    float: left;
+}
+
+.title {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    font-family: monospace;
+}
+
+.data {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.pvname {
+    color: dimgray;
+    font-size: 15px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+</style>
+</head>
+<body style="background-color:black; margin:0px">
+
+    <div style="margin:auto; position: relative; width:1920px; height:94px;">
+        <div class="status-box">RUNNING</div>
+        <div class="line1-box"><img src="images/line1.svg"></img></div>
+        <div class="line2-box"><img src="images/line2.svg"></img></div>
+        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+    </div>
+
+    <div class="body" style="width:1920px; height:900px; display:flex; margin:auto;">
+        <div class="body-left" style="width:640px; height:900px; background-color: red;">
+            <div class="contens">
+                <p class="title">Temperature</p>
+                <p class="data" id="scwook-ai1">Not Assigned</p>
+                <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
+            </div>
+            <div class="contens">
+                <p class="title">Temperature</p>
+                <p class="data" id="scwook-ai1">Not Assigned</p>
+                <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
+            </div>
+        </div>
+
+        <div class="body-center" style="width:640px; height:900px;">
+            <div id="time-stamp"></div>    
+            <div style="margin:auto; position: relative; width:500px; height:500px;">
+                <div class="image-box"><img id="img1" src="images/img1.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img2" src="images/img2.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img3" src="images/img3.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img4" src="images/img4.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img5" src="images/img5.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img6" src="images/img6.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img7" src="images/img7.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img8" src="images/img8.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img9" src="images/img9.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img10" src="images/img10.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img11" src="images/img11.svg" style="position: relative; width:500; height:500;"></img></div>
+            </div>
+        </div>
+
+        <div class="body-right" style="width:640px; height:900px; background-color: blue;">
+            <div class="contens">
+
+            </div>
+            <div class="contens">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function timer() {
+            var d = new Date();
+            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        }
+
+        window.onload = function () {
+            var myVar = setInterval(timer, 1000);
+
+            //document.getElementById('img4').style.animationDuration = "5s";
+        }
+
+    </script>
+</body>
+</html> 

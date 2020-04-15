@@ -1,1 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 133.77 33.83"><defs><style>.cls-1{fill:#fff;}</style></defs><title>자산 16</title><g id="레이어_2" data-name="레이어 2"><g id="Layer_2" data-name="Layer 2"><circle class="cls-1" cx="7.79" cy="7.79" r="7.79"/><path class="cls-1" d="M92,5a14.44,14.44,0,1,0,14.3,14.44A14.37,14.37,0,0,0,92,5Zm0,23.22a8.64,8.64,0,0,1-8.49-8.78,8.49,8.49,0,1,1,17,0A8.64,8.64,0,0,1,92,28.17Z"/><rect class="cls-1" x="56.93" y="22.22" width="14.53" height="4.81"/><path class="cls-1" d="M64.67,13.72l-1.12,2.84-7.5,17H49.83L62.11,6.61a2.83,2.83,0,0,1,5.16,0L79.55,33.55H73.33l-7.5-17-1.12-2.84Z"/><path class="cls-1" d="M114.79,6.08a2.83,2.83,0,0,0-5.09,1.71V33.55h5.66V19.39l0-4.24h0l3.07,4.24,10.25,13.32A2.83,2.83,0,0,0,133.77,31V5.24H128.1V19.39l0,4.25h0L125,19.39Z"/><path class="cls-1" d="M38.87,19.2l5,5.45,7.65,8.9H44L32.85,19.78a1.24,1.24,0,0,1-.29-.81,1.27,1.27,0,0,1,1.27-1.28h7.64a3.68,3.68,0,1,0,0-7.36H7.79a2.55,2.55,0,1,1,0-5.09H42A8.85,8.85,0,0,1,51,14a8.72,8.72,0,0,1-2.83,6.42,8.83,8.83,0,0,1-6.3,2.15"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 133.77 33.83"
+   version="1.1"
+   id="svg1917"
+   sodipodi:docname="raon.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata1921">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>자산 16</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1380"
+     id="namedview1919"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:showpageshadow="false"
+     inkscape:zoom="2.3248859"
+     inkscape:cx="66.885002"
+     inkscape:cy="16.915001"
+     inkscape:window-x="0"
+     inkscape:window-y="31"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1917" />
+  <defs
+     id="defs1899">
+    <style
+       id="style1897">.cls-1{fill:#fff;}</style>
+  </defs>
+  <title
+     id="title1901">자산 16</title>
+  <g
+     id="레이어_2"
+     data-name="레이어 2">
+    <g
+       id="Layer_2"
+       data-name="Layer 2">
+      <circle
+         class="cls-1"
+         cx="7.79"
+         cy="7.79"
+         r="7.79"
+         id="circle1903" />
+      <path
+         class="cls-1"
+         d="M92,5a14.44,14.44,0,1,0,14.3,14.44A14.37,14.37,0,0,0,92,5Zm0,23.22a8.64,8.64,0,0,1-8.49-8.78,8.49,8.49,0,1,1,17,0A8.64,8.64,0,0,1,92,28.17Z"
+         id="path1905" />
+      <rect
+         class="cls-1"
+         x="56.93"
+         y="22.22"
+         width="14.53"
+         height="4.81"
+         id="rect1907" />
+      <path
+         class="cls-1"
+         d="M64.67,13.72l-1.12,2.84-7.5,17H49.83L62.11,6.61a2.83,2.83,0,0,1,5.16,0L79.55,33.55H73.33l-7.5-17-1.12-2.84Z"
+         id="path1909" />
+      <path
+         class="cls-1"
+         d="M114.79,6.08a2.83,2.83,0,0,0-5.09,1.71V33.55h5.66V19.39l0-4.24h0l3.07,4.24,10.25,13.32A2.83,2.83,0,0,0,133.77,31V5.24H128.1V19.39l0,4.25h0L125,19.39Z"
+         id="path1911" />
+      <path
+         class="cls-1"
+         d="M38.87,19.2l5,5.45,7.65,8.9H44L32.85,19.78a1.24,1.24,0,0,1-.29-.81,1.27,1.27,0,0,1,1.27-1.28h7.64a3.68,3.68,0,1,0,0-7.36H7.79a2.55,2.55,0,1,1,0-5.09H42A8.85,8.85,0,0,1,51,14a8.72,8.72,0,0,1-2.83,6.42,8.83,8.83,0,0,1-6.3,2.15"
+         id="path1913" />
+    </g>
+  </g>
+</svg>
