@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" type="text/css" href="style.css">
-<script src="moment.js"></script>
-<script src="live-chart/chart.js@2.8.0"></script>
-<script src="chartjs-plugin-streaming/chartjs-plugin-streaming.js"></script>
+<script src="script/moment.js"></script>
+<script src="script/chart.js@2.8.0"></script>
+<script src="script/chartjs-plugin-streaming.js"></script>
+<script src="script/common.js"></script>
 
 
 <body style="background-color:black">
@@ -11,10 +12,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     <div style="background-color: black; height:60px; margin:10px">
-        <div style="background-color: black; width: 300px; float:left; font-size: 40px; font-family:Arial, Helvetica, sans-serif;">RAON</div>
-        <div id="time-stamp" style="background-color: black; width: 300px; color:white; margin: auto; text-align: center; font-size: 40px; font-family:Arial, Helvetica, sans-serif;"></div>
+        <div
+            style="background-color: black; width: 300px; float:left; font-size: 40px; font-family:Arial, Helvetica, sans-serif;">
+            RAON</div>
+        <div id="time-stamp"
+            style="background-color: black; width: 300px; color:white; margin: auto; text-align: center; font-size: 40px; font-family:Arial, Helvetica, sans-serif;">
+        </div>
     </div>
-    
+
     <br>
     <br>
     <br>
@@ -67,7 +72,7 @@
             <img src="image1.svg" width="150" height="150">
         </div>
     </div>
-<!--
+    <!--
     <div class="contents-box">
         <svg width="300" height="300">
             <circle cx="150" cy="150" r="80" style="stroke:gray; stroke-width:30; fill:none"/>
@@ -77,46 +82,12 @@
     </div>
 -->
     <script>
-
-        function doughnutChart(canvas, value){
-            var c = document.getElementById(canvas);
-            var cx = c.getContext("2d");
-            cx.beginPath();
-            cx.arc(150,150,90,0,2*Math.PI);
-            cx.lineWidth = 25;
-            cx.strokeStyle = "gray";
-            cx.stroke();
-
-            var angle = 1.5;
-            cx.beginPath();
-            cx.lineWidth = 25;
-            cx.lineCap = "round"
-            cx.strokeStyle = "dodgerblue";  
-            cx.arc(150,150,90,-0.5*Math.PI,-0.5*Math.PI + angle);
-            cx.stroke();
-
-            strValue = value + "TB";
-            cx.font = "50px Arial";
-            cx.fillStyle = "white";
-            cx.fillText(strValue, 90, 170);
-        }
-        
-        var chartColors = {
-            red: 'rgb(255, 99, 132)',
-            orange: 'rgb(255, 159, 64)',
-            yellow: 'rgb(255, 205, 86)',
-            green: 'rgb(75, 192, 192)',
-            blue: 'rgb(54, 162, 235)',
-            purple: 'rgb(153, 102, 255)',
-            grey: 'rgb(201, 203, 207)'
-        };
-
         function randomScalingFactor() {
             return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
         }
 
         function onRefresh(chart) {
-            chart.config.data.datasets.forEach(function(dataset) {
+            chart.config.data.datasets.forEach(function (dataset) {
                 dataset.data.push({
                     x: Date.now(),
                     y: randomScalingFactor()
@@ -124,8 +95,9 @@
             });
         }
 
+        // Line chart configuration
         var color = Chart.helpers.color;
-        var config = {
+        var configLine = {
             type: 'line',
             data: {
                 datasets: [{
@@ -178,150 +150,53 @@
             }
         };
 
-
-	// round corners
-	Chart.pluginService.register({
-		afterUpdate: function (chart) {
-			if (chart.config.options.elements.arc.roundedCornersFor !== undefined) {
-				var arc = chart.getDatasetMeta(0).data[chart.config.options.elements.arc.roundedCornersFor];
-				arc.round = {
-					x: (chart.chartArea.left + chart.chartArea.right) / 2,
-					y: (chart.chartArea.top + chart.chartArea.bottom) / 2,
-					radius: (chart.outerRadius + chart.innerRadius) / 2,
-					thickness: (chart.outerRadius - chart.innerRadius) / 2 - 1,
-					backgroundColor: arc._model.backgroundColor
-				}
-			}
-		},
-
-		afterDraw: function (chart) {
-			if (chart.config.options.elements.arc.roundedCornersFor !== undefined) {
-				var ctx = chart.chart.ctx;
-				var arc = chart.getDatasetMeta(0).data[chart.config.options.elements.arc.roundedCornersFor];
-				var startAngle = Math.PI / 2 - arc._view.startAngle;
-				var endAngle = Math.PI / 2 - arc._view.endAngle;
-
-				ctx.save();
-				ctx.translate(arc.round.x, arc.round.y);
-				console.log(arc.round.startAngle)
-				ctx.fillStyle = arc.round.backgroundColor;
-				ctx.beginPath();
-				ctx.arc(arc.round.radius * Math.sin(startAngle), arc.round.radius * Math.cos(startAngle), arc.round.thickness, 0, 2 * Math.PI);
-				ctx.arc(arc.round.radius * Math.sin(endAngle), arc.round.radius * Math.cos(endAngle), arc.round.thickness, 0, 2 * Math.PI);
-				ctx.closePath();
-				ctx.fill();
-				ctx.restore();
-			}
-		},
-	});
-
-	// write text plugin
-	Chart.pluginService.register({
-		afterUpdate: function (chart) {
-			if (chart.config.options.elements.center) {
-				var helpers = Chart.helpers;
-				var centerConfig = chart.config.options.elements.center;
-				var globalConfig = Chart.defaults.global;
-				var ctx = chart.chart.ctx;
-
-				var fontStyle = helpers.getValueOrDefault(centerConfig.fontStyle, globalConfig.defaultFontStyle);
-				var fontFamily = helpers.getValueOrDefault(centerConfig.fontFamily, globalConfig.defaultFontFamily);
-
-				if (centerConfig.fontSize)
-					var fontSize = centerConfig.fontSize;
-					// figure out the best font size, if one is not specified
-				else {
-					ctx.save();
-					var fontSize = helpers.getValueOrDefault(centerConfig.minFontSize, 1);
-					var maxFontSize = helpers.getValueOrDefault(centerConfig.maxFontSize, 256);
-					var maxText = helpers.getValueOrDefault(centerConfig.maxText, centerConfig.text);
-
-					do {
-						ctx.font = helpers.fontString(fontSize, fontStyle, fontFamily);
-						var textWidth = ctx.measureText(maxText).width;
-
-						// check if it fits, is within configured limits and that we are not simply toggling back and forth
-						if (textWidth < chart.innerRadius * 2 && fontSize < maxFontSize)
-							fontSize += 1;
-						else {
-							// reverse last step
-							fontSize -= 1;
-							break;
-						}
-					} while (true)
-					ctx.restore();
-				}
-
-				// save properties
-				chart.center = {
-					font: helpers.fontString(fontSize, fontStyle, fontFamily),
-					fillStyle: helpers.getValueOrDefault(centerConfig.fontColor, globalConfig.defaultFontColor)
-				};
-			}
-		},
-		afterDraw: function (chart) {
-			if (chart.center) {
-				var centerConfig = chart.config.options.elements.center;
-				var ctx = chart.chart.ctx;
-
-				ctx.save();
-				ctx.font = chart.center.font;
-				ctx.fillStyle = chart.center.fillStyle;
-				ctx.textAlign = 'center';
-				ctx.textBaseline = 'middle';
-				var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
-				var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-				ctx.fillText(centerConfig.text, centerX, centerY);
-				ctx.restore();
-			}
-		},
-	})
-	var configDoughnut = {
-		type: 'doughnut',
-		data: {
-			labels: [
-				"Red",
-				"Gray"
-			],
-			datasets: [{
-				data: [20, 33],
-				backgroundColor: [
-					"#FF6684",
-					"#ccc"
-				],
-				hoverBackgroundColor: [
-					"#FF6384",
-					"#ccc"
+        // Doughnut chart configuration
+        var configDoughnut = {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    "Red",
+                    "Gray"
                 ],
-			}]
-		},
-		options: {
-            legend: {
-                display: true,
+                datasets: [{
+                    data: [20, 33],
+                    backgroundColor: [
+                        "#FF6684",
+                        "#ccc"
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#ccc"
+                    ],
+                }]
             },
-			elements: {
-				arc: {
-                    roundedCornersFor: 0,
-                    borderColor: "#000000"
-				},
-				center: {
-					// the longest text that could appear in the center
-					maxText: '100%',
-					text: '30%',
-					fontColor: '#FF6684',
-					fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-					fontStyle: 'normal',
-					// fontSize: 12,
-					// if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
-					// if these are not specified either, we default to 1 and 256
-					minFontSize: 1,
-					maxFontSize: 256,
-				}
-			},
-			cutoutPercentage: 80
+            options: {
+                legend: {
+                    display: true,
+                },
+                elements: {
+                    arc: {
+                        roundedCornersFor: 0,
+                        borderColor: "#000000"
+                    },
+                    center: {
+                        // the longest text that could appear in the center
+                        maxText: '100%',
+                        text: '30%',
+                        fontColor: '#FF6684',
+                        fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        fontStyle: 'normal',
+                        // fontSize: 12,
+                        // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
+                        // if these are not specified either, we default to 1 and 256
+                        minFontSize: 1,
+                        maxFontSize: 256,
+                    }
+                },
+                cutoutPercentage: 80
 
-		}
-	};
+            }
+        };
 
         function timer() {
             var d = new Date();
@@ -329,11 +204,10 @@
         }
 
         function monitoring() {
-
             var pvList = ["scwook-ai1", "scwook-ai2", "scwook-ai3"];
             requests = new Array(pvList.length);
 
-            for(let i = 0; i < pvList.length; i++) {
+            for (let i = 0; i < pvList.length; i++) {
                 requests[i] = new XMLHttpRequest();
                 requests[i].open("GET", pvList[i], true);
 
@@ -343,7 +217,7 @@
                         document.getElementById(pvList[i]).innerHTML = jsonValue.value;
 
                         alarmStatus = jsonValue.alarm.severity;
-                        switch(alarmStatus) {
+                        switch (alarmStatus) {
                             case 0:
                                 document.getElementById(pvList[i]).style.color = "white";
                                 break;
@@ -351,7 +225,7 @@
                             case 1:
                                 document.getElementById(pvList[i]).style.color = "Gold";
                                 break;
-                            
+
                             case 2:
                                 document.getElementById(pvList[i]).style.color = "OrangeRed";
                                 break;
@@ -363,29 +237,10 @@
             }
         }
 
-        function chartMonitoring() {
-
-            var pvList = ["scwook-ai1", "scwook-ai2", "scwook-ai3"];
-            requests = new Array(pvList.length);
-
-            for(let i = 0; i < pvList.length; i++) {
-                requests[i] = new XMLHttpRequest();
-                requests[i].open("GET", pvList[i], true);
-
-                requests[i].onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var jsonValue = JSON.parse(requests[i].responseText);
-                        document.getElementById(pvList[i]).innerHTML = jsonValue.value;
-                    }
-                }
-                requests[i].send();
-            }
-        }
-
         var count = 0;
         function changeImage() {
 
-            if ( count == 0) {
+            if (count == 0) {
                 document.getElementById("img").src = "change.svg";
                 count = 1;
             }
@@ -395,14 +250,13 @@
             }
         }
 
-        var cwData = 0;
         window.onload = function () {
             var ctx = document.getElementById('canvas').getContext('2d');
-	        window.myChart1 = new Chart(ctx, config);
+            window.myChart1 = new Chart(ctx, configLine);
 
             var ctx2 = document.getElementById('storage').getContext('2d');
             window.myChart2 = new Chart(ctx2, configDoughnut);
-            
+
             // doughnutChart('storage', 86);
             var myVar = setInterval(timer, 1000);
             var startMonitoring = setInterval(monitoring, 1000);

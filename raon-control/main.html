@@ -1,128 +1,151 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="script/moment.js"></script>
+<script src="script/chart.js@2.8.0"></script>
+<script src="script/chartjs-plugin-streaming.js"></script>
+<script src="script/common.js"></script>
+
 <head>
-<style>
-@font-face {
-    font-family: "Roboto-Thin" ;
-    src: url(fonts/Roboto-Thin.ttf);
-}
+    <style>
+        @font-face {
+            font-family: "Roboto-Thin";
+            src: url(fonts/Roboto-Thin.ttf);
+        }
 
-@keyframes example {
-    from { 
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+        @keyframes example {
+            from {
+                transform: rotate(0deg);
+            }
 
-@keyframes example2 {
-    from { 
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(1080deg);
-    }
-}
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-#img4{
-    animation-name: example2;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    animation-direction: reverse;
-    animation-direction: alternate;
-}
+        @keyframes example2 {
+            from {
+                transform: rotate(0deg);
+            }
 
-#img5 {
-    animation-name: example;
-    animation-duration: 10s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
+            to {
+                transform: rotate(1080deg);
+            }
+        }
 
-#img9 {
-    animation-name: example;
-    animation-duration: 20s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-direction: reverse;
-}
+        #img4 {
+            animation-name: example2;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-direction: reverse;
+            animation-direction: alternate;
+        }
 
-.image-box {
-    position: absolute;
-    top:80px;
-}
+        #img5 {
+            animation-name: example;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
 
-.status-box {
-    position: absolute;
-    color: white;
-    font-family: "Roboto-Thin";
-    font-size: 60px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -70%);
-}
+        #img9 {
+            animation-name: example;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            animation-direction: reverse;
+        }
 
-.line1-box {
-    position: absolute;
+        .image-box {
+            position: absolute;
+            top: 80px;
+        }
 
-}
+        .status-box {
+            position: absolute;
+            color: white;
+            font-family: "Roboto-Thin";
+            font-size: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -70%);
+        }
 
-.line2-box {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0%);
-}
+        .line1-box {
+            position: absolute;
 
-.raon-box {
-    position: absolute;
-    left:10px;
-    top:20px;
-}
+        }
 
-#time-stamp {
-    background-color: black; 
-    width: 300px;
-    height: 50px; 
-    color:white; 
-    margin: auto;
-    padding: 20px; 
-    text-align: center; 
-    font-size: 60px; 
-    font-family: "Roboto-Thin";
-}
+        .line2-box {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
 
-.contens {
-    background-color: dodgerblue;
-    width: 320px;
-    height: 320px;
-    float: left;
-}
+        .raon-box {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+        }
 
-.title {
-    color: white;
-    font-size: 20px;
-    text-align: center;
-    font-family: monospace;
-}
+        #time-stamp {
+            background-color: black;
+            width: 300px;
+            height: 50px;
+            color: white;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 60px;
+            font-family: "Roboto-Thin";
+        }
 
-.data {
-    color: white;
-    font-size: 40px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-}
+        .contens {
+            background-color: black;
+            width: 320px;
+            height: 320px;
+            float: left;
+        }
 
-.pvname {
-    color: dimgray;
-    font-size: 15px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-}
+        .title {
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            font-family: monospace;
+        }
 
-</style>
+        .data {
+            color: white;
+            font-size: 40px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .pvname {
+            color: dimgray;
+            font-size: 15px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .doughnu-chart-text {
+            color:white; 
+            font-size: 40px; 
+            text-align: center;
+            font-family: "Roboto-Thin";
+            margin-top: 50px;
+        }
+
+        .contens-wide-chart {
+            background-color: black;
+            width: 640px;
+            height: 200px;
+            float: left;
+        }
+    </style>
 </head>
+
 <body style="background-color:black; margin:0px">
 
     <div style="margin:auto; position: relative; width:1920px; height:94px;">
@@ -132,8 +155,10 @@
         <div class="raon-box"><img src="images/raon-white.svg"></img></div>
     </div>
 
-    <div class="body" style="width:1920px; height:900px; display:flex; margin:auto;">
-        <div class="body-left" style="width:640px; height:900px; background-color: red;">
+    <div style="height:6px"></div>
+
+    <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
+        <div class="body-left" style="width:640px; height:780px; background-color: MediumSeaGreen;">
             <div class="contens">
                 <p class="title">Temperature</p>
                 <p class="data" id="scwook-ai1">Not Assigned</p>
@@ -146,45 +171,199 @@
             </div>
         </div>
 
-        <div class="body-center" style="width:640px; height:900px;">
-            <div id="time-stamp"></div>    
+        <div class="body-center" style="width:640px; height:780px;">
+            <div id="time-stamp"></div>
             <div style="margin:auto; position: relative; width:500px; height:500px;">
-                <div class="image-box"><img id="img1" src="images/img1.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img2" src="images/img2.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img3" src="images/img3.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img4" src="images/img4.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img5" src="images/img5.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img6" src="images/img6.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img7" src="images/img7.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img8" src="images/img8.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img9" src="images/img9.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img10" src="images/img10.svg" style="position: relative; width:500; height:500;"></img></div>
-                <div class="image-box"><img id="img11" src="images/img11.svg" style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img1" src="images/img1.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img2" src="images/img2.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img3" src="images/img3.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img4" src="images/img4.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img5" src="images/img5.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img6" src="images/img6.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img7" src="images/img7.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img8" src="images/img8.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img9" src="images/img9.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img10" src="images/img10.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
+                <div class="image-box"><img id="img11" src="images/img11.svg"
+                        style="position: relative; width:500; height:500;"></img></div>
             </div>
         </div>
 
-        <div class="body-right" style="width:640px; height:900px; background-color: blue;">
+        <div class="body-right" style="width:640px; height:780px; background-color: dodgerblue;">
             <div class="contens">
-
             </div>
             <div class="contens">
-
+                <canvas id="storage" widht="200px" height="200px" style="transform: translate(0%, 20%);"></canvas>
+                <div class="doughnu-chart-text">Storage</div>
             </div>
         </div>
     </div>
 
+    <div class="bottom" style="width:1920px; height:200px; display:flex; margin:auto;">
+        <div class="bottom-left" style="width:640px; height:200px; background-color: black;">
+            <canvas id="canvas1" width="640px" height="200px"></canvas>
+        </div>
+        <div class="bottom-center" style="width:640px; height:200px; background-color: black;">
+            <canvas id="canvas2" width="640px" height="200px"></canvas>
+
+        </div>
+        <div class="bottom-right" style="width:640px; height:200px; background-color: black;">
+            <canvas id="canvas3" width="640px" height="200px"></canvas>
+
+        </div>
+    </div>
+
     <script>
+        function randomScalingFactor() {
+            return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+        }
+
+        function onRefresh(chart) {
+            chart.config.data.datasets.forEach(function (dataset) {
+                dataset.data.push({
+                    x: Date.now(),
+                    y: randomScalingFactor()
+                });
+            });
+        }
+
+        // Line chart configuration
+        var color = Chart.helpers.color;
+        var configLine = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Dataset  (cubic interpolation)',
+                    backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: chartColors.blue,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Line chart (hotizontal scroll) sample'
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 10
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 1000,
+                            onRefresh: onRefresh
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        }
+                    }]
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                }
+            }
+        };
+
+        // Doughnut chart configuration
+        var configDoughnut = {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    "Red",
+                    "Gray"
+                ],
+                datasets: [{
+                    data: [20, 33],
+                    backgroundColor: [
+                        "#FF6684",
+                        "#ccc"
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#ccc"
+                    ],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+                elements: {
+                    arc: {
+                        roundedCornersFor: 0,
+                        borderColor: "#000000"
+                    },
+                    center: {
+                        // the longest text that could appear in the center
+                        maxText: '100%',
+                        text: '30%',
+                        fontColor: '#FF6684',
+                        fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        fontStyle: 'normal',
+                         fontSize: 64,
+                        // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
+                        // if these are not specified either, we default to 1 and 256
+                        minFontSize: 1,
+                        maxFontSize: 256,
+                    }
+                },
+                cutoutPercentage: 90,
+            }
+        };
+
         function timer() {
             var d = new Date();
             document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
         }
 
         window.onload = function () {
-            var myVar = setInterval(timer, 1000);
+            var ctx1 = document.getElementById('canvas1').getContext('2d');
+            window.myChart1 = new Chart(ctx1, configLine);
+            
+            //var ctx2 = document.getElementById('canvas2').getContext('2d');
+            //window.myChart1 = new Chart(ctx2, configLine);
 
-            //document.getElementById('img4').style.animationDuration = "5s";
+            //var ctx3 = document.getElementById('canvas3').getContext('2d');
+            //window.myChart1 = new Chart(ctx3, configLine);
+
+            var ctx4 = document.getElementById('storage').getContext('2d');
+            window.myChart2 = new Chart(ctx4, configDoughnut);
+
+            // doughnutChart('storage', 86);
+            var myVar = setInterval(timer, 1000);
+            var startMonitoring = setInterval(monitoring, 1000);
+            var change = setInterval(changeImage, 500);
         }
 
     </script>
 </body>
-</html> 
+
+</html>
