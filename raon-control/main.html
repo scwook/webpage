@@ -13,6 +13,11 @@
             src: url(fonts/Roboto-Thin.ttf);
         }
 
+        @font-face {
+            font-family: "Roboto-Light";
+            src: url(fonts/Roboto-Light.ttf);
+        }
+
         @keyframes example {
             from {
                 transform: rotate(0deg);
@@ -101,10 +106,17 @@
             font-family: "Roboto-Thin";
         }
 
-        .contens {
+        .contens_1x1 {
             background-color: black;
-            width: 320px;
-            height: 320px;
+            width: 200px;
+            height: 200px;
+            float: left;
+        }
+
+        .contens_2x2 {
+            background-color: black;
+            width: 300px;
+            height: 300px;
             float: left;
         }
 
@@ -130,11 +142,11 @@
         }
 
         .doughnu-chart-text {
-            color:white; 
-            font-size: 40px; 
+            color: white;
+            font-size: 24px;
             text-align: center;
-            font-family: "Roboto-Thin";
-            margin-top: 50px;
+            font-family: "Roboto-Light";
+            margin-top: 30px;
         }
 
         .contens-wide-chart {
@@ -158,20 +170,41 @@
     <div style="height:6px"></div>
 
     <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
-        <div class="body-left" style="width:640px; height:780px; background-color: MediumSeaGreen;">
-            <div class="contens">
-                <p class="title">Temperature</p>
-                <p class="data" id="scwook-ai1">Not Assigned</p>
-                <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
+        <div class="body-left" style="width:600px; height:780px; background-color: MediumSeaGreen;">
+            <div class="contens_1x1">
+                <canvas id="chart1" widht="100x" height="200px" style="transform: translate(0%, 15%);"></canvas>
+                <div class="doughnu-chart-text">Storage1</div>
             </div>
-            <div class="contens">
+            <div class="contens_1x1">
+                <canvas id="chart2" widht="100px" height="200px" style="transform: translate(0%, 15%);"></canvas>
+                <div class="doughnu-chart-text">Storage2</div>
+            </div>
+            <div class="contens_1x1">
+                <canvas id="chart3" widht="100px" height="200px" style="transform: translate(0%, 15%);"></canvas>
+                <div class="doughnu-chart-text">Storage3</div>
+            </div>
+
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">24.5%</p>
+                <p class="title">Flow</p>
+
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">3.4bar</p>
+                <p class="title">Pressure</p>
+
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
                 <p class="title">Temperature</p>
-                <p class="data" id="scwook-ai1">Not Assigned</p>
-                <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
             </div>
         </div>
 
-        <div class="body-center" style="width:640px; height:780px;">
+        <div class="body-center" style="width:720px; height:780px;">
             <div id="time-stamp"></div>
             <div style="margin:auto; position: relative; width:500px; height:500px;">
                 <div class="image-box"><img id="img1" src="images/img1.svg"
@@ -199,25 +232,43 @@
             </div>
         </div>
 
-        <div class="body-right" style="width:640px; height:780px; background-color: dodgerblue;">
-            <div class="contens">
+        <div class="body-right" style="width:600px; height:780px; background-color: dodgerblue;">
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
             </div>
-            <div class="contens">
-                <canvas id="storage" widht="200px" height="200px" style="transform: translate(0%, 20%);"></canvas>
-                <div class="doughnu-chart-text">Storage</div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
+            </div>
+            <div class="contens_2x2">
+                <p class="data" id="scwook-ai1">295C</p>
+                <p class="title">Temperature</p>
             </div>
         </div>
     </div>
 
     <div class="bottom" style="width:1920px; height:200px; display:flex; margin:auto;">
-        <div class="bottom-left" style="width:640px; height:200px; background-color: black;">
+        <div class="bottom-left" style="width:600px; height:200px; background-color: black;">
             <canvas id="canvas1" width="640px" height="200px"></canvas>
         </div>
         <div class="bottom-center" style="width:640px; height:200px; background-color: black;">
             <canvas id="canvas2" width="640px" height="200px"></canvas>
 
         </div>
-        <div class="bottom-right" style="width:640px; height:200px; background-color: black;">
+        <div class="bottom-right" style="width:600px; height:200px; background-color: black;">
             <canvas id="canvas3" width="640px" height="200px"></canvas>
 
         </div>
@@ -232,65 +283,68 @@
             chart.config.data.datasets.forEach(function (dataset) {
                 dataset.data.push({
                     x: Date.now(),
-                    y: randomScalingFactor()
-                });
+                    y: randomScalingFactor(),
+                })
             });
         }
-
+        
         // Line chart configuration
-        var color = Chart.helpers.color;
-        var configLine = {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: 'Dataset  (cubic interpolation)',
-                    backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                    borderColor: chartColors.blue,
-                    fill: false,
-                    cubicInterpolationMode: 'monotone',
-                    data: [],
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Line chart (hotizontal scroll) sample'
-                },
-                legend: {
-                    display: false
-                },
-                layout: {
-                    padding: {
-                        bottom: 10
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'realtime',
-                        realtime: {
-                            duration: 60000,
-                            refresh: 1000,
-                            delay: 1000,
-                            onRefresh: onRefresh
-                        }
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'value'
-                        }
+        function lineChartConfig(details) {
+            // var color = Chart.helpers.color;
+            return {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: details.label,
+                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                        borderColor: details.color,
+                        fill: false,
+                        cubicInterpolationMode: 'monotone',
+                        data: [],
                     }]
                 },
-                tooltips: {
-                    mode: 'nearest',
-                    intersect: false
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: false
+                options: {
+                    title: {
+                        display: true,
+                        text: details.label
+                    },
+                    legend: {
+                        display: false
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 10
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'realtime',
+                            realtime: {
+                                duration: 60000,
+                                refresh: 1000,
+                                delay: 2000,
+                                onRefresh: onRefresh
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'value'
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
                 }
-            }
-        };
+            };
+        }
+
 
         // Doughnut chart configuration
         var configDoughnut = {
@@ -328,14 +382,14 @@
                         fontColor: '#FF6684',
                         fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
                         fontStyle: 'normal',
-                         fontSize: 64,
+                        fontSize: 36,
                         // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
                         // if these are not specified either, we default to 1 and 256
                         minFontSize: 1,
                         maxFontSize: 256,
                     }
                 },
-                cutoutPercentage: 90,
+                cutoutPercentage: 80,
             }
         };
 
@@ -345,22 +399,38 @@
         }
 
         window.onload = function () {
+
+            var details = [
+                { label: "Line Chart1", color:window.chartColors.red },
+                { label: "Line Chart2", color:window.chartColors.green },
+                { label: "Line Chart3", color:window.chartColors.blue }
+            ]
+
+
             var ctx1 = document.getElementById('canvas1').getContext('2d');
-            window.myChart1 = new Chart(ctx1, configLine);
-            
-            //var ctx2 = document.getElementById('canvas2').getContext('2d');
-            //window.myChart1 = new Chart(ctx2, configLine);
+            //var lineConfig1 = lineChartConfig(details[0])
+            window.myChart = new Chart(ctx1, lineChartConfig(details[0]));
 
-            //var ctx3 = document.getElementById('canvas3').getContext('2d');
-            //window.myChart1 = new Chart(ctx3, configLine);
+            var ctx2 = document.getElementById('canvas2').getContext('2d');
+            window.myChart = new Chart(ctx2, lineChartConfig(details[1]));
 
-            var ctx4 = document.getElementById('storage').getContext('2d');
-            window.myChart2 = new Chart(ctx4, configDoughnut);
+            var ctx3 = document.getElementById('canvas3').getContext('2d');
+            // var lineConfig2 = lineChartConfig(datails2)
+            window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
+
+            var ctx4 = document.getElementById('chart1').getContext('2d');
+            window.myChart4 = new Chart(ctx4, configDoughnut);
+
+            var ctx5 = document.getElementById('chart2').getContext('2d');
+            window.myChart5 = new Chart(ctx5, configDoughnut);
+
+            var ctx6 = document.getElementById('chart3').getContext('2d');
+            window.myChart6 = new Chart(ctx6, configDoughnut);
 
             // doughnutChart('storage', 86);
             var myVar = setInterval(timer, 1000);
-            var startMonitoring = setInterval(monitoring, 1000);
-            var change = setInterval(changeImage, 500);
+            //var startMonitoring = setInterval(monitoring, 1000);
+            //var change = setInterval(changeImage, 500);
         }
 
     </script>

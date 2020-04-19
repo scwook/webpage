@@ -95,61 +95,62 @@
             });
         }
 
-        // Line chart configuration
-        var color = Chart.helpers.color;
-        var configLine = {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: 'Dataset  (cubic interpolation)',
-                    backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                    borderColor: chartColors.blue,
-                    fill: false,
-                    cubicInterpolationMode: 'monotone',
-                    data: []
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Line chart (hotizontal scroll) sample'
-                },
-                legend: {
-                    display: false
-                },
-                layout: {
-                    padding: {
-                        bottom: 10
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'realtime',
-                        realtime: {
-                            duration: 20000,
-                            refresh: 1000,
-                            delay: 2000,
-                            onRefresh: onRefresh
-                        }
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'value'
-                        }
+       // Line chart configuration
+       function lineChartConfig(details) {
+            // var color = Chart.helpers.color;
+            return {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: details.label,
+                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                        borderColor: details.color,
+                        fill: false,
+                        cubicInterpolationMode: 'monotone',
+                        data: [],
                     }]
                 },
-                tooltips: {
-                    mode: 'nearest',
-                    intersect: false
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: false
+                options: {
+                    title: {
+                        display: true,
+                        text: details.label
+                    },
+                    legend: {
+                        display: false
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 10
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'realtime',
+                            realtime: {
+                                duration: 60000,
+                                refresh: 1000,
+                                delay: 2000,
+                                onRefresh: onRefresh
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'value'
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
                 }
-            }
-        };
-
+            };
+        }
         // Doughnut chart configuration
         var configDoughnut = {
             type: 'doughnut',
@@ -251,8 +252,13 @@
         }
 
         window.onload = function () {
+
+            var details = [
+                { label: "Line Chart1", color:window.chartColors.red }
+            ]
+
             var ctx = document.getElementById('canvas').getContext('2d');
-            window.myChart1 = new Chart(ctx, configLine);
+            window.myChart1 = new Chart(ctx, lineChartConfig(details[0]));
 
             var ctx2 = document.getElementById('storage').getContext('2d');
             window.myChart2 = new Chart(ctx2, configDoughnut);

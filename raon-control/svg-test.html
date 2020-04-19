@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<body style="margin:0px; background-color: black;">
+
+    <div style="position: relative; margin:auto; width:600px; height:600px; background-color: dodgerblue;">
+    <svg height="600" width="600">
+            <polygon id="polygone" points="0,0 260,150 520,0 520,300, 260,150 0,300" style="fill:white; stroke: none; stroke-width: 1;">
+            </polygon>
+        </svg>
+
+        <!-- <svg
+           viewBox="0 0 39.687499 39.687501"
+           height="150"
+           width="150">
+          <defs
+             id="defs2" />
+          <g
+             transform="translate(0,-257.31248)"
+             id="layer1">
+            <path
+               transform="matrix(0.66321993,0,0,0.68923835,4.9282104,84.806619)"
+               d="m 22.489583,277.15622 -9.973439,5.75817 -9.9734385,5.75816 0,-11.51633 0,-11.51634 9.9734395,5.75817 z"
+               id="path815"
+               style="fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:7.9375;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+            <path
+               style="fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:7.9375;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="path4531"
+               d="m 22.489583,277.15622 -9.973439,5.75817 -9.9734385,5.75816 0,-11.51633 0,-11.51634 9.9734395,5.75817 z"
+               transform="matrix(-0.66321993,0,0,0.68923835,34.75929,84.806619)" />
+            <path
+               id="path4533"
+               d="M 6.6145832,275.83331 H 0"
+               style="fill:#f9f9f9;stroke:#2a7fff;stroke-width:1.32291667;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+            <path
+               id="path4533-3"
+               d="M 39.6875,275.83331 H 33.072917"
+               style="fill:#f9f9f9;stroke:#2a7fff;stroke-width:1.32291663;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          </g>
+        </svg> -->
+    </div>
+
+</body>
+
+<script>
+    var count = 0;
+    function changePosition() {
+        if (count == 0) {
+            document.getElementById("path815").style.fill = "tomato";
+            count = 1;
+        }
+        else {
+            document.getElementById("path815").style.fill = "gray";
+            count = 0;
+        }
+    }
+
+    window.onload = function () {
+        var change = setInterval(changePosition, 1000);
+    }
+</script>
+
+</html>
