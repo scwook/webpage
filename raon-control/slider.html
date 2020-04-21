@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+
+<style>
+.mySlides {
+    display:none;
+    width: 800px;
+    height: 450px;
+}
+
+.w3-animate-left{
+    position:relative;
+    animation:animateleft 0.4s
+}
+@keyframes animateleft{
+    from{left:-300px;opacity:0} 
+    to{left:0;opacity:1}
+}
+
+.w3-animate-right{
+    position:relative;
+    animation:animateright 0.4s
+}
+    
+@keyframes animateright{
+    from{right:-300px;opacity:0} 
+    to{right:0;opacity:1}
+}
+
+.slide-button{
+    width: 50px;
+    height: 500px;
+    float: left;
+    font-size:32px;
+    margin: 0px;
+    color:white;
+    background-color:black;
+    border: none;
+    outline: none;
+
+}
+
+</style>
+<body style="background-color: black;">
+
+<button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
+
+<div style="width: 800px; height: 500px; margin:auto; background-color: tomato; float:left">
+    <div style="background-color: green; width:800px; height: 50px">
+        SonSangGung Monitoring System
+    </div>
+  <div class="mySlides">
+    <h1><b>Did You Know?</b></h1>
+    <h1><i>We plan to sell trips to the moon in the 2020s</i></h1>
+  </div>
+
+  <div class="mySlides">
+    <p><span>New!</span>
+    <p>6 Crystal Glasses</p>
+    <p>Only $99 !!!</p>
+  </div>
+
+  <div class="mySlides">
+    <p>scwook</p>
+    <p>0619.</p>
+  </div>
+
+  <div class="mySlides">
+    <p><span>sykim</span>
+    <p>0717</p>
+  </div>
+
+  <div class="mySlides">
+    <p>Accelerator Control</p>
+  </div>
+</div>
+<button class="slide-button" onclick="showDivs(1)">&#10095;</button>
+
+
+<script>
+// var myIndex = 0;
+// carousel();
+
+var slideIndex = 1;
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(count) {
+
+    slideIndex += count;
+    n = slideIndex;
+
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+
+  if (n > x.length) {
+      slideIndex = 1
+    }
+  if (n < 1) {
+      slideIndex = x.length
+    }
+
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  
+  console.log(n);
+  if( count < 0) {
+    x[slideIndex-1].style.position = "relative";
+    x[slideIndex-1].style.animation = "animateleft 0.4s";
+    x[slideIndex-1].style.display = "block";
+  }
+  else {
+    x[slideIndex-1].style.position = "relative";
+    x[slideIndex-1].style.animation = "animateright 0.4s";
+    x[slideIndex-1].style.display = "block";
+  }
+
+}
+
+// function carousel() {
+//   var i;
+//   var x = document.getElementsByClassName("mySlides");
+//   for (i = 0; i < x.length; i++) {
+//     x[i].style.display = "none";  
+//   }
+//   myIndex++;
+//   if (myIndex > x.length) {myIndex = 1}    
+//   x[myIndex-1].style.display = "block";  
+//   setTimeout(carousel, 2500);    
+// }
+</script>
+
+</body>
+</html>

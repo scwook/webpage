@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="archive.css">
+<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    width: 1000px;
+    margin: auto;
+}
+
+th {
+    color: white;
+    background-color: dodgerblue;
+    font-size: 15px;
+    height: 40px;
+    text-align: center;
+    font-weight: normal;
+}
+
+td {
+    color: white;
+    font-size: 15px;
+    height: 40px;
+    text-align: center;
+    font-weight: normal;
+}
+
+tr:nth-child(even) {
+    background-color: #2d2d2d;
+}
+
+tr:nth-child(odd) {
+    background-color: #1d1d1d;
+}
+</style>
+
+<body style="background-color:black">
+
+	<table id="header">
+		<thead>
+			<tr>
+				<th>PV Name</th>
+				<th>Status</th>
+				<th>Connected</th>
+				<th>Monitored</th>
+				<th>Sampling Period</th>
+				<th>Last Event</th>
+			</tr>
+		</thead>
+		<tbody id="row">
+			<tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+            </tr>
+            
+            <tr>
+				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
+				<td>Being archived</td>
+				<td>true</td>
+				<td>true</td>
+				<td>1.0</td>
+				<td>Apr/11/2020 07:26:40 +09:00</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+<script type="text/javascript">
+    $("table tr").hide();
+$("table tr").each(function(index){
+$(this).delay(index*100).show(1000);
+});
+</script>
+
+</html>
