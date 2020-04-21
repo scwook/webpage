@@ -7,66 +7,92 @@
 <script src="script/common.js"></script>
 
 <style>
-.body-box{
-    width: 1920px;
-    height: 1080px;
-    margin: auto;
-}
+    .body-box {
+        width: 1920px;
+        height: 1080px;
+        margin: auto;
+    }
 
-.slide-box {
-    width: 1800px;
-    height:1080px;
-    float:left;
-}
+    .slide-box {
+        width: 1800px;
+        height: 1080px;
+        float: left;
+    }
 
-.slide-page {
-    width: 1800px;
-    height: 1080px;
-    display: none;
-}
+    .slide-page {
+        width: 1800px;
+        height: 1080px;
+        display: none;
+    }
 
-.slide-button{
-    width: 60px;
-    height: 1080px;
-    font-size:32px;
-    margin: 0px;
-    color:white;
-    background-color:black;
-    border: none;
-    outline: none;
-    float: left;
+    .slide-page-title {
+        width: 1800px;
+        height:64px;
+        background-color: black;
+        font-size: 32px;
+        text-align: center;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
 
-}
+    }
 
-.w3-animate-left{
-    position:relative;
-    animation:animateleft 0.4s
-}
-@keyframes animateleft{
-    from{left:-300px;opacity:0} 
-    to{left:0;opacity:1}
-}
+    .slide-button {
+        width: 60px;
+        height: 1080px;
+        font-size: 32px;
+        margin: 0px;
+        color: white;
+        background-color: black;
+        border: none;
+        outline: none;
+        float: left;
 
-.w3-animate-right{
-    position:relative;
-    animation:animateright 0.4s
-}
-    
-@keyframes animateright{
-    from{right:-300px;opacity:0} 
-    to{right:0;opacity:1}
-}
+    }
 
-.contents-box {
-    margin: 10px;
-    width: 280px;
-    height: 280px;
-    float: left;
-    background-color: #1d1d1d;
-    /* border: 2px solid black; */
-}
+    .w3-animate-left {
+        position: relative;
+        animation: animateleft 0.4s
+    }
 
-/* .double-contents-box {
+    @keyframes animateleft {
+        from {
+            left: -300px;
+            opacity: 0
+        }
+
+        to {
+            left: 0;
+            opacity: 1
+        }
+    }
+
+    .w3-animate-right {
+        position: relative;
+        animation: animateright 0.4s
+    }
+
+    @keyframes animateright {
+        from {
+            right: -300px;
+            opacity: 0
+        }
+
+        to {
+            right: 0;
+            opacity: 1
+        }
+    }
+
+    .contents-box {
+        margin: 10px;
+        width: 280px;
+        height: 280px;
+        float: left;
+        background-color: #1d1d1d;
+        /* border: 2px solid black; */
+    }
+
+    /* .double-contents-box {
     margin: 5px;
     width: 614px;
     height: 614px;
@@ -75,53 +101,53 @@
     border: 2px solid black;
 } */
 
-.wide-box {
-    margin: 10px;
-    width: 580px;
-    height: 280px;
-    float: left;
-    background-color: #1d1d1d;    
-    /* border: 2px solid black; */
-}
+    .wide-box {
+        margin: 10px;
+        width: 580px;
+        height: 280px;
+        float: left;
+        background-color: #1d1d1d;
+        /* border: 2px solid black; */
+    }
 
-.widget-contents-box {
-    width: 1800px;
-    height: 1080px;
-    background-color: #b63232;
-    /* display: none; */
-}
+    .widget-contents-box {
+        width: 1800px;
+        height: 1080px;
+        background-color: #1d1d1d;
+        /* display: none; */
+    }
 
-.widget-box {
-    float: left;
-    margin-bottom: -4px;
-}
+    .widget-box {
+        float: left;
+        margin-bottom: -4px;
+    }
 
-.double-widget-box {
-    float: left;
-    margin-bottom: -4px;
-}
+    .double-widget-box {
+        float: left;
+        margin-bottom: -4px;
+    }
 
 
-.title {
-    color: white;
-    font-size: 20px;
-    text-align: center;
-    font-family: monospace;
-}
+    .title {
+        color: white;
+        font-size: 20px;
+        text-align: center;
+        font-family: monospace;
+    }
 
-.data {
-    color: white;
-    font-size: 60px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-}
+    .data {
+        color: white;
+        font-size: 60px;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-.pvname {
-    color: dimgray;
-    font-size: 15px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-}
+    .pvname {
+        color: dimgray;
+        font-size: 15px;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 </style>
 
 <body style="background-color:black">
@@ -130,46 +156,50 @@
         <button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
 
         <div class="slide-box">
+
+            <!-- Page 1 -->
             <div class="slide-page">
+                <div class="slide-page-title">Page1 Title</div>
+
                 <div class="contents-box">
                     <p class="title">Temperature</p>
                     <p class="data" id="scwook-ai1">Not Assigned</p>
                     <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
                 </div>
-            
+
                 <div class="contents-box">
                     <p class="title">Humidity</p>
                     <p class="data" id="scwook-ai2">Not Assigned</p>
                 </div>
-            
+
                 <div class="contents-box">
                     <p class="title">Pressure</p>
                     <p class="data" id="scwook-ai3">Not Assigned</p>
                 </div>
-            
+
                 <div class="contents-box">
                     <p class="title">Dust</p>
                     <p class="data">Not Assigned</p>
                 </div>
-                
+
                 <div class="contents-box">
                     <p class="title">Dust</p>
                     <p class="data">Not Assigned</p>
                 </div>
-            
+
                 <div class="contents-box">
                     <p class="title">Dust</p>
                     <p class="data">Not Assigned</p>
                 </div>
-            
+
                 <div class="wide-box">
                     <canvas id="canvas"></canvas>
                 </div>
-            
+
                 <div class="contents-box">
                     <canvas id="storage" width="300" height="300"></canvas>
                 </div>
-            
+
                 <!-- <div class="contents-box">
                     <div class="widget-box">
                         <img id="img" src="image1.svg" width="150" height="150">
@@ -186,11 +216,14 @@
                 </div> -->
             </div>
 
+            <!-- Page 2 -->
             <div class="slide-page">
+                <div class="slide-page-title">Page2 Title</div>
+                
                 <div class="widget-contents-box">
 
                 </div>
- 
+
             </div>
         </div>
 
@@ -221,8 +254,8 @@
             });
         }
 
-       // Line chart configuration
-       function lineChartConfig(details) {
+        // Line chart configuration
+        function lineChartConfig(details) {
             // var color = Chart.helpers.color;
             return {
                 type: 'line',
@@ -384,41 +417,39 @@
             slideIndex += count;
             n = slideIndex;
 
-        var i;
-        var x = document.getElementsByClassName("slide-page");
+            var i;
+            var x = document.getElementsByClassName("slide-page");
 
-        if (n > x.length) {
-            slideIndex = 1
+            if (n > x.length) {
+                slideIndex = 1
             }
-        if (n < 1) {
-            slideIndex = x.length
+            if (n < 1) {
+                slideIndex = x.length
             }
 
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";  
-        }
-        
-        console.log(n);
-        if( count < 0) {
-            x[slideIndex-1].style.position = "relative";
-            x[slideIndex-1].style.animation = "animateleft 0.4s";
-            x[slideIndex-1].style.display = "block";
-        }
-        else {
-            x[slideIndex-1].style.position = "relative";
-            x[slideIndex-1].style.animation = "animateright 0.4s";
-            x[slideIndex-1].style.display = "block";
-        }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+
+            console.log(n);
+            if (count < 0) {
+                x[slideIndex - 1].style.position = "relative";
+                x[slideIndex - 1].style.animation = "animateleft 0.4s";
+                x[slideIndex - 1].style.display = "block";
+            }
+            else {
+                x[slideIndex - 1].style.position = "relative";
+                x[slideIndex - 1].style.animation = "animateright 0.4s";
+                x[slideIndex - 1].style.display = "block";
+            }
 
         }
-
-
 
 
         window.onload = function () {
 
             var details = [
-                { label: "Line Chart1", color:window.chartColors.red }
+                { label: "Line Chart1", color: window.chartColors.red }
             ]
 
             var ctx = document.getElementById('canvas').getContext('2d');
@@ -434,7 +465,7 @@
 
 
             var x = document.getElementsByClassName("slide-page");
-                x[0].style.display = "block";  
+            x[0].style.display = "block";
         }
     </script>
 
