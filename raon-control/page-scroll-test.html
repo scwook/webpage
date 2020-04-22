@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    
+<script src="script/jquery.min.js"></script>
+
+<style>
+div {
+    width: 600px;
+    height: 600px;
+    margin: auto; 
+}
+
+.oddDiv {
+    background-color: dodgerblue;
+}
+
+.evenDiv {
+    background-color: tomato;
+}
+
+.w3-animate-top{
+    position:relative;
+    animation:animatetop 0.8s
+}
+
+@keyframes animatetop{
+    from{top:-300px;opacity:0} 
+    to{top:0;opacity:1}
+}
+
+.w3-animate-bottom{
+    position:relative;
+    animation:animatebottom 5s
+}
+
+@keyframes animatebottom{
+    from{bottom:-300px;opacity:0} 
+    to{bottom:0;opacity:1}
+}
+
+.container {
+    visibility: hidden;
+}
+
+</style>
+
+<body style="background-color:black">
+    <div class="oddDiv container w3-animate-top">First Div</div>
+    <div class="evenDiv container">First Div</div>
+    <div class="oddDiv container">First Div</div>
+    <div class="evenDiv container">First Div</div>
+    <div class="oddDiv container">First Div</div>
+    <div class="evenDiv container">First Div</div>
+    <div class="oddDiv container">First Div</div>
+    <div class="evenDiv container">First Div</div>
+</body>
+
+<script>
+$(window).scroll(function() {
+    var x = document.getElementsByClassName("container");
+
+    if ($(this).scrollTop() > 800) {
+        // apply effects and animations
+        console.log($(this).scrollTop());
+        x[2].style.animation = "animaterbottom 0.4s";
+        x[2].style.visibility = "visible";
+    }
+});
+
+
+window.onload = function () {
+    var x = document.getElementsByClassName("container");
+    console.log(x.length);
+     x[0].style.visibility = "visible";
+     x[0].style.position = "relative";
+     x[0].style.animation = "animaterbottom 1s";
+}
+</script>
+
+</html>
