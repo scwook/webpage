@@ -7,6 +7,57 @@
 <script src="script/common.js"></script>
 
 <style>
+        @font-face {
+            font-family: "Helvetica-Neue-Light";
+            src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+        }
+
+        @font-face {
+            font-family: "Roboto-Thin";
+            src: url(fonts/Roboto-Thin.ttf);
+        }
+
+        @font-face {
+            font-family: "Roboto-Light";
+            src: url(fonts/Roboto-Light.ttf);
+        }
+
+    #time-stamp {
+            position: absolute;
+            color: white;
+            font-family: "Roboto-Thin";
+            font-size: 48px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -70%);
+        }
+
+        .under-line-box {
+            position: absolute;
+            top: 34px;
+        }
+
+        .center-top-box {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+
+        .raon-box {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+        }
+
+        .accelerator-control {
+            position:absolute; 
+            color:white; 
+            width:150px; 
+            left:150px; 
+            top:40px;
+            font-family: "Helvetica-Neue-Light";
+        }
+
     .body-box {
         width: 1920px;
         height: 1080px;
@@ -32,7 +83,7 @@
         font-size: 32px;
         text-align: center;
         color: white;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Helvetica-Neue-Light;
 
     }
 
@@ -132,25 +183,35 @@
         color: white;
         font-size: 20px;
         text-align: center;
-        font-family: monospace;
+        font-family: Helvetica-Neue-Light;
     }
 
     .data {
         color: white;
         font-size: 60px;
         text-align: center;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Roboto-Thin;
     }
 
     .pvname {
         color: dimgray;
         font-size: 15px;
         text-align: center;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Helvetica-Neue-Light;
     }
 </style>
 
-<body style="background-color:black">
+<body style="background-color:black; margin:0px">
+
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
+        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+        <div class="accelerator-control">Accelerator Control</div>
+    </div>
+
+    <br><br>
 
     <div class="body-box">
         <button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
@@ -453,6 +514,10 @@
 
         }
 
+        function timer() {
+            var d = new Date();
+            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        }
 
         window.onload = function () {
 
@@ -467,7 +532,7 @@
             window.myChart2 = new Chart(ctx2, configDoughnut);
 
             // doughnutChart('storage', 86);
-            // var myVar = setInterval(timer, 1000);
+             var myVar = setInterval(timer, 1000);
             // var startMonitoring = setInterval(monitoring, 1000);
             // var change = setInterval(changeImage, 500);
 

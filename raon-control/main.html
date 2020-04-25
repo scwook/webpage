@@ -9,6 +9,11 @@
 <head>
     <style>
         @font-face {
+            font-family: "Helvetica-Neue-Light";
+            src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+        }
+
+        @font-face {
             font-family: "Roboto-Thin";
             src: url(fonts/Roboto-Thin.ttf);
         }
@@ -67,22 +72,22 @@
             top: 80px;
         }
 
-        .status-box {
+        #time-stamp {
             position: absolute;
             color: white;
             font-family: "Roboto-Thin";
-            font-size: 60px;
+            font-size: 48px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -70%);
         }
 
-        .line1-box {
+        .under-line-box {
             position: absolute;
-
+            top: 34px;
         }
 
-        .line2-box {
+        .center-top-box {
             position: absolute;
             left: 50%;
             transform: translate(-50%, 0%);
@@ -94,7 +99,16 @@
             top: 20px;
         }
 
-        #time-stamp {
+        .accelerator-control {
+            position:absolute; 
+            color:white; 
+            width:150px; 
+            left:150px; 
+            top:40px;
+            font-family: "Helvetica-Neue-Light";
+        }
+
+        .status-box {
             background-color: black;
             width: 300px;
             height: 50px;
@@ -155,16 +169,18 @@
             height: 200px;
             float: left;
         }
+
     </style>
 </head>
 
 <body style="background-color:black; margin:0px">
 
-    <div style="margin:auto; position: relative; width:1920px; height:94px;">
-        <div class="status-box">RUNNING</div>
-        <div class="line1-box"><img src="images/line1.svg"></img></div>
-        <div class="line2-box"><img src="images/line2.svg"></img></div>
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
         <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+        <div class="accelerator-control">Accelerator Control</div>
     </div>
 
     <div style="height:6px"></div>
@@ -205,7 +221,7 @@
         </div>
 
         <div class="body-center" style="width:720px; height:780px;">
-            <div id="time-stamp"></div>
+            <div class="status-box">RUNNING</div>
             <div style="margin:auto; position: relative; width:500px; height:500px;">
                 <div class="image-box"><img id="img1" src="images/img1.svg"
                         style="position: relative; width:500; height:500;"></img></div>
