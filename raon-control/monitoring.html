@@ -7,80 +7,80 @@
 <script src="script/common.js"></script>
 
 <style>
-        @font-face {
-            font-family: "Helvetica-Neue-Light";
-            src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-        }
+    @font-face {
+        font-family: "Helvetica-Neue-Light";
+        src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+    }
 
-        @font-face {
-            font-family: "Roboto-Thin";
-            src: url(fonts/Roboto-Thin.ttf);
-        }
+    @font-face {
+        font-family: "Roboto-Thin";
+        src: url(fonts/Roboto-Thin.ttf);
+    }
 
-        @font-face {
-            font-family: "Roboto-Light";
-            src: url(fonts/Roboto-Light.ttf);
-        }
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url(fonts/Roboto-Light.ttf);
+    }
 
     #time-stamp {
-            position: absolute;
-            color: white;
-            font-family: "Roboto-Thin";
-            font-size: 48px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -70%);
-        }
+        position: absolute;
+        color: white;
+        font-family: "Roboto-Thin";
+        font-size: 48px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+    }
 
-        .under-line-box {
-            position: absolute;
-            top: 34px;
-        }
+    .under-line-box {
+        position: absolute;
+        top: 34px;
+    }
 
-        .center-top-box {
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, 0%);
-        }
+    .center-top-box {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+    }
 
-        .raon-box {
-            position: absolute;
-            left: 10px;
-            top: 20px;
-        }
+    .raon-box {
+        position: absolute;
+        left: 10px;
+        top: 20px;
+    }
 
-        .accelerator-control {
-            position:absolute; 
-            color:white; 
-            width:150px; 
-            left:150px; 
-            top:40px;
-            font-family: "Helvetica-Neue-Light";
-        }
+    .accelerator-control {
+        position: absolute;
+        color: white;
+        width: 150px;
+        left: 150px;
+        top: 40px;
+        font-family: "Helvetica-Neue-Light";
+    }
 
     .body-box {
         width: 1920px;
-        height: 1080px;
+        height: 960px;
         margin: auto;
     }
 
     .slide-box {
         width: 1800px;
-        height: 1080px;
+        height: 960px;
         float: left;
     }
 
     .slide-page {
         width: 1800px;
-        height: 1080px;
+        height: 960px;
         display: none;
     }
 
     .slide-page-title {
         width: 1800px;
-        height:64px;
+        height: 64px;
         background-color: black;
-        font-size: 32px;
+        font-size: 40px;
         text-align: center;
         color: white;
         font-family: Helvetica-Neue-Light;
@@ -89,7 +89,7 @@
 
     .slide-button {
         width: 60px;
-        height: 1080px;
+        height: 960px;
         font-size: 32px;
         margin: 0px;
         color: white;
@@ -202,7 +202,7 @@
 </style>
 
 <body style="background-color:black; margin:0px">
-
+    
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
         <div id="time-stamp"></div>
         <div class="under-line-box"><img src="images/under-line.svg"></img></div>
@@ -211,7 +211,7 @@
         <div class="accelerator-control">Accelerator Control</div>
     </div>
 
-    <br><br>
+    <div style="height:40px"></div>
 
     <div class="body-box">
         <button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
@@ -280,10 +280,20 @@
             <!-- Page 2 -->
             <div class="slide-page">
                 <div class="slide-page-title">Page2 Title</div>
-                <div class="widget-contents-box">
-
+                <div class="contents-box">
+                    <p class="title">Temperature</p>
+                    <p class="data" id="scwook-ai1">Not Assigned</p>
                 </div>
 
+                <div class="contents-box">
+                    <p class="title">Humidity</p>
+                    <p class="data" id="scwook-ai2">Not Assigned</p>
+                </div>
+
+                <div class="contents-box">
+                    <p class="title">Pressure</p>
+                    <p class="data" id="scwook-ai3">Not Assigned</p>
+                </div>
             </div>
 
             <!-- Page 3 -->
@@ -532,7 +542,7 @@
             window.myChart2 = new Chart(ctx2, configDoughnut);
 
             // doughnutChart('storage', 86);
-             var myVar = setInterval(timer, 1000);
+            var myVar = setInterval(timer, 1000);
             // var startMonitoring = setInterval(monitoring, 1000);
             // var change = setInterval(changeImage, 500);
 
