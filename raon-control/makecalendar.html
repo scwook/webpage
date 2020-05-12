@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* #calendar {
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        td {
+            border: 1px solid black;
+            color: red;
+        } */
+        table {
+            border-collapse: collapse;
+            color: white;
+        }
+
+        td {
+            /*position: relative;*/
+            width: 110px;
+            /*box-sizing: border-box;*/
+            border-collapse: collapse;
+            /*border: 1px solid black;*/
+            background-color: #1d1d1d
+        }
+
+        button {
+            height: 26px;
+            width: 100%;
+            border: none;
+            background-color: #4CAF50;
+            border-radius: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button onclick="prevCalendar()">Prev</button>
+    <button onclick="nextCalendar()">Next</button>
+    <!--
+    <div>
+        <table id="calendar">
+
+        </table>
+    </div>
+
+    <br><br><br>
+-->
+
+    <div id="test"></div>
+
+    <script>
+        var today = new Date();
+        var date = new Date();
+
+        function prevCalendar() {
+            today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            createCalendar();
+        }
+
+        function nextCalendar() {
+            today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            createCalendar();
+        }
+
+        function createCalendar() {
+            var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+            var startDate = 1;
+            if (firstDate.getDay() != 0) {
+                startDate = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+            }
+
+            var tb = document.getElementById("calendar");
+
+            if (tb) {
+                tb.remove();
+            }
+
+            var x = document.createElement("TABLE");
+            x.setAttribute("id", "calendar");
+            document.body.appendChild(x);
+
+            tb = document.getElementById("calendar");
+
+            //document.getElementById("test").innerHTML = tb.rows();
+
+            var row = null;
+
+            var cell = null;
+            var rowPos = 0;
+            var count = startDate;
+            var cellDate = 0;
+
+            for (let w = 0; w < 6; w++) {
+                for (let i = 0; i < 3; i++) {
+                    row = tb.insertRow();
+                    row.setAttribute("class", "rowClass", 0);
+
+                    for (let j = 0; j < 7; j++) {
+                        cell = row.insertCell();
+                        cell.setAttribute("class", "cellClass", 0);
+
+                        cell.style.width = "100px";
+
+                        if (rowPos == 0) {
+                            row.style.height = "40px";
+                            cell.innerHTML = count;
+                            count += 1;
+
+                            if ((w == 0) && (count > prevMonthLastDate.getDate())) {
+                                count = 1;
+                            }
+
+                            if ((w > 3) && (count > lastDate.getDate())) {
+                                count = 1;
+                            }
+                        }
+                        else if (rowPos == 1) {
+                            row.style.height = "30px";
+
+                            // if (w == 2) {
+                            // cell.colSpan = "3";
+
+                            // let x = document.createElement("BUTTON");
+                            // let t = document.createTextNode("Click me");
+                            // x.addEventListener("click", myFunction);
+                            // x.appendChild(t);
+                            // cell.appendChild(x);
+                            // j += 2;
+                            // }
+                        }
+                        else if (rowPos == 2) {
+                            row.style.height = "30px";
+
+                            // if (w == 3) {
+                            //     cell.colSpan = "2";
+                            //     j += 1;
+                            // }
+
+                        }
+
+                    }
+
+                    rowPos += 1;
+                }
+
+                rowPos = 0;
+            }
+            // console.log(document.getElementsByClassName("rowClass"));
+            // document.getElementsByClassName("cellClass")[29].innerHTML = "scwook";
+            var eventRow = document.getElementsByClassName("rowClass");
+            var eventCell = document.getElementsByClassName("cellClass")[29];
+            eventCell.colSpan = "3";
+            let btn = document.createElement("BUTTON");
+            let comment = document.createTextNode("Beam Operation Event 1");
+            btn.addEventListener("click", myFunction);
+            btn.appendChild(comment);
+            eventCell.appendChild(btn);
+            eventRow[4].deleteCell(6);
+            eventRow[4].deleteCell(5);
+
+
+        }
+
+        window.onload = function () {
+            createCalendar();
+        }
+
+        function myFunction() {
+            document.getElementById("test").innerHTML = "test";
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,101 +1,113 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<style>
+  <style>
+    table {
+      border-collapse: collapse;
+      color: white;
+    }
 
-table {
-  border-collapse: collapse;
-  color: white;
-}
+    td {
+      /*position: relative;*/
+      width: 110px;
+      /*box-sizing: border-box;*/
+      border-collapse: collapse;
+      /*border: 1px solid black;*/
+      background-color: #1d1d1d
+    }
 
-td {
-  /*position: relative;*/
-  width: 110px;
-  /*box-sizing: border-box;*/
-  border-collapse: collapse;
-  /*border: 1px solid black;*/
-  background-color: #1d1d1d
-
-}
-
-.day {
-/*  position: absolute;
+    .day {
+      /*  position: absolute;
   left: 10px;
   top: 10px;
   width: 40px;
   height: 40px;
   */
-  width: 40px;
-  height: 40px;
-  margin:5px;
-  text-align: center;
-  line-height: 40px;
-}
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      text-align: center;
+      line-height: 40px;
+    }
 
-.today {
-  background-color: #f44336;
-  border-radius: 20px;
-}
+    .today {
+      background-color: #f44336;
+      border-radius: 20px;
+    }
 
-.schedule1 {
-  height: 30px;
-  background-color:#4CAF50;
-  margin: 0px;
- /* border-radius: 10px 0px 0px 10px*/
-}
+    .schedule1 {
+      height: 30px;
+      background-color: #4CAF50;
+      margin: 0px;
+      /* border-radius: 10px 0px 0px 10px*/
+    }
 
-.schedule2 {
-  height: 30px;
-  background-color:#4CAF50;
-  margin: 0px;
-  background-color: #1d1d1d;
- /* border-radius: 10px 0px 0px 10px*/
-}
+    .schedule2 {
+      height: 30px;
+      background-color: #4CAF50;
+      margin: 0px;
+      background-color: #1d1d1d;
+      /* border-radius: 10px 0px 0px 10px*/
+    }
 
-button {
-  height: 26px;
-  width: 220px;
-  border: none;
-  background-color: #4CAF50;
-  border-radius: 13px;
-}
-
-</style>
+    button {
+      height: 26px;
+      width: 220px;
+      border: none;
+      background-color: #4CAF50;
+      border-radius: 13px;
+    }
+  </style>
 </head>
-<body style="background-color:black">
-<table>
-  <tr>
-    <td><div class="day">28</div></td>
-    <td><div class="day today">29</div></td>
-    <td><div class="day">30</div></td>
-  </tr>
-  <tr class="trSchedule1">
-    <td colspan="2" align="center"><button>Beam Operation 1</button></td>
-    <td></td>
-  </tr>
-  <tr class="trSchedule2">
-    <td><div></div></td>
-    <td colspan="2" align="center"><button>Beam Operation 2</button></td>
-  </tr>
-  
-</table>
 
-<script>
-  var today =  new Date();
-  var date = new Date();
-  
-  function preCalendar() {
-  
-  }
-  
-  function nextCalendar() {
-  
-  }
-  
-  function buildCalendar() {
-    var doMonth = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-  }
-</script>
+<body style="background-color:black">
+  <table>
+    <tr>
+      <td>
+        <div class="day">28</div>
+      </td>
+      <td>
+        <div class="day today">29</div>
+      </td>
+      <td>
+        <div class="day">30</div>
+      </td>
+    </tr>
+    <tr class="trSchedule1">
+      <td colspan="2" align="center"><button>Beam Operation 1</button></td>
+      <td></td>
+    </tr>
+    <tr class="trSchedule2">
+      <td>
+        <div></div>
+      </td>
+      <td colspan="2" align="center"><button>Beam Operation 2</button></td>
+    </tr>
+
+  </table>
+
+  <script>
+    var today = new Date();
+    var date = new Date();
+
+    function preCalendar() {
+
+    }
+
+    function nextCalendar() {
+
+    }
+
+    function buildCalendar() {
+      var doMonth = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    }
+
+
+
+
+  </script>
 
 </body>
+
 </html>
