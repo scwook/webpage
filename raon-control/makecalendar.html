@@ -8,6 +8,84 @@
             src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
         }
 
+        @font-face {
+            font-family: "Roboto-Thin";
+            src: url(fonts/Roboto-Thin.ttf);
+        }
+
+        @font-face {
+            font-family: "Roboto-Light";
+            src: url(fonts/Roboto-Light.ttf);
+        }
+
+        #time-stamp {
+            position: absolute;
+            color: white;
+            font-family: "Roboto-Thin";
+            font-size: 48px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -70%);
+        }
+
+        .under-line-box {
+            position: absolute;
+            top: 34px;
+        }
+
+        .center-top-box {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+
+        .raon-box {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+        }
+
+        .accelerator-control {
+            position: absolute;
+            color: white;
+            width: 150px;
+            left: 150px;
+            top: 40px;
+            font-family: "Helvetica-Neue-Light";
+        }
+
+        .body-left {
+            float: left;
+            width: 800px;
+            height: 1000px;
+            /* background-color: tomato; */
+        }
+
+        .body-center {
+            float: left;
+            width: 320px;
+            height: 1000px;
+            /* background-color: teal; */
+        }
+
+        .body-right {
+            float: left;
+            width: 800px;
+            height: 1000px;
+            /* background-color: goldenrod; */
+        }
+
+        .beam-schedule-box {
+            font-size: 32px;
+            font-family: "Helvetica-Neue-Light";
+            color: white;
+            margin-top: 30px;
+        }
+
+        #calendar-header {
+            margin-top: 10px;
+        }
+
         table {
             background-color: #1d1d1d;
             border-collapse: collapse;
@@ -64,65 +142,89 @@
         }
 
         .today-schedule-box {
-            width: 780px;
-            height: 80px;
+            width: 784px;
+            height: 200px;
             font-size: 18px;
             font-family: "Helvetica-Neue-Light";
             color: white;
             margin-top: 10px;
             background-color: #1d1d1d;
-            /* padding: 10px; */
-            /* box-sizing: border-box; */
+            padding: 20px;
+            box-sizing: border-box;
 
+        }
+
+        .schedule-list-box {
+            width: 320px;
+            height: 150px;
+            background-color: indianred;
+            margin: auto;
+            border-radius: 20px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body style="background-color: black;">
 
-    <!-- <button onclick="prevCalendar()">Prev</button>
-    <button onclick="nextCalendar()">Next</button> -->
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
+        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+        <div class="accelerator-control">Accelerator Control</div>
+    </div>
 
-    <div id="calendar-box">
-        <table id="calendar-header">
-            <tr>
-                <!-- label은 마우스로 클릭을 편하게 해줌 -->
-                <td class="year"><label onclick="prevCalendar()">&#10094;</label></td>
-                <td class="year" id="calendarYear" colspan="5" style="font-size:32px;">May 2020</td>
-                <td class="year"><label onclick="nextCalendar()">&#10095;</label></td>
-            </tr>
-            <tr>
-                <td class="week">SUN</td>
-                <td class="week">MON</td>
-                <td class="week">TUE</td>
-                <td class="week">WED</td>
-                <td class="week">THU</td>
-                <td class="week">FRI</td>
-                <td class="week">SAT</td>
-            </tr>
-        </table>
+    <div style="height:6px"></div>
 
-        <table id="calendar"></table>
+    <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
 
-        <div class="today-box">Today</div>
-        <div class="today-schedule-box">
-            The third effect depends not only on the top position of the window’s scrollbar, but also on the width
-            property of the window. More specifically, we are making the following assumptions
+        <div class="body-left">
+            <div class="beam-schedule-box">Beam Schedule</div>
+            <table id="calendar-header">
+                <tr>
+                    <!-- label은 마우스로 클릭을 편하게 해줌 -->
+                    <td class="year"><label onclick="prevCalendar()">&#10094;</label></td>
+                    <td class="year" id="calendarYear" colspan="5" style="font-size:32px;">May 2020</td>
+                    <td class="year"><label onclick="nextCalendar()">&#10095;</label></td>
+                </tr>
+                <tr>
+                    <td class="week">SUN</td>
+                    <td class="week">MON</td>
+                    <td class="week">TUE</td>
+                    <td class="week">WED</td>
+                    <td class="week">THU</td>
+                    <td class="week">FRI</td>
+                    <td class="week">SAT</td>
+                </tr>
+            </table>
+
+            <table id="calendar"></table>
+
+            <div class="today-box">Today</div>
+            <div class="today-schedule-box">
+                The third effect depends not only on the top position of the window’s scrollbar, but also on the width
+                property of the window. More specifically, we are making the following assumptions
+            </div>
+        </div>
+
+        <div class="body-center">
+            <div style="height:80px"></div>
+            <div class="schedule-list-box">
+                <table style="width:250px;">
+                    <tr>
+                        <td style="font-size:32px; width:auto">9</td>
+                        <td style="font-size:24px; width:auto; vertical-align: bottom;">-11</td>
+                        <td style="font-size:16px; width: 100%; padding-left: 20px;">Beam Operation 1</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="body-right">
+
         </div>
     </div>
-
-    <div id="schedule-box">
-
-    </div>
-
-    <div id="shifter-box">
-
-    </div>
-
-    <br><br><br>
-
-
-    <div id="test" style="color:white"></div>
 
     <script>
         var today = new Date();
@@ -265,8 +367,15 @@
 
         }
 
+        function timer() {
+            var d = new Date();
+            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        }
+
         window.onload = function () {
             createCalendar();
+
+            var myVar = setInterval(timer, 1000);
         }
 
         function myFunction() {
