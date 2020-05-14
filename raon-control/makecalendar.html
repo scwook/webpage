@@ -56,21 +56,21 @@
 
         .body-left {
             float: left;
-            width: 800px;
+            width: 750px;
             height: 1000px;
             /* background-color: tomato; */
         }
 
         .body-center {
             float: left;
-            width: 320px;
+            width: 420px;
             height: 1000px;
             /* background-color: teal; */
         }
 
         .body-right {
             float: left;
-            width: 800px;
+            width: 750px;
             height: 1000px;
             /* background-color: goldenrod; */
         }
@@ -83,7 +83,7 @@
         }
 
         #calendar-header {
-            margin-top: 10px;
+            margin: auto;
         }
 
         table {
@@ -91,6 +91,7 @@
             border-collapse: collapse;
             color: white;
             font-family: "Helvetica-Neue-Light";
+            margin: auto;
         }
 
         .year {
@@ -109,7 +110,7 @@
 
         td {
             /*position: relative;*/
-            width: 110px;
+            width: 105px;
             /*box-sizing: border-box;*/
             border-collapse: collapse;
             /*border: 1px solid black;*/
@@ -120,7 +121,7 @@
             height: 26px;
             width: 100%;
             border: none;
-            background-color: #4CAF50;
+            background-color: #FF5733;
             border-radius: 13px;
             color: white;
         }
@@ -142,12 +143,12 @@
         }
 
         .today-schedule-box {
-            width: 784px;
+            width: 740px;
             height: 200px;
             font-size: 18px;
             font-family: "Helvetica-Neue-Light";
             color: white;
-            margin-top: 10px;
+            margin-top: auto;
             background-color: #1d1d1d;
             padding: 20px;
             box-sizing: border-box;
@@ -155,12 +156,45 @@
         }
 
         .schedule-list-box {
-            width: 320px;
+            width: 300px;
             height: 150px;
-            background-color: indianred;
-            margin: auto;
+            background-color: #FF5733;
+            padding: 10px;
             border-radius: 20px;
-            margin-bottom: 10px;
+            color: white;
+            margin: auto;
+            font-family: "Helvetica-Neue-Light";
+
+        }
+
+        .day-schedule {
+            font-size: 14px;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+        .shift-avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        .shift-avatar img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .shift-team {
+            width: 345px;
+            height: 20px;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .shift-user {
+            width: 345px;
+            height: 40px;
+            font-size: 28px;
+            padding-left: 10px;
         }
     </style>
 </head>
@@ -211,18 +245,29 @@
         <div class="body-center">
             <div style="height:80px"></div>
             <div class="schedule-list-box">
-                <table style="width:250px;">
-                    <tr>
-                        <td style="font-size:32px; width:auto">9</td>
-                        <td style="font-size:24px; width:auto; vertical-align: bottom;">-11</td>
-                        <td style="font-size:16px; width: 100%; padding-left: 20px;">Beam Operation 1</td>
-                    </tr>
-                </table>
+                <div style="display:inline-block; font-size:26px;">11</div>
+                <div style="display:inline-block; font-size:18px;">-14</div>
+                <div style="display:inline-block; font-size:20px; margin-left: 15px">Beam Operation Event 1</div>
+                <div class="day-schedule">Day 11 : Beam Standby</div>
+                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+                <div class="day-schedule">Day 13 : Beam Standby</div>
+                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
             </div>
         </div>
 
         <div class="body-right">
-
+            <table>
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Accelerator Control</th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">5</th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Son, Changwook</td>
+                    <td class="shift-user">6</th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -297,7 +342,7 @@
                     for (let j = 0; j < 7; j++) {
                         cell = row.insertCell();
                         cell.setAttribute("class", "cellClass", 0);
-                        cell.style.width = "110px";
+                        cell.style.width = "105px";
 
                         if (rowPos == 0) {
                             row.style.height = "50px";
