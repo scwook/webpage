@@ -18,6 +18,28 @@
             src: url(fonts/Roboto-Light.ttf);
         }
 
+        @keyframes bar-animation {
+            from {
+                width: 0px;
+            }
+
+            to {
+                width: 650px;
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
         #time-stamp {
             position: absolute;
             color: white;
@@ -76,11 +98,21 @@
         }
 
         .header-box {
+            display: inline-block;
             font-size: 32px;
             font-family: "Helvetica-Neue-Light";
             color: white;
             margin-top: 30px;
             margin-bottom: 10px;
+        }
+
+        .header-bar {
+            display: inline-block;
+            height: 5px;
+            background-color: #283593;
+            animation-name: bar-animation;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
         }
 
         #calendar-header {
@@ -166,6 +198,15 @@
             margin-top: 8px;
         }
 
+        #shift-table {
+            margin-left: 70px;
+            animation: animatebottom 1s;
+            bottom: -100px;
+            opacity: 0;
+            /* border: 1px solid white; */
+
+        }
+
         .shift-avatar {
             width: 60px;
             height: 60px;
@@ -192,6 +233,19 @@
             padding-left: 10px;
         }
 
+        .avatar-img {
+            /* border: 2px solid white; */
+            border-radius: 50%;
+        }
+
+        .row-spacing {
+            height: 20px;
+        }
+
+        .desk-position {
+            margin-left: 10px;
+        }
+
         #schedule1 {
             background-color: #283593;
         }
@@ -203,7 +257,6 @@
         #schedule3 {
             background-color: #EF6C00;
         }
-
     </style>
 </head>
 
@@ -223,6 +276,7 @@
 
         <div class="body-left">
             <div class="header-box">Schedule</div>
+
             <table id="calendar-header">
                 <tr>
                     <!-- label은 마우스로 클릭을 편하게 해줌 -->
@@ -255,7 +309,8 @@
             <div class="schedule-list-box" id="schedule1">
                 <div style="display:inline-block; font-size:32px; font-weight: bold;">4</div>
                 <div style="display:inline-block; font-size:20px; font-weight: bold;">-6</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation Event 1</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
                 <div class="day-schedule">Day 11 : Beam Standby</div>
                 <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
                 <div class="day-schedule">Day 13 : Beam Standby</div>
@@ -267,7 +322,8 @@
             <div class="schedule-list-box" id="schedule2">
                 <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
                 <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation Event 1</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
                 <div class="day-schedule">Day 11 : Beam Standby</div>
                 <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
                 <div class="day-schedule">Day 13 : Beam Standby</div>
@@ -279,7 +335,8 @@
             <div class="schedule-list-box" id="schedule3">
                 <div style="display:inline-block; font-size:32px; font-weight: bold;">25</div>
                 <div style="display:inline-block; font-size:20px; font-weight: bold;">-29</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation Event 1</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
                 <div class="day-schedule">Day 11 : Beam Standby</div>
                 <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
                 <div class="day-schedule">Day 13 : Beam Standby</div>
@@ -290,17 +347,149 @@
 
         <div class="body-right">
             <div class="header-box">Shift</div>
-            <table>
+            <div class="header-bar"></div>
+
+            <table id="shift-table">
+
+                <!-- row 1 -->
                 <tr>
+                    <th class="shift-avatar" rowspan="2"><img class="avatar-img" src="images/scwook.jpeg"></th>
+                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk1-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Accelerator Control</th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">5</th>
+                    <th class="shift-team">Low Energy<img class="desk-position" src="images/desk1-1.svg"></th>
                 </tr>
                 <tr>
                     <td class="shift-user">Son, Changwook</td>
-                    <td class="shift-user">6</th>
+                    <td class="shift-user">Lee, SangIl</th>
                 </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 2 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk1-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk2-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, MiJeong</td>
+                    <td class="shift-user">Choi, YoungJun</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 3 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk1-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Kim, YongHak</td>
+                    <td class="shift-user">Ki, TaeKyung</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 4 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, InMyung</td>
+                    <td class="shift-user">Shin JaeHee</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 5 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Yoon, Sungwoon</td>
+                    <td class="shift-user">Jo, HyunChul</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 6 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, Heecheol</td>
+                    <td class="shift-user">Yoo, Junghyun</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 7 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, Heecheol</td>
+                    <td class="shift-user">Yoo, Junghyun</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 8 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, Heecheol</td>
+                    <td class="shift-user">Yoo, Junghyun</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 9 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, Heecheol</td>
+                    <td class="shift-user">Yoo, Junghyun</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 10 -->
+                <tr>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
+                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                </tr>
+                <tr>
+                    <td class="shift-user">Park, Heecheol</td>
+                    <td class="shift-user">Yoo, Junghyun</th>
+                </tr>
+
+                <tr class="row-spacing"></tr>
             </table>
         </div>
     </div>
@@ -453,8 +642,9 @@
 
         window.onload = function () {
             createCalendar();
-
             var myVar = setInterval(timer, 1000);
+
+            document.getElementById("shift-table").style.animationName = "animatebottom";
         }
 
         function myFunction() {
