@@ -30,7 +30,7 @@
 
         @keyframes animatebottom {
             from {
-                bottom: -100px;
+                bottom: -50px;
                 opacity: 0
             }
 
@@ -136,6 +136,12 @@
             margin: auto;
         }
 
+        
+        th, td {
+            border: 1px solid white;
+
+        }
+
         .year {
             height: 80px;
             text-align: center;
@@ -154,7 +160,6 @@
             height: 26px;
             width: 100%;
             border: none;
-            background-color: #283593;
             border-radius: 13px;
             color: white;
         }
@@ -190,6 +195,12 @@
             margin: auto;
             font-family: "Roboto-Light";
 
+            position: relative;
+            animation: animatebottom 1s;
+            bottom: -50px;
+            opacity: 0;
+            animation-fill-mode: forwards;
+
         }
 
         .day-schedule {
@@ -199,9 +210,10 @@
         }
 
         #shift-table {
+            position: relative;
             margin-left: 70px;
             animation: animatebottom 1s;
-            bottom: -100px;
+            animation-fill-mode: forwards;
             opacity: 0;
             /* border: 1px solid white; */
 
@@ -354,13 +366,14 @@
                 <!-- row 1 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img class="avatar-img" src="images/scwook.jpeg"></th>
-                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk1-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Low Energy<img class="desk-position" src="images/desk1-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Son, Changwook</td>
-                    <td class="shift-user">Lee, SangIl</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -368,13 +381,14 @@
                 <!-- row 2 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk1-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk2-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk2-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, MiJeong</td>
-                    <td class="shift-user">Choi, YoungJun</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -382,13 +396,13 @@
                 <!-- row 3 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Accelerator Control<img class="desk-position" src="images/desk1-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Kim, YongHak</td>
-                    <td class="shift-user">Ki, TaeKyung</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -396,13 +410,14 @@
                 <!-- row 4 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, InMyung</td>
-                    <td class="shift-user">Shin JaeHee</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -410,13 +425,14 @@
                 <!-- row 5 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Yoon, Sungwoon</td>
-                    <td class="shift-user">Jo, HyunChul</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -424,13 +440,14 @@
                 <!-- row 6 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, Heecheol</td>
-                    <td class="shift-user">Yoo, Junghyun</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -438,13 +455,14 @@
                 <!-- row 7 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, Heecheol</td>
-                    <td class="shift-user">Yoo, Junghyun</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -452,13 +470,14 @@
                 <!-- row 8 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, Heecheol</td>
-                    <td class="shift-user">Yoo, Junghyun</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -466,13 +485,14 @@
                 <!-- row 9 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, Heecheol</td>
-                    <td class="shift-user">Yoo, Junghyun</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -480,13 +500,14 @@
                 <!-- row 10 -->
                 <tr>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                     <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team">Cryogenic<img class="desk-position" src="images/desk4-1.svg"></th>
+                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
                 </tr>
                 <tr>
-                    <td class="shift-user">Park, Heecheol</td>
-                    <td class="shift-user">Yoo, Junghyun</th>
+                    <td class="shift-user"></td>
+                    <td class="shift-user">
+                        </th>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -497,6 +518,78 @@
     <script>
         var today = new Date();
         var date = new Date();
+        var monthStartCell = 0;
+
+        var list1 = [
+            { name: "Son, Changwook", team: "Accelerator Control", desk: "1-1" },
+            { name: "Lee, SangIl", team: "Accelerator Control", desk: "1-1" },
+            { name: "Park, MiJeong", team: "Accelerator Control", desk: "1-1" },
+            { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1-1" },
+            { name: "Kim, YongHak", team: "Accelerator Control", desk: "1-1" },
+            { name: "Kim TaeKyung", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, InMyung", team: "Cryogenic", desk: "1-1" },
+            { name: "Shin, JaeHee", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1-1" },
+            { name: "Jo, HyunChul", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+        ]
+
+        var list2 = [
+            { name: "Park, MiJeong", team: "Accelerator Control", desk: "1-1" },
+            { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1-1" },
+            { name: "Kim, YongHak", team: "Accelerator Control", desk: "1-1" },
+            { name: "Kim TaeKyung", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, InMyung", team: "Cryogenic", desk: "1-1" },
+            { name: "Shin, JaeHee", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1-1" },
+            { name: "Son, Changwook", team: "Accelerator Control", desk: "1-1" },
+            { name: "Jo, HyunChul", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Lee, SangIl", team: "Accelerator Control", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+        ]
+
+        var list3 = [
+            { name: "Kim, YongHak", team: "Accelerator Control", desk: "1-1" },
+            { name: "Son, Changwook", team: "Accelerator Control", desk: "1-1" },
+            { name: "Lee, SangIl", team: "Accelerator Control", desk: "1-1" },
+            { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1-1" },
+            { name: "Kim TaeKyung", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, InMyung", team: "Cryogenic", desk: "1-1" },
+            { name: "Shin, JaeHee", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1-1" },
+            { name: "Jo, HyunChul", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1-1" },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1-1" },
+            { name: "Park, MiJeong", team: "Accelerator Control", desk: "1-1" }
+        ]
+
+        var shiftInfo = [list1, list2, list3];
 
         function prevCalendar() {
             today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
@@ -533,7 +626,6 @@
             //document.getElementById("test").innerHTML = tb.rows();
 
             var row = null;
-
             var cell = null;
             var rowPos = 0;
             var tableDay = startDate;
@@ -557,11 +649,13 @@
             var cy = document.getElementById("calendarYear");
             cy.innerHTML = m + " " + today.getFullYear();
 
+            // Week
             for (let w = 0; w < 6; w++) {
+                //Day, Schedule1, Schedule2
                 for (let i = 0; i < 3; i++) {
                     row = tb.insertRow();
                     row.setAttribute("class", "rowClass", 0);
-
+                    //Cell
                     for (let j = 0; j < 7; j++) {
                         cell = row.insertCell();
                         cell.setAttribute("class", "cellClass", 0);
@@ -576,10 +670,10 @@
 
                             if (i == 0) {
                                 if (j == 0) {
-                                    dayBox.style.color = "red";
+                                    dayBox.style.color = "tomato"; //Sunday color
                                 }
                                 else if (j == 6) {
-                                    dayBox.style.color = "blue";
+                                    dayBox.style.color = "#1976D2"; //Saturday color
                                 }
                             }
 
@@ -587,13 +681,13 @@
 
                             if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (tableDay == today.getDate())) {
                                 dayBox.style.backgroundColor = "dodgerblue";
-                                addSchedule();
                             }
 
                             tableDay += 1;
 
                             if ((w == 0) && (tableDay > prevMonthLastDate.getDate())) {
                                 tableDay = 1;
+                                monthStartCell = j + 1;
                             }
 
                             if ((w > 3) && (tableDay > lastDate.getDate())) {
@@ -642,28 +736,80 @@
 
         window.onload = function () {
             createCalendar();
+            addSchedule();
+
             var myVar = setInterval(timer, 1000);
+
+            var scheduleList = document.getElementsByClassName("schedule-list-box");
+            var delayTime = 0;
+            for (let i = 0; i < scheduleList.length; i++) {
+                scheduleList[i].style.animationDelay = delayTime + "s";
+
+                delayTime += 0.2;
+            }
+
+        }
+
+        function scheduleClickEvent(x) {
+            var shiftUserTable = document.getElementsByClassName("shift-user");
+            var shiftTeamTable = document.getElementsByClassName("shift-team");
+
+
+            for (let i = 0; i < shiftInfo[x].length; i++) {
+                shiftUserTable[i].innerHTML = shiftInfo[x][i].name;
+                shiftTeamTable[i].innerHTML = shiftInfo[x][i].team;
+            }
 
             document.getElementById("shift-table").style.animationName = "animatebottom";
         }
 
-        function myFunction() {
-            document.getElementById("test").innerHTML = today.getDate();
-        }
-
         function addSchedule() {
-            // console.log(document.getElementsByClassName("rowClass"));
-            // document.getElementsByClassName("cellClass")[29].innerHTML = "scwook";
+            // let schedule = [
+            //     {startDate:"2020-05-04", endDate: "2020-05-06", commemt:"Beam Operation Event 1"},
+            //     {startDate:"2020-05-12", endDate: "2020-05-15", commemt:"Beam Operation Event 2"},
+            //     {startDate:"2020-05-25", endDate: "2020-05-29", commemt:"Beam Operation Event 3"}
+            // ]
+
+            // let start = new Date(schedule[0].startDate);
+            // let end = new Date(schedule[0].endDate);
+
+
             var eventRow = document.getElementsByClassName("rowClass");
-            var eventCell = document.getElementsByClassName("cellClass")[29];
-            eventCell.colSpan = "3";
-            let btn = document.createElement("BUTTON");
+            var eventCell = document.getElementsByClassName("cellClass");
+
+            // Event 1
+            eventCell[29].colSpan = "3";
+            let shiftButton1 = document.createElement("BUTTON");
             let comment = document.createTextNode("Beam Operation Event 1");
-            btn.addEventListener("click", myFunction);
-            btn.appendChild(comment);
-            eventCell.appendChild(btn);
-            eventRow[4].deleteCell(6);
+            shiftButton1.style.backgroundColor = "#283593";
+            shiftButton1.addEventListener("click", function () { scheduleClickEvent(0) });
+            shiftButton1.appendChild(comment);
+            eventCell[29].appendChild(shiftButton1);
             eventRow[4].deleteCell(5);
+            eventRow[4].deleteCell(5);
+
+            eventCell[49].colSpan = "4";
+            let shiftButton2 = document.createElement("BUTTON");
+            let comment2 = document.createTextNode("Beam Operation Event 2");
+            shiftButton2.style.backgroundColor = "#2E7D32";
+            shiftButton2.addEventListener("click", function () { scheduleClickEvent(1) });
+            shiftButton2.appendChild(comment2);
+            eventCell[49].appendChild(shiftButton2);
+            eventRow[7].deleteCell(4);
+            eventRow[7].deleteCell(4);
+            eventRow[7].deleteCell(4);
+
+            eventCell[87].colSpan = "5";
+            let shiftButton3 = document.createElement("BUTTON");
+            let comment3 = document.createTextNode("Beam Operation Event 2");
+            shiftButton3.style.backgroundColor = "#EF6C00";
+            shiftButton3.addEventListener("click", function () { scheduleClickEvent(2) });
+            shiftButton3.appendChild(comment3);
+            eventCell[87].appendChild(shiftButton3);
+            eventRow[13].deleteCell(3);
+            eventRow[13].deleteCell(3);
+            eventRow[13].deleteCell(3);
+            eventRow[13].deleteCell(3);
         }
 
     </script>
