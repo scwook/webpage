@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<script src="script/jquery.min.js"></script>
 
 <head>
     <style>
@@ -37,6 +38,18 @@
             to {
                 bottom: 0;
                 opacity: 1
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                bottom: 0px;
+                opacity: 1
+            }
+
+            to {
+                bottom: -50px;
+                opacity: 0
             }
         }
 
@@ -136,9 +149,10 @@
             margin: auto;
         }
 
-        
-        th, td {
-            border: 1px solid white;
+
+        th,
+        td {
+            /* border: 1px solid white; */
 
         }
 
@@ -216,7 +230,6 @@
             animation-fill-mode: forwards;
             opacity: 0;
             /* border: 1px solid white; */
-
         }
 
         .shift-avatar {
@@ -254,7 +267,7 @@
             height: 20px;
         }
 
-        .desk-position {
+        .desk-img {
             margin-left: 10px;
         }
 
@@ -365,40 +378,38 @@
 
                 <!-- row 1 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img class="avatar-img" src="images/scwook.jpeg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 2 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk2-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 3 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk1-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
@@ -409,105 +420,98 @@
 
                 <!-- row 4 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 5 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 6 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 7 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 8 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 9 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
 
                 <!-- row 10 -->
                 <tr>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
-                    <th class="shift-avatar" rowspan="2"><img src="images/avatar.svg"></th>
-                    <th class="shift-team"><img class="desk-position" src="images/desk4-1.svg"></th>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span><img class="desk-img"></td>
                 </tr>
                 <tr>
                     <td class="shift-user"></td>
-                    <td class="shift-user">
-                        </th>
+                    <td class="shift-user"></td>
                 </tr>
 
                 <tr class="row-spacing"></tr>
@@ -725,8 +729,6 @@
 
                 rowPos = 0;
             }
-
-
         }
 
         function timer() {
@@ -747,20 +749,28 @@
 
                 delayTime += 0.2;
             }
-
         }
 
         function scheduleClickEvent(x) {
+            var shiftAvatar = document.getElementsByClassName("avatar-img");
+            let shiftDesk = document.getElementsByClassName("desk-img");
             var shiftUserTable = document.getElementsByClassName("shift-user");
-            var shiftTeamTable = document.getElementsByClassName("shift-team");
+            var shiftTeamTable = document.getElementsByClassName("team-name");
 
 
             for (let i = 0; i < shiftInfo[x].length; i++) {
+                shiftAvatar[i].src = "images/avatar.svg";
+                shiftDesk[i].src = "images/desk1-1.svg";
                 shiftUserTable[i].innerHTML = shiftInfo[x][i].name;
                 shiftTeamTable[i].innerHTML = shiftInfo[x][i].team;
             }
 
-            document.getElementById("shift-table").style.animationName = "animatebottom";
+            // $("#shift-table tr").hide();
+            // $("#shift-table tr").each(function (index) {
+            //     $(this).delay(index * 50).show(100);
+            // });
+
+            // document.getElementById("shift-table").style.animationName = "animatebottom";
         }
 
         function addSchedule() {
