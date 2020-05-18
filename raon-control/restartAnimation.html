@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#test {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+
+.ani {
+  animation-name: example;
+  animation-duration: 1s;
+}
+
+@keyframes example {
+  0%   {bottom: 0px; opacity: 1;}
+  50%  {bottom: -20px; opacity: 0;}
+  100% {bottom: 0px; opacity: 1;}
+}
+</style>
+</head>
+<body>
+<button onclick="myfunction()">button</button>
+<div id="test" class="ani">scwook</div>
+
+</body>
+<script>
+function myfunction() {
+  var e = document.getElementById("test");
+  e.classList.remove("ani");
+  void e.offsetWidth;
+
+  e.classList.add("ani");
+
+ // document.getElementById("test").innerHTML = "TEST";
+}
+</script>
+</html>

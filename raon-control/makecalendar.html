@@ -226,9 +226,9 @@
         #shift-table {
             position: relative;
             margin-left: 70px;
-            animation: animatebottom 1s;
-            animation-fill-mode: forwards;
-            opacity: 0;
+            /* animation: animatebottom 1s; */
+            /* animation-fill-mode: forwards; */
+            /* opacity: 0; */
             /* border: 1px solid white; */
         }
 
@@ -749,9 +749,11 @@
 
                 delayTime += 0.2;
             }
+
+            refrashShiftTable(0);
         }
 
-        function scheduleClickEvent(x) {
+        function scheduleUpdate(x) {
             var shiftAvatar = document.getElementsByClassName("avatar-img");
             let shiftDesk = document.getElementsByClassName("desk-img");
             var shiftUserTable = document.getElementsByClassName("shift-user");
@@ -792,7 +794,7 @@
             let shiftButton1 = document.createElement("BUTTON");
             let comment = document.createTextNode("Beam Operation Event 1");
             shiftButton1.style.backgroundColor = "#283593";
-            shiftButton1.addEventListener("click", function () { scheduleClickEvent(0) });
+            shiftButton1.addEventListener("click", function () { refrashShiftTable(0) });
             shiftButton1.appendChild(comment);
             eventCell[29].appendChild(shiftButton1);
             eventRow[4].deleteCell(5);
@@ -802,7 +804,7 @@
             let shiftButton2 = document.createElement("BUTTON");
             let comment2 = document.createTextNode("Beam Operation Event 2");
             shiftButton2.style.backgroundColor = "#2E7D32";
-            shiftButton2.addEventListener("click", function () { scheduleClickEvent(1) });
+            shiftButton2.addEventListener("click", function () { refrashShiftTable(1) });
             shiftButton2.appendChild(comment2);
             eventCell[49].appendChild(shiftButton2);
             eventRow[7].deleteCell(4);
@@ -813,7 +815,7 @@
             let shiftButton3 = document.createElement("BUTTON");
             let comment3 = document.createTextNode("Beam Operation Event 2");
             shiftButton3.style.backgroundColor = "#EF6C00";
-            shiftButton3.addEventListener("click", function () { scheduleClickEvent(2) });
+            shiftButton3.addEventListener("click", function () { refrashShiftTable(2) });
             shiftButton3.appendChild(comment3);
             eventCell[87].appendChild(shiftButton3);
             eventRow[13].deleteCell(3);
@@ -821,6 +823,50 @@
             eventRow[13].deleteCell(3);
             eventRow[13].deleteCell(3);
         }
+
+        function refrashShiftTable(x) {
+            var shiftTableElement = document.getElementById("shift-table");
+            var tablePosition = 0;
+            var tableOpacity = 1.0;
+            var id = setInterval(frame, 5);
+
+            function frame() {
+                if (tablePosition == 50) {
+                    clearInterval(id);
+                    showUpShiftTable(x);
+                }
+                else {
+                    tablePosition += 1;
+                    tableOpacity -= 0.02;
+
+                    shiftTableElement.style.top = tablePosition + "px";
+                    shiftTableElement.style.opacity = tableOpacity;
+                }
+            }
+        }
+
+        function showUpShiftTable(x) {
+            scheduleUpdate(x);
+
+            var shiftTableElement = document.getElementById("shift-table");
+            var tablePosition = 50;
+            var tableOpacity = 0.0;
+            var id = setInterval(frame, 5);
+
+            function frame() {
+                if (tablePosition == 0) {
+                    clearInterval(id);
+                }
+                else {
+                    tablePosition -= 1;
+                    tableOpacity += 0.02;
+
+                    shiftTableElement.style.top = tablePosition + "px";
+                    shiftTableElement.style.opacity = tableOpacity;
+                }
+            }
+        }
+
 
     </script>
 </body>
