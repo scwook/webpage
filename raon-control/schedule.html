@@ -1,184 +1,689 @@
 <!DOCTYPE html>
 <html>
+<script src="script/jquery.min.js"></script>
 
-<title>달력</title>
-<style type="text/css">
-    @font-face {
-        font-family: "Helvetica-Neue-Light";
-        src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-    }
+<head>
+    <style>
+        @font-face {
+            font-family: "Helvetica-Neue-Light";
+            src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+        }
 
-    table {
-        border-collapse: collapse;
-        background-color: #1d1d1d;
-        font-family: "Helvetica-Neue-Light";
-    }
+        @font-face {
+            font-family: "Roboto-Thin";
+            src: url(fonts/Roboto-Thin.ttf);
+        }
 
-    td {
-        width: 110px;
-        box-sizing: border-box;
-        border-collapse: collapse;
-        color: white;
-    }
+        @font-face {
+            font-family: "Roboto-Light";
+            src: url(fonts/Roboto-Light.ttf);
+        }
 
-    .year {
-        height: 80px;
-        text-align: center;
-        background-color: #181818;
-    }
+        @keyframes bar-animation {
+            from {
+                width: 0px;
+            }
 
-    .week {
-        height: 40px;
-        text-align: center;
-        font-size: 15px;
-        color: gray;
-        background-color: #181818;
-    }
+            to {
+                width: 650px;
+            }
+        }
 
-    .day-box {
-        height: 110px;
-        /* padding-left: 5px;
-        padding-top: 5px; */
-    }
+        @keyframes animatebottom {
+            from {
+                bottom: -50px;
+                opacity: 0
+            }
 
-    .day {
-        width: 40px;
-        height: 40px;
-        margin: 15px;
-        line-height: 40px;
-        background-color: red;
-        border-radius: 20px;
-        text-align: center;
-    }
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
 
-    .schedule1 {
-        width: 110px;
-        height: 30px;
-        background-color: dodgerblue;
-    }
+        @keyframes animatetop {
+            from {
+                bottom: 0px;
+                opacity: 1
+            }
 
-    .schedule2 {
-        width: 110px;
-        height: 30px;
-        background-color: orange;
-    }
-</style>
+            to {
+                bottom: -50px;
+                opacity: 0
+            }
+        }
+
+        #time-stamp {
+            position: absolute;
+            color: white;
+            font-family: "Roboto-Thin";
+            font-size: 48px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -70%);
+        }
+
+        .under-line-box {
+            position: absolute;
+            top: 34px;
+        }
+
+        .center-top-box {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+
+        .raon-box {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+        }
+
+        .accelerator-control {
+            position: absolute;
+            color: white;
+            width: 150px;
+            left: 150px;
+            top: 40px;
+            font-family: "Helvetica-Neue-Light";
+        }
+
+        .body-left {
+            float: left;
+            width: 750px;
+            height: 1000px;
+            /* background-color: tomato; */
+        }
+
+        .body-center {
+            float: left;
+            width: 420px;
+            height: 1000px;
+            /* background-color: teal; */
+        }
+
+        .body-right {
+            float: left;
+            width: 750px;
+            height: 1000px;
+            /* background-color: goldenrod; */
+        }
+
+        .header-box {
+            display: inline-block;
+            font-size: 32px;
+            font-family: "Helvetica-Neue-Light";
+            color: white;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .header-bar {
+            display: inline-block;
+            height: 5px;
+            background-color: #283593;
+            animation-name: bar-animation;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        #calendar-header {
+            margin: auto;
+            background-color: #1d1d1d;
+            border-collapse: collapse;
+        }
+
+        #calendar-header td {
+            width: 105px;
+        }
+
+        #calendar {
+            background-color: #1d1d1d;
+        }
+
+        table {
+            border-collapse: collapse;
+            color: white;
+            font-family: "Helvetica-Neue-Light";
+            margin: auto;
+        }
+
+
+        th,
+        td {
+            /* border: 1px solid white; */
+
+        }
+
+        .year {
+            height: 80px;
+            text-align: center;
+            background-color: #181818;
+        }
+
+        .week {
+            height: 40px;
+            text-align: center;
+            font-size: 15px;
+            color: gray;
+            background-color: #181818;
+        }
+
+        button {
+            height: 26px;
+            width: 100%;
+            border: none;
+            border-radius: 13px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .day-box {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 20px;
+        }
+
+        .today-box {
+            width: 740px;
+            height: 150px;
+            font-size: 18px;
+            font-family: "Helvetica-Neue-Light";
+            color: white;
+            margin-top: auto;
+            background-color: #181818;
+            padding: 20px;
+            box-sizing: border-box;
+
+        }
+
+        .schedule-list-box {
+            width: 300px;
+            height: 150px;
+            padding: 10px;
+            border-radius: 20px;
+            color: white;
+            margin: auto;
+            font-family: "Roboto-Light";
+
+            position: relative;
+            animation: animatebottom 1s;
+            bottom: -50px;
+            opacity: 0;
+            animation-fill-mode: forwards;
+
+        }
+
+        .day-schedule {
+            font-size: 14px;
+            margin-left: 10px;
+            margin-top: 8px;
+        }
+
+        #shift-table {
+            position: relative;
+            margin-left: 70px;
+            /* animation: animatebottom 1s; */
+            /* animation-fill-mode: forwards; */
+            /* opacity: 0; */
+            /* border: 1px solid white; */
+        }
+
+        .shift-avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* .shift-avatar img {
+            width: 60px;
+            height: 60px;
+        } */
+
+        .shift-team {
+            width: 345px;
+            height: 20px;
+            /* text-align: left; */
+            padding-left: 10px;
+            font-size: 14px;
+            color: gray;
+        }
+
+        .shift-team svg {
+            vertical-align: middle;
+        }
+
+        .shift-user {
+            width: 345px;
+            height: 40px;
+            font-size: 28px;
+            padding-left: 10px;
+        }
+
+        .avatar-img {
+            /* border: 2px solid white; */
+            border-radius: 50%;
+        }
+
+        .row-spacing {
+            height: 20px;
+        }
+
+        .desk-img {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        #schedule1 {
+            background-color: #283593;
+        }
+
+        #schedule2 {
+            background-color: #2E7D32;
+        }
+
+        #schedule3 {
+            background-color: #EF6C00;
+        }
+    </style>
+</head>
 
 <body style="background-color: black;">
-    <table id="calendar">
-        <tr>
-            <!-- label은 마우스로 클릭을 편하게 해줌 -->
-            <td class="year"><label onclick="prevCalendar()">&#10094;</label></td>
-            <td class="year" id="tbCalendarYM" colspan="5" style="font-size:32px;">May 2020</td>
-            <td class="year"><label onclick="nextCalendar()">&#10095;</label></td>
-        </tr>
-        <tr>
-            <td class="week">SUN</td>
-            <td class="week">MON</td>
-            <td class="week">TUE</td>
-            <td class="week">WED</td>
-            <td class="week">THU</td>
-            <td class="week">FRI</td>
-            <td class="week">SAT</td>
-        </tr>
 
-        <tr>
-            <td class="day-box">
-                <div class="day">26</div>
-                <div class="schedule1"></div>
-                <div class="schedule2"></div>
-            </td>
-            <td class="day-box">27</td>
-            <td class="day-box">28</td>
-            <td class="day-box">29</td>
-            <td class="day-box">30</td>
-            <td class="day-box">1</td>
-            <td class="day-box">2</td>
-        </tr>
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
+        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+        <div class="accelerator-control">Accelerator Control</div>
+    </div>
 
-        <tr>
-            <td class="day-box">3</td>
-            <td class="day-box">4</td>
-            <td class="day-box">5</td>
-            <td class="day-box">6</td>
-            <td class="day-box">7</td>
-            <td class="day-box">8</td>
-            <td class="day-box">9</td>
-        </tr>
-        <tr>
-            <td class="day-box">10</td>
-            <td class="day-box">11</td>
-            <td class="day-box">12</td>
-            <td class="day-box">13</td>
-            <td class="day-box">14</td>
-            <td class="day-box">15</td>
-            <td class="day-box">16</td>
-        </tr>
-        <tr>
-            <td class="day-box">17</td>
-            <td class="day-box">18</td>
-            <td class="day-box">19</td>
-            <td class="day-box">20</td>
-            <td class="day-box">21</td>
-            <td class="day-box">22</td>
-            <td class="day-box">23</td>
-        </tr>
-        <tr>
-            <td class="day-box">24</td>
-            <td class="day-box">25</td>
-            <td class="day-box">26</td>
-            <td class="day-box">27</td>
-            <td class="day-box">28</td>
-            <td class="day-box">29</td>
-            <td class="day-box">30</td>
-        </tr>
-        <tr>
-            <td class="day-box">31</td>
-            <td class="day-box">1</td>
-            <td class="day-box">2</td>
-            <td class="day-box">3</td>
-            <td class="day-box">4</td>
-            <td class="day-box">5</td>
-            <td class="day-box">6</td>
-        </tr>
-    </table>
+    <div style="height:6px"></div>
 
-    <script type="text/javascript">
-        var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
-        var date = new Date();//today의 Date를 세어주는 역할
-        function prevCalendar() {//이전 달
-            // 이전 달을 today에 값을 저장하고 달력에 today를 넣어줌
-            //today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
-            //getMonth()는 현재 달을 받아 오므로 이전달을 출력하려면 -1을 해줘야함
+    <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
+
+        <div class="body-left">
+            <div class="header-box">Schedule</div>
+
+            <table id="calendar-header">
+                <tr>
+                    <!-- label은 마우스로 클릭을 편하게 해줌 -->
+                    <td class="year"><label onclick="prevCalendar()">&#10094;</label></td>
+                    <td class="year" id="calendarYear" colspan="5" style="font-size:32px;">May 2020</td>
+                    <td class="year"><label onclick="nextCalendar()">&#10095;</label></td>
+                </tr>
+                <tr>
+                    <td class="week">SUN</td>
+                    <td class="week">MON</td>
+                    <td class="week">TUE</td>
+                    <td class="week">WED</td>
+                    <td class="week">THU</td>
+                    <td class="week">FRI</td>
+                    <td class="week">SAT</td>
+                </tr>
+            </table>
+
+            <table id="calendar"></table>
+
+            <div class="header-box">Today</div>
+            <div class="today-box">
+                The third effect depends not only on the top position of the window’s scrollbar, but also on the width
+                property of the window. More specifically, we are making the following assumptions
+            </div>
+        </div>
+
+        <div class="body-center">
+            <div style="height:80px"></div>
+            <div class="schedule-list-box" id="schedule1">
+                <div style="display:inline-block; font-size:32px; font-weight: bold;">4</div>
+                <div style="display:inline-block; font-size:20px; font-weight: bold;">-6</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
+                <div class="day-schedule">Day 11 : Beam Standby</div>
+                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+                <div class="day-schedule">Day 13 : Beam Standby</div>
+                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
+            </div>
+
+            <div style="height:40px"></div>
+
+            <div class="schedule-list-box" id="schedule2">
+                <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
+                <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
+                <div class="day-schedule">Day 11 : Beam Standby</div>
+                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+                <div class="day-schedule">Day 13 : Beam Standby</div>
+                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
+            </div>
+
+            <div style="height:40px"></div>
+
+            <div class="schedule-list-box" id="schedule3">
+                <div style="display:inline-block; font-size:32px; font-weight: bold;">25</div>
+                <div style="display:inline-block; font-size:20px; font-weight: bold;">-29</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
+                <div class="day-schedule">Day 11 : Beam Standby</div>
+                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+                <div class="day-schedule">Day 13 : Beam Standby</div>
+                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
+            </div>
+
+        </div>
+
+        <div class="body-right">
+            <div class="header-box">Shift</div>
+            <div class="header-bar"></div>
+
+            <table id="shift-table">
+
+                <!-- row 1 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 2 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 3 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 4 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 5 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 6 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 7 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 8 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 9 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+
+                <!-- row 10 -->
+                <tr>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                    <td class="shift-avatar" rowspan="2"><img class="avatar-img"></td>
+                    <td class="shift-team"><span class="team-name"></span>
+                        <div class="desk-img"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shift-user"></td>
+                    <td class="shift-user"></td>
+                </tr>
+
+                <tr class="row-spacing"></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var today = new Date();
+        var date = new Date();
+        var monthStartCell = 0;
+        var svgDeskCode1 = '<svg id="desk1" width="37.6749" height="6.1317" viewBox="0 0 37.6749 6.1317"><style>#desk1-1{fill:#e6e6e6;}#desk1-2{fill:#e6e6e6;}#desk1-3{fill:#e6e6e6;}</style><path id="desk1-1" d="M7.4417,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1863V.9341H1.1626V7.0659H2.3488A11.6573,11.6573,0,0,1,7.4417,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-2" d="M20,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H13.7209V7.0659h1.1862A11.6573,11.6573,0,0,1,20,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-3" d="M32.5583,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H26.2791V7.0659h1.1863A11.6573,11.6573,0,0,1,32.5583,5.839" transform="translate(-1.1626 -0.9341)"/></svg>';
+        var svgDeskCode2 = '<svg id="desk2" width="19.3464" height="20.3421"><style>#desk2-1{fill:#e6e6e6;}#desk2-2{fill:#e6e6e6;}#desk2-3{fill:#e6e6e6;}#desk2-4{fill:#e6e6e6;}#desk2-5{fill:#e6e6e6;}#desk2-6{fill:#e6e6e6;}</style><path id="desk2-1" d="M9.1711,16.6943,7.7165,21.171,2.3693,17.286l3.8116-2.7693A5.9935,5.9935,0,0,0,9.1711,16.6943Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-2" d="M5.0323,11a5.9544,5.9544,0,0,0,1.1486,3.5167L2.3693,17.286.3268,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-3" d="M6.181,7.4833,2.3693,4.714,7.7165.829,9.1711,5.3057A5.9938,5.9938,0,0,0,6.181,7.4833Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-4" d="M11.0212,5.0111a5.9784,5.9784,0,0,0-1.85.2946L7.7165.829h6.61L12.8714,5.3058A5.9757,5.9757,0,0,0,11.0212,5.0111Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-5" d="M5.0323,11H.3268L2.3693,4.714,6.181,7.4833A5.9538,5.9538,0,0,0,5.0323,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-6" d="M12.8714,5.3058,14.326.829l5.3472,3.885L15.8615,7.4833A5.9937,5.9937,0,0,0,12.8714,5.3058Z" transform="translate(-0.3268 -0.829)"/></svg>';
+        var svgDeskCode3 = '<svg id="desk3" width="19.3464" height="20.3421"><style>.#desk3-1{fill:#e6e6e6;}#desk3-2{fill:#e6e6e6;}#desk3-3{fill:#e6e6e6;}#desk3-4{fill:#e6e6e6;}#desk3-5{fill:#e6e6e6;}#desk3-6{fill:#e6e6e6;}</style><path id="desk3-1" d="M10.5021,15.8654l1.4546,4.4767l5.3472-3.885l-3.8117-2.7693C12.7567,14.6984,11.7163,15.4711,10.5021,15.8654z"/><path id="desk3-2" d="M14.6409,10.1711c0,1.3158-0.4293,2.5285-1.1486,3.5167l3.8117,2.7693l2.0425-6.286H14.6409z"/><path id="desk3-3" d="M13.4922,6.6544l3.8117-2.7694L11.9567,0l-1.4546,4.4767C11.7163,4.8711,12.7566,5.6438,13.4922,6.6544z"/><path id="desk3-4" d="M8.652,4.1822c0.6462,0,1.2671,0.1052,1.8502,0.2946L11.9567,0H5.3472l1.4546,4.4768C7.3848,4.2875,8.0058,4.1822,8.652,4.1822z"/><path id="desk3-5" d="M14.6409,10.1711h4.7056L17.3039,3.885l-3.8117,2.7694C14.2115,7.6426,14.6409,8.8553,14.6409,10.1711z"/><path id="desk3-6" d="M6.8018,4.4768L5.3472,0L0,3.885l3.8117,2.7694C4.5473,5.6438,5.5876,4.8711,6.8018,4.4768z"/></svg>';
+        var svgDeskCode4 = '<svg id="desk4" width="25" height="11.8882"><style>#desk4-1{fill:#e6e6e6;}#desk4-2{fill:#e6e6e6;}#desk4-3{fill:#e6e6e6;}#desk4-4{fill:#e6e6e6;}#desk4-5{fill:#e6e6e6;}</style><path id="desk4-1" d="M6.8425,7.8337,2.3873,4.5968,0,11.9441H5.5A6.9591,6.9591,0,0,1,6.8425,7.8337Z" transform="translate(0 -0.0559)"/><path id="desk4-2" d="M18.1574,7.8337l4.4553-3.2369L16.3627.0559l-1.7,5.2325A7.0061,7.0061,0,0,1,18.1574,7.8337Z" transform="translate(0 -0.0559)"/><path id="desk4-3" d="M12.5,4.9441a6.9871,6.9871,0,0,1,2.1625.3443l1.7-5.2325H8.6373l1.7,5.2326A6.9873,6.9873,0,0,1,12.5,4.9441Z" transform="translate(0 -0.0559)"/><path id="desk4-4" d="M19.5,11.9441H25L22.6127,4.5968,18.1574,7.8337A6.9592,6.9592,0,0,1,19.5,11.9441Z" transform="translate(0 -0.0559)"/><path id="desk4-5" d="M10.3374,5.2885,8.6373.0559l-6.25,4.5409L6.8425,7.8337A7.0064,7.0064,0,0,1,10.3374,5.2885Z" transform="translate(0 -0.0559)"/></svg>';
+        var svgDesk = [svgDeskCode1, svgDeskCode2, svgDeskCode3, svgDeskCode4];
+        var shiftList1 = [
+            { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+            { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+            { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+            { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: "1", leader: 0 },
+            { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: "2", leader: 0 },
+            { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: "3", leader: 0 },
+            { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: "4", leader: 0 },
+            { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: "5", leader: 0 },
+            { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: "6", leader: 0 },
+            { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "2", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "3", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "4", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "5", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+        ]
+
+        var shiftList2 = [
+            { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Kim, YongHak", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Kim TaeKyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, InMyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Shin, JaeHee", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Jo, HyunChul", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 }
+        ]
+
+        var shiftList3 = [
+            { name: "Kim, YongHak", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
+            { name: "Kim TaeKyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, InMyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Shin, JaeHee", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Jo, HyunChul", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
+            { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 }
+        ]
+
+        var shiftInfo = [shiftList1, shiftList2, shiftList3];
+
+        function prevCalendar() {
             today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-            buildCalendar(); //달력 cell 만들어 출력 
+            createCalendar();
         }
 
-        function nextCalendar() {//다음 달
-            // 다음 달을 today에 값을 저장하고 달력에 today 넣어줌
-            //today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
-            //getMonth()는 현재 달을 받아 오므로 다음달을 출력하려면 +1을 해줘야함
+        function nextCalendar() {
             today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-            buildCalendar();//달력 cell 만들어 출력
+            createCalendar();
         }
-        function buildCalendar() {//현재 달 달력 만들기
-            var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-            //이번 달의 첫째 날,
-            //new를 쓰는 이유 : new를 쓰면 이번달의 로컬 월을 정확하게 받아온다.     
-            //new를 쓰지 않았을때 이번달을 받아오려면 +1을 해줘야한다. 
-            //왜냐면 getMonth()는 0~11을 반환하기 때문
-            var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-            //이번 달의 마지막 날
-            //new를 써주면 정확한 월을 가져옴, getMonth()+1을 해주면 다음달로 넘어가는데
-            //day를 1부터 시작하는게 아니라 0부터 시작하기 때문에 
-            //대로 된 다음달 시작일(1일)은 못가져오고 1 전인 0, 즉 전달 마지막일 을 가져오게 된다
-            var tbCalendar = document.getElementById("calendar");
-            //날짜를 찍을 테이블 변수 만듬, 일 까지 다 찍힘
-            var tbCalendarYM = document.getElementById("tbCalendarYM");
-            //테이블에 정확한 날짜 찍는 변수
-            //innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
-            //new를 찍지 않아서 month는 +1을 더해줘야 한다. 
+        function createCalendar() {
+            var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+            var startDate = 1;
+            if (firstDate.getDay() != 0) {
+                startDate = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+            }
+
+            var tb = document.getElementById("calendar");
+
+            while (tb.rows.length) {
+                tb.deleteRow(tb.rows.length - 1);
+            }
+
+            // var x = document.createElement("TABLE");
+            // x.setAttribute("id", "calendar");
+            // document.body.appendChild(x);
+
+            // tb = document.getElementById("calendar");
+
+            //document.getElementById("test").innerHTML = tb.rows();
+            var row = null;
+            var cell = null;
+            var rowPos = 0;
+            var tableDay = startDate;
+            var cellDate = 0;
+
             var month = new Array();
             month[0] = "January";
             month[1] = "February";
@@ -193,57 +698,275 @@
             month[10] = "November";
             month[11] = "December";
             var m = month[today.getMonth()];
-            tbCalendarYM.innerHTML = m + " " + today.getFullYear();
 
-            /*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
-            while (tbCalendar.rows.length > 2) {
-                //열을 지워줌
-                //기본 열 크기는 body 부분에서 2로 고정되어 있다.
-                tbCalendar.deleteRow(tbCalendar.rows.length - 1);
-                //테이블의 tr 갯수 만큼의 열 묶음은 -1칸 해줘야지 
-                //30일 이후로 담을달에 순서대로 열이 계속 이어진다.
-            }
-            var row = null;
-            row = tbCalendar.insertRow();
-            //테이블에 새로운 열 삽입//즉, 초기화
-            var cnt = 0;// count, 셀의 갯수를 세어주는 역할
-            // 1일이 시작되는 칸을 맞추어 줌
-            for (i = 0; i < doMonth.getDay(); i++) {
-                /*이번달의 day만큼 돌림*/
-                cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-                cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-            }
-            /*달력 출력*/
-            for (i = 1; i <= lastDate.getDate(); i++) {
-                //1일부터 마지막 일까지 돌림
-                cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-                cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
-                cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-                if (cnt % 7 == 1) {/*일요일 계산*/
-                    //1주일이 7일 이므로 일요일 구하기
-                    //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                    cell.innerHTML = "<font color=#F79DC2>" + i
-                    //1번째의 cell에만 색칠
+            var cy = document.getElementById("calendarYear");
+            cy.innerHTML = m + " " + today.getFullYear();
+
+            // Week
+            for (let w = 0; w < 6; w++) {
+                //Day, Schedule1, Schedule2
+                for (let i = 0; i < 3; i++) {
+                    row = tb.insertRow();
+                    row.setAttribute("class", "rowClass", 0);
+                    //Cell
+                    for (let j = 0; j < 7; j++) {
+                        cell = row.insertCell();
+                        cell.setAttribute("class", "cellClass", 0);
+                        cell.style.width = "105px";
+
+                        if (rowPos == 0) {
+                            row.style.height = "50px";
+
+                            var dayBox = document.createElement("DIV");
+                            dayBox.classList.add("day-box");
+                            dayBox.innerHTML = tableDay;
+
+                            if (i == 0) {
+                                if (j == 0) {
+                                    dayBox.style.color = "tomato"; //Sunday color
+                                }
+                                else if (j == 6) {
+                                    dayBox.style.color = "#1976D2"; //Saturday color
+                                }
+                            }
+
+                            cell.appendChild(dayBox);
+
+                            if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (tableDay == today.getDate())) {
+                                dayBox.style.backgroundColor = "dodgerblue";
+                            }
+
+                            tableDay += 1;
+
+                            if ((w == 0) && (tableDay > prevMonthLastDate.getDate())) {
+                                tableDay = 1;
+                                monthStartCell = j + 1;
+                            }
+
+                            if ((w > 3) && (tableDay > lastDate.getDate())) {
+                                tableDay = 1;
+                            }
+                        }
+                        else if (rowPos == 1) {
+                            row.style.height = "30px";
+
+                            // if (w == 2) {
+                            // cell.colSpan = "3";
+
+                            // let x = document.createElement("BUTTON");
+                            // let t = document.createTextNode("Click me");
+                            // x.addEventListener("click", myFunction);
+                            // x.appendChild(t);
+                            // cell.appendChild(x);
+                            // j += 2;
+                            // }
+                        }
+                        else if (rowPos == 2) {
+                            row.style.height = "30px";
+
+                            // if (w == 3) {
+                            //     cell.colSpan = "2";
+                            //     j += 1;
+                            // }
+
+                        }
+
+                    }
+
+                    rowPos += 1;
                 }
-                if (cnt % 7 == 0) {/* 1주일이 7일 이므로 토요일 구하기*/
-                    //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                    cell.innerHTML = "<font color=skyblue>" + i
-                    //7번째의 cell에만 색칠
-                    row = calendar.insertRow();
-                    //토요일 다음에 올 셀을 추가
+
+                rowPos = 0;
+            }
+        }
+
+        function timer() {
+            var d = new Date();
+            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        }
+
+        function scheduleUpdate(x) {
+            var shiftAvatar = document.getElementsByClassName("avatar-img");
+            var shiftUserTable = document.getElementsByClassName("shift-user");
+            var shiftTeamTable = document.getElementsByClassName("team-name");
+            var shiftDesk = document.getElementsByClassName("desk-img");
+
+            for (let i = 0; i < shiftInfo[x].length; i++) {
+                shiftAvatar[i].src = "images/avatar.svg";
+                shiftUserTable[i].innerHTML = shiftInfo[x][i].name;
+                shiftTeamTable[i].innerHTML = shiftInfo[x][i].team;
+
+                let deskNum = shiftInfo[x][i].desk;
+                let seatNum = shiftInfo[x][i].seat;
+                let isShiftLeader = shiftInfo[x][i].leader;
+
+                shiftDesk[i].innerHTML = findDeskSeat(i + 1, deskNum, seatNum, isShiftLeader);;
+                // shiftDesk[i].innerHTML = '<svg width="10" height="10"><circle cx="5" cy="5" r="5"stroke="green" stroke-width="4" fill="yellow" />';
+                // shiftDesk[i].appendChild(svgCode);
+            }
+
+
+            // $("#shift-table tr").hide();
+            // $("#shift-table tr").each(function (index) {
+            //     $(this).delay(index * 50).show(100);
+            // });
+
+            // document.getElementById("shift-table").style.animationName = "animatebottom";
+        }
+
+        function findDeskSeat(shiftNum, deskNum, seatNum, isLeader) {
+            var operatorSeatColor = "#3498DB";
+            if(isLeader) {
+                operatorSeatColor = "#DB3434";
+            }
+            var deselectedSeat = "desk" + deskNum + "-" + seatNum + "{fill:#e6e6e6;}";
+            var operatorSeatColor = "desk" + deskNum + "-" + seatNum + "{fill:" + operatorSeatColor + ";}";
+            var svgDeskSeat = svgDesk[deskNum - 1].replace(deselectedSeat, operatorSeatColor);
+
+            //to avoid overlap of path id in svg code(id must have unique name)
+            var shiftID = null;
+            var deskID = null;
+            console.log(shiftNum, deskNum, seatNum);
+            switch (deskNum) {
+                case "1":
+                    for (let i = 1; i <= 3; i++) {
+                        deskID = "desk" + deskNum + "-" + i;
+                        shiftID = "shift" + shiftNum + "-" + i;
+                        svgDeskSeat = svgDeskSeat.split(deskID).join(shiftID);
+                    }
+                    break;
+
+                case "2":
+                    for (let i = 1; i <= 6; i++) {
+                        deskID = "desk" + deskNum + "-" + i;
+                        shiftID = "shift" + shiftNum + "-" + i;
+                        svgDeskSeat = svgDeskSeat.split(deskID).join(shiftID);
+                    }
+                case "3":
+                    break;
+
+                case "4":
+                    for (let i = 1; i <= 5; i++) {
+                        deskID = "desk" + deskNum + "-" + i;
+                        shiftID = "shift" + shiftNum + "-" + i;
+                        svgDeskSeat = svgDeskSeat.split(deskID).join(shiftID);
+                    }
+                    break;
+            }
+
+            return svgDeskSeat;
+        }
+
+        function addSchedule() {
+            // let schedule = [
+            //     {startDate:"2020-05-04", endDate: "2020-05-06", commemt:"Beam Operation Event 1"},
+            //     {startDate:"2020-05-12", endDate: "2020-05-15", commemt:"Beam Operation Event 2"},
+            //     {startDate:"2020-05-25", endDate: "2020-05-29", commemt:"Beam Operation Event 3"}
+            // ]
+
+            // let start = new Date(schedule[0].startDate);
+            // let end = new Date(schedule[0].endDate);
+
+
+            var eventRow = document.getElementsByClassName("rowClass");
+            var eventCell = document.getElementsByClassName("cellClass");
+
+            // Event 1
+            eventCell[29].colSpan = "3";
+            let shiftButton1 = document.createElement("BUTTON");
+            let comment = document.createTextNode("Beam Operation Event 1");
+            shiftButton1.style.backgroundColor = "#283593";
+            shiftButton1.addEventListener("click", function () { refrashShiftTable(0) });
+            shiftButton1.appendChild(comment);
+            eventCell[29].appendChild(shiftButton1);
+            eventRow[4].deleteCell(5);
+            eventRow[4].deleteCell(5);
+
+            eventCell[49].colSpan = "4";
+            let shiftButton2 = document.createElement("BUTTON");
+            let comment2 = document.createTextNode("Beam Operation Event 2");
+            shiftButton2.style.backgroundColor = "#2E7D32";
+            shiftButton2.addEventListener("click", function () { refrashShiftTable(1) });
+            shiftButton2.appendChild(comment2);
+            eventCell[49].appendChild(shiftButton2);
+            eventRow[7].deleteCell(4);
+            eventRow[7].deleteCell(4);
+            eventRow[7].deleteCell(4);
+
+            eventCell[87].colSpan = "5";
+            let shiftButton3 = document.createElement("BUTTON");
+            let comment3 = document.createTextNode("Beam Operation Event 2");
+            shiftButton3.style.backgroundColor = "#EF6C00";
+            shiftButton3.addEventListener("click", function () { refrashShiftTable(2) });
+            shiftButton3.appendChild(comment3);
+            eventCell[87].appendChild(shiftButton3);
+            eventRow[13].deleteCell(3);
+            eventRow[13].deleteCell(3);
+            eventRow[13].deleteCell(3);
+            eventRow[13].deleteCell(3);
+        }
+
+        function refrashShiftTable(x) {
+            var shiftTableElement = document.getElementById("shift-table");
+            var tablePosition = 0;
+            var tableOpacity = 1.0;
+            var id = setInterval(frame, 5);
+
+            function frame() {
+                if (tablePosition == 80) {
+                    clearInterval(id);
+                    showUpShiftTable(x);
                 }
-                /*오늘의 날짜에 노란색 칠하기*/
-                if (today.getFullYear() == date.getFullYear()
-                    && today.getMonth() == date.getMonth()
-                    && i == date.getDate()) {
-                    //달력에 있는 년,달과 내 컴퓨터의 로컬 년,달이 같고, 일이 오늘의 일과 같으면
-                    cell.bgColor = "#FAF58C";//셀의 배경색을 노랑으로 
+                else {
+                    tablePosition += 1;
+                    tableOpacity -= 0.02;
+
+                    shiftTableElement.style.top = tablePosition + "px";
+                    shiftTableElement.style.opacity = tableOpacity;
+                }
+            }
+        }
+
+        function showUpShiftTable(x) {
+            scheduleUpdate(x);
+
+            var shiftTableElement = document.getElementById("shift-table");
+            var tablePosition = 80;
+            var tableOpacity = 0.0;
+            var id = setInterval(frame, 5);
+
+            function frame() {
+                if (tablePosition == 0) {
+                    clearInterval(id);
+                }
+                else {
+                    tablePosition -= 1;
+                    tableOpacity += 0.02;
+
+                    shiftTableElement.style.top = tablePosition + "px";
+                    shiftTableElement.style.opacity = tableOpacity;
                 }
             }
         }
 
         window.onload = function () {
-            // buildCalendar();
+            createCalendar();
+            addSchedule();
+
+            var myVar = setInterval(timer, 1000);
+
+            var scheduleList = document.getElementsByClassName("schedule-list-box");
+            var delayTime = 0;
+            for (let i = 0; i < scheduleList.length; i++) {
+                scheduleList[i].style.animationDelay = delayTime + "s";
+
+                delayTime += 0.2;
+            }
+
+            var shiftTableElement = document.getElementById("shift-table");
+            shiftTableElement.style.top = 80;
+            shiftTableElement.style.opacity = 0;
+            showUpShiftTable(0);
         }
     </script>
 </body>
