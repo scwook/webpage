@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @font-face {
+        font-family: "Helvetica-Neue-Light";
+        src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+    }
+
+    @font-face {
+        font-family: "Roboto-Thin";
+        src: url(fonts/Roboto-Thin.ttf);
+    }
+
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url(fonts/Roboto-Light.ttf);
+    }
+
+    #time-stamp {
+        position: absolute;
+        color: white;
+        font-family: "Roboto-Thin";
+        font-size: 48px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+    }
+
+    .under-line-box {
+        position: absolute;
+        top: 34px;
+    }
+
+    .center-top-box {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+    }
+
+    .raon-box {
+        position: absolute;
+        left: 10px;
+        top: 20px;
+    }
+
+    .accelerator-control {
+        position: absolute;
+        color: white;
+        width: 150px;
+        left: 150px;
+        top: 40px;
+        font-family: "Helvetica-Neue-Light";
+    }
+
+    .body-title {
+        width: 1800px;
+        height: 64px;
+        background-color: black;
+        font-size: 40px;
+        text-align: center;
+        color: white;
+        font-family: Helvetica-Neue-Light;
+    }
+
+    .body-box {
+        width: 1920px;
+        height: 960px;
+        background-color: black;
+        margin: auto;
+    }
+
+    .flex-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        font-family: Helvetica-Neue-Light;
+    }
+
+    .download-box {
+        background-color: #f1f1f1;
+        width: 450px;
+        height: 600px;
+        margin: 50px;
+    }
+
+    .download-title-img {
+        display: block;
+        width: 120px;
+        height: 120px;
+        margin: auto;
+        margin-top: 20px;
+        background-color: green;
+    }
+
+    .download-title {
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .download-comment {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .download-text {
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .download-flex-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .download-os-box {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+    }
+
+    .os-img {
+        width: 80px;
+        height: 80px;
+        background-color: blue;
+    }
+
+    .os-text {
+        font-size: 24px;
+    }
+</style>
+
+<body style="background-color: black;">
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
+        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+        <div class="accelerator-control">Accelerator Control</div>
+    </div>
+
+    <div style="height:20px"></div>
+
+    <div class="body-title">Download for RAON Accelerator Control</div>
+    <div class="body-box">
+        <div style="height:60px"></div>
+        <div class="flex-box">
+            <div class="download-box">
+                <img class="download-title-img">
+                <div class="download-title">Control System Studio</div>
+                <div class="download-comment">This is a RAON CS-Studio</div>
+                <div class="download-text">Download</div>
+                <div class="download-flex-box">
+                    <div class="download-os-box">
+                        <img class="os-img">
+                        <div clas="os-text">Mac</div>
+                    </div>
+                    <div class="download-os-box">
+                        <img class="os-img">
+                        <div clas="os-text">Windows</div>
+                    </div>
+                    <div class="download-os-box">
+                        <img class="os-img">
+                        <div clas="os-text">Linux</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
+
+
+    window.onload = function () {
+        var myVar = setInterval(timer, 1000);
+    }
+</script>
+
+</html>
