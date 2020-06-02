@@ -53,8 +53,9 @@
     }
 
     .body-title {
-        width: 1800px;
+        width: 1920px;
         height: 64px;
+        margin: auto;
         background-color: black;
         font-size: 40px;
         text-align: center;
@@ -78,10 +79,12 @@
     }
 
     .download-box {
-        background-color: #f1f1f1;
-        width: 420px;
+        position: relative;
+        background-color: #3a3a3aa9;
+        width: 400px;
         height: 540px;
         margin: 50px;
+        color: white;
     }
 
     .download-title-img {
@@ -90,25 +93,29 @@
         height: 100px;
         margin: auto;
         margin-top: 20px;
-        background-color: green;
+        /* background-color: green; */
     }
 
     .download-title {
-        font-size: 24px;
+        margin-top: 20px;
+        font-size: 32px;
         text-align: center;
     }
 
     .download-comment {
-        font-size: 18px;
+        margin-top: 10px;
+        font-size: 20px;
         text-align: center;
     }
 
     .download-text {
-        font-size: 24px;
+        margin-top: 100px;
+        font-size: 32px;
         text-align: center;
     }
 
     .download-flex-box {
+        margin-top: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -119,18 +126,25 @@
         height: 100px;
         margin: 10px;
         text-align: center;
-        line-height: 75px;
+        line-height: 40px;
         font-size: 30px;
     }
 
     .os-img {
-        width: 50px;
-        height: 50px;
-        background-color: blue;
+        width: 60px;
+        height: 60px;
+        /* background-color: blue; */
     }
 
     .os-text {
-        font-size: 24px;
+        font-size: 18px;
+    }
+
+    .download-bottom-line {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height: 10px;
     }
 </style>
 
@@ -150,24 +164,72 @@
         <div style="height:60px"></div>
         <div class="flex-box">
             <div class="download-box">
-                <img class="download-title-img">
+                <img class="download-title-img" src="images/css-logo.svg">
                 <div class="download-title">Control System Studio</div>
                 <div class="download-comment">This is a RAON CS-Studio</div>
                 <div class="download-text">Download</div>
                 <div class="download-flex-box">
                     <div class="download-os-box">
-                        <img class="os-img">
-                        <div clas="os-text">Mac</div>
+                        <img class="os-img" src="images/mac-logo.svg">
+                        <div class="os-text">Mac</div>
                     </div>
                     <div class="download-os-box">
-                        <img class="os-img">
-                        <div clas="os-text">Windows</div>
+                        <img class="os-img" src="images/windows-logo.svg">
+                        <div class="os-text">Windows</div>
                     </div>
                     <div class="download-os-box">
-                        <img class="os-img">
-                        <div clas="os-text">Linux</div>
+                        <img class="os-img" src="images/debian-logo.svg">
+                        <div class="os-text">Linux</div>
                     </div>
                 </div>
+
+                <div class="download-bottom-line" style="background-color: dodgerblue;"></div>
+            </div>
+
+            <div class="download-box">
+                <img class="download-title-img" src="images/java-logo.svg">
+                <div class="download-title">Java Runtime Library</div>
+                <div class="download-comment">Library for Java Application</div>
+                <div class="download-text">Download</div>
+                <div class="download-flex-box">
+                    <div class="download-os-box">
+                        <img class="os-img" src="images/mac-logo.svg">
+                        <div class="os-text">Mac</div>
+                    </div>
+                    <div class="download-os-box">
+                        <img class="os-img" src="images/windows-logo.svg">
+                        <div class="os-text">Windows</div>
+                    </div>
+                    <div class="download-os-box">
+                        <img class="os-img" src="images/debian-logo.svg">
+                        <div class="os-text">Linux</div>
+                    </div>
+                </div>
+
+                <div class="download-bottom-line" style="background-color: rgb(255, 158, 30);"></div>
+            </div>
+
+            <div class="download-box">
+                <img class="download-title-img" src="images/script-logo.svg">
+                <div class="download-title">Scripts for EPICS</div>
+                <div class="download-comment">RAON EPICS Installation Scripts</div>
+                <div class="download-text">Download</div>
+                <div class="download-flex-box">
+                    <div class="download-os-box">
+                        <img class="os-img" src="images/mac-logo.svg">
+                        <div class="os-text">Mac</div>
+                    </div>
+                    <div class="download-os-box">
+                        <img class="os-img" src="images/windows-logo.svg">
+                        <div class="os-text">Windows</div>
+                    </div>
+                    <div class="download-os-box">
+                        <img class="os-img" src="images/debian-logo.svg">
+                        <div class="os-text">Linux</div>
+                    </div>
+                </div>
+
+                <div class="download-bottom-line" style="background-color: rgb(40, 33, 145);"></div>
             </div>
         </div>
 </body>
