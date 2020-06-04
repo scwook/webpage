@@ -16,6 +16,16 @@
         src: url(fonts/Roboto-Light.ttf);
     }
 
+    @keyframes animateopacity {
+            from {
+                background-color: #3a3a3a00;
+            }
+
+            to {
+                background-color: #3a3a3a9a;
+            }
+        }
+
     #time-stamp {
         position: absolute;
         color: white;
@@ -84,11 +94,18 @@
 
     .download-box {
         position: relative;
-        background-color: #3a3a3aa9;
+        background-color: #3a3a3a9a;
         width: 400px;
         height: 540px;
         margin: 50px;
         color: white;
+        transition-duration: 0.4s;
+        animation: animateopacity 1s;
+        /* animation-fill-mode: forwards; */
+    }
+
+    .download-box:hover {
+        background-color: #3a3a3ad8;
     }
 
     .download-title-img {
@@ -219,14 +236,6 @@
                 <div class="download-comment">RAON EPICS Installation Scripts</div>
                 <div class="download-text">Download</div>
                 <div class="download-flex-box">
-                    <div class="download-os-box">
-                        <img class="os-img" src="images/mac-logo.svg">
-                        <div class="os-text">Mac</div>
-                    </div>
-                    <div class="download-os-box">
-                        <img class="os-img" src="images/windows-logo.svg">
-                        <div class="os-text">Windows</div>
-                    </div>
                     <div class="download-os-box">
                         <img class="os-img" src="images/debian-logo.svg">
                         <div class="os-text">Linux</div>
