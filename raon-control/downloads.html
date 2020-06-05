@@ -18,11 +18,13 @@
 
     @keyframes animateopacity {
             from {
-                background-color: #3a3a3a00;
+                opacity: 0;
+                bottom: -50px;
             }
 
             to {
-                background-color: #3a3a3a9a;
+                opacity: 1.0;        
+                bottom: 0px;
             }
         }
 
@@ -94,14 +96,16 @@
 
     .download-box {
         position: relative;
+        bottom: -50px;
         background-color: #3a3a3a9a;
+        opacity: 0;
         width: 400px;
         height: 540px;
         margin: 50px;
         color: white;
         transition-duration: 0.4s;
         animation: animateopacity 1s;
-        /* animation-fill-mode: forwards; */
+        animation-fill-mode: forwards;
     }
 
     .download-box:hover {
@@ -184,7 +188,7 @@
     <div class="body-box">
         <div style="height:60px"></div>
         <div class="flex-box">
-            <div class="download-box">
+            <div class="download-box" style="animation-delay: 0.0s;">
                 <img class="download-title-img" src="images/css-logo.svg">
                 <div class="download-title">Control System Studio</div>
                 <div class="download-comment">This is a RAON CS-Studio</div>
@@ -207,7 +211,7 @@
                 <div class="download-bottom-line" style="background-color: dodgerblue;"></div>
             </div>
 
-            <div class="download-box">
+            <div class="download-box" style="animation-delay: 0.2s;">
                 <img class="download-title-img" src="images/java-logo.svg">
                 <div class="download-title">Java Runtime Library</div>
                 <div class="download-comment">Library for Java Application</div>
@@ -230,7 +234,7 @@
                 <div class="download-bottom-line" style="background-color: rgb(255, 158, 30);"></div>
             </div>
 
-            <div class="download-box">
+            <div class="download-box" style="animation-delay: 0.4s;">
                 <img class="download-title-img" src="images/script-logo.svg">
                 <div class="download-title">Scripts for EPICS</div>
                 <div class="download-comment">RAON EPICS Installation Scripts</div>
