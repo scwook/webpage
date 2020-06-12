@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    html {
+        background: #f2f2f2;
+    }
+
+
+    .box {
+        animation-name: movingBox;
+        animation-duration: 2300ms;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+
+        width: 100px;
+        height: 100px;
+        background: #FFF;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes movingBox {
+        0% {
+            transform: translate(0, 0);
+            opacity: 0.3;
+        }
+
+        25% {
+            opacity: 0.9;
+        }
+
+        50% {
+            transform: translate(100px, 100px);
+            opacity: 0.2;
+        }
+
+        100% {
+            transform: translate(30px, 30px);
+            opacity: 0.8;
+        }
+    }
+</style>
+
+<body>
+    <div class="box"></div>
+</body>
+
+<script>
+
+</script>
+
+</html>
