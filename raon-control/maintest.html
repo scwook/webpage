@@ -19,37 +19,122 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     }
 
-    @keyframes movingBox {
-        0% {
+    #body-box {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        background-color: dodgerblue;
+    }
+
+    #svg1-box {
+        position: absolute;
+        left: 0px;
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+    }
+
+    #svg1 {
+        /* animation-name: movingBoxScaleDown; */
+        /* animation-duration: 0.5s;
+        animation-timing-function: ease-out; */
+        /* animation-iteration-count: infinite; */
+        /* animation-direction: alternate; */
+    }
+
+    #svg2-box {
+        position: absolute;
+        left: 200px;
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: fuchsia;
+    }
+
+    #svg2 {
+        /* animation-name: movingBoxScaleUp; */
+        /* animation-duration: 0.5s;
+        animation-timing-function: ease-out; */
+        /* transform: scale(0.5, 0.5) translate(-300px, 0); */
+        /* animation-iteration-count: infinite; */
+        /* animation-direction: alternate; */
+    }
+
+    @keyframes movingBoxScaleDown {
+        from {
             transform: translate(0, 0);
             opacity: 1.0;
         }
-/* 
-        25% {
-            opacity: 0.9;
-        } */
 
-        50% {
-            transform: translate(300px, 0px);
-            transform: scale(0.5, 0.5);
-            opacity: 0.5;
+        to {
+            transform: scale(0.5, 0.5) translate(300px, 0px);
+            opacity: 0.0;
         }
 
-        100% {
-            transform: translate(300px, 0px);
-            
+    }
 
+    @keyframes movingBoxScaleUp {
+        from {
+            transform: translate(-300, 0);
+            opacity: 0.0;
+        }
+
+        to {
+            transform: scale(1.0, 1.0) translate(0px, 0px);
             opacity: 1.0;
         }
     }
 </style>
 
 <body>
-    <div class="box"></div>
+    <!-- <div class="box"></div> -->
+
+    <div id="body-box">
+        <div id="svg1-box">
+            <svg id="svg1">
+                <rect width="100" height="100" style="fill:rgb(63, 182, 142);stroke-width:3;stroke:none" />
+            </svg>
+        </div>
+        <div id="svg2-box">
+            <svg id="svg2">
+                <rect width="100" height="100" style="fill:rgb(121, 38, 38);stroke-width:3;stroke:none" />
+            </svg>
+        </div>
+    </div>
+
+    <button onclick="myMove()">Click</button>
 </body>
 
 <script>
+function myMove() {
+    var divBox1 = document.getElementById("svg1-box");
+    var divBox2 = document.getElementById("svg2-box");
+    var initPos = 0;
+    var initScale = 1.0;
+    var divBox1InitPos = 0;
+    var divBox2InitPos = 200;
 
+    console.log(divBox1InitPos, divBox2InitPos);
+
+    var id = setInterval(frame, 5);
+
+    function frame() {
+        if (initPos == 300) {
+            clearInterval(id);
+        }
+        else {
+            initPos += 2;
+            initScale -= 0.003;
+
+            divBox1.style.left = divBox1InitPos + initPos + 'px';
+            divBox1.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+            divBox2.style.left = divBox2InitPos + initPos + 'px';
+            divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+        }
+    }
+}
 </script>
 
 </html>
