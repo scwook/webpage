@@ -107,34 +107,42 @@
 </body>
 
 <script>
-function myMove() {
-    var divBox1 = document.getElementById("svg1-box");
-    var divBox2 = document.getElementById("svg2-box");
-    var initPos = 0;
-    var initScale = 1.0;
-    var divBox1InitPos = 0;
-    var divBox2InitPos = 200;
+    function myMove() {
+        var divBox1 = document.getElementById("svg1-box");
+        var divBox2 = document.getElementById("svg2-box");
+        var initPos = 0;
+        var initScale = 1.0;
+        var divBox1InitPos = 0;
+        var divBox2InitPos = 200;
 
-    console.log(divBox1InitPos, divBox2InitPos);
+        // console.log(divBox1InitPos, divBox2InitPos);
 
-    var id = setInterval(frame, 5);
+        var dt = 0.0;
+        var x = 0.0;
+        var y = 0.0;
+        var id = setInterval(frame, 5);
 
-    function frame() {
-        if (initPos == 300) {
-            clearInterval(id);
-        }
-        else {
-            initPos += 2;
-            initScale -= 0.003;
+        function frame() {
+            if (dt > 0.4) {
+                clearInterval(id);
+            }
+            else {
+                initPos += 2;
+                initScale -= 0.003;
 
-            divBox1.style.left = divBox1InitPos + initPos + 'px';
-            divBox1.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
-            divBox2.style.left = divBox2InitPos + initPos + 'px';
-            divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+                dt += 0.001;
+                x = 2 * dt - 1;
+                y = Math.pow(x, 3) + 2;
 
+                console.log(dt, x, y);
+                divBox1.style.left = y + 'px';
+                // divBox1.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+                // divBox2.style.left = divBox2InitPos + initPos + 'px';
+                // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+            }
         }
     }
-}
 </script>
 
 </html>
