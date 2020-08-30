@@ -109,55 +109,110 @@
 <script>
     function myMove() {
         var divBox1 = document.getElementById("svg1-box");
-        var divBox2 = document.getElementById("svg2-box");
-        var initPos = 200;
-        var finalPos = 500;
-        var distance = Math.abs(finalPos - initPos);
-        var finalScale = 0.5;
-        var scaleFactor = 1 - finalScale;
-        var opacity = 1.0;
+
+        var initPos1 = -100;
+        var finalPos1 = 200;
+        var distance1 = Math.abs(finalPos1 - initPos1);
+        var finalScale1 = 1.0;
+        var scaleFactor1 = 0.5;
+        var opacity1 = 0.0;
         // console.log(divBox1InitPos, divBox2InitPos);
 
-        var dt = 0.0;
-        var x = 0.0;
-        var leftPos = 0;
+        var dt1 = 0.0;
+        var x1 = 0.0;
+        var leftPos1 = 0;
 
         // var animationDuration = 1; //s
         // var interval = 0.005; //s
         // var frame = animationDuration / interval;
         // var count = 0;
-        var id = setInterval(myFunction, 5);
+        var id1 = setInterval(leftToCenter, 5);
 
-        function myFunction() {
-            if (leftPos == finalPos) {
-                clearInterval(id);
+        function leftToCenter() {
+            if (leftPos1 == finalPos1) {
+                clearInterval(id1);
             }
             else {
                 // initPos += 5;
                 // scale -= 0.002;
 
-                dt += 0.005;
-                x = 1 - Math.pow(2, -10 * dt);
+                dt1 += 0.005;
+                x1 = 1 - Math.pow(2, -10 * dt1);
                 // y = Math.pow(x, 2) + 1;
-                leftPos = initPos + x * distance;
-                scale = 1.0 - x * scaleFactor;
-                opacity -= 0.02;
+                leftPos1 = initPos1 + x1 * distance1;
+                scale1 = 0.0 + x1 * scaleFactor1;
+                opacity1 += 0.02;
 
-                if (leftPos > (finalPos - 1)) {
-                    leftPos = finalPos;
-                    scale = finalScale;
+                if (leftPos1 > (finalPos1 - 1)) {
+                    leftPos1 = finalPos1;
+                    scale1 = finalScale1;
                 }
 
-                console.log(leftPos);
-                divBox2.style.left = leftPos + 'px';
-                divBox2.style.transform = 'scale(' + scale + ', ' + scale + ')';
-                divBox2.style.opacity = opacity;
+                // console.log(leftPos1);
+                divBox1.style.left = leftPos1 + 'px';
+                divBox1.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+                divBox1.style.opacity = opacity1;
+                // divBox2.style.left = divBox2InitPos + initPos + 'px';
+                // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+                console.log(opacity1);
+                // count += 1;
+            }
+        }
+
+
+        var divBox2 = document.getElementById("svg2-box");
+        var initPos2 = 200;
+        var finalPos2 = 500;
+        var distance2 = Math.abs(finalPos2 - initPos2);
+        var finalScale2 = 0.5;
+        var scaleFactor2 = 1 - finalScale2;
+        var opacity2 = 1.0;
+        // console.log(divBox1InitPos, divBox2InitPos);
+
+        var dt2 = 0.0;
+        var x2 = 0.0;
+        var leftPos2 = 0;
+
+        // var animationDuration = 1; //s
+        // var interval = 0.005; //s
+        // var frame = animationDuration / interval;
+        // var count = 0;
+        var id2 = setInterval(centerToRight, 5);
+
+        function centerToRight() {
+            if (leftPos2 == finalPos2) {
+                clearInterval(id2);
+            }
+            else {
+                // initPos += 5;
+                // scale -= 0.002;
+
+                dt2 += 0.005;
+                x2 = 1 - Math.pow(2, -10 * dt2);
+                // y = Math.pow(x, 2) + 1;
+                leftPos2 = initPos2 + x2 * distance2;
+                scale2 = 1.0 - x2 * scaleFactor2;
+                opacity2 -= 0.02;
+
+                if (leftPos2 > (finalPos2 - 1)) {
+                    leftPos2 = finalPos2;
+                    scale2 = finalScale2;
+                }
+
+                // console.log(leftPos2);
+                divBox2.style.left = leftPos2 + 'px';
+                divBox2.style.transform = 'scale(' + scale2 + ', ' + scale2 + ')';
+                divBox2.style.opacity = opacity2;
                 // divBox2.style.left = divBox2InitPos + initPos + 'px';
                 // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
 
                 // count += 1;
             }
         }
+
+
+
     }
 </script>
 
