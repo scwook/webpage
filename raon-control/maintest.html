@@ -19,16 +19,19 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     }
 
+
     #body-box {
         position: relative;
         width: 500px;
         height: 500px;
         background-color: dodgerblue;
+        overflow: hidden;
+
     }
 
     #svg1-box {
         position: absolute;
-        left: 0px;
+        left: -100px;
         display: inline-block;
         width: 100px;
         height: 100px;
@@ -50,6 +53,15 @@
         width: 100px;
         height: 100px;
         background-color: fuchsia;
+    }
+
+    #contain {
+        position: relative;
+        margin: auto;
+        overflow: hidden;
+        width: 1000px;
+        height: 1000px;
+        background-color: black;
     }
 
     #svg2 {
@@ -102,32 +114,36 @@
             </svg>
         </div>
     </div>
+    <button onclick="rightToLeft()">left</button>
+    <button onclick="leftToRight()">right</button>
 
-    <button onclick="myMove()">Click</button>
+    <div id="contain">
+
+    </div>
 </body>
 
 <script>
-    function myMove() {
-        var divBox1 = document.getElementById("svg1-box");
+    function rightToLeft() {
+        let divBox1 = document.getElementById("svg1-box");
 
-        var initPos1 = -100;
-        var finalPos1 = 200;
-        var distance1 = Math.abs(finalPos1 - initPos1);
-        var finalScale1 = 1.0;
-        var scaleFactor1 = 0.5;
-        var opacity1 = 0.0;
+        let initPos1 = 200;
+        let finalPos1 = -100;
+        let distance1 = Math.abs(finalPos1 - initPos1);
+        let finalScale1 = 1.0;
+        let scaleFactor1 = 0.5;
+        let opacity1 = 0.0;
         // console.log(divBox1InitPos, divBox2InitPos);
 
-        var dt1 = 0.0;
-        var x1 = 0.0;
-        var leftPos1 = 0;
+        let dt1 = 0.0;
+        let x1 = 0.0;
+        let leftPos1 = 0;
 
         // var animationDuration = 1; //s
         // var interval = 0.005; //s
         // var frame = animationDuration / interval;
         // var count = 0;
-        var id1 = setInterval(leftToCenter, 5);
-
+        let id1 = setInterval(leftToCenter, 15);
+        let count = 1;
         function leftToCenter() {
             if (leftPos1 == finalPos1) {
                 clearInterval(id1);
@@ -136,16 +152,17 @@
                 // initPos += 5;
                 // scale -= 0.002;
 
-                dt1 += 0.005;
+                dt1 += 0.016;
                 x1 = 1 - Math.pow(2, -10 * dt1);
                 // y = Math.pow(x, 2) + 1;
-                leftPos1 = initPos1 + x1 * distance1;
-                scale1 = 0.0 + x1 * scaleFactor1;
-                opacity1 += 0.02;
+                leftPos1 = initPos1 - x1 * distance1;
+                // scale1 = 0.0 + x1 * 1.0;
+                scale1 = 1.0;
+                opacity1 = 1.0;
 
-                if (leftPos1 > (finalPos1 - 1)) {
+                if (leftPos1 < (finalPos1 + 1)) {
                     leftPos1 = finalPos1;
-                    scale1 = finalScale1;
+                    // scale1 = finalScale1;
                 }
 
                 // console.log(leftPos1);
@@ -155,30 +172,140 @@
                 // divBox2.style.left = divBox2InitPos + initPos + 'px';
                 // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
 
-                console.log(opacity1);
+                // console.log(leftPos1);
+                // count += 1;
                 // count += 1;
             }
         }
 
 
-        var divBox2 = document.getElementById("svg2-box");
-        var initPos2 = 200;
-        var finalPos2 = 500;
-        var distance2 = Math.abs(finalPos2 - initPos2);
-        var finalScale2 = 0.5;
-        var scaleFactor2 = 1 - finalScale2;
-        var opacity2 = 1.0;
+        let divBox2 = document.getElementById("svg2-box");
+        let initPos2 = 500;
+        let finalPos2 = 200;
+        let distance2 = Math.abs(finalPos2 - initPos2);
+        let finalScale2 = 0.5;
+        let scaleFactor2 = 1 - finalScale2;
+        let opacity2 = 1.0;
         // console.log(divBox1InitPos, divBox2InitPos);
 
-        var dt2 = 0.0;
-        var x2 = 0.0;
-        var leftPos2 = 0;
+        let dt2 = 0.0;
+        let x2 = 0.0;
+        let leftPos2 = 0;
 
         // var animationDuration = 1; //s
         // var interval = 0.005; //s
         // var frame = animationDuration / interval;
         // var count = 0;
-        var id2 = setInterval(centerToRight, 5);
+        let id2 = setInterval(centerToRight, 5);
+
+        function centerToRight() {
+            if (leftPos2 == finalPos2) {
+                clearInterval(id2);
+            }
+            else {
+                // initPos += 5;
+                // scale -= 0.002;
+
+                dt2 += 0.005;
+                x2 = 1 - Math.pow(2, -10 * dt2);
+                // y = Math.pow(x, 2) + 1;
+                leftPos2 = initPos2 - x2 * distance2;
+                // scale2 = 1.0 - x2 * scaleFactor2;
+                scale2 = 1.0;
+                opacity2 = 1.0;
+
+                if (leftPos2 < (finalPos2 + 1)) {
+                    leftPos2 = finalPos2;
+                    // scale2 = finalScale2;
+                }
+
+                // console.log(leftPos2);
+                divBox2.style.left = leftPos2 + 'px';
+                divBox2.style.transform = 'scale(' + scale2 + ', ' + scale2 + ')';
+                divBox2.style.opacity = opacity2;
+                // divBox2.style.left = divBox2InitPos + initPos + 'px';
+                // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+                // count += 1;
+            }
+        }
+    }
+
+
+    function leftToRight() {
+        let divBox1 = document.getElementById("svg1-box");
+
+        let initPos1 = -100;
+        let finalPos1 = 200;
+        let distance1 = Math.abs(finalPos1 - initPos1);
+        let finalScale1 = 1.0;
+        let scaleFactor1 = 0.5;
+        let opacity1 = 0.0;
+        // console.log(divBox1InitPos, divBox2InitPos);
+
+        let dt1 = 0.0;
+        let x1 = 0.0;
+        let leftPos1 = 0;
+
+        // var animationDuration = 1; //s
+        // var interval = 0.005; //s
+        // var frame = animationDuration / interval;
+        // var count = 0;
+        let id1 = setInterval(leftToCenter, 15);
+        let count = 1;
+        function leftToCenter() {
+            if (leftPos1 == finalPos1) {
+                clearInterval(id1);
+            }
+            else {
+                // initPos += 5;
+                // scale -= 0.002;
+
+                dt1 += 0.016;
+                x1 = 1 - Math.pow(2, -10 * dt1);
+                // y = Math.pow(x, 2) + 1;
+                leftPos1 = initPos1 + x1 * distance1;
+                // scale1 = 0.0 + x1 * 1.0;
+                scale1 = 1.0;
+                opacity1 = 1.0;
+
+                if (leftPos1 > (finalPos1 - 1)) {
+                    leftPos1 = finalPos1;
+                    // scale1 = finalScale1;
+                }
+
+                // console.log(leftPos1);
+                divBox1.style.left = leftPos1 + 'px';
+                divBox1.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+                divBox1.style.opacity = opacity1;
+                // divBox2.style.left = divBox2InitPos + initPos + 'px';
+                // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+                // console.log(count);
+                // count += 1;
+                // count += 1;
+            }
+        }
+
+
+        let divBox2 = document.getElementById("svg2-box");
+        let initPos2 = 200;
+        let finalPos2 = 500;
+        let distance2 = Math.abs(finalPos2 - initPos2);
+        let finalScale2 = 0.5;
+        let scaleFactor2 = 1 - finalScale2;
+        let opacity2 = 1.0;
+        // console.log(divBox1InitPos, divBox2InitPos);
+
+        let dt2 = 0.0;
+        let x2 = 0.0;
+        let leftPos2 = 0;
+
+        // var animationDuration = 1; //s
+        // var interval = 0.005; //s
+        // var frame = animationDuration / interval;
+        // var count = 0;
+        let id2 = setInterval(centerToRight, 5);
 
         function centerToRight() {
             if (leftPos2 == finalPos2) {
@@ -192,12 +319,13 @@
                 x2 = 1 - Math.pow(2, -10 * dt2);
                 // y = Math.pow(x, 2) + 1;
                 leftPos2 = initPos2 + x2 * distance2;
-                scale2 = 1.0 - x2 * scaleFactor2;
-                opacity2 -= 0.02;
+                // scale2 = 1.0 - x2 * scaleFactor2;
+                scale2 = 1.0;
+                opacity2 = 1.0;
 
                 if (leftPos2 > (finalPos2 - 1)) {
                     leftPos2 = finalPos2;
-                    scale2 = finalScale2;
+                    // scale2 = finalScale2;
                 }
 
                 // console.log(leftPos2);
@@ -210,10 +338,37 @@
                 // count += 1;
             }
         }
+    }
 
-
+    function continueLeftToRight() {
 
     }
+
+    function continueRightToLeft() {
+
+    }
+
+    var div = document.getElementById('contain'); //Get svg element
+
+    for (let i = 0; i < 10; i++) {
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        var idName = "svg" + i;
+        svg.setAttribute("id", idName);
+        svg.setAttribute("width", 100);
+        svg.setAttribute("height", 100);
+        svg.style.position = "absolute";
+        svg.style.left = 200 * i + "px";
+
+        var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //Create a path in SVG's namespace
+        newElement.setAttribute("width", "100"); //Set path's data
+        newElement.setAttribute("height", "100"); //Set path's data
+        newElement.setAttribute("style", "fill:rgb(63, 182, 142);stroke-width:3;stroke:none"); //Set path's data
+
+        svg.appendChild(newElement);
+        div.appendChild(svg);
+    }
+
+
 </script>
 
 </html>
