@@ -8,9 +8,214 @@
     background-position: center;
     /* background-size: 3840px 2160px; */
   }
+
+  #contain {
+    position: relative;
+    left: 100px;
+    width: 800px;
+    height: 1000px;
+    background-color: dodgerblue;
+    overflow: hidden;
+
+  }
+
+  svg {
+    width: 500px;
+    height: 800px;
+  }
 </style>
 <html>
-<body>
 
+<body>
+  <div id="contain">
+  </div>
 </body>
+
+<script>
+  var initPos = 150;
+  var svgWidth = 500;
+  var svgHeight = 800;
+  var repeatNumber = 5;
+
+  var div = document.getElementById('contain'); //Get svg elemen
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  // var idName = "svg" + i;
+  // svg.setAttribute("id", idName);
+  svg.setAttribute("width", svgWidth);
+  svg.setAttribute("height", svgHeight);
+  svg.style.position = "absolute";
+  svg.style.left = initPos + 'px';
+  svg.style.right = initPos + 'px';
+  var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //Create a path in SVG's namespace
+  newElement.setAttribute("width", svgWidth); //Set path's data
+  newElement.setAttribute("height", svgHeight); //Set path's data
+  newElement.setAttribute("style", "fill:rgb(63, 182, 142);stroke-width:3;stroke:none"); //Set path's data
+
+  svg.appendChild(newElement);
+  div.appendChild(svg);
+
+  var svgID = document.getElementsByTagName("svg");
+  // console.log(svgID[0]);
+
+  var id = setInterval(moveToRight, 5, "left");
+  var id2 = null;
+
+  var dx = 50;
+  var count = 0;
+  function moveToRight(direction) {
+
+    var currentPosLeft = parseInt(svgID[0].style.left);
+    var currentPosRight = parseInt(svgID[0].style.right);
+
+    // console.log(currentPos / 1000);
+
+    switch (direction) {
+      case "right":
+        if ((currentPosLeft / 1000) == 1) {
+          svgID[0].style.left = -svgWidth + 'px';
+          count += 1;
+        } else {
+          svgID[0].style.left = currentPosLeft + dx + 'px';
+
+        }
+
+        if (count > repeatNumber) {
+          clearInterval(id);
+          leftToRight(-svgWidth);
+        }
+        break;
+
+      case "left":
+        if ((currentPosRight / 1000) == 1) {
+          svgID[0].style.right = -svgWidth + 'px';
+          count += 1;
+        } else {
+          svgID[0].style.right = currentPosRight + dx + 'px';
+          console.log("right", svgID[0].style.right);
+          console.log("left", svgID[0].style.left);
+
+        }
+
+        if (count > repeatNumber) {
+          clearInterval(id);
+          rightToLeft(-svgWidth);
+        }
+
+        break;
+
+      default:
+
+    }
+  }
+
+  function leftToRight(startPosition) {
+    var initPos1 = startPosition;
+    var finalPos1 = initPos;
+    var distance1 = Math.abs(finalPos1 - initPos1);
+    var finalScale1 = 1.0;
+    var scaleFactor1 = 0.5;
+    var opacity1 = 0.0;
+    // console.log(divBox1InitPos, divBox2InitPos);
+
+    var dt1 = 0.0;
+    var x1 = 0.0;
+    var leftPos1 = 0;
+
+    // var animationDuration = 1; //s
+    // var interval = 0.005; //s
+    // var frame = animationDuration / interval;
+    // var count = 0;
+    var id3 = setInterval(leftToCenter, 10);
+    var count = 1;
+    function leftToCenter() {
+      if (leftPos1 == finalPos1) {
+        clearInterval(id3);
+      }
+      else {
+        // initPos += 5;
+        // scale -= 0.002;
+
+        dt1 += 0.016;
+        x1 = 1 - Math.pow(2, -10 * dt1);
+        // y = Math.pow(x, 2) + 1;
+        leftPos1 = initPos1 + x1 * distance1;
+        // scale1 = 0.0 + x1 * 1.0;
+        scale1 = 1.0;
+        opacity1 = 1.0;
+
+        if (leftPos1 > (finalPos1 - 1)) {
+          leftPos1 = finalPos1;
+          // scale1 = finalScale1;
+        }
+
+        // console.log(leftPos1);
+        svgID[0].style.left = leftPos1 + 'px';
+        svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+        svgID[0].style.opacity = opacity1;
+        // divBox2.style.left = divBox2InitPos + initPos + 'px';
+        // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+        // console.log(count);
+        // count += 1;
+        // count += 1;
+      }
+    }
+  }
+
+  function rightToLeft(startPosition) {
+    var initPos1 = startPosition;
+    var finalPos1 = initPos;
+    var distance1 = Math.abs(finalPos1 - initPos1);
+    var finalScale1 = 1.0;
+    var scaleFactor1 = 0.5;
+    var opacity1 = 0.0;
+    // console.log(divBox1InitPos, divBox2InitPos);
+
+    var dt1 = 0.0;
+    var x1 = 0.0;
+    var rightPos = 0;
+
+    // var animationDuration = 1; //s
+    // var interval = 0.005; //s
+    // var frame = animationDuration / interval;
+    // var count = 0;
+    var id1 = setInterval(leftToCenter, 15);
+    var count = 1;
+    function leftToCenter() {
+      if (rightPos == finalPos1) {
+        clearInterval(id1);
+      }
+      else {
+        // initPos += 5;
+        // scale -= 0.002;
+
+        dt1 += 0.016;
+        x1 = 1 - Math.pow(2, -10 * dt1);
+        // y = Math.pow(x, 2) + 1;
+        rightPos = initPos1 - x1 * distance1;
+        // scale1 = 0.0 + x1 * 1.0;
+        scale1 = 1.0;
+        opacity1 = 1.0;
+
+        if (rightPos < (finalPos1 + 1)) {
+          rightPos = finalPos1;
+          // scale1 = finalScale1;
+        }
+
+        // console.log(rightPos);
+        svgID[0].style.right = rightPos + 'px';
+        svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+        svgID[0].style.opacity = opacity1;
+        // divBox2.style.left = divBox2InitPos + initPos + 'px';
+        // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+        // console.log(rightPos);
+        // count += 1;
+        // count += 1;
+      }
+    }
+  }
+
+</script>
+
 </html>

@@ -56,12 +56,19 @@
     }
 
     #contain {
-        position: relative;
-        margin: auto;
         overflow: hidden;
         width: 1000px;
         height: 1000px;
         background-color: black;
+
+    }
+
+    #child {
+        position: relative;
+        background-color: red;
+        width: 10000px;
+        left: -10000px;
+        
     }
 
     #svg2 {
@@ -104,12 +111,12 @@
 
     <div id="body-box">
         <div id="svg1-box">
-            <svg id="svg1">
-                <rect width="100" height="100" style="fill:rgb(63, 182, 142);stroke-width:3;stroke:none" />
+            <svg id="svgs1">
+                <rect width="100" height="100" style="fill:rgb(0, 182, 142);stroke-width:3;stroke:none" />
             </svg>
         </div>
         <div id="svg2-box">
-            <svg id="svg2">
+            <svg id="svgs2">
                 <rect width="100" height="100" style="fill:rgb(121, 38, 38);stroke-width:3;stroke:none" />
             </svg>
         </div>
@@ -118,11 +125,29 @@
     <button onclick="leftToRight()">right</button>
 
     <div id="contain">
-
+        <div id="child">
+            <svg class="svgt" width="100" height="100">
+                <rect width="100" height="100" style="fill:rgb(10, 255, 38);stroke-width:3;stroke:none" />
+            </svg>
+            <svg class="svgt" width="100" height="100" style="left: 100px">
+                <rect width="100" height="100" style="fill:rgb(121, 38, 38);stroke-width:3;stroke:none" />
+            </svg>
+        </div>
     </div>
 </body>
 
 <script>
+
+
+    var divID = document.getElementById("child");
+    var id = setInterval(moveStart, 10);
+    var dx = -500;
+    function moveStart() {
+        divID.style.left = dx + "px";
+        dx += 30;
+    }
+
+
     function rightToLeft() {
         let divBox1 = document.getElementById("svg1-box");
 
@@ -340,35 +365,65 @@
         }
     }
 
-    function continueLeftToRight() {
-
-    }
-
-    function continueRightToLeft() {
-
-    }
-
-    var div = document.getElementById('contain'); //Get svg element
-
-    for (let i = 0; i < 10; i++) {
-        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        var idName = "svg" + i;
-        svg.setAttribute("id", idName);
-        svg.setAttribute("width", 100);
-        svg.setAttribute("height", 100);
-        svg.style.position = "absolute";
-        svg.style.left = 200 * i + "px";
-
-        var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //Create a path in SVG's namespace
-        newElement.setAttribute("width", "100"); //Set path's data
-        newElement.setAttribute("height", "100"); //Set path's data
-        newElement.setAttribute("style", "fill:rgb(63, 182, 142);stroke-width:3;stroke:none"); //Set path's data
-
-        svg.appendChild(newElement);
-        div.appendChild(svg);
-    }
 
 
+    // function continueLeftToRight() {
+
+    //     var svg0 = document.getElementById("svg0");
+    //     // svg0.style.left = "10px";
+    //     var svgArray = [];
+
+    //     for (let i = 0; i < 10; i++) {
+    //         var svgID = "svg" + i;
+    //         svgArray[i] = document.getElementById(svgID);
+    //         // console.log(svgArray[i]);
+    //     }
+
+    //     var id = setInterval(moveStart, 100);
+    //     var increase = 10;
+    //     function moveStart() {
+
+    //         for(let i = 0; i < 10; i ++) {
+    //             var leftPos = parseInt(svgArray[i].style.left);
+    //             svgArray[i].style.left = (leftPos + increase) + 'px';
+    //             console.log(svgArray[i].style.left);
+    //             // console.log(i);
+    //         }
+    //     }
+
+    // }
+
+    // function continueRightToLeft() {
+
+    // }
+
+    // var div = document.getElementById('contain'); //Get svg elemen
+    // var divWidth = 1000;
+    // var divHeight = 2000;
+    // var initLeft = 0;
+
+    // for (let i = 0; i < 10; i++) {
+    //     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    //     var idName = "svg" + i;
+    //     svg.setAttribute("id", idName);
+    //     svg.setAttribute("width", divWidth / 2);
+    //     svg.setAttribute("height", divHeight / 2);
+    //     svg.style.position = "absolute";
+    //     svg.style.left = (initLeft - (1000 * 1)) + "px";
+
+    //     var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //Create a path in SVG's namespace
+    //     newElement.setAttribute("width", "500"); //Set path's data
+    //     newElement.setAttribute("height", "1000"); //Set path's data
+    //     newElement.setAttribute("style", "fill:rgb(63, 182, 142);stroke-width:3;stroke:none"); //Set path's data
+
+    //     svg.appendChild(newElement);
+    //     div.appendChild(svg);
+    // }
+
+    // window.onload = function () {
+    //     continueLeftToRight();
+
+    // }
 </script>
 
 </html>
