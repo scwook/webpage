@@ -23,19 +23,55 @@
     width: 500px;
     height: 800px;
   }
+
+  svg.svgt {
+    width: 100px;
+    height: 100px;
+  }
 </style>
 <html>
 
 <body>
   <div id="contain">
   </div>
+
+  <button onclick="movingStart(10)">left</button>
+  <button onclick="movingStop()">stop</button>
+  <button onclick="movingStart(1)">right</button>
+
+  <svg class="svgt" width="20" height="20" onclick="movingStart(6)">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+
+  <svg class="svgt" width="20" height="20" onclick="movingStart(5)">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+
+  <svg class="svgt" width="20" height="20" onclick="movingStart(4)">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+  <svg class="svgt" width="20" height="20" onclick="movingStart(3)">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+  <svg class="svgt" width="20" height="20" onclick="movingStart(2)">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+  <svg class="svgt" width="20" height="20" onclick="movingStart(1)">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+
 </body>
 
 <script>
+
   var initPos = 150;
   var svgWidth = 500;
   var svgHeight = 800;
-  var repeatNumber = 5;
+  var offset = svgWidth / 2;
+  // var repeatNumber = 10;
+  var containWidth = 800;
+  var movingSpeed = 5;
+  var selection = 1;
 
   var div = document.getElementById('contain'); //Get svg elemen
   var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -45,7 +81,6 @@
   svg.setAttribute("height", svgHeight);
   svg.style.position = "absolute";
   svg.style.left = initPos + 'px';
-  svg.style.right = initPos + 'px';
   var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //Create a path in SVG's namespace
   newElement.setAttribute("width", svgWidth); //Set path's data
   newElement.setAttribute("height", svgHeight); //Set path's data
@@ -55,163 +90,185 @@
   div.appendChild(svg);
 
   var svgID = document.getElementsByTagName("svg");
-  // console.log(svgID[0]);
+  var id = null;
 
-  var id = setInterval(moveToRight, 5, "left");
-  var id2 = null;
-
-  var dx = 50;
-  var count = 0;
-  function moveToRight(direction) {
-
-    var currentPosLeft = parseInt(svgID[0].style.left);
-    var currentPosRight = parseInt(svgID[0].style.right);
-
-    // console.log(currentPos / 1000);
-
-    switch (direction) {
-      case "right":
-        if ((currentPosLeft / 1000) == 1) {
-          svgID[0].style.left = -svgWidth + 'px';
-          count += 1;
-        } else {
-          svgID[0].style.left = currentPosLeft + dx + 'px';
-
-        }
-
-        if (count > repeatNumber) {
-          clearInterval(id);
-          leftToRight(-svgWidth);
-        }
-        break;
-
-      case "left":
-        if ((currentPosRight / 1000) == 1) {
-          svgID[0].style.right = -svgWidth + 'px';
-          count += 1;
-        } else {
-          svgID[0].style.right = currentPosRight + dx + 'px';
-          console.log("right", svgID[0].style.right);
-          console.log("left", svgID[0].style.left);
-
-        }
-
-        if (count > repeatNumber) {
-          clearInterval(id);
-          rightToLeft(-svgWidth);
-        }
-
-        break;
-
-      default:
-
-    }
+  function movingStop() {
+    clearInterval(id);
   }
 
-  function leftToRight(startPosition) {
-    var initPos1 = startPosition;
-    var finalPos1 = initPos;
-    var distance1 = Math.abs(finalPos1 - initPos1);
-    var finalScale1 = 1.0;
-    var scaleFactor1 = 0.5;
-    var opacity1 = 0.0;
-    // console.log(divBox1InitPos, divBox2InitPos);
+  function movingStart(number) {
+    clearInterval(id);
 
-    var dt1 = 0.0;
-    var x1 = 0.0;
-    var leftPos1 = 0;
+    var direction = null;
+    var repeat = count = Math.abs(selection - number)
 
-    // var animationDuration = 1; //s
-    // var interval = 0.005; //s
-    // var frame = animationDuration / interval;
-    // var count = 0;
-    var id3 = setInterval(leftToCenter, 10);
-    var count = 1;
-    function leftToCenter() {
-      if (leftPos1 == finalPos1) {
-        clearInterval(id3);
-      }
-      else {
-        // initPos += 5;
-        // scale -= 0.002;
 
-        dt1 += 0.016;
-        x1 = 1 - Math.pow(2, -10 * dt1);
-        // y = Math.pow(x, 2) + 1;
-        leftPos1 = initPos1 + x1 * distance1;
-        // scale1 = 0.0 + x1 * 1.0;
-        scale1 = 1.0;
-        opacity1 = 1.0;
+    if (selection < number) {
+      direction = 1;
+    } else if (selection > number) {
+      direction = -1;
+    } else {
+      direction = 0;
+    }
 
-        if (leftPos1 > (finalPos1 - 1)) {
-          leftPos1 = finalPos1;
-          // scale1 = finalScale1;
-        }
+    selection = number;
 
-        // console.log(leftPos1);
-        svgID[0].style.left = leftPos1 + 'px';
-        svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-        svgID[0].style.opacity = opacity1;
-        // divBox2.style.left = divBox2InitPos + initPos + 'px';
-        // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+    id = setInterval(moveToRight, movingSpeed, direction);
 
-        // console.log(count);
-        // count += 1;
-        // count += 1;
+    var dx = 50;
+    var count = 0;
+    // console.log(direction);
+    function moveToRight(dir) {
+
+      var currentPosLeft = parseInt(svgID[0].style.left);
+      // console.log(repeat);
+
+      switch (dir) {
+        case 1:
+          if (currentPosLeft >= containWidth) {
+            svgID[0].style.left = -svgWidth + 'px';
+            count += 1;
+          } else {
+            svgID[0].style.left = currentPosLeft + dx + 'px';
+
+          }
+
+          if (count == repeat) {
+            clearInterval(id);
+            // console.log("clear ID", id);
+
+            leftToRight(-svgWidth);
+          }
+          break;
+
+        case -1:
+          if (currentPosLeft <= -svgWidth) {
+            svgID[0].style.left = containWidth + 'px';
+            count += 1;
+          } else {
+            svgID[0].style.left = currentPosLeft - dx + 'px';
+          }
+
+          if (count == repeat) {
+            clearInterval(id);
+            // console.log("clear ID", id);
+            rightToLeft(containWidth);
+          }
+
+          break;
+
+        default:
+
       }
     }
-  }
 
-  function rightToLeft(startPosition) {
-    var initPos1 = startPosition;
-    var finalPos1 = initPos;
-    var distance1 = Math.abs(finalPos1 - initPos1);
-    var finalScale1 = 1.0;
-    var scaleFactor1 = 0.5;
-    var opacity1 = 0.0;
-    // console.log(divBox1InitPos, divBox2InitPos);
 
-    var dt1 = 0.0;
-    var x1 = 0.0;
-    var rightPos = 0;
+    // 시작 전 clearInterval(id) 필요
+    function leftToRight(startPosition) {
+      var initPos1 = startPosition;
+      var finalPos1 = initPos;
+      var distance1 = Math.abs(finalPos1 - initPos1);
+      var finalScale1 = 1.0;
+      var scaleFactor1 = 0.5;
+      var opacity1 = 0.0;
+      // console.log(divBox1InitPos, divBox2InitPos);
 
-    // var animationDuration = 1; //s
-    // var interval = 0.005; //s
-    // var frame = animationDuration / interval;
-    // var count = 0;
-    var id1 = setInterval(leftToCenter, 15);
-    var count = 1;
-    function leftToCenter() {
-      if (rightPos == finalPos1) {
-        clearInterval(id1);
-      }
-      else {
-        // initPos += 5;
-        // scale -= 0.002;
+      var dt1 = 0.0;
+      var x1 = 0.0;
+      var leftPos1 = 0;
 
-        dt1 += 0.016;
-        x1 = 1 - Math.pow(2, -10 * dt1);
-        // y = Math.pow(x, 2) + 1;
-        rightPos = initPos1 - x1 * distance1;
-        // scale1 = 0.0 + x1 * 1.0;
-        scale1 = 1.0;
-        opacity1 = 1.0;
-
-        if (rightPos < (finalPos1 + 1)) {
-          rightPos = finalPos1;
-          // scale1 = finalScale1;
+      // var animationDuration = 1; //s
+      // var interval = 0.005; //s
+      // var frame = animationDuration / interval;
+      // var count = 0;
+      var id3 = setInterval(leftToCenter, 10);
+      var count = 1;
+      function leftToCenter() {
+        if (leftPos1 == finalPos1) {
+          clearInterval(id3);
         }
+        else {
+          // initPos += 5;
+          // scale -= 0.002;
 
-        // console.log(rightPos);
-        svgID[0].style.right = rightPos + 'px';
-        svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-        svgID[0].style.opacity = opacity1;
-        // divBox2.style.left = divBox2InitPos + initPos + 'px';
-        // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+          dt1 += 0.016;
+          x1 = 1 - Math.pow(2, -10 * dt1);
+          // y = Math.pow(x, 2) + 1;
+          leftPos1 = initPos1 + x1 * distance1;
+          // scale1 = 0.0 + x1 * 1.0;
+          scale1 = 1.0;
+          opacity1 = 1.0;
 
-        // console.log(rightPos);
-        // count += 1;
-        // count += 1;
+          if (leftPos1 > (finalPos1 - 1)) {
+            leftPos1 = finalPos1;
+            // scale1 = finalScale1;
+          }
+
+          // console.log(leftPos1);
+          svgID[0].style.left = leftPos1 + 'px';
+          svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+          svgID[0].style.opacity = opacity1;
+          // divBox2.style.left = divBox2InitPos + initPos + 'px';
+          // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+          // console.log(count);
+          // count += 1;
+          // count += 1;
+        }
+      }
+    }
+
+    function rightToLeft(startPosition) {
+      var initPos1 = startPosition;
+      var finalPos1 = initPos;
+      var distance1 = Math.abs(finalPos1 - initPos1);
+      var finalScale1 = 1.0;
+      var scaleFactor1 = 0.5;
+      var opacity1 = 0.0;
+      // console.log(divBox1InitPos, divBox2InitPos);
+
+      var dt1 = 0.0;
+      var x1 = 0.0;
+      var leftPos = 0;
+
+      // var animationDuration = 1; //s
+      // var interval = 0.005; //s
+      // var frame = animationDuration / interval;
+      // var count = 0;
+      var id1 = setInterval(rightToCenter, 15);
+      var count = 1;
+      function rightToCenter() {
+        if (leftPos == finalPos1) {
+          clearInterval(id1);
+        }
+        else {
+          // initPos += 5;
+          // scale -= 0.002;
+
+          dt1 += 0.016;
+          x1 = 1 - Math.pow(2, -10 * dt1);
+          // y = Math.pow(x, 2) + 1;
+          leftPos = initPos1 - x1 * distance1;
+          // scale1 = 0.0 + x1 * 1.0;
+          scale1 = 1.0;
+          opacity1 = 1.0;
+
+          if (leftPos < (finalPos1 + 1)) {
+            leftPos = finalPos1;
+            // scale1 = finalScale1;
+          }
+
+          // console.log(rightPos);
+          svgID[0].style.left = leftPos + 'px';
+          svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+          svgID[0].style.opacity = opacity1;
+          // divBox2.style.left = divBox2InitPos + initPos + 'px';
+          // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
+
+          // console.log(rightPos);
+          // count += 1;
+          // count += 1;
+        }
       }
     }
   }
