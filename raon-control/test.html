@@ -19,47 +19,52 @@
 
   }
 
-  svg {
+  /* svg {
     width: 500px;
     height: 800px;
-  }
+  } */
 
-  svg.svgt {
-    width: 100px;
-    height: 100px;
-  }
+  /* svg.svgt {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: tomato;
+  } */
 </style>
 <html>
 
 <body>
   <div id="contain">
   </div>
-
+  <!-- 
   <button onclick="movingStart(10)">left</button>
   <button onclick="movingStop()">stop</button>
-  <button onclick="movingStart(1)">right</button>
+  <button onclick="movingStart(1)">right</button> -->
 
-  <svg class="svgt" width="20" height="20" onclick="movingStart(6)">
-    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
-  </svg>
-
-  <svg class="svgt" width="20" height="20" onclick="movingStart(5)">
+  <!-- <svg class="svgt" width="20" height="20" onclick="movingStart(6)" style="left:100px;">
     <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
   </svg>
 
-  <svg class="svgt" width="20" height="20" onclick="movingStart(4)">
-    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
-  </svg>
-  <svg class="svgt" width="20" height="20" onclick="movingStart(3)">
-    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
-  </svg>
-  <svg class="svgt" width="20" height="20" onclick="movingStart(2)">
-    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
-  </svg>
-  <svg class="svgt" width="20" height="20" onclick="movingStart(1)">
+  <svg class="svgt" width="20" height="20" onclick="movingStart(5)" style="left:200px;">
     <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
   </svg>
 
+  <svg class="svgt" width="20" height="20" onclick="movingStart(4)" style="left:300px;">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+  <svg class="svgt" width="20" height="20" onclick="movingStart(3)" style="left:400px;">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+  <svg class="svgt" width="20" height="20" onclick="movingStart(2)" style="left:500px;">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+  <svg class="svgt" width="20" height="20" onclick="movingStart(1)" style="left:600px;">
+    <rect width="20" height="20" style="fill:rgb(100, 25, 208);stroke-width:3;stroke:none" />
+  </svg>
+
+  <svg class="svgt" width="22" height="22" style="left:200px;">
+    <rect width="20" height="20" style="fill:none;stroke-width:5;stroke:green" />
+  </svg> -->
 </body>
 
 <script>
@@ -70,7 +75,7 @@
   var offset = svgWidth / 2;
   // var repeatNumber = 10;
   var containWidth = 800;
-  var movingSpeed = 5;
+  var movingSpeed = 10;
   var selection = 1;
 
   var div = document.getElementById('contain'); //Get svg elemen
@@ -88,6 +93,32 @@
 
   svg.appendChild(newElement);
   div.appendChild(svg);
+
+  for (let i = 0; i < 50; i++) {
+    var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    var moduleIdName = "module" + i;
+    moduleSVG.setAttribute("id", moduleIdName);
+    moduleSVG.setAttribute("width", 10);
+    moduleSVG.setAttribute("height", 20);
+    moduleSVG.onclick = function() { movingStart(i+1) };
+    moduleSVG.style.position = "absolute";
+    moduleSVG.style.right = (20 * i) + "px";
+    moduleSVG.style.backgroundColor = "tomato";
+    moduleSVG.style.top = "900px";
+
+    var moduleElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect'); //Create a path in SVG's namespace
+    moduleElement.setAttribute("width", "10"); //Set path's data
+    moduleElement.setAttribute("height", "20"); //Set path's data
+    moduleElement.setAttribute("style", "fill:rgb(63, 182, 142);stroke-width:3;stroke:none"); //Set path's data
+
+    moduleSVG.appendChild(moduleElement);
+    div.appendChild(moduleSVG);
+  }
+
+  window.onload = function () {
+    continueLeftToRight();
+
+  }
 
   var svgID = document.getElementsByTagName("svg");
   var id = null;
