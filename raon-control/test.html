@@ -75,7 +75,7 @@
   var offset = svgWidth / 2;
   // var repeatNumber = 10;
   var containWidth = 800;
-  var movingSpeed = 10;
+  var timeout = 5;
   var selection = 1;
 
   var div = document.getElementById('contain'); //Get svg elemen
@@ -131,7 +131,7 @@
     clearInterval(id);
 
     var direction = null;
-    var repeat = count = Math.abs(selection - number)
+    var repeat = Math.abs(selection - number)
 
 
     if (selection < number) {
@@ -144,10 +144,12 @@
 
     selection = number;
 
-    id = setInterval(moveToRight, movingSpeed, direction);
+    id = setInterval(moveToRight, timeout, direction);
 
     var dx = 50;
     var count = 0;
+    var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
+
     // console.log(direction);
     function moveToRight(dir) {
 
@@ -159,8 +161,9 @@
           if (currentPosLeft >= containWidth) {
             svgID[0].style.left = -svgWidth + 'px';
             count += 1;
+            movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
           } else {
-            svgID[0].style.left = currentPosLeft + dx + 'px';
+            svgID[0].style.left = currentPosLeft + movingSpeed + 'px';
 
           }
 
@@ -175,9 +178,10 @@
         case -1:
           if (currentPosLeft <= -svgWidth) {
             svgID[0].style.left = containWidth + 'px';
+            movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
             count += 1;
           } else {
-            svgID[0].style.left = currentPosLeft - dx + 'px';
+            svgID[0].style.left = currentPosLeft - movingSpeed + 'px';
           }
 
           if (count == repeat) {
