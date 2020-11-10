@@ -1,0 +1,67 @@
+<!-- https://www.youtube.com/watch?v=wGPDuqgkoew&t=12s -->
+<!DOCTYPE html>
+<html>
+    <style>
+        body {
+            margin: 0px;
+            height:100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Open Sans", sans-serif;
+            background: #222;
+
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 10px solid #ccc;
+            border-radius: 50%;
+            line-height: 200px;
+            text-align: center;
+            color: #ddd;
+            font-size: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: #00acee;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 40%;
+            animation: fill 7s ease-out forwards, rotation 7s linear infinite;
+        }
+
+        @keyframes fill {
+            from {
+                top: 250px;
+            }
+            to {
+                top: 100px;
+            }
+        }
+
+        @keyframes rotation {
+            from {
+                transform: translateX(-50%) rotate(0deg);
+            }
+            to {
+                transform: translateX(-50%) rotate(360deg);
+            }
+        }
+    </style>
+    <body>
+        <div class="box">
+            Fill Effect
+        </div>
+    </body>
+</html>
