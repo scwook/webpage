@@ -44,12 +44,12 @@
         }
 
         body {
-            margin:0px;
+            margin: 0px;
             /* width: 1920px;
             height: 1080px; */
             background-color: black;
-            background-image: url('shadowbg.png'); 
-            background-repeat: no-repeat; 
+            background-image: url('shadowbg.png');
+            background-repeat: no-repeat;
             background-position: center 100px;
 
         }
@@ -166,6 +166,22 @@
             height: 200px;
             float: left;
         } */
+        .polygon {
+            position: absolute;
+            /* top: 200px; */
+        }
+
+        #polygon2 {
+            position: absolute;
+            left: 200px;
+            top: 312px;
+        }
+
+        #polygon3 {
+            position: absolute;
+            left: 103px;
+            top: 256px;
+        }
     </style>
 </head>
 
@@ -181,9 +197,72 @@
     <div style="height:6px"></div>
 
     <div class="body" style="width:1920px; height:780px; display:flex; margin:auto">
-        <svg id="polygon" width="120" height="104" viewBox="0 0 120 104"><style>.cls-1{fill:#0094c5;opacity:0.5;}</style><title>Untitled-1</title><polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0"/></svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+        <svg class="polygon" width="120" height="200">
+            <style>
+                .cls-1 {
+                    fill: #0094c5;
+                    opacity: 0.1;
+                }
+            </style>
+            <polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+
         <div class="body-left" style="width:600px; height:780px;">
- 
+
         </div>
 
         <div class="body-center" style="width:720px; height:780px;">
@@ -191,7 +270,7 @@
         </div>
 
         <div class="body-right" style="width:600px; height:780px;">
- 
+
         </div>
     </div>
 
@@ -210,6 +289,23 @@
     </div>
 
     <script>
+        var polygonSVGElement = document.getElementsByClassName('polygon');
+        var verticalInitPos = 100;
+        var verticalDt = 112;
+        var horizontalDt = 97;
+        var leftSidePolygonInitPos = 400;
+        var rightSidePolygonInitPos = 800;
+        var numberOfPolygon = polygonSVGElement.length;
+        // Left Side Polygone Positioning
+        for (var j = 0; j < 6; j++) {
+            for (var i = 0; i < numberOfPolygon - j; i++) {
+                polygonSVGElement[i].style.position = 'absolute';
+                polygonSVGElement[i].style.left = leftSidePolygonInitPos;
+                polygonSVGElement[i].style.top = verticalInitPos + verticalDt * i + 'px';
+            }
+        }
+
+
         function randomScalingFactor() {
             return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
         }
@@ -333,7 +429,12 @@
             document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
         }
 
+        // var shieldSVG = '<svg class="polygon1" width="120" height="104" viewBox="0 0 120 104"><style>.cls-1{fill:#0094c5;opacity:0.1;}</style><polygon class="cls-1" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0"/></svg>';
+
         window.onload = function () {
+
+            // var shieldBackground = document.getElementsByClassName("body");
+            // shieldBackground.innerHTML = shieldSVG;
 
             var details = [
                 { label: "Line Chart1", color: window.chartColors.red },
@@ -352,14 +453,14 @@
             // var lineConfig2 = lineChartConfig(datails2)
             window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
 
-            var ctx4 = document.getElementById('chart1').getContext('2d');
-            window.myChart4 = new Chart(ctx4, configDoughnut);
+            // var ctx4 = document.getElementById('chart1').getContext('2d');
+            // window.myChart4 = new Chart(ctx4, configDoughnut);
 
-            var ctx5 = document.getElementById('chart2').getContext('2d');
-            window.myChart5 = new Chart(ctx5, configDoughnut);
+            // var ctx5 = document.getElementById('chart2').getContext('2d');
+            // window.myChart5 = new Chart(ctx5, configDoughnut);
 
-            var ctx6 = document.getElementById('chart3').getContext('2d');
-            window.myChart6 = new Chart(ctx6, configDoughnut);
+            // var ctx6 = document.getElementById('chart3').getContext('2d');
+            // window.myChart6 = new Chart(ctx6, configDoughnut);
 
             // doughnutChart('storage', 86);
             var myVar = setInterval(timer, 1000);
