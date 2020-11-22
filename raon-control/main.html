@@ -23,24 +23,19 @@
             src: url(fonts/Roboto-Light.ttf);
         }
 
-        @keyframes example {
+        @keyframes fadeIn {
             from {
-                transform: rotate(0deg);
+                opacity: 0;
             }
 
             to {
-                transform: rotate(360deg);
+                opacity: var(--opacity);
             }
         }
 
-        @keyframes example2 {
-            from {
-                transform: rotate(0deg);
-            }
+        .startAni {
+            animation: fadeIn 1s alternate;
 
-            to {
-                transform: rotate(1080deg);
-            }
         }
 
         body {
@@ -52,35 +47,6 @@
             background-repeat: no-repeat;
             background-position: center 100px;
 
-        }
-
-        #img4 {
-            animation-name: example2;
-            animation-duration: 5s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-            animation-direction: reverse;
-            animation-direction: alternate;
-        }
-
-        #img5 {
-            animation-name: example;
-            animation-duration: 10s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
-        }
-
-        #img9 {
-            animation-name: example;
-            animation-duration: 20s;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
-            animation-direction: reverse;
-        }
-
-        .image-box {
-            position: absolute;
-            top: 80px;
         }
 
         #time-stamp {
@@ -823,6 +789,7 @@
 
                 for (var i = 0; i < num; i++) {
                     polygonSVGElement[polygonCount].style.position = 'absolute';
+                    polygonSVGElement[polygonCount].style.setProperty('--opacity', 1.0);
                     polygonSVGElement[polygonCount].style.left = polygonInitPos - hShift + 'px';
                     polygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
 
@@ -830,7 +797,7 @@
                 }
             }
         }
-                 
+                
         function rightPolygonPositing() {
             var polygonSVGElement = document.getElementsByClassName('rightPolygon');
             var verticalInitPos = 220;
@@ -851,6 +818,22 @@
                     polygonSVGElement[polygonCount].style.left = polygonInitPos + hShift + 'px';
                     polygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
 
+                    polygonCount += 1;
+                }
+            }
+        }
+
+        function triggerAnimation() {
+            var polygonSVGElement = document.getElementsByClassName('leftPolygon');
+            var polygonCount = 0;
+
+            for (var j = 0; j < 6; j++) {
+                var num = 7 - j;
+
+                for (var i = 0; i < num; i++) {
+                    polygonSVGElement[polygonCount].classList.remove('startAni');
+                    void polygonSVGElement[polygonCount].offsetWidth;
+                    polygonSVGElement[polygonCount].classList.add('startAni');
                     polygonCount += 1;
                 }
             }
@@ -988,6 +971,7 @@
 
             leftPolygonPositing();
             rightPolygonPositing();
+            triggerAnimation();
 
             var details = [
                 { label: "Line Chart1", color: window.chartColors.red },
