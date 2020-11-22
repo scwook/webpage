@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+
+@keyframes fadeIn {
+
+from {
+opacity: 0;
+}
+
+to {
+opacity: calc(0.5 * var(--opacity));
+}
+}
+
+.startAni {
+animation-name: fadeIn;
+animation-duration: 1s;
+animation-timing-function: linear;
+animation-delay: calc(0.5s * var(--delay));
+animation-direction: alternate;
+}
+
+</style>
+</head>
+<body>
+        <svg class="rightPolygon" width="120" height="200">
+            <style>
+                .polygon-2 {
+                    fill: #0094c5;
+                    }
+            </style>
+            <polygon class="polygon-2"
+                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+        </svg>
+
+</body>
+<script>
+var polygonSVGElement = document.getElementsByClassName('rightPolygon');
+polygonSVGElement.style.backgroundColor=black;
+
+</script>
+</html>
