@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="main.css">
 <script src="script/moment.js"></script>
 <script src="script/chart.js@2.8.0"></script>
 <script src="script/chartjs-plugin-streaming.js"></script>
@@ -8,128 +8,6 @@
 
 <head>
     <style>
-        @font-face {
-            font-family: "Helvetica-Neue-Light";
-            src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-        }
-
-        @font-face {
-            font-family: "Roboto-Thin";
-            src: url(fonts/Roboto-Thin.ttf);
-        }
-
-        @font-face {
-            font-family: "Roboto-Light";
-            src: url(fonts/Roboto-Light.ttf);
-        }
-
-        body {
-            overflow: hidden;
-            margin: 0px;
-            /* width: 1920px;
-            height: 1080px; */
-            background-color: black;
-            background-image: url('shadowbg.png');
-            background-repeat: no-repeat;
-            background-position: center 100px;
-        }
-
-        .leftPolygon {
-            opacity: 0.0;
-        }
-
-        .rightPolygon {
-            opacity: 0.0;
-        }
-
-        .startAni {
-            animation-name: fadeIn;
-            animation-duration: 0.3s;
-            animation-timing-function: linear;
-            animation-delay: calc(1s * var(--delay));
-            animation-fill-mode: forwards;
-        }
-
-        #time-stamp {
-            position: absolute;
-            color: white;
-            font-family: "Roboto-Thin";
-            font-size: 48px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -70%);
-        }
-
-        .under-line-box {
-            position: absolute;
-            top: 34px;
-        }
-
-        .center-top-box {
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, 0%);
-        }
-
-        .raon-box {
-            position: absolute;
-            left: 10px;
-            top: 20px;
-        }
-
-        .accelerator-control {
-            position: absolute;
-            color: white;
-            width: 150px;
-            left: 150px;
-            top: 40px;
-            font-family: "Helvetica-Neue-Light";
-        }
-
-        .status-box {
-            /* background-color: black; */
-            width: 300px;
-            height: 50px;
-            color: white;
-            margin: auto;
-            padding: 20px;
-            text-align: center;
-            font-size: 60px;
-            font-family: "Roboto-Thin";
-        }
-
-        .title {
-            color: white;
-            font-size: 20px;
-            text-align: center;
-            font-family: monospace;
-        }
-
-        .data {
-            color: white;
-            font-size: 40px;
-            text-align: center;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .pvname {
-            color: dimgray;
-            font-size: 15px;
-            text-align: center;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-
-            to {
-                opacity: var(--opacity);
-                transform: scale(1.0);
-            }
-        }
 
     </style>
 </head>
@@ -144,670 +22,625 @@
     </div>
 
     <div style="height:50px"></div>
+    <!-- Left Side Polygon 7-1 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-    <div class="body-box" style="width:1920px; height:780px; display:flex; margin:auto; position: relative;">
+    <!-- Left Side Polygon 7-2 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-1 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 7-3 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-2 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 7-4 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-3 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 7-5 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-4 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 7-6 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-5 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 7-7 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-6 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 6-1 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 7-7 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 6-2 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 6-1 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 6-3 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 6-2 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 6-4 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 6-3 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 6-5 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 6-4 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 6-6 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 6-5 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 5-1 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 6-6 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 5-2 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 5-1 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 5-3 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 5-2 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 5-4 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 5-3 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 5-5 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 5-4 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 4-1 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 5-5 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 4-2 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 4-1 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 4-3 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 4-2 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 4-4 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 4-3 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 3-1 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-3 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-3" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 4-4 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 3-2 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-3 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-3" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 3-1 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-3 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-3"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 3-3 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-3 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-3" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 3-2 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-3 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-3"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 2-1 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-2 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-2" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 3-3 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-3 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-3"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Left Side Polygon 2-2 -->
+    <svg class="leftPolygon" width="120" height="200">
+        <style>
+            .polygon-2 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-2" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 2-1 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-2 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-2"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-1 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Left Side Polygon 2-2 -->
-        <svg class="leftPolygon" width="120" height="200">
-            <style>
-                .polygon-2 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-2"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-2 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-1 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-3 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-2 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-4 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-3 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-5 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-4 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-6 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-5 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 7-7 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-7 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-7" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-6 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 6-1 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 7-7 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-7 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-7"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 6-2 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 6-1 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 6-3 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 6-2 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 6-4 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 6-3 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 6-5 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 6-4 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 6-6 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-6 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-6" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 6-5 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 5-1 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 6-6 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-6 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-6"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 5-2 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 5-1 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 5-3 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 5-2 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 5-4 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 5-3 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 5-5 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-5 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-5" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 5-4 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 4-1 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 5-5 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-5 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-5"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 4-2 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 4-1 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 4-3 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 4-2 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 4-4 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-4 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-4" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 4-3 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 3-1 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-3 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-3" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 4-4 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-4 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-4"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 3-2 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-3 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-3" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 3-1 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-3 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-3"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 3-3 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-3 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-3" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 3-2 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-3 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-3"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 2-1 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-2 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-2" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 3-3 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-3 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-3"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <!-- Right Side Polygon 2-2 -->
+    <svg class="rightPolygon" width="120" height="200">
+        <style>
+            .polygon-2 {
+                fill: #0094c5;
+            }
+        </style>
+        <polygon class="polygon-2" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
+    </svg>
 
-        <!-- Right Side Polygon 2-1 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-2 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-2"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
-
-        <!-- Right Side Polygon 2-2 -->
-        <svg class="rightPolygon" width="120" height="200">
-            <style>
-                .polygon-2 {
-                    fill: #0094c5;
-                }
-            </style>
-            <polygon class="polygon-2"
-                points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
-        </svg>
+    <div class="body-contain" style="width:1920px; height:780px; display:flex; margin:auto; position: relative;">
         <div class="body-left" style="width:660px; height:780px;">
-            <div class="body-left-grid"
-                style=" width:620px; height:740px; display: grid; grid-template-columns: 300px 300px; grid-template-rows: 160px 160px 160px 160px; gap: 20px; padding: 20px;">
-                <div
+            <div class="body-left-grid">
+                <div class="grid-item"
                     style="width:620px; height:160px; background-color: #1a1a1a; opacity: 0.3; grid-column: 1/3; grid-row: 1/2; border-style: solid; border-width: 1px; border-color: #323232;">
-
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:620px; height:160px; background-color: #1a1a1a; opacity: 0.3; grid-column: 1/3; grid-row: 4/5; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
             </div>
         </div>
 
-        <div class="body-center" style="width:600px; height:780px;">
-
+        <div class="body-center" style="width:600px; height:780px; background-color: hotpink; opacity: 0.3; position: relative;">
+            <svg id="module" width="268.3" height="683.35" viewBox="0 0 268.3 683.35">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill: #014161;
+                            stroke: #2959a8;
+                            stroke-miterlimit: 10;
+                            stroke-width: 2px;
+                            opacity: 0.3;
+                        }
+                    </style>
+                </defs>
+                <polygon class="cls-1"
+                    points="267.3 181.44 267.3 1 1 1 1.79 181.44 1 275.02 36.69 682.35 154.19 682.35 231.62 682.35 267.3 275.02 267.3 181.44" />
+            </svg>
         </div>
 
         <div class="body-right" style="width:660px; height:780px;">
-            <div class="body-right-grid"
-                style=" width:620px; height:740px; display: grid; grid-template-columns: 300px 300px; grid-template-rows: 160px 160px 160px 160px; gap: 20px; padding: 20px;">
-                <div
+            <div class="body-right-grid">
+                <div class="grid-item"
                     style="width:620px; height:160px; background-color: #1a1a1a; opacity: 0.3; grid-column: 1/3; grid-row: 1/2; border-style: solid; border-width: 1px; border-color: #323232;">
-
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:300px; height:160px; background-color: #1a1a1a; opacity: 0.3; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
 
-                <div
+                <div class="grid-item"
                     style="width:620px; height:160px; background-color: #1a1a1a; opacity: 0.3; grid-column: 1/3; grid-row: 4/5; border-style: solid; border-width: 1px; border-color: #323232;">
 
                 </div>
@@ -832,7 +665,7 @@
 
     <script>
 
-        function leftPolygonPositing() {
+        function polygonPositing() {
             var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
             var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
 
@@ -1023,7 +856,7 @@
             // var shieldBackground = document.getElementsByClassName("body");
             // shieldBackground.innerHTML = shieldSVG;
 
-            leftPolygonPositing();
+            polygonPositing();
             // rightPolygonPositing();
             triggerAnimation();
 
