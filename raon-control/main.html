@@ -596,12 +596,13 @@
             </div>
         </div>
 
-        <div class="body-center" style="width:600px; height:780px; background-color: hotpink; opacity: 0.3; position: relative;">
+        <div class="body-center"
+            style="width:600px; height:780px; position: relative;">
 
             <svg id="module" width="268.3" height="683.35" viewBox="0 0 268.3 683.35">
                 <defs>
                     <style>
-                        .cls-1 {
+                        .module-1 {
                             fill: #014161;
                             stroke: #2959a8;
                             stroke-miterlimit: 10;
@@ -610,9 +611,10 @@
                         }
                     </style>
                 </defs>
-                <polygon class="cls-1"
+                <polygon class="module-1"
                     points="267.3 181.44 267.3 1 1 1 1.79 181.44 1 275.02 36.69 682.35 154.19 682.35 231.62 682.35 267.3 275.02 267.3 181.44" />
             </svg>
+
         </div>
 
         <div class="body-right" style="width:660px; height:780px;">
@@ -651,16 +653,26 @@
     </div>
 
     <div class="bottom" style="width:1920px; height:200px; display:flex; margin:auto;">
-        <div class="bottom-left" style="width:600px; height:200px">
-            <canvas id="canvas1" width="640px" height="200px"></canvas>
+        <div class="bottom-left" style="width:660px; height:200px">
         </div>
-        <div class="bottom-center" style="width:640px; height:200px">
-            <canvas id="canvas2" width="640px" height="200px"></canvas>
+        <div class="bottom-center" style="width:600px; height:200px">
+            <svg class="moduleNavi" width="9" height="28">
+                <defs>
+                    <style>
+                        .moduleNavi-1 {
+                            fill: none;
+                            stroke: #818181;
+                            stroke-miterlimit: 10;
+                            stroke-width: 0.5px;
+                        }
+                    </style>
+                </defs>
+                <polygon class="moduleNavi-1"
+                    points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62" />
+            </svg>
 
         </div>
-        <div class="bottom-right" style="width:600px; height:200px">
-            <canvas id="canvas3" width="640px" height="200px"></canvas>
-
+        <div class="bottom-right" style="width:660px; height:200px">
         </div>
     </div>
 
