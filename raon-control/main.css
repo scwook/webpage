@@ -14,7 +14,7 @@
 }
 
 body {
-    overflow: hidden;
+    /* overflow: hidden; */
     margin: 0px;
     /* width: 1920px;
     height: 1080px; */
@@ -22,22 +22,6 @@ body {
     background-image: url('shadowbg.png');
     background-repeat: no-repeat;
     background-position: center 100px;
-}
-
-.leftPolygon {
-    opacity: 0.0;
-}
-
-.rightPolygon {
-    opacity: 0.0;
-}
-
-.startAni {
-    animation-name: fadeIn;
-    animation-duration: 0.3s;
-    animation-timing-function: linear;
-    animation-delay: calc(1s * var(--delay));
-    animation-fill-mode: forwards;
 }
 
 #time-stamp {
@@ -86,6 +70,24 @@ body {
     text-align: center;
     font-size: 60px;
     font-family: "Roboto-Thin";
+}
+
+.leftPolygon {
+    opacity: 0.0;
+    position: absolute;
+}
+
+.rightPolygon {
+    opacity: 0.0;
+    position: absolute;
+}
+
+.startAni {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-delay: calc(1s + 2s * var(--delay));
+    animation-fill-mode: forwards;
 }
 
 .title {

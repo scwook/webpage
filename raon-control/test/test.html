@@ -82,6 +82,7 @@
   var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   // var idName = "svg" + i;
   // svg.setAttribute("id", idName);
+  svg.setAttribute("id", "moduleID");
   svg.setAttribute("width", svgWidth);
   svg.setAttribute("height", svgHeight);
   svg.style.position = "absolute";
@@ -120,7 +121,8 @@
 
   }
 
-  var svgID = document.getElementsByTagName("svg");
+  // var svgID = document.getElementsByTagName("svg");
+  var svgID = document.getElementById("moduleID");
   var id = null;
 
   function movingStop() {
@@ -153,17 +155,17 @@
     // console.log(direction);
     function moveToRight(dir) {
 
-      var currentPosLeft = parseInt(svgID[0].style.left);
+      var currentPosLeft = parseInt(svgID.style.left);
       // console.log(repeat);
 
       switch (dir) {
         case 1:
           if (currentPosLeft >= containWidth) {
-            svgID[0].style.left = -svgWidth + 'px';
+            svgID.style.left = -svgWidth + 'px';
             count += 1;
             movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
           } else {
-            svgID[0].style.left = currentPosLeft + movingSpeed + 'px';
+            svgID.style.left = currentPosLeft + movingSpeed + 'px';
 
           }
 
@@ -177,11 +179,11 @@
 
         case -1:
           if (currentPosLeft <= -svgWidth) {
-            svgID[0].style.left = containWidth + 'px';
+            svgID.style.left = containWidth + 'px';
             movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
             count += 1;
           } else {
-            svgID[0].style.left = currentPosLeft - movingSpeed + 'px';
+            svgID.style.left = currentPosLeft - movingSpeed + 'px';
           }
 
           if (count == repeat) {
@@ -240,9 +242,9 @@
           }
 
           // console.log(leftPos1);
-          svgID[0].style.left = leftPos1 + 'px';
-          svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-          svgID[0].style.opacity = opacity1;
+          svgID.style.left = leftPos1 + 'px';
+          svgID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+          svgID.style.opacity = opacity1;
           // divBox2.style.left = divBox2InitPos + initPos + 'px';
           // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
 
@@ -294,9 +296,9 @@
           }
 
           // console.log(rightPos);
-          svgID[0].style.left = leftPos + 'px';
-          svgID[0].style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-          svgID[0].style.opacity = opacity1;
+          svgID.style.left = leftPos + 'px';
+          svgID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+          svgID.style.opacity = opacity1;
           // divBox2.style.left = divBox2InitPos + initPos + 'px';
           // divBox2.style.transform = 'scale(' + initScale + ', ' + initScale + ')';
 
