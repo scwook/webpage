@@ -97,11 +97,18 @@ body {
     font-family: monospace;
 }
 
-.data {
+.data-name {
     color: white;
-    font-size: 20px;
+    font-size: 30px;
     /* text-align: center; */
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Roboto-Thin";
+}
+
+.data-value {
+    color: white;
+    font-size: 60px;
+    /* text-align: center; */
+    font-family: "Roboto-Thin";
 }
 
 .pvname {

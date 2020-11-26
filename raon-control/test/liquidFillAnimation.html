@@ -41,6 +41,32 @@
             animation: fill 7s ease-out forwards, rotation 7s linear infinite;
         }
 
+        .box-2 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            line-height: 200px;
+            text-align: center;
+            color: #ddd;
+            position: relative;
+            /* overflow: hidden; */
+            z-index: -1;
+        }
+
+        .box-2::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: #00acee;
+            left: 50%;
+            transform: translateX(-30%);
+            border-radius: 40%;
+            animation: fill 7s ease-out forwards, rotation 7s linear infinite;
+        }
+
+
         @keyframes fill {
             from {
                 top: 250px;
@@ -62,6 +88,9 @@
     <body>
         <div class="box">
             Fill Effect
+        </div>
+
+        <div class="box-2">
         </div>
     </body>
 </html>
