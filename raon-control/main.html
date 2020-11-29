@@ -614,7 +614,7 @@
         </div>
 
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
-
+            <div style="position: absolute; left:150px; top: 50px"><img src="module-shadow.svg"></img></div>
         </div>
 
         <div class="body-right" style="width:660px; height:780px;">
@@ -650,8 +650,8 @@
     </div>
     <script>
         var initPos = 150;
-        var svgWidth = 268.3;
-        var svgHeight = 683.35;
+        var svgWidth = 268;
+        var svgHeight = 682;
         var offset = svgWidth / 2;
         // var repeatNumber = 10;
         var containWidth = 600;
@@ -673,7 +673,7 @@
         newElement.setAttribute("width", svgWidth);
         newElement.setAttribute("height", svgHeight);
         newElement.setAttribute("style", "fill:#014161;stroke:#2959a8;stroke-miterlimit:10;stroke-width:2px;opacity:0.3");
-        newElement.setAttribute("points", "267.3 181.44 267.3 1 1 1 1.79 181.44 1 275.02 36.69 682.35 154.19 682.35 231.62 682.35 267.3 275.02 267.3 181.44");
+        newElement.setAttribute("points", "267 1 1 1 1 273.67 36.64 681 154.02 681 231.36 681 267 273.67 267 1");
 
         moduleSVG.appendChild(newElement);
         contain.appendChild(moduleSVG);
