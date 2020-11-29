@@ -99,7 +99,7 @@ body {
 
 .data-name {
     color: white;
-    font-size: 30px;
+    font-size: 28px;
     /* text-align: center; */
     font-family: "Roboto-Thin";
 }
@@ -165,7 +165,7 @@ body {
     color: #ddd;
     position: relative;
     left: 25px;
-    top: 25px;
+    top: 15px;
     overflow: hidden;
     font-family: "Roboto-Thin";
 }
@@ -175,12 +175,30 @@ body {
     position: absolute;
     width: 200px;
     height: 200px;
-    background: rgb(0, 169, 157);
+    background: var(--b);
     left: 50%;
     transform: translateX(-30%);
     border-radius: 40%;
     z-index: -1;
     animation: fill 7s ease-out forwards, rotation 7s linear infinite;
+}
+
+.level-bar {
+    position: relative; 
+    left: 30px; 
+    top:15px; 
+    width:36px; 
+    height:130px;
+    background-color: rgba(0, 64, 96, 0.5);
+    border: 2px solid rgba(0, 84, 188, 0.5);
+}
+
+.level {
+    position: relative;
+    left: 2px;
+    top: var(--i);
+    width:32px; 
+    height:14px;
 }
 
 @keyframes fadeIn {
