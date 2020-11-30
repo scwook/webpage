@@ -153,6 +153,16 @@ body {
     top: 50px;
 }
 
+#moduleNum {
+    width:600px;
+    position: absolute;
+    top: 750px;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    font-family: "Roboto-Thin";
+}
+
 .box {
     width: 100px;
     height: 100px;

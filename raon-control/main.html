@@ -563,6 +563,8 @@
     </svg>
 
     <div class="body-contain" style="width:1920px; height:780px; display:flex; margin:auto; position: relative;">
+
+        <!-- Left -->
         <div class="body-left" style="width:660px; height:780px;">
             <div class="body-left-grid">
                 <div class="grid-item"
@@ -646,15 +648,18 @@
                 </div>
 
                 <div class="grid-item" style="width:620px; height:160px; grid-column: 1/3; grid-row: 4/5;">
-
+                    <canvas id="canvas1" width="640px" height="160px"></canvas>
                 </div>
             </div>
         </div>
 
+        <!-- Center -->
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
-            <div style="position: absolute; left:150px; top: 50px"><img src="module-shadow.svg"></img></div>
+            <div style="position: absolute; left:150px; top:20px;"><img src="module-shadow.svg"></img></div>
+            <div id="moduleNum" style="color:white">QWR 1</div>
         </div>
 
+        <!-- Right -->
         <div class="body-right" style="width:660px; height:780px;">
             <div class="body-right-grid">
                 <div class="grid-item" style="width:620px; height:160px; grid-column: 1/3; grid-row: 1/2;">
@@ -701,11 +706,11 @@
         var contain = document.getElementById('body-center');
         var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
-        moduleSVG.setAttribute("id", "moduleID");
+        moduleSVG.setAttribute("id", "moduleSVG");
         moduleSVG.setAttribute("width", svgWidth);
         moduleSVG.setAttribute("height", svgHeight);
         moduleSVG.style.position = "absolute";
-        moduleSVG.style.top = "50px";
+        moduleSVG.style.top = "20px";
         moduleSVG.style.left = initPos + 'px';
         var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
         newElement.setAttribute("width", svgWidth);
@@ -746,7 +751,8 @@
             }
         }
 
-        var moduleID = document.getElementById("moduleID");
+        var moduleID = document.getElementById("moduleSVG");
+        var moduleName = document.getElementById("moduleNum");
         var id = null;
 
         function movingStop() {
@@ -1086,14 +1092,14 @@
             moduleNaviPositing();
 
             var details = [
-                { label: "Line Chart1", color: window.chartColors.red },
+                { label: "Line Chart1", color: window.chartColors.blue },
                 { label: "Line Chart2", color: window.chartColors.green },
-                { label: "Line Chart3", color: window.chartColors.blue }
+                { label: "Line Chart3", color: window.chartColors.red }
             ]
 
-            // var ctx1 = document.getElementById('canvas1').getContext('2d');
-            // //var lineConfig1 = lineChartConfig(details[0])
-            // window.myChart = new Chart(ctx1, lineChartConfig(details[0]));
+            var ctx1 = document.getElementById('canvas1').getContext('2d');
+            //var lineConfig1 = lineChartConfig(details[0])
+            window.myChart = new Chart(ctx1, lineChartConfig(details[0]));
 
             // var ctx2 = document.getElementById('canvas2').getContext('2d');
             // window.myChart = new Chart(ctx2, lineChartConfig(details[1]));
