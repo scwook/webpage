@@ -693,9 +693,9 @@
     </div>
     <script>
         var initPos = 150;
-        var svgWidth = 268;
-        var svgHeight = 682;
-        var offset = svgWidth / 2;
+        var moduleWidth = 268;
+        var moduleHeight = 682;
+        var offset = moduleWidth / 2;
         // var repeatNumber = 10;
         var containWidth = 600;
         var timeout = 5;
@@ -707,14 +707,14 @@
         var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
         moduleSVG.setAttribute("id", "moduleSVG");
-        moduleSVG.setAttribute("width", svgWidth);
-        moduleSVG.setAttribute("height", svgHeight);
+        moduleSVG.setAttribute("width", moduleWidth);
+        moduleSVG.setAttribute("height", moduleHeight);
         moduleSVG.style.position = "absolute";
         moduleSVG.style.top = "20px";
         moduleSVG.style.left = initPos + 'px';
         var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-        newElement.setAttribute("width", svgWidth);
-        newElement.setAttribute("height", svgHeight);
+        newElement.setAttribute("width", moduleWidth);
+        newElement.setAttribute("height", moduleHeight);
         newElement.setAttribute("style", "fill:#014161;stroke:#2959a8;stroke-miterlimit:10;stroke-width:2px;opacity:0.3");
         newElement.setAttribute("points", "267 1 1 1 1 273.67 36.64 681 154.02 681 231.36 681 267 273.67 267 1");
 
@@ -733,7 +733,7 @@
                 moduleSVG.setAttribute("height", 30);
 
                 moduleSVG.onclick = function () {
-                    movingStart(i + 1)
+                    moveToSelectedModule(i + 1)
                 };
 
                 moduleSVG.style.position = "absolute";
@@ -759,7 +759,7 @@
             clearInterval(id);
         }
 
-        function movingStart(number) {
+        function moveToSelectedModule(number) {
             clearInterval(id);
 
             var direction = null;
@@ -776,22 +776,23 @@
 
             selection = number;
 
-            id = setInterval(moveToRight, timeout, direction);
+            id = setInterval(movingStart, timeout, direction);
 
             var dx = 50;
             var count = 0;
             var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
 
-            function moveToRight(dir) {
+            function movingStart(dir) {
 
                 var currentPosLeft = parseInt(moduleID.style.left);
 
                 switch (dir) {
                     case 1:
                         if (currentPosLeft >= containWidth) {
-                            moduleID.style.left = -svgWidth + 'px';
+                            moduleID.style.left = -moduleWidth + 'px';
                             count += 1;
                             movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
+                            moduleName.innerHTML = number;
                         } else {
                             moduleID.style.left = currentPosLeft + movingSpeed + 'px';
 
@@ -799,12 +800,12 @@
 
                         if (count == repeat) {
                             clearInterval(id);
-                            leftToRight(-svgWidth);
+                            easeOutToRight(-moduleWidth);
                         }
                         break;
 
                     case -1:
-                        if (currentPosLeft <= -svgWidth) {
+                        if (currentPosLeft <= -moduleWidth) {
                             moduleID.style.left = containWidth + 'px';
                             movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
@@ -814,7 +815,7 @@
 
                         if (count == repeat) {
                             clearInterval(id);
-                            rightToLeft(containWidth);
+                            easeOutToLeft(containWidth);
                         }
 
                         break;
@@ -825,7 +826,7 @@
             }
 
             // 시작 전 clearInterval(id) 필요
-            function leftToRight(startPosition) {
+            function easeOutToRight(startPosition) {
                 var initPos1 = startPosition;
                 var finalPos1 = initPos;
                 var distance1 = Math.abs(finalPos1 - initPos1);
@@ -861,7 +862,7 @@
                 }
             }
 
-            function rightToLeft(startPosition) {
+            function easeOutToLeft(startPosition) {
                 var initPos1 = startPosition;
                 var finalPos1 = initPos;
                 var distance1 = Math.abs(finalPos1 - initPos1);
