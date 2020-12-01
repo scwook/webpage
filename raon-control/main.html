@@ -655,8 +655,9 @@
 
         <!-- Center -->
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
-            <div style="position: absolute; left:150px; top:20px;"><img src="module-shadow.svg"></img></div>
-            <div id="moduleNum" style="color:white">QWR 1</div>
+            <div id="moduleShadow" style="position: absolute; left:150px; top:20px;"><img src="module-shadow.svg"></img>
+            </div>
+            <div id="moduleNum" style="color:white">QWR</div>
         </div>
 
         <!-- Right -->
@@ -753,6 +754,7 @@
 
         var moduleID = document.getElementById("moduleSVG");
         var moduleName = document.getElementById("moduleNum");
+
         var id = null;
 
         function movingStop() {
@@ -762,9 +764,14 @@
         function moveToSelectedModule(number) {
             clearInterval(id);
 
+            var moduleShadow = document.getElementById("moduleShadow");
+
+            // fadeInOpacity must be removed before setting opacity or opacity will be maintained 1.0
+            moduleShadow.classList.remove('fadeInOpacity');
+            moduleShadow.style.opacity = 0.0;
+
             var direction = null;
             var repeat = Math.abs(selection - number)
-
 
             if (selection < number) {
                 direction = 1;
@@ -774,25 +781,23 @@
                 direction = 0;
             }
 
-            selection = number;
-
             id = setInterval(movingStart, timeout, direction);
 
             var dx = 50;
             var count = 0;
             var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
-
+            console.log(moduleShadow.style.opacity);
             function movingStart(dir) {
 
                 var currentPosLeft = parseInt(moduleID.style.left);
 
                 switch (dir) {
-                    case 1:
+                    case 1: // move to right >>
                         if (currentPosLeft >= containWidth) {
                             moduleID.style.left = -moduleWidth + 'px';
+                            // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
-                            movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
-                            moduleName.innerHTML = number;
+                            moduleName.innerHTML = selection + count;
                         } else {
                             moduleID.style.left = currentPosLeft + movingSpeed + 'px';
 
@@ -800,28 +805,30 @@
 
                         if (count == repeat) {
                             clearInterval(id);
+                            selection = number;
                             easeOutToRight(-moduleWidth);
                         }
                         break;
 
-                    case -1:
+                    case -1: // move to left <<
                         if (currentPosLeft <= -moduleWidth) {
                             moduleID.style.left = containWidth + 'px';
-                            movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
+                            // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
+                            moduleName.innerHTML = selection - count;
                         } else {
                             moduleID.style.left = currentPosLeft - movingSpeed + 'px';
                         }
 
                         if (count == repeat) {
                             clearInterval(id);
+                            selection = number;
                             easeOutToLeft(containWidth);
                         }
 
                         break;
 
                     default:
-
                 }
             }
 
@@ -838,11 +845,12 @@
                 var x1 = 0.0;
                 var leftPos1 = 0;
 
-                var id3 = setInterval(leftToCenter, 10);
+                var id = setInterval(leftToCenter, 10);
                 var count = 1;
                 function leftToCenter() {
                     if (leftPos1 == finalPos1) {
-                        clearInterval(id3);
+                        clearInterval(id);
+                        showUpModuleShadow();
                     }
                     else {
                         dt1 += 0.016;
@@ -856,8 +864,8 @@
                         }
 
                         moduleID.style.left = leftPos1 + 'px';
-                        moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-                        moduleID.style.opacity = opacity1;
+                        // moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+                        // moduleID.style.opacity = opacity1;
                     }
                 }
             }
@@ -874,11 +882,12 @@
                 var x1 = 0.0;
                 var leftPos = 0;
 
-                var id1 = setInterval(rightToCenter, 15);
+                var id = setInterval(rightToCenter, 15);
                 var count = 1;
                 function rightToCenter() {
                     if (leftPos == finalPos1) {
-                        clearInterval(id1);
+                        clearInterval(id);
+                        showUpModuleShadow();
                     }
                     else {
                         dt1 += 0.016;
@@ -892,11 +901,19 @@
                         }
 
                         moduleID.style.left = leftPos + 'px';
-                        moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-                        moduleID.style.opacity = opacity1;
+                        // moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+                        // moduleID.style.opacity = opacity1;
                     }
                 }
             }
+        }
+
+        function showUpModuleShadow() {
+            var moduleShadow = document.getElementById("moduleShadow");
+
+            moduleShadow.classList.remove('fadeInOpacity');
+            void moduleShadow.offsetWidth;
+            moduleShadow.classList.add('fadeInOpacity');
         }
 
         function polygonPositing() {

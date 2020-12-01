@@ -211,6 +211,13 @@ body {
     height:14px;
 }
 
+.fadeInOpacity {
+    animation-name: showUp;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -250,5 +257,15 @@ body {
     }
     to {
         transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+@keyframes showUp {
+    from {
+        opacity: 0.0;
+    }
+
+    to {
+        opacity: 1.0;
     }
 }
