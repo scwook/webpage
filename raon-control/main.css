@@ -163,6 +163,10 @@ body {
     font-family: "Roboto-Thin";
 }
 
+#moduleNum::before {
+    content: 'QWR ';
+}
+
 .box {
     width: 100px;
     height: 100px;
