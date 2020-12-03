@@ -106,7 +106,7 @@ body {
 
 .data-value {
     color: white;
-    font-size: 60px;
+    font-size: 50px;
     /* text-align: center; */
     font-family: "Roboto-Thin";
 }
@@ -220,6 +220,12 @@ body {
     animation-duration: 0.3s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
+}
+
+.lightning {
+    position: relative;
+    left: 20px;
+    top: 30px;
 }
 
 @keyframes fadeIn {
