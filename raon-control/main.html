@@ -562,7 +562,8 @@
         <polygon class="polygon-2" points="90.12 0 30.04 0 0 52.03 30.04 104.06 90.12 104.06 120.16 52.03 90.12 0" />
     </svg>
 
-    <div class="body-contain" style="width:1920px; height:780px; display:flex; margin:auto; position: relative;">
+    <div class="body-contain"
+        style="width:1920px; height:780px; display:flex; flex-wrap: wrap; margin:auto; position: relative;">
 
         <!-- Left -->
         <div class="body-left" style="width:660px; height:780px;">
@@ -647,8 +648,8 @@
                     </div>
                 </div>
 
-                <div class="grid-item" style="width:620px; height:160px; grid-column: 1/3; grid-row: 4/5;">
-                    <canvas id="canvas1" width="640px" height="160px"></canvas>
+                <div class="grid-item" style="width:620px; height:200px; grid-column: 1/3; grid-row: 4/5;">
+                    <canvas id="canvas1" width="640px" height="200px"></canvas>
                 </div>
             </div>
         </div>
@@ -696,11 +697,13 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- bottom -->
+        <div id="body-bottom" style="width:1920px; height:200px; position:relative;">
+        </div>
     </div>
 
-    <div id="bottom" style="height:200px; position:relative;">
-    </div>
+
     <script>
         var initPos = 150;
         var moduleWidth = 268;
@@ -733,7 +736,7 @@
         // }
 
         function moduleNaviPositing() {
-            var bottomDiv = document.getElementById('bottom');
+            var bottomDiv = document.getElementById('body-bottom');
 
             for (let i = 0; i < 50; i++) {
                 var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -741,6 +744,10 @@
                 moduleSVG.setAttribute("id", moduleIdName);
                 moduleSVG.setAttribute("width", 10);
                 moduleSVG.setAttribute("height", 30);
+                moduleSVG.style.opacity = 0.0;
+                moduleSVG.style.setProperty('--opacity', 1.0);
+                moduleSVG.style.setProperty('--delay', i / 5);
+                moduleSVG.style.setProperty('--scale', 0.5);
 
                 moduleSVG.onclick = function () {
                     moveToSelectedModule(i + 1)
@@ -759,6 +766,15 @@
                 moduleSVG.appendChild(moduleElement);
                 bottomDiv.appendChild(moduleSVG);
             }
+
+            for (let i = 0; i < 50; i++) {
+                var moduleSVG = document.getElementById('module' + i);
+                moduleSVG.classList.remove('moduleNaviShowUp');
+                void moduleSVG.offsetWidth;
+                moduleSVG.classList.add('moduleNaviShowUp');
+            }
+
+
         }
 
         var moduleID = document.getElementById("moduleSVG");
@@ -949,12 +965,16 @@
                     // leftPolygonSVGElement[polygonCount].style.position = 'absolute';
                     leftPolygonSVGElement[polygonCount].style.setProperty('--opacity', (j + 1) / 80);
                     leftPolygonSVGElement[polygonCount].style.setProperty('--delay', animationDelay);
+                    leftPolygonSVGElement[polygonCount].style.setProperty('--scale', 0.8);
+
                     leftPolygonSVGElement[polygonCount].style.left = leftPolygonInitPos - hShift + 'px';
                     leftPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
 
                     // rightPolygonSVGElement[polygonCount].style.position = 'absolute';
                     rightPolygonSVGElement[polygonCount].style.setProperty('--opacity', (j + 1) / 80);
                     rightPolygonSVGElement[polygonCount].style.setProperty('--delay', animationDelay);
+                    rightPolygonSVGElement[polygonCount].style.setProperty('--scale', 0.8);
+
                     rightPolygonSVGElement[polygonCount].style.left = rightPolygonInitPos + hShift + 'px';
                     rightPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
 
@@ -1114,7 +1134,7 @@
         window.onload = function () {
 
             polygonPositing();
-            // triggerAnimation();
+            triggerAnimation();
             // modulePosition();
             moduleNaviPositing();
 
