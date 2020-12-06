@@ -1,3 +1,7 @@
+:root {
+    --background-image-top: 0px;
+  }
+  
 @font-face {
     font-family: "Helvetica-Neue-Light";
     src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
@@ -21,7 +25,7 @@ body {
     background-color: black;
     background-image: url('shadowbg.png');
     background-repeat: no-repeat;
-    background-position: center 100px;
+    background-position: center var(--background-image-top);
 }
 
 #time-stamp {
@@ -70,6 +74,14 @@ body {
     text-align: center;
     font-size: 60px;
     font-family: "Roboto-Thin";
+}
+
+#polygon-contain{ 
+    width:1920px; 
+    height:780px; 
+    position: absolute; 
+    left:50%; 
+    margin-left:-960px;
 }
 
 .leftPolygon {
@@ -285,5 +297,16 @@ body {
 
     to {
         opacity: 1.0;
+    }
+}
+
+@media all and (max-width: 1920px) {
+    body {
+        background-position: 0px var(--background-image-top);
+    }
+
+    #polygon-contain{
+        margin-left: 0px;
+        left: 0px;
     }
 }
