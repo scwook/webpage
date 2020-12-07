@@ -76,40 +76,6 @@ body {
     font-family: "Roboto-Thin";
 }
 
-#polygon-contain{ 
-    width:1920px; 
-    height:780px; 
-    position: absolute; 
-    left:50%; 
-    margin-left:-960px;
-}
-
-.leftPolygon {
-    opacity: 0.0;
-    position: absolute;
-}
-
-.rightPolygon {
-    opacity: 0.0;
-    position: absolute;
-}
-
-.startAni {
-    animation-name: fadeIn;
-    animation-duration: 0.3s;
-    animation-timing-function: linear;
-    animation-delay: calc(1s + 2s * var(--delay));
-    animation-fill-mode: forwards;
-}
-
-.moduleNaviShowUp {
-    animation-name: fadeIn;
-    animation-duration: 0.3s;
-    animation-timing-function: linear;
-    animation-delay: calc(0.1s * var(--delay));
-    animation-fill-mode: forwards;
-}
-
 .title {
     color: white;
     font-size: 20px;
@@ -136,6 +102,70 @@ body {
     font-size: 15px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+#polygon-contain{ 
+    width:1920px; 
+    height:780px; 
+    position: absolute; 
+    left:50%; 
+    margin-left:-960px;
+}
+
+.leftPolygon {
+    opacity: 0.0;
+    position: absolute;
+}
+
+.rightPolygon {
+    opacity: 0.0;
+    position: absolute;
+}
+
+.startAni {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-delay: calc(1s + 2s * var(--delay));
+    animation-fill-mode: forwards;
+}
+
+.moduleNavi-contain {
+    position: absolute;
+    top: 100px;
+    right: calc(460px + 20 * var(--right) + var(--offset));
+    width: 16px;
+    height: 30px;
+    opacity: 0;
+}
+
+.moduleNaviFill, .moduleNaviEmpty {
+    position: absolute;
+    /* top: 100px; */
+    /* right: calc(460px + 20 * var(--right)); */
+    width: 13px;
+    height: 30px;
+    opacity: 1.0;
+}
+
+.moduleNavi-split {
+    position: absolute;
+    /* top: 100px; */
+    /* right: calc(460px + 20 * var(--right)); */
+    width: 13px;
+    height: 10px;
+    opacity: 1.0;
+    background-color: black;
+}
+
+.moduleNaviShowUp {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-delay: calc(0.02s * var(--delay));
+    animation-fill-mode: forwards;
+    --opacity: 1.0;
+    --scale: 0.8;
 }
 
 .body-left-grid {
@@ -247,6 +277,37 @@ body {
     left: 20px;
     top: 30px;
 }
+
+/* .tooltip {
+    position: absolute;
+    background-color: blue;
+    color: white;
+  } */
+  
+.tooltiptext {
+    visibility: hidden;
+    width: 60px;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 120%;
+    left: 50%;
+    margin-left: -30px;
+    font-family: "Roboto-Thin";
+
+    opacity: 0;
+    transition: opacity 1s;
+}
+  
+.moduleNavi-contain:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1.0;
+}
+
 
 @keyframes fadeIn {
     from {

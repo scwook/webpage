@@ -422,7 +422,7 @@
                     <div style="width:30%; height:100%">
                         <div class="level-bar">
                             <div class="level" style="--i:2px; background-color: rgba(0, 200, 63, 0.0);"></div>
-                            <div class="level" style="--i:4px;background-color: rgba(140, 200, 63, 0.0);"></div>
+                            <div class="level" style="--i:4px; background-color: rgba(140, 200, 63, 0.0);"></div>
                             <div class="level" style="--i:6px; background-color: rgba(252, 238, 33, 0.0);"></div>
                             <div class="level" style="--i:8px; background-color: rgba(251, 186, 59, 1.0);"></div>
                             <div class="level" style="--i:10px; background-color: rgba(247, 167, 40, 1.0);"></div>
@@ -485,9 +485,872 @@
 
         <!-- bottom -->
         <div id="body-bottom" style="width:1920px; height:200px; position:relative;">
+
+            <!-- module navigation 1 -->
+            <div class="moduleNavi-contain" style="--right:1px; --offset:0px; --delay:0; --opacity:1.0; --scale:1.0">
+                <span class="tooltiptext">QWR 1</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(1)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 2 -->
+            <div class="moduleNavi-contain" style="--right:2px; --offset:0px; --delay:1;"><span class="tooltiptext">QWR
+                    2</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(2)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 3 -->
+            <div class="moduleNavi-contain" style="--right:3px; --offset:0px; --delay:2;"><span class="tooltiptext">QWR
+                    3</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(3)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 4 -->
+            <div class="moduleNavi-contain" style="--right:4px; --offset:0px; --delay:3;"><span class="tooltiptext">QWR
+                    4</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(4)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 5 -->
+            <div class="moduleNavi-contain" style="--right:5px; --offset:0px; --delay:4;"><span class="tooltiptext">QWR
+                    5</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(5)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 6 -->
+            <div class="moduleNavi-contain" style="--right:6px; --offset:0px; --delay:5;"><span class="tooltiptext">QWR
+                    6</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(6)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 7 -->
+            <div class="moduleNavi-contain" style="--right:7px; --offset:0px; --delay:6;"><span class="tooltiptext">QWR
+                    7</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(7)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 8 -->
+            <div class="moduleNavi-contain" style="--right:8px; --offset:0px; --delay:7;"><span class="tooltiptext">QWR
+                    8</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(8)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 9 -->
+            <div class="moduleNavi-contain" style="--right:9px; --offset:0px; --delay:8;"><span class="tooltiptext">QWR
+                    9</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(9)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 10 -->
+            <div class="moduleNavi-contain" style="--right:10px; --offset:0px; --delay:9;"><span class="tooltiptext">QWR
+                    10</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(10)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 11 -->
+            <div class="moduleNavi-contain" style="--right:11px; --offset:0px; --delay:10;"><span
+                    class="tooltiptext">QWR 11</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(11)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 12 -->
+            <div class="moduleNavi-contain" style="--right:12px; --offset:0px; --delay:11;"><span
+                    class="tooltiptext">QWR 12</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(12)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 13 -->
+            <div class="moduleNavi-contain" style="--right:13px; --offset:0px; --delay:12;"><span
+                    class="tooltiptext">QWR 13</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(13)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 14 -->
+            <div class="moduleNavi-contain" style="--right:14px; --offset:0px; --delay:13;"><span
+                    class="tooltiptext">QWR 14</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(14)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 15 -->
+            <div class="moduleNavi-contain" style="--right:15px; --offset:0px; --delay:14;"><span
+                    class="tooltiptext">QWR 15</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(15)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 16 -->
+            <div class="moduleNavi-contain" style="--right:16px; --offset:0px; --delay:15;"><span
+                    class="tooltiptext">QWR 16</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(16)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 17 -->
+            <div class="moduleNavi-contain" style="--right:17px; --offset:0px; --delay:16;"><span
+                    class="tooltiptext">QWR 17</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(17)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 18 -->
+            <div class="moduleNavi-contain" style="--right:18px; --offset:0px; --delay:17;"><span
+                    class="tooltiptext">QWR 18</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(18)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 19 -->
+            <div class="moduleNavi-contain" style="--right:19px; --offset:0px; --delay:18;"><span
+                    class="tooltiptext">QWR 19</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(19)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 20 -->
+            <div class="moduleNavi-contain" style="--right:20px; --offset:0px; --delay:19;"><span
+                    class="tooltiptext">QWR 20</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(20)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 21 -->
+            <div class="moduleNavi-contain" style="--right:21px; --offset:0px; --delay:20;"><span
+                    class="tooltiptext">QWR 21</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(21)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 22 -->
+            <div class="moduleNavi-contain" style="--right:22px; --offset:0px; --delay:21;"><span
+                    class="tooltiptext">QWR 22</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(22)">
+                    <polygon
+                        points="9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 23 -->
+            <div class="moduleNavi-contain" style="--right:23px; --offset:1px; --delay:22;"><span
+                    class="tooltiptext">HWR 1</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(23)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 24 -->
+            <div class="moduleNavi-contain" style="--right:24px; --offset:1px; --delay:23;"><span
+                    class="tooltiptext">HWR 2</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(24)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 25 -->
+            <div class="moduleNavi-contain" style="--right:25px; --offset:1px; --delay:24;"><span
+                    class="tooltiptext">HWR 3</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(25)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 26 -->
+            <div class="moduleNavi-contain" style="--right:26px; --offset:1px; --delay:25;"><span
+                    class="tooltiptext">HWR 4</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(26)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 27 -->
+            <div class="moduleNavi-contain" style="--right:27px; --offset:1px; --delay:26;"><span
+                    class="tooltiptext">HWR 5</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(27)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 28 -->
+            <div class="moduleNavi-contain" style="--right:28px; --offset:1px; --delay:27;"><span
+                    class="tooltiptext">HWR 6</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(28)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 29 -->
+            <div class="moduleNavi-contain" style="--right:29px; --offset:1px; --delay:28;"><span
+                    class="tooltiptext">HWR 7</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(29)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 30 -->
+            <div class="moduleNavi-contain" style="--right:30px; --offset:1px; --delay:29;"><span
+                    class="tooltiptext">HWR 8</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(30)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 31 -->
+            <div class="moduleNavi-contain" style="--right:31px; --offset:1px; --delay:30;"><span
+                    class="tooltiptext">HWR 9</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(31)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 32 -->
+            <div class="moduleNavi-contain" style="--right:32px; --offset:1px; --delay:31;"><span
+                    class="tooltiptext">HWR 10</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(32)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 33 -->
+            <div class="moduleNavi-contain" style="--right:33px; --offset:1px; --delay:32;"><span
+                    class="tooltiptext">HWR 11</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(33)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 34 -->
+            <div class="moduleNavi-contain" style="--right:34px; --offset:1px; --delay:33;"><span
+                    class="tooltiptext">HWR 12</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(34)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 35 -->
+            <div class="moduleNavi-contain" style="--right:35px; --offset:1px; --delay:34;"><span
+                    class="tooltiptext">HWR 13</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(35)">
+                    <polygon
+                        points="10.49 7.62 10.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 9.04 28.09 10.49 11.45 10.49 7.62"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 36 -->
+            <div class="moduleNavi-contain" style="--right:36px; --offset:4px; --delay:35;"><span
+                    class="tooltiptext">HWR 14</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(36)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 37 -->
+            <div class="moduleNavi-contain" style="--right:37px; --offset:4px; --delay:36;"><span
+                    class="tooltiptext">HWR 15</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(37)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 38 -->
+            <div class="moduleNavi-contain" style="--right:38px; --offset:4px; --delay:37;"><span
+                    class="tooltiptext">HWR 16</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(38)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 39 -->
+            <div class="moduleNavi-contain" style="--right:39px; --offset:4px; --delay:38;"><span
+                    class="tooltiptext">HWR 17</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(39)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 40 -->
+            <div class="moduleNavi-contain" style="--right:40px; --offset:4px; --delay:39;"><span
+                    class="tooltiptext">HWR 18</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(40)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 41 -->
+            <div class="moduleNavi-contain" style="--right:41px; --offset:4px; --delay:40;"><span
+                    class="tooltiptext">HWR 19</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(41)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 42 -->
+            <div class="moduleNavi-contain" style="--right:42px; --offset:4px; --delay:41;"><span
+                    class="tooltiptext">HWR 20</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(42)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 43 -->
+            <div class="moduleNavi-contain" style="--right:43px; --offset:4px; --delay:42;"><span
+                    class="tooltiptext">HWR 21</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(43)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 44 -->
+            <div class="moduleNavi-contain" style="--right:44px; --offset:4px; --delay:43;"><span
+                    class="tooltiptext">HWR 22</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(44)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 45 -->
+            <div class="moduleNavi-contain" style="--right:45px; --offset:4px; --delay:44;"><span
+                    class="tooltiptext">HWR 23</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(45)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 46 -->
+            <div class="moduleNavi-contain" style="--right:46px; --offset:4px; --delay:45;"><span
+                    class="tooltiptext">HWR 23</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(46)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 47 -->
+            <div class="moduleNavi-contain" style="--right:47px; --offset:4px; --delay:46;"><span
+                    class="tooltiptext">HWR 24</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(47)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 48 -->
+            <div class="moduleNavi-contain" style="--right:48px; --offset:4px; --delay:47;"><span
+                    class="tooltiptext">HWR 25</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(48)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 49 -->
+            <div class="moduleNavi-contain" style="--right:49px; --offset:4px; --delay:48;"><span
+                    class="tooltiptext">HWR 26</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(49)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 50 -->
+            <div class="moduleNavi-contain" style="--right:50px; --offset:4px; --delay:49;"><span
+                    class="tooltiptext">HWR 27</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(50)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 51 -->
+            <div class="moduleNavi-contain" style="--right:51px; --offset:4px; --delay:50;"><span
+                    class="tooltiptext">HWR 28</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(51)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 52 -->
+            <div class="moduleNavi-contain" style="--right:52px; --offset:4px; --delay:51;"><span
+                    class="tooltiptext">HWR 28</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(52)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 53 -->
+            <div class="moduleNavi-contain" style="--right:53px; --offset:4px; --delay:52;"><span
+                    class="tooltiptext">HWR 29</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(53)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
+
+            <!-- module navigation 54 -->
+            <div class="moduleNavi-contain" style="--right:54px; --offset:4px; --delay:53;"><span
+                    class="tooltiptext">HWR 30</span>
+                <svg class="moduleNaviFill">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+                <div class="moduleNavi-split"></div>
+                <svg class="moduleNaviEmpty" onclick="moveToSelectedModule(54)">
+                    <polygon
+                        points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
+                        style="fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px" />
+                </svg>
+            </div>
         </div>
     </div>
-
 
     <script>
         var initPos = 150;
@@ -524,42 +1387,49 @@
             var bottomDiv = document.getElementById('body-bottom');
 
             for (let i = 0; i < 50; i++) {
-                var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                var moduleIdName = "module" + i;
-                moduleSVG.setAttribute("id", moduleIdName);
-                moduleSVG.setAttribute("width", 10);
-                moduleSVG.setAttribute("height", 30);
-                moduleSVG.style.opacity = 0.0;
-                moduleSVG.style.setProperty('--opacity', 1.0);
-                moduleSVG.style.setProperty('--delay', i / 5);
-                moduleSVG.style.setProperty('--scale', 0.5);
+                // var divElement = document.createElement("div");
+                // divElement.setAttribute("class", "moduelNavi-contain");
+                // divElement.setAttribute("width", 10);
+                // divElement.setAttribute("height", 30);
+                // divElement.style.position = "absolute";
+                // divElement.style.top = "100px";
+                // divElement.style.right = 480 + (20 * i) + "px";
+                // divElement.style.backgroundColor = "#2959a8";
+                // bottomDiv.appendChild(divElement);
 
-                moduleSVG.onclick = function () {
-                    moveToSelectedModule(i + 1)
-                };
+                // var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                // moduleSVG.setAttribute("class", "moduleNavi");
+                // // moduleSVG.setAttribute("class", "tooltip");
+                // moduleSVG.setAttribute("width", 10);
+                // moduleSVG.setAttribute("height", 30);
+                // moduleSVG.style.opacity = 0.0;
+                // moduleSVG.style.setProperty('--opacity', 1.0);
+                // moduleSVG.style.setProperty('--delay', i / 5);
 
-                moduleSVG.style.position = "absolute";
-                moduleSVG.style.right = 480 + (20 * i) + "px";
-                moduleSVG.style.top = "100px";
+                // moduleSVG.onclick = function () {
+                //     moveToSelectedModule(i + 1)
+                // };
 
-                var moduleElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-                moduleElement.setAttribute("width", "10");
-                moduleElement.setAttribute("height", "30");
-                moduleElement.setAttribute("style", "fill:none;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px");
-                moduleElement.setAttribute("points", "9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62");
+                // moduleSVG.style.position = "absolute";
+                // moduleSVG.style.right = 480 + (20 * i) + "px";
+                // moduleSVG.style.top = "100px";
 
-                moduleSVG.appendChild(moduleElement);
-                bottomDiv.appendChild(moduleSVG);
+                // var moduleElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+                // moduleElement.setAttribute("width", "10");
+                // moduleElement.setAttribute("height", "30");
+                // moduleElement.setAttribute("style", "fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px");
+                // moduleElement.setAttribute("points", "9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62");
+
+                // moduleSVG.appendChild(moduleElement);
+                // bottomDiv.appendChild(moduleSVG);
             }
 
-            for (let i = 0; i < 50; i++) {
-                var moduleSVG = document.getElementById('module' + i);
-                moduleSVG.classList.remove('moduleNaviShowUp');
-                void moduleSVG.offsetWidth;
-                moduleSVG.classList.add('moduleNaviShowUp');
+            var moduleNaviSVG = document.getElementsByClassName('moduleNavi-contain');
+            for (let i = 0; i < moduleNaviSVG.length; i++) {
+                moduleNaviSVG[i].classList.remove('moduleNaviShowUp');
+                void moduleNaviSVG[i].offsetWidth;
+                moduleNaviSVG[i].classList.add('moduleNaviShowUp');
             }
-
-
         }
 
         var moduleID = document.getElementById("moduleSVG");
@@ -596,7 +1466,7 @@
             var dx = 50;
             var count = 0;
             var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
-            console.log(moduleShadow.style.opacity);
+            // console.log(moduleShadow.style.opacity);
             function movingStart(dir) {
 
                 var currentPosLeft = parseInt(moduleID.style.left);
