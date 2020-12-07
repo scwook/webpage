@@ -153,7 +153,7 @@ body {
     /* top: 100px; */
     /* right: calc(460px + 20 * var(--right)); */
     width: 13px;
-    height: 10px;
+    height: 30px;
     opacity: 1.0;
     background-color: black;
 }
@@ -203,7 +203,7 @@ body {
     top: 50px;
 }
 
-#moduleNum {
+#moduleName {
     width:600px;
     position: absolute;
     top: 750px;
@@ -211,10 +211,6 @@ body {
     font-size: 28px;
     text-align: center;
     font-family: "Roboto-Thin";
-}
-
-#moduleNum::before {
-    content: 'QWR ';
 }
 
 .box {
@@ -287,7 +283,7 @@ body {
 .tooltiptext {
     visibility: hidden;
     width: 60px;
-    background-color: dodgerblue;
+    background-color: black;
     color: white;
     text-align: center;
     border-radius: 3px;

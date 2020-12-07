@@ -443,7 +443,7 @@
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
             <div id="moduleShadow" style="position: absolute; left:150px; top:20px;"><img src="module-shadow.svg"></img>
             </div>
-            <div id="moduleNum" style="color:white">1</div>
+            <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
         </div>
 
         <!-- Right -->
@@ -1433,8 +1433,7 @@
         }
 
         var moduleID = document.getElementById("moduleSVG");
-        var moduleName = document.getElementById("moduleNum");
-
+        var moduleNumber = document.getElementById("moduleNumber");
         var id = null;
 
         function movingStop() {
@@ -1477,7 +1476,7 @@
                             moduleID.style.left = -moduleWidth + 'px';
                             // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
-                            moduleName.innerHTML = selection + count;
+                            moduleNumber.innerHTML = "QWR " + (selection + count);
                         } else {
                             moduleID.style.left = currentPosLeft + movingSpeed + 'px';
 
@@ -1495,7 +1494,7 @@
                             moduleID.style.left = containWidth + 'px';
                             // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
-                            moduleName.innerHTML = selection - count;
+                            moduleNumber.innerHTML = "QWR " + (selection - count);
                         } else {
                             moduleID.style.left = currentPosLeft - movingSpeed + 'px';
                         }
