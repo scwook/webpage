@@ -164,7 +164,7 @@ body {
     animation-timing-function: linear;
     animation-delay: calc(0.02s * var(--delay));
     animation-fill-mode: forwards;
-    --opacity: 1.0;
+    --opacity: 0.5;
     --scale: 0.8;
 }
 
@@ -267,11 +267,25 @@ body {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+.lightning-contain {
+    position: absolute;
+    width: 60px;
+    height: 104px;
+    left: 15px;
+    top: 20px;
+}
+
+.lightning-split {
+    position: absolute;
+    width: 60px;
+    height: 104px;
+    /* background-color: black; */
+}
 
 .lightning {
-    position: relative;
-    left: 20px;
-    top: 30px;
+    position: absolute;
+    /* left: 20px;
+    top: 30px; */
 }
 
 /* .tooltip {
@@ -298,7 +312,18 @@ body {
     opacity: 0;
     transition: opacity 1s;
 }
-  
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+
 .moduleNavi-contain:hover .tooltiptext {
     visibility: visible;
     opacity: 1.0;
@@ -365,5 +390,25 @@ body {
     #polygon-contain{
         margin-left: 0px;
         left: 0px;
+    }
+}
+
+/* Simulation Animation */
+
+.moduleNaviSplitAnimaiton {
+    animation-name: heightChange;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes heightChange {
+    from {
+        height: 30px;
+    }
+
+    to {
+        height: calc(1px * var(--splitHeight));
     }
 }

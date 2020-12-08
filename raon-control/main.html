@@ -355,16 +355,25 @@
             <div class="body-left-grid">
                 <div class="grid-item"
                     style="display:flex; width:620px; height:160px; grid-column: 1/3; grid-row: 1/2;">
-                    <div style="width: 100%; height: 100%; background-color: red;">
-
+                    <div style="width: 100%; height: 100%;">
+                        <canvas id="chart1" width="200px" height="110px" style="position:relative; top:5px;"></canvas>
+                        <div class="data-name"
+                            style="position: relative; top: 10px; width: 100%; height: 30px; text-align: center;">
+                            Storage1</div>
                     </div>
 
-                    <div style="width: 100%; height: 100%; background-color: royalblue;">
-
+                    <div style="width: 100%; height: 100%;">
+                        <canvas id="chart2" width="200px" height="110px" style="position:relative; top:5px;"></canvas>
+                        <div class="data-name"
+                            style="position: relative; top: 10px; width: 100%; height: 30px; text-align: center;">
+                            Storage1</div>
                     </div>
 
-                    <div style="width: 100%; height: 100%; background-color: tomato;">
-
+                    <div style="width: 100%; height: 100%;">
+                        <canvas id="chart3" width="200px" height="110px" style="position:relative; top:5px;"></canvas>
+                        <div class="data-name"
+                            style="position: relative; top: 10px; width: 100%; height: 30px; text-align: center;">
+                            Storage1</div>
                     </div>
 
                 </div>
@@ -451,17 +460,27 @@
             <div class="body-right-grid">
                 <div class="grid-item" style="width:620px; height:160px; grid-column: 1/3; grid-row: 1/2;">
                 </div>
-                <div class="grid-item" style="display:flex; width:300px; height:160px;">
+                <div class="grid-item" style="display:flex; width:300px; height:160px; position: relative;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">Power</div>
                         <div class="data-value" style="position: relative; left: 25px; top:40px">3000 KV</div>
                     </div>
-                    <div style="width:30%; height:100%;">
-                        <svg class="lightning" width="59.63" height="103.33">
-                            <polygon
-                                points="58.67 0.5 18.67 0.5 6.67 40.5 0.67 60.5 16.67 60.5 4.67 100.5 32.67 60.5 46.67 40.5 30.67 40.5 58.67 0.5"
-                                style="fill:#2959a8;stroke:#1e417d;stroke-miterlimit:10" />
-                        </svg>
+                    <div style="width:30%; height:100%; position: relative;">
+                        <div class="lightning-contain">
+                            <span class="tooltiptext">Voltage</span>
+                            <svg class="lightning" width="59.63" height="103.33">
+                                <polygon
+                                    points="58.67 0.5 18.67 0.5 6.67 40.5 0.67 60.5 16.67 60.5 4.67 100.5 32.67 60.5 46.67 40.5 30.67 40.5 58.67 0.5"
+                                    style="fill:#2959a8;stroke:#1e417d;stroke-miterlimit:10" />
+                            </svg>
+                            <div class="lightning-split"></div>
+                            <svg class="lightning" width="59.63" height="103.33">
+                                <polygon
+                                    points="58.67 0.5 18.67 0.5 6.67 40.5 0.67 60.5 16.67 60.5 4.67 100.5 32.67 60.5 46.67 40.5 30.67 40.5 58.67 0.5"
+                                    style="fill:none;stroke:#1e417d;stroke-miterlimit:10" />
+                            </svg>
+                        </div>
+
                     </div>
                 </div>
 
@@ -487,7 +506,7 @@
         <div id="body-bottom" style="width:1920px; height:200px; position:relative;">
 
             <!-- module navigation 1 -->
-            <div class="moduleNavi-contain" style="--right:1px; --offset:0px; --delay:0; --opacity:1.0; --scale:1.0">
+            <div class="moduleNavi-contain" style="--right:1px; --offset:0px; --delay:0;">
                 <span class="tooltiptext">QWR 1</span>
                 <svg class="moduleNaviFill">
                     <polygon
@@ -1208,7 +1227,7 @@
 
             <!-- module navigation 46 -->
             <div class="moduleNavi-contain" style="--right:46px; --offset:4px; --delay:45;"><span
-                    class="tooltiptext">HWR 23</span>
+                    class="tooltiptext">HWR 24</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1224,7 +1243,7 @@
 
             <!-- module navigation 47 -->
             <div class="moduleNavi-contain" style="--right:47px; --offset:4px; --delay:46;"><span
-                    class="tooltiptext">HWR 24</span>
+                    class="tooltiptext">HWR 25</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1240,7 +1259,7 @@
 
             <!-- module navigation 48 -->
             <div class="moduleNavi-contain" style="--right:48px; --offset:4px; --delay:47;"><span
-                    class="tooltiptext">HWR 25</span>
+                    class="tooltiptext">HWR 26</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1256,7 +1275,7 @@
 
             <!-- module navigation 49 -->
             <div class="moduleNavi-contain" style="--right:49px; --offset:4px; --delay:48;"><span
-                    class="tooltiptext">HWR 26</span>
+                    class="tooltiptext">HWR 27</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1272,7 +1291,7 @@
 
             <!-- module navigation 50 -->
             <div class="moduleNavi-contain" style="--right:50px; --offset:4px; --delay:49;"><span
-                    class="tooltiptext">HWR 27</span>
+                    class="tooltiptext">HWR 28</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1288,7 +1307,7 @@
 
             <!-- module navigation 51 -->
             <div class="moduleNavi-contain" style="--right:51px; --offset:4px; --delay:50;"><span
-                    class="tooltiptext">HWR 28</span>
+                    class="tooltiptext">HWR 29</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1304,7 +1323,7 @@
 
             <!-- module navigation 52 -->
             <div class="moduleNavi-contain" style="--right:52px; --offset:4px; --delay:51;"><span
-                    class="tooltiptext">HWR 28</span>
+                    class="tooltiptext">HWR 30</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1320,7 +1339,7 @@
 
             <!-- module navigation 53 -->
             <div class="moduleNavi-contain" style="--right:53px; --offset:4px; --delay:52;"><span
-                    class="tooltiptext">HWR 29</span>
+                    class="tooltiptext">HWR 31</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1336,7 +1355,7 @@
 
             <!-- module navigation 54 -->
             <div class="moduleNavi-contain" style="--right:54px; --offset:4px; --delay:53;"><span
-                    class="tooltiptext">HWR 30</span>
+                    class="tooltiptext">HWR 32</span>
                 <svg class="moduleNaviFill">
                     <polygon
                         points="12.49 0.25 0.25 0.25 0.25 11.45 1.71 28.09 4.87 28.09 11.04 28.09 12.49 11.45 12.49 0.25"
@@ -1360,7 +1379,7 @@
         // var repeatNumber = 10;
         var containWidth = 600;
         var timeout = 5;
-        var selection = 1;
+        var currentSelection = 1;
 
         // function modulePosition() {
 
@@ -1384,45 +1403,45 @@
         // }
 
         function moduleNaviPositing() {
-            var bottomDiv = document.getElementById('body-bottom');
+            // var bottomDiv = document.getElementById('body-bottom');
 
-            for (let i = 0; i < 50; i++) {
-                // var divElement = document.createElement("div");
-                // divElement.setAttribute("class", "moduelNavi-contain");
-                // divElement.setAttribute("width", 10);
-                // divElement.setAttribute("height", 30);
-                // divElement.style.position = "absolute";
-                // divElement.style.top = "100px";
-                // divElement.style.right = 480 + (20 * i) + "px";
-                // divElement.style.backgroundColor = "#2959a8";
-                // bottomDiv.appendChild(divElement);
+            // for (let i = 0; i < 50; i++) {
+            // var divElement = document.createElement("div");
+            // divElement.setAttribute("class", "moduelNavi-contain");
+            // divElement.setAttribute("width", 10);
+            // divElement.setAttribute("height", 30);
+            // divElement.style.position = "absolute";
+            // divElement.style.top = "100px";
+            // divElement.style.right = 480 + (20 * i) + "px";
+            // divElement.style.backgroundColor = "#2959a8";
+            // bottomDiv.appendChild(divElement);
 
-                // var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                // moduleSVG.setAttribute("class", "moduleNavi");
-                // // moduleSVG.setAttribute("class", "tooltip");
-                // moduleSVG.setAttribute("width", 10);
-                // moduleSVG.setAttribute("height", 30);
-                // moduleSVG.style.opacity = 0.0;
-                // moduleSVG.style.setProperty('--opacity', 1.0);
-                // moduleSVG.style.setProperty('--delay', i / 5);
+            // var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            // moduleSVG.setAttribute("class", "moduleNavi");
+            // // moduleSVG.setAttribute("class", "tooltip");
+            // moduleSVG.setAttribute("width", 10);
+            // moduleSVG.setAttribute("height", 30);
+            // moduleSVG.style.opacity = 0.0;
+            // moduleSVG.style.setProperty('--opacity', 1.0);
+            // moduleSVG.style.setProperty('--delay', i / 5);
 
-                // moduleSVG.onclick = function () {
-                //     moveToSelectedModule(i + 1)
-                // };
+            // moduleSVG.onclick = function () {
+            //     moveToSelectedModule(i + 1)
+            // };
 
-                // moduleSVG.style.position = "absolute";
-                // moduleSVG.style.right = 480 + (20 * i) + "px";
-                // moduleSVG.style.top = "100px";
+            // moduleSVG.style.position = "absolute";
+            // moduleSVG.style.right = 480 + (20 * i) + "px";
+            // moduleSVG.style.top = "100px";
 
-                // var moduleElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-                // moduleElement.setAttribute("width", "10");
-                // moduleElement.setAttribute("height", "30");
-                // moduleElement.setAttribute("style", "fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px");
-                // moduleElement.setAttribute("points", "9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62");
+            // var moduleElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+            // moduleElement.setAttribute("width", "10");
+            // moduleElement.setAttribute("height", "30");
+            // moduleElement.setAttribute("style", "fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px");
+            // moduleElement.setAttribute("points", "9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62");
 
-                // moduleSVG.appendChild(moduleElement);
-                // bottomDiv.appendChild(moduleSVG);
-            }
+            // moduleSVG.appendChild(moduleElement);
+            // bottomDiv.appendChild(moduleSVG);
+            // }
 
             var moduleNaviSVG = document.getElementsByClassName('moduleNavi-contain');
             for (let i = 0; i < moduleNaviSVG.length; i++) {
@@ -1450,11 +1469,11 @@
             moduleShadow.style.opacity = 0.0;
 
             var direction = null;
-            var repeat = Math.abs(selection - number)
+            var repeat = Math.abs(currentSelection - number)
 
-            if (selection < number) {
+            if (currentSelection < number) {
                 direction = 1;
-            } else if (selection > number) {
+            } else if (currentSelection > number) {
                 direction = -1;
             } else {
                 direction = 0;
@@ -1476,7 +1495,12 @@
                             moduleID.style.left = -moduleWidth + 'px';
                             // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
-                            moduleNumber.innerHTML = "QWR " + (selection + count);
+                            let num = currentSelection + count;
+                            if (num > 22) {
+                                moduleNumber.innerText = "HWR " + (num - 22);
+                            } else {
+                                moduleNumber.innerText = "QWR " + num;
+                            }
                         } else {
                             moduleID.style.left = currentPosLeft + movingSpeed + 'px';
 
@@ -1484,7 +1508,7 @@
 
                         if (count == repeat) {
                             clearInterval(id);
-                            selection = number;
+                            currentSelection = number;
                             easeOutToRight(-moduleWidth);
                         }
                         break;
@@ -1494,14 +1518,19 @@
                             moduleID.style.left = containWidth + 'px';
                             // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
-                            moduleNumber.innerHTML = "QWR " + (selection - count);
+                            let num = currentSelection - count;
+                            if (num > 22) {
+                                moduleNumber.innerText = "HWR " + (num - 22);
+                            } else {
+                                moduleNumber.innerText = "QWR " + num;
+                            }
                         } else {
                             moduleID.style.left = currentPosLeft - movingSpeed + 'px';
                         }
 
                         if (count == repeat) {
                             clearInterval(id);
-                            selection = number;
+                            currentSelection = number;
                             easeOutToLeft(containWidth);
                         }
 
@@ -1742,12 +1771,12 @@
                 datasets: [{
                     data: [20, 33],
                     backgroundColor: [
-                        "#FF6684",
-                        "#ccc"
+                        "#ff4d4d",
+                        "#004060"
                     ],
                     hoverBackgroundColor: [
-                        "#FF6384",
-                        "#ccc"
+                        "#ff4d4d",
+                        "#004060"
                     ],
                 }]
             },
@@ -1763,11 +1792,11 @@
                     center: {
                         // the longest text that could appear in the center
                         maxText: '100%',
-                        text: '30%',
-                        fontColor: '#FF6684',
-                        fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                        text: '50%',
+                        fontColor: '#FFFFFF',
+                        fontFamily: "'Roboto-Thin'",
                         fontStyle: 'normal',
-                        fontSize: 36,
+                        fontSize: 32,
                         // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
                         // if these are not specified either, we default to 1 and 256
                         minFontSize: 1,
@@ -1791,6 +1820,7 @@
             triggerAnimation();
             // modulePosition();
             moduleNaviPositing();
+            simulation();
 
             var details = [
                 { label: "Line Chart1", color: window.chartColors.blue },
@@ -1809,20 +1839,34 @@
             // // var lineConfig2 = lineChartConfig(datails2)
             // window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
 
-            // var ctx4 = document.getElementById('chart1').getContext('2d');
-            // window.myChart4 = new Chart(ctx4, configDoughnut);
+            var ctx4 = document.getElementById('chart1').getContext('2d');
+            window.myChart4 = new Chart(ctx4, configDoughnut);
 
-            // var ctx5 = document.getElementById('chart2').getContext('2d');
-            // window.myChart5 = new Chart(ctx5, configDoughnut);
+            var ctx5 = document.getElementById('chart2').getContext('2d');
+            window.myChart5 = new Chart(ctx5, configDoughnut);
 
-            // var ctx6 = document.getElementById('chart3').getContext('2d');
-            // window.myChart6 = new Chart(ctx6, configDoughnut);
+            var ctx6 = document.getElementById('chart3').getContext('2d');
+            window.myChart6 = new Chart(ctx6, configDoughnut);
 
             // doughnutChart('storage', 86);
             //var startMonitoring = setInterval(monitoring, 1000);
             //var change = setInterval(changeImage, 500);
         }
 
+        function simulation() {
+            var moduleNaviSplit = document.getElementsByClassName("moduleNavi-split");
+            // moduleSVG.style.setProperty('--opacity', 1.0);
+
+            for (let i = 0; i < moduleNaviSplit.length; i++) {
+                moduleNaviSplit[i].style.setProperty('--splitHeight', Math.floor(Math.random() * 30));
+
+                moduleNaviSplit[i].classList.remove('moduleNaviSplitAnimaiton');
+                void moduleNaviSplit[i].offsetWidth;
+                moduleNaviSplit[i].classList.add('moduleNaviSplitAnimaiton');
+            }
+
+
+        }
     </script>
 </body>
 
