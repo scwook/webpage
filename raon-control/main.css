@@ -160,7 +160,7 @@ body {
 
 .moduleNaviShowUp {
     animation-name: fadeIn;
-    animation-duration: 0.3s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-delay: calc(0.02s * var(--delay));
     animation-fill-mode: forwards;
@@ -211,6 +211,33 @@ body {
     font-size: 28px;
     text-align: center;
     font-family: "Roboto-Thin";
+}
+
+.doughnut-contain {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    transform: rotate(-90deg);
+}
+
+.doughnutBackground {
+    stroke-dashoffset: 0;
+    stroke: rgba(0, 84, 188, 0.3);
+    transform: translate(5px, 5px);
+    stroke-width: 10;
+}
+
+.doughnutForeground {
+    animation-name: percentage;
+    animation-duration: 1.0s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    --i: 200;
+    stroke: #0094c5;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    transform: translate(5px, 5px);
 }
 
 .box {
@@ -329,6 +356,15 @@ body {
     opacity: 1.0;
 }
 
+@keyframes percentage {
+    from {
+      stroke-dashoffset: 440;
+    }
+    to {
+      stroke-dashoffset: var(--i);
+  
+    }
+}
 
 @keyframes fadeIn {
     from {
