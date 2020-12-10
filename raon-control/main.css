@@ -195,12 +195,21 @@ body {
     animation-duration: 1.0s;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
-    --i: 200;
-    stroke: #0094c5;
+    /* --i: 200; */
     stroke-width: 10;
     stroke-linecap: round;
     stroke-dasharray: 440;
     transform: translate(5px, 5px);
+}
+
+.doughnutChartText {
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    color: white;
+    font-size: 20px;
+    font-family: "Roboto-Thin";
+    text-align: center;
 }
 
 .box {
@@ -362,7 +371,7 @@ body {
       stroke-dashoffset: 440;
     }
     to {
-      stroke-dashoffset: var(--i);
+      stroke-dashoffset: var(--chartValue);
   
     }
 }
