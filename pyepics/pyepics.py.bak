@@ -1,5 +1,4 @@
 import time
-
 from pvaccess import *
 
 class ChannelMonitor:
@@ -7,13 +6,13 @@ class ChannelMonitor:
         self.name = name
 
     def monitor(self, data):
-	jsonData = data.toJSON(False)
-	self.writeDataToFile(self.name, jsonData)
-	print(jsonData)
+        jsonData = data.toJSON(False)
+        self.writeDataToFile(self.name, jsonData)
+        print(jsonData)
 #        dataDic[self.name] = str(data['value'])
 
     def writeDataToFile(self, fileName, data):
-	newFileName = fileName.replace(":", "-")
+        newFileName = fileName.replace(":", "-")
         f = open(newFileName, 'w')
         f.write(data)
         f.close()
@@ -49,8 +48,7 @@ for name in pvList:
 #d.startMonitor('value')
 
 while 1:
-    time.sleep(0.1)
-
+    time.sleep(1)
 
 #print c.get()
 #print c.get().toJSON(False)
