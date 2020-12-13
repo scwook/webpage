@@ -130,44 +130,6 @@ body {
     animation-fill-mode: forwards;
 }
 
-.moduleNavi-contain {
-    position: absolute;
-    top: 100px;
-    right: calc(460px + 20 * var(--right) + var(--offset));
-    width: 16px;
-    height: 30px;
-    opacity: 0;
-}
-
-.moduleNaviFill, .moduleNaviEmpty {
-    position: absolute;
-    /* top: 100px; */
-    /* right: calc(460px + 20 * var(--right)); */
-    width: 13px;
-    height: 30px;
-    opacity: 1.0;
-}
-
-.moduleNavi-split {
-    position: absolute;
-    /* top: 100px; */
-    /* right: calc(460px + 20 * var(--right)); */
-    width: 13px;
-    height: 30px;
-    opacity: 1.0;
-    background-color: black;
-}
-
-.moduleNaviShowUp {
-    animation-name: fadeIn;
-    animation-duration: 0.3s;
-    animation-timing-function: linear;
-    animation-delay: calc(0.02s * var(--delay));
-    animation-fill-mode: forwards;
-    --opacity: 0.5;
-    --scale: 0.8;
-}
-
 .body-left-grid {
     width: 620px;
     height: 740px;
@@ -189,6 +151,7 @@ body {
 }
 
 .grid-item {
+    position: relative;
     background-color: rgba(26, 26, 26, 0.3);
     border: 1px solid rgba(50, 50, 50, 0.3);
     /* animation-name: scaleUp;
@@ -211,6 +174,42 @@ body {
     font-size: 28px;
     text-align: center;
     font-family: "Roboto-Thin";
+}
+
+.doughnut-contain {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    transform: rotate(-90deg);
+}
+
+.doughnutBackground {
+    stroke-dashoffset: 0;
+    stroke: rgba(0, 84, 188, 0.3);
+    transform: translate(5px, 5px);
+    stroke-width: 10;
+}
+
+.doughnutForeground {
+    animation-name: percentage;
+    animation-duration: 1.0s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    /* --i: 200; */
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    transform: translate(5px, 5px);
+}
+
+.doughnutChartText {
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    color: white;
+    font-size: 20px;
+    font-family: "Roboto-Thin";
+    text-align: center;
 }
 
 .box {
@@ -293,7 +292,45 @@ body {
     background-color: blue;
     color: white;
   } */
-  
+
+.moduleNavi-contain {
+    position: absolute;
+    top: 100px;
+    right: calc(460px + 20 * var(--right) + var(--offset));
+    width: 16px;
+    height: 30px;
+    opacity: 0;
+}
+
+.moduleNaviFill, .moduleNaviEmpty {
+    position: absolute;
+    /* top: 100px; */
+    /* right: calc(460px + 20 * var(--right)); */
+    width: 13px;
+    height: 30px;
+    opacity: 1.0;
+}
+
+.moduleNavi-split {
+    position: absolute;
+    /* top: 100px; */
+    /* right: calc(460px + 20 * var(--right)); */
+    width: 13px;
+    height: 30px;
+    opacity: 1.0;
+    background-color: black;
+}
+
+.moduleNaviShowUp {
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-delay: calc(0.02s * var(--delay));
+    animation-fill-mode: forwards;
+    --opacity: 0.5;
+    --scale: 0.8;
+}
+
 .tooltiptext {
     visibility: hidden;
     width: 60px;
@@ -329,6 +366,15 @@ body {
     opacity: 1.0;
 }
 
+@keyframes percentage {
+    from {
+      stroke-dashoffset: 440;
+    }
+    to {
+      stroke-dashoffset: var(--chartValue);
+  
+    }
+}
 
 @keyframes fadeIn {
     from {
