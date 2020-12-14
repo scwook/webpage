@@ -205,11 +205,11 @@ body {
 .doughnutChartText {
     position: absolute;
     width: 100%;
-    top: 50px;
+    top: 45px;
     color: white;
-    font-size: 20px;
-    font-family: "Roboto-Thin";
+    font-size: 30px;
     text-align: center;
+    font-family: "Roboto-Thin";
 }
 
 .box {
@@ -220,7 +220,6 @@ body {
     line-height: 100px;
     text-align: center;
     font-size: 30px;
-    text-align: center;
     color: #ddd;
     position: relative;
     left: 25px;
