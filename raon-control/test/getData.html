@@ -2,18 +2,29 @@
 <html>
 
 <body>
-    <div id="test">bbb</div>
+    <div id="length"></div>
+    <div id="name"></div>
+    <div id="value"></div>
 </body>
 <script>
+    var pvData = new Object();
+
     function getData() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
 
-                var jsonValue = JSON.parse(this.responseText);
-                document.getElementById("test").innerText = jsonValue.age;
+                let jsonValue = JSON.parse(this.responseText);
+                let channelLength = jsonValue.channelName.length;
+                let valueLength = jsonValue.value.length
 
-                // if (jsonValue.length) {
+                for (let i = 0; i < channelLength; i++) {
+                    pvData[jsonValue.channelName[i]] = jsonValue.value[i];
+                    console.log(jsonValue.channelName[i], jsonValue.value[i]);
+                }
+
+
+                // if (jsonValue.length)
 
                 // }
             }
@@ -24,10 +35,14 @@
         xhttp.send();
     }
 
+    function monitoring() {
+        document.getElementById("value").innerText = pvData['scwookHost:ai1'];
+    }
+
     window.onload = function () {
 
-        getData();
-
+        var getPVData = setInterval(getData, 2000);
+        var startMonitoring = setInterval(monitoring, 1000);
     }
 </script>
 
