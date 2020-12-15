@@ -1839,14 +1839,21 @@
                                 refresh: 1000,
                                 delay: 2000,
                                 onRefresh: onRefresh
+                            },
+                            gridLines: {
+                                display: false
                             }
+
                         }],
                         yAxes: [{
                             scaleLabel: {
                                 display: true,
                                 labelString: 'value'
+                            },
+                            gridLines: {
+                                display: false
                             }
-                        }]
+                        }],
                     },
                     tooltips: {
                         mode: 'nearest',
@@ -1859,54 +1866,6 @@
                 }
             };
         }
-
-
-        // Doughnut chart configuration
-        var configDoughnut = {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    "Red",
-                    "Gray"
-                ],
-                datasets: [{
-                    data: [20, 33],
-                    backgroundColor: [
-                        "#ff4d4d",
-                        "#004060"
-                    ],
-                    hoverBackgroundColor: [
-                        "#ff4d4d",
-                        "#004060"
-                    ],
-                }]
-            },
-            options: {
-                legend: {
-                    display: false,
-                },
-                elements: {
-                    arc: {
-                        roundedCornersFor: 0,
-                        borderColor: "#000000"
-                    },
-                    center: {
-                        // the longest text that could appear in the center
-                        maxText: '100%',
-                        text: '50%',
-                        fontColor: '#FFFFFF',
-                        fontFamily: "'Roboto-Thin'",
-                        fontStyle: 'normal',
-                        fontSize: 32,
-                        // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
-                        // if these are not specified either, we default to 1 and 256
-                        minFontSize: 1,
-                        maxFontSize: 256,
-                    }
-                },
-                cutoutPercentage: 80,
-            }
-        };
 
         function timer() {
             var d = new Date();
@@ -1922,7 +1881,7 @@
             // modulePosition();
             moduleNaviPositing();
             simulation();
-            
+
             var details = [
                 { label: "Line Chart1", color: window.chartColors.blue },
                 { label: "Line Chart2", color: window.chartColors.green },
@@ -1939,19 +1898,6 @@
             // var ctx3 = document.getElementById('canvas3').getContext('2d');
             // // var lineConfig2 = lineChartConfig(datails2)
             // window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
-
-            var ctx4 = document.getElementById('chart1').getContext('2d');
-            window.myChart4 = new Chart(ctx4, configDoughnut);
-
-            var ctx5 = document.getElementById('chart2').getContext('2d');
-            window.myChart5 = new Chart(ctx5, configDoughnut);
-
-            var ctx6 = document.getElementById('chart3').getContext('2d');
-            window.myChart6 = new Chart(ctx6, configDoughnut);
-
-            // doughnutChart('storage', 86);
-            //var startMonitoring = setInterval(monitoring, 1000);
-            //var change = setInterval(changeImage, 500);
         }
 
         function simulation() {
