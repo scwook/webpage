@@ -494,7 +494,6 @@
                     <polygon id="modulePolygon"
                         points="321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681"
                         style="fill:#004262;stroke:#2b59a7;stroke-miterlimit:10;stroke-width:2px;opacity:0.3">
-
                     </polygon>
                 </svg>
             </div>
@@ -1658,7 +1657,8 @@
                 function leftToCenter() {
                     if (leftPos1 == finalPos1) {
                         clearInterval(id);
-                        showUpModuleShadow();
+                        moduleChange('HWR');
+                        setTimeout(showUpModuleShadow, 500);
                     }
                     else {
                         dt1 += 0.016;
@@ -1695,7 +1695,8 @@
                 function rightToCenter() {
                     if (leftPos == finalPos1) {
                         clearInterval(id);
-                        showUpModuleShadow();
+                        moduleChange('QWR');
+                        setTimeout(showUpModuleShadow, 500);
                     }
                     else {
                         dt1 += 0.016;
@@ -1787,6 +1788,36 @@
                     polygonCount += 1;
                 }
             }
+        }
+
+        var modulePolygon = document.getElementById('modulePolygon');
+        var polygonElement = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        polygonElement.setAttribute('id', 'modulePolygonAnimation');
+        polygonElement.setAttribute('begin', 'indefinite');
+        polygonElement.setAttribute("attributeName", "points");
+        polygonElement.setAttribute('dur', '0.5s');
+        polygonElement.setAttribute('fill', 'freeze');
+        polygonElement.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        polygonElement.setAttribute('keyTimes', '0;1');
+        polygonElement.setAttribute('calcMode', 'spline');
+        polygonElement.setAttribute('from', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+        polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+
+        function moduleChange(moduleType) {
+            var currentPolygonPoints = polygonElement.getAttribute('to');
+            if (moduleType == 'QWR') {
+                polygonElement.setAttribute('from', currentPolygonPoints);
+                polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+            } else {
+
+                polygonElement.setAttribute('from', currentPolygonPoints);
+                polygonElement.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+            }
+
+            modulePolygon.appendChild(polygonElement);
+
+            var animationTrigger = document.getElementById("modulePolygonAnimation");
+            animationTrigger.beginElement();
         }
 
         function randomScalingFactor() {
