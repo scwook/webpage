@@ -292,6 +292,12 @@ body {
     color: white;
   } */
 
+#moduleSVG {
+    width: 266;
+    height: 680;
+    position: absolute;
+}
+
 .moduleNavi-contain {
     position: absolute;
     top: 100px;

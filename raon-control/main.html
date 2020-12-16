@@ -489,6 +489,8 @@
 
         <!-- Center -->
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
+            <div id="moduleSVG" style="position: absolute; left:150px; top:20px;"><img src="module.svg"></img>
+            </div>
             <div id="moduleShadow" style="position: absolute; left:150px; top:20px;"><img src="module-shadow.svg"></img>
             </div>
             <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
@@ -1465,8 +1467,8 @@
 
     <script>
         var initPos = 150;
-        var moduleWidth = 268;
-        var moduleHeight = 682;
+        var moduleWidth = 266;
+        var moduleHeight = 680;
         var offset = moduleWidth / 2;
         // var repeatNumber = 10;
         var containWidth = 600;
@@ -1475,23 +1477,23 @@
 
         // function modulePosition() {
 
-        var contain = document.getElementById('body-center');
-        var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        // var contain = document.getElementById('body-center');
+        // var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
-        moduleSVG.setAttribute("id", "moduleSVG");
-        moduleSVG.setAttribute("width", moduleWidth);
-        moduleSVG.setAttribute("height", moduleHeight);
-        moduleSVG.style.position = "absolute";
-        moduleSVG.style.top = "20px";
-        moduleSVG.style.left = initPos + 'px';
-        var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-        newElement.setAttribute("width", moduleWidth);
-        newElement.setAttribute("height", moduleHeight);
-        newElement.setAttribute("style", "fill:#014161;stroke:#2959a8;stroke-miterlimit:10;stroke-width:2px;opacity:0.3");
-        newElement.setAttribute("points", "267 1 1 1 1 273.67 36.64 681 154.02 681 231.36 681 267 273.67 267 1");
+        // moduleSVG.setAttribute("id", "moduleSVG");
+        // moduleSVG.setAttribute("width", moduleWidth);
+        // moduleSVG.setAttribute("height", moduleHeight);
+        // moduleSVG.style.position = "absolute";
+        // moduleSVG.style.top = "20px";
+        // moduleSVG.style.left = initPos + 'px';
+        // var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+        // newElement.setAttribute("width", moduleWidth);
+        // newElement.setAttribute("height", moduleHeight);
+        // newElement.setAttribute("style", "fill:#014161;stroke:#2959a8;stroke-miterlimit:10;stroke-width:2px;opacity:0.3");
+        // newElement.setAttribute("points", "267 1 1 1 1 273.67 36.64 681 154.02 681 231.36 681 267 273.67 267 1");
 
-        moduleSVG.appendChild(newElement);
-        contain.appendChild(moduleSVG);
+        // moduleSVG.appendChild(newElement);
+        // contain.appendChild(moduleSVG);
         // }
 
         function moduleNaviPositing() {

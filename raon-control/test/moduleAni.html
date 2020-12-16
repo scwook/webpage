@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <svg width="446" height="682">
+        <polygon id="ani" points="">
+            <!-- <animate attributeName="points" dur="0.5s" fill="freeze" keySplines=" 0.0 0.4 0.2 1" keyTimes="0;1" calcMode="spline"
+     		  from="321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681"
+              to="411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681"/> -->
+
+        </polygon>
+    </svg>
+
+    <button type="button" onclick="hwr()">HWR</button>
+    <button type="button" onclick="qwr()">QWR</button>
+
+    <script>
+
+
+        var dd = document.getElementById('ani');
+        var newElem = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        newElem.setAttribute('id', 'animation-to-start');
+        newElem.setAttribute('begin', 'indefinite');
+        newElem.setAttribute("attributeName", "points");
+        newElem.setAttribute('dur', '0.5s');
+        newElem.setAttribute('fill', 'freeze');
+        newElem.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        newElem.setAttribute('keyTimes', '0;1');
+        newElem.setAttribute('calcMode', 'spline');
+        newElem.setAttribute('from', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+        newElem.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+
+        dd.appendChild(newElem);
+
+        function hwr() {
+            newElem.setAttribute('from', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+            newElem.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+            dd.appendChild(newElem);
+
+            var animationToCheck = document.getElementById("animation-to-start");
+            animationToCheck.beginElement();
+        }
+
+        function qwr() {
+            newElem.setAttribute('from', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+            newElem.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+            dd.appendChild(newElem);
+
+            var animationToCheck = document.getElementById("animation-to-start");
+            animationToCheck.beginElement();
+
+
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
