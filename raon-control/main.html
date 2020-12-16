@@ -489,10 +489,16 @@
 
         <!-- Center -->
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
-            <div id="moduleSVG" style="position: absolute; left:150px; top:20px;"><img src="module.svg"></img>
+            <div id="moduleSVG" style="position: absolute; left:60px; top:20px;">
+                <svg width="446" height="682">
+                    <polygon id="modulePolygon"
+                        points="321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681"
+                        style="fill:#004262;stroke:#2b59a7;stroke-miterlimit:10;stroke-width:2px;opacity:0.3">
+
+                    </polygon>
+                </svg>
             </div>
-            <div id="moduleShadow" style="position: absolute; left:150px; top:20px;"><img src="module-shadow.svg"></img>
-            </div>
+            <img id="qwrModuleShadow" src="module-shadow.svg" style="position:absolute; left:150px; top:20px">
             <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
         </div>
 
@@ -1466,8 +1472,8 @@
     </div>
 
     <script>
-        var initPos = 150;
-        var moduleWidth = 266;
+        var initPos = 90;
+        var moduleWidth = 446;
         var moduleHeight = 680;
         var offset = moduleWidth / 2;
         // var repeatNumber = 10;
@@ -1556,11 +1562,11 @@
         function moveToSelectedModule(number) {
             clearInterval(id);
 
-            var moduleShadow = document.getElementById("moduleShadow");
+            var qwrModuleShadow = document.getElementById("qwrModuleShadow");
 
             // fadeInOpacity must be removed before setting opacity or opacity will be maintained 1.0
-            moduleShadow.classList.remove('fadeInOpacity');
-            moduleShadow.style.opacity = 0.0;
+            qwrModuleShadow.classList.remove('fadeInOpacity');
+            qwrModuleShadow.style.opacity = 0.0;
 
             var direction = null;
             var repeat = Math.abs(currentSelection - number)
@@ -1578,7 +1584,7 @@
             var dx = 50;
             var count = 0;
             var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
-            // console.log(moduleShadow.style.opacity);
+            // console.log(qwrModuleShadow.style.opacity);
             function movingStart(dir) {
 
                 var currentPosLeft = parseInt(moduleID.style.left);
@@ -1711,11 +1717,11 @@
         }
 
         function showUpModuleShadow() {
-            var moduleShadow = document.getElementById("moduleShadow");
+            var qwrModuleShadow = document.getElementById("qwrModuleShadow");
 
-            moduleShadow.classList.remove('fadeInOpacity');
-            void moduleShadow.offsetWidth;
-            moduleShadow.classList.add('fadeInOpacity');
+            qwrModuleShadow.classList.remove('fadeInOpacity');
+            void qwrModuleShadow.offsetWidth;
+            qwrModuleShadow.classList.add('fadeInOpacity');
         }
 
         function polygonPositing() {

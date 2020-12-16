@@ -160,21 +160,11 @@ body {
     animation-fill-mode: forwards; */
 }
 
-#module {
+/* #module {
     position: absolute;
     left: 165px;
     top: 50px;
-}
-
-#moduleName {
-    width:600px;
-    position: absolute;
-    top: 750px;
-    color: white;
-    font-size: 28px;
-    text-align: center;
-    font-family: "Roboto-Thin";
-}
+} */
 
 .doughnut-contain {
     position: relative;
@@ -293,9 +283,19 @@ body {
   } */
 
 #moduleSVG {
-    width: 266;
-    height: 680;
+    width: 446;
+    height: 682;
     position: absolute;
+}
+
+#moduleName {
+    width:600px;
+    position: absolute;
+    top: 750px;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    font-family: "Roboto-Thin";
 }
 
 .moduleNavi-contain {
