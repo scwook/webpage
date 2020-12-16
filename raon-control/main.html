@@ -497,7 +497,12 @@
                     </polygon>
                 </svg>
             </div>
-            <img id="qwrModuleShadow" src="module-shadow.svg" style="position:absolute; left:150px; top:20px">
+            <img class="moduleShadow" src="qwrModuleShadow.svg"
+                style="position:absolute; left:150px; top:20px; opacity: 1.0;">
+            <img class="moduleShadow" src="hwraModuleShadow.svg"
+                style="position:absolute; left:110px; top:20px; opacity: 0.0;">
+            <img class="moduleShadow" src="hwrbModuleShadow.svg"
+                style="position:absolute; left:60px; top:20px; opacity: 0.0;">
             <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
         </div>
 
@@ -1561,11 +1566,14 @@
         function moveToSelectedModule(number) {
             clearInterval(id);
 
-            var qwrModuleShadow = document.getElementById("qwrModuleShadow");
+            var moduleShadow = document.getElementsByClassName("moduleShadow");
 
             // fadeInOpacity must be removed before setting opacity or opacity will be maintained 1.0
-            qwrModuleShadow.classList.remove('fadeInOpacity');
-            qwrModuleShadow.style.opacity = 0.0;
+            for (let i = 0; i < moduleShadow.length; i++) {
+                moduleShadow[i].classList.remove('fadeInOpacity');
+                moduleShadow[i].style.opacity = 0.0;
+            }
+
 
             var direction = null;
             var repeat = Math.abs(currentSelection - number)
@@ -1583,6 +1591,8 @@
             var dx = 50;
             var count = 0;
             var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
+            var moduleType = 'QWR';
+
             // console.log(qwrModuleShadow.style.opacity);
             function movingStart(dir) {
 
@@ -1595,11 +1605,17 @@
                             // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
                             let num = currentSelection + count;
-                            if (num > 22) {
+                            if (num > 22 && num < 36) {
+                                moduleType = 'HWRA'
+                                moduleNumber.innerText = "HWR " + (num - 22);
+                            } else if (num >= 36) {
+                                moduleType = 'HWRB';
                                 moduleNumber.innerText = "HWR " + (num - 22);
                             } else {
+                                moduleType = 'QWR';
                                 moduleNumber.innerText = "QWR " + num;
                             }
+
                         } else {
                             moduleID.style.left = currentPosLeft + movingSpeed + 'px';
 
@@ -1608,7 +1624,7 @@
                         if (count == repeat) {
                             clearInterval(id);
                             currentSelection = number;
-                            easeOutToRight(-moduleWidth);
+                            easeOutToRight(-moduleWidth, moduleType);
                         }
                         break;
 
@@ -1618,9 +1634,14 @@
                             // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
                             count += 1;
                             let num = currentSelection - count;
-                            if (num > 22) {
+                            if (num > 22 && num < 36) {
+                                moduleType = 'HWRA'
+                                moduleNumber.innerText = "HWR " + (num - 22);
+                            } else if (num >= 36) {
+                                moduleType = 'HWRB';
                                 moduleNumber.innerText = "HWR " + (num - 22);
                             } else {
+                                moduleType = 'QWR';
                                 moduleNumber.innerText = "QWR " + num;
                             }
                         } else {
@@ -1630,7 +1651,7 @@
                         if (count == repeat) {
                             clearInterval(id);
                             currentSelection = number;
-                            easeOutToLeft(containWidth);
+                            easeOutToLeft(containWidth, moduleType);
                         }
 
                         break;
@@ -1640,7 +1661,7 @@
             }
 
             // 시작 전 clearInterval(id) 필요
-            function easeOutToRight(startPosition) {
+            function easeOutToRight(startPosition, moduleType) {
                 var initPos1 = startPosition;
                 var finalPos1 = initPos;
                 var distance1 = Math.abs(finalPos1 - initPos1);
@@ -1657,8 +1678,8 @@
                 function leftToCenter() {
                     if (leftPos1 == finalPos1) {
                         clearInterval(id);
-                        moduleChange('HWR');
-                        setTimeout(showUpModuleShadow, 500);
+                        moduleChange(moduleType);
+                        setTimeout(showUpModuleShadow, 500, moduleType);
                     }
                     else {
                         dt1 += 0.016;
@@ -1678,7 +1699,7 @@
                 }
             }
 
-            function easeOutToLeft(startPosition) {
+            function easeOutToLeft(startPosition, moduleType) {
                 var initPos1 = startPosition;
                 var finalPos1 = initPos;
                 var distance1 = Math.abs(finalPos1 - initPos1);
@@ -1695,8 +1716,8 @@
                 function rightToCenter() {
                     if (leftPos == finalPos1) {
                         clearInterval(id);
-                        moduleChange('QWR');
-                        setTimeout(showUpModuleShadow, 500);
+                        moduleChange(moduleType);
+                        setTimeout(showUpModuleShadow, 500, moduleType);
                     }
                     else {
                         dt1 += 0.016;
@@ -1717,12 +1738,71 @@
             }
         }
 
-        function showUpModuleShadow() {
-            var qwrModuleShadow = document.getElementById("qwrModuleShadow");
+        var modulePolygon = document.getElementById('modulePolygon');
+        var polygonElement = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        polygonElement.setAttribute('id', 'modulePolygonAnimation');
+        polygonElement.setAttribute('begin', 'indefinite');
+        polygonElement.setAttribute("attributeName", "points");
+        polygonElement.setAttribute('dur', '0.5s');
+        polygonElement.setAttribute('fill', 'freeze');
+        polygonElement.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        polygonElement.setAttribute('keyTimes', '0;1');
+        polygonElement.setAttribute('calcMode', 'spline');
+        polygonElement.setAttribute('from', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+        polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
 
-            qwrModuleShadow.classList.remove('fadeInOpacity');
-            void qwrModuleShadow.offsetWidth;
-            qwrModuleShadow.classList.add('fadeInOpacity');
+        function moduleChange(moduleType) {
+            var currentPolygonPoints = polygonElement.getAttribute('to');
+            switch(moduleType) {
+                case 'QWR':
+                polygonElement.setAttribute('from', currentPolygonPoints);
+                polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+                break;
+
+                case 'HWRA':
+                polygonElement.setAttribute('from', currentPolygonPoints);
+                polygonElement.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
+                break;
+
+                case 'HWRB':
+                polygonElement.setAttribute('from', currentPolygonPoints);
+                polygonElement.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+                break;
+
+                default:
+            }
+
+            modulePolygon.appendChild(polygonElement);
+
+            var animationTrigger = document.getElementById("modulePolygonAnimation");
+            animationTrigger.beginElement();
+        }
+        
+        function showUpModuleShadow(moduleType) {
+            var moduleShadow = document.getElementsByClassName("moduleShadow");
+
+            switch (moduleType) {
+                case 'QWR':
+                    moduleShadow[0].classList.remove('fadeInOpacity');
+                    void moduleShadow[0].offsetWidth;
+                    moduleShadow[0].classList.add('fadeInOpacity');
+                    break;
+
+                case 'HWRA':
+                    moduleShadow[1].classList.remove('fadeInOpacity');
+                    void moduleShadow[1].offsetWidth;
+                    moduleShadow[1].classList.add('fadeInOpacity');
+                    break;
+
+                case 'HWRB':
+                    moduleShadow[2].classList.remove('fadeInOpacity');
+                    void moduleShadow[2].offsetWidth;
+                    moduleShadow[2].classList.add('fadeInOpacity');
+                    break;
+
+                default:
+            }
+
         }
 
         function polygonPositing() {
@@ -1790,35 +1870,6 @@
             }
         }
 
-        var modulePolygon = document.getElementById('modulePolygon');
-        var polygonElement = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-        polygonElement.setAttribute('id', 'modulePolygonAnimation');
-        polygonElement.setAttribute('begin', 'indefinite');
-        polygonElement.setAttribute("attributeName", "points");
-        polygonElement.setAttribute('dur', '0.5s');
-        polygonElement.setAttribute('fill', 'freeze');
-        polygonElement.setAttribute('keySplines', '0.0 0.4 0.2 1');
-        polygonElement.setAttribute('keyTimes', '0;1');
-        polygonElement.setAttribute('calcMode', 'spline');
-        polygonElement.setAttribute('from', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-        polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-
-        function moduleChange(moduleType) {
-            var currentPolygonPoints = polygonElement.getAttribute('to');
-            if (moduleType == 'QWR') {
-                polygonElement.setAttribute('from', currentPolygonPoints);
-                polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-            } else {
-
-                polygonElement.setAttribute('from', currentPolygonPoints);
-                polygonElement.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
-            }
-
-            modulePolygon.appendChild(polygonElement);
-
-            var animationTrigger = document.getElementById("modulePolygonAnimation");
-            animationTrigger.beginElement();
-        }
 
         function randomScalingFactor() {
             return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
