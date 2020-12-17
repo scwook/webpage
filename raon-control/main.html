@@ -492,13 +492,13 @@
             <div id="moduleSVG" style="position: absolute; left:60px; top:20px;">
                 <svg width="446" height="682">
                     <polygon id="modulePolygon"
-                        points="321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681"
+                        points="224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681"
                         style="fill:#004262;stroke:#2b59a7;stroke-miterlimit:10;stroke-width:2px;opacity:0.3">
                     </polygon>
                 </svg>
             </div>
             <img class="moduleShadow" src="qwrModuleShadow.svg"
-                style="position:absolute; left:150px; top:20px; opacity: 1.0;">
+                style="position:absolute; left:150px; top:20px; opacity: 0.0;">
             <img class="moduleShadow" src="hwraModuleShadow.svg"
                 style="position:absolute; left:110px; top:20px; opacity: 0.0;">
             <img class="moduleShadow" src="hwrbModuleShadow.svg"
@@ -1484,7 +1484,7 @@
         var containWidth = 600;
         var timeout = 5;
         var currentSelection = 1;
-
+        var currentModule = 'QWR';
         // function modulePosition() {
 
         // var contain = document.getElementById('body-center');
@@ -1679,7 +1679,14 @@
                     if (leftPos1 == finalPos1) {
                         clearInterval(id);
                         moduleChange(moduleType);
-                        setTimeout(showUpModuleShadow, 500, moduleType);
+
+                        let timeout = 0;
+                        if (currentModule != moduleType) {
+                            timeout = 500;
+                            currentModule = moduleType
+                        }
+
+                        setTimeout(showUpModuleShadow, timeout, moduleType);
                     }
                     else {
                         dt1 += 0.016;
@@ -1717,7 +1724,14 @@
                     if (leftPos == finalPos1) {
                         clearInterval(id);
                         moduleChange(moduleType);
-                        setTimeout(showUpModuleShadow, 500, moduleType);
+
+                        let timeout = 0;
+                        if (currentModule != moduleType) {
+                            timeout = 500;
+                            currentModule = moduleType
+                        }
+
+                        setTimeout(showUpModuleShadow, timeout, moduleType);
                     }
                     else {
                         dt1 += 0.016;
@@ -1748,26 +1762,26 @@
         polygonElement.setAttribute('keySplines', '0.0 0.4 0.2 1');
         polygonElement.setAttribute('keyTimes', '0;1');
         polygonElement.setAttribute('calcMode', 'spline');
-        polygonElement.setAttribute('from', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-        polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+        polygonElement.setAttribute('from', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
+        polygonElement.setAttribute('to', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
 
         function moduleChange(moduleType) {
             var currentPolygonPoints = polygonElement.getAttribute('to');
-            switch(moduleType) {
+            switch (moduleType) {
                 case 'QWR':
-                polygonElement.setAttribute('from', currentPolygonPoints);
-                polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-                break;
+                    polygonElement.setAttribute('from', currentPolygonPoints);
+                    polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+                    break;
 
                 case 'HWRA':
-                polygonElement.setAttribute('from', currentPolygonPoints);
-                polygonElement.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
-                break;
+                    polygonElement.setAttribute('from', currentPolygonPoints);
+                    polygonElement.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
+                    break;
 
                 case 'HWRB':
-                polygonElement.setAttribute('from', currentPolygonPoints);
-                polygonElement.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
-                break;
+                    polygonElement.setAttribute('from', currentPolygonPoints);
+                    polygonElement.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+                    break;
 
                 default:
             }
@@ -1777,7 +1791,7 @@
             var animationTrigger = document.getElementById("modulePolygonAnimation");
             animationTrigger.beginElement();
         }
-        
+
         function showUpModuleShadow(moduleType) {
             var moduleShadow = document.getElementsByClassName("moduleShadow");
 
@@ -1847,7 +1861,7 @@
             }
         }
 
-        function triggerAnimation() {
+        function polygonAnimation() {
             var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
             var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
 
@@ -1966,10 +1980,9 @@
 
         window.onload = function () {
 
-            polygonPositing();
-            triggerAnimation();
+            firstShowUp();
             // modulePosition();
-            moduleNaviPositing();
+            // moduleChange('QWR');
             simulation();
 
             var details = [
@@ -1988,6 +2001,24 @@
             // var ctx3 = document.getElementById('canvas3').getContext('2d');
             // // var lineConfig2 = lineChartConfig(datails2)
             // window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
+        }
+
+        function firstShowUp() {
+            polygonPositing();
+            polygonAnimation();
+            moduleNaviPositing();
+
+            polygonElement.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
+            polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+
+            modulePolygon.appendChild(polygonElement);
+
+            var animationTrigger = document.getElementById("modulePolygonAnimation");
+            animationTrigger.beginElement();
+
+            setTimeout(showUpModuleShadow, 500, 'QWR');
+
+
         }
 
         function simulation() {
