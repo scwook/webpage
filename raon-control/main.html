@@ -493,7 +493,7 @@
                 <svg width="446" height="682">
                     <polygon id="modulePolygon"
                         points="224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681"
-                        style="fill:#004262;stroke:#2b59a7;stroke-miterlimit:10;stroke-width:2px;opacity:0.3">
+                        style="fill:#004262;stroke:#2b59a7;stroke-miterlimit:10;stroke-width:2px;opacity:0.0">
                     </polygon>
                 </svg>
             </div>
@@ -1753,40 +1753,41 @@
         }
 
         var modulePolygon = document.getElementById('modulePolygon');
-        var polygonElement = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-        polygonElement.setAttribute('id', 'modulePolygonAnimation');
-        polygonElement.setAttribute('begin', 'indefinite');
-        polygonElement.setAttribute("attributeName", "points");
-        polygonElement.setAttribute('dur', '0.5s');
-        polygonElement.setAttribute('fill', 'freeze');
-        polygonElement.setAttribute('keySplines', '0.0 0.4 0.2 1');
-        polygonElement.setAttribute('keyTimes', '0;1');
-        polygonElement.setAttribute('calcMode', 'spline');
-        polygonElement.setAttribute('from', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
-        polygonElement.setAttribute('to', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
+        var moduleShapeAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        moduleShapeAni.setAttribute('id', 'modulePolygonAnimation');
+        moduleShapeAni.setAttribute('begin', 'indefinite');
+        moduleShapeAni.setAttribute("attributeName", "points");
+        moduleShapeAni.setAttribute('dur', '0.5s');
+        moduleShapeAni.setAttribute('fill', 'freeze');
+        moduleShapeAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        moduleShapeAni.setAttribute('keyTimes', '0;1');
+        moduleShapeAni.setAttribute('calcMode', 'spline');
+        moduleShapeAni.setAttribute('from', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
+        moduleShapeAni.setAttribute('to', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
 
         function moduleChange(moduleType) {
-            var currentPolygonPoints = polygonElement.getAttribute('to');
+            var currentPolygonPoints = moduleShapeAni.getAttribute('to');
             switch (moduleType) {
                 case 'QWR':
-                    polygonElement.setAttribute('from', currentPolygonPoints);
-                    polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+                    moduleShapeAni.setAttribute('from', currentPolygonPoints);
+                    moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
                     break;
 
                 case 'HWRA':
-                    polygonElement.setAttribute('from', currentPolygonPoints);
-                    polygonElement.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
+                    moduleShapeAni.setAttribute('from', currentPolygonPoints);
+                    moduleShapeAni.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
                     break;
 
                 case 'HWRB':
-                    polygonElement.setAttribute('from', currentPolygonPoints);
-                    polygonElement.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+                    moduleShapeAni.setAttribute('from', currentPolygonPoints);
+                    moduleShapeAni.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
                     break;
 
                 default:
             }
 
-            modulePolygon.appendChild(polygonElement);
+            moduleShapeAni.setAttribute('dur', '0.5s');
+            modulePolygon.appendChild(moduleShapeAni);
 
             var animationTrigger = document.getElementById("modulePolygonAnimation");
             animationTrigger.beginElement();
@@ -1889,7 +1890,7 @@
             return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
         }
 
-        function onRefresh(chart) {
+        function chart1Refresh(chart) {
             chart.config.data.datasets.forEach(function (dataset) {
                 dataset.data.push({
                     x: Date.now(),
@@ -1898,25 +1899,55 @@
             });
         }
 
-        // Line chart configuration
+        function chart2Refresh(chart) {
+            chart.config.data.datasets.forEach(function (dataset) {
+                dataset.data.push({
+                    x: Date.now(),
+                    y: randomScalingFactor(),
+                })
+            });
+        }
+
         function lineChartConfig(details) {
-            // var color = Chart.helpers.color;
-            return {
+            // Line chart configuration
+            return chartConfig;
+        }
+
+        function timer() {
+            var d = new Date();
+            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        }
+
+        var myVar = setInterval(timer, 1000);
+
+        window.onload = function () {
+
+            firstShowUp();
+            // modulePosition();
+            // moduleChange('QWR');
+            simulation();
+
+            // var details = [
+            //     { label: "Line Chart1", color: window.chartColors.blue },
+            //     { label: "Line Chart2", color: window.chartColors.green },
+            //     { label: "Line Chart3", color: window.chartColors.red }
+            // ]
+            var chart1Config = {
                 type: 'line',
                 data: {
                     datasets: [{
-                        label: details.label,
+                        label: 'Label1',
                         // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
                         // borderColor: details.color,
-                        borderColor: 'rgb(255, 99, 132)',
+                        borderColor: window.chartColors.red,
                         fill: false,
                         cubicInterpolationMode: 'monotone',
                         data: [],
                     }, {
-                        label: details.label,
+                        label: 'Label 2',
                         // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
                         // borderColor: details.color,
-                        borderColor: 'rgb(54, 162, 235)',
+                        borderColor: window.chartColors.green,
                         fill: false,
                         cubicInterpolationMode: 'monotone',
                         data: [],
@@ -1925,7 +1956,7 @@
                 options: {
                     title: {
                         display: true,
-                        text: details.label
+                        text: 'Chart 1'
                     },
                     legend: {
                         display: false
@@ -1942,7 +1973,7 @@
                                 duration: 60000,
                                 refresh: 1000,
                                 delay: 2000,
-                                onRefresh: onRefresh
+                                onRefresh: chart1Refresh
                             },
                             gridLines: {
                                 display: false
@@ -1969,34 +2000,83 @@
                     }
                 }
             };
-        }
 
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-        }
+            var chart2Config = {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Label1',
+                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                        // borderColor: details.color,
+                        borderColor: window.chartColors.blue,
+                        fill: false,
+                        cubicInterpolationMode: 'monotone',
+                        data: [],
+                    }, {
+                        label: 'Label 2',
+                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                        // borderColor: details.color,
+                        borderColor: window.chartColors.yellow,
+                        fill: false,
+                        cubicInterpolationMode: 'monotone',
+                        data: [],
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Chart 2'
+                    },
+                    legend: {
+                        display: false
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 10
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'realtime',
+                            realtime: {
+                                duration: 60000,
+                                refresh: 1000,
+                                delay: 2000,
+                                onRefresh: chart2Refresh
+                            },
+                            gridLines: {
+                                display: false
+                            }
 
-        var myVar = setInterval(timer, 1000);
-
-        window.onload = function () {
-
-            firstShowUp();
-            // modulePosition();
-            // moduleChange('QWR');
-            simulation();
-
-            var details = [
-                { label: "Line Chart1", color: window.chartColors.blue },
-                { label: "Line Chart2", color: window.chartColors.green },
-                { label: "Line Chart3", color: window.chartColors.red }
-            ]
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'value'
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        }],
+                    },
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
+                }
+            };
 
             var ctx1 = document.getElementById('canvas1').getContext('2d');
-            //var lineConfig1 = lineChartConfig(details[0])
-            window.myChart = new Chart(ctx1, lineChartConfig(details[0]));
+            // chartConfig.data.datasets.push(newDataSet1);
+
+            window.myChart = new Chart(ctx1, chart1Config);
 
             var ctx2 = document.getElementById('canvas2').getContext('2d');
-            window.myChart = new Chart(ctx2, lineChartConfig(details[1]));
+            window.myChart = new Chart(ctx2, chart2Config);
 
             // var ctx3 = document.getElementById('canvas3').getContext('2d');
             // // var lineConfig2 = lineChartConfig(datails2)
@@ -2008,15 +2088,30 @@
             polygonAnimation();
             moduleNaviPositing();
 
-            polygonElement.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
-            polygonElement.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+            moduleShapeAni.setAttribute('dur', '1s');
+            moduleShapeAni.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
+            moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
 
-            modulePolygon.appendChild(polygonElement);
+            modulePolygon.appendChild(moduleShapeAni);
+
+            var moduleOpacityAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+            moduleOpacityAni.setAttribute('id', 'moduleOpacityAnimation');
+            moduleOpacityAni.setAttribute('begin', 'indefinite');
+            moduleOpacityAni.setAttribute("attributeName", "opacity");
+            moduleOpacityAni.setAttribute('dur', '1s');
+            moduleOpacityAni.setAttribute('fill', 'freeze');
+            moduleOpacityAni.setAttribute('from', '0');
+            moduleOpacityAni.setAttribute('to', '0.3');
+
+            modulePolygon.appendChild(moduleOpacityAni);
 
             var animationTrigger = document.getElementById("modulePolygonAnimation");
             animationTrigger.beginElement();
 
-            setTimeout(showUpModuleShadow, 500, 'QWR');
+            var animationOpacityTrigger = document.getElementById("moduleOpacityAnimation");
+            animationOpacityTrigger.beginElement();
+
+            setTimeout(showUpModuleShadow, 1000, 'QWR');
 
 
         }
