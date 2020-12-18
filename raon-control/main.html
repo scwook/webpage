@@ -1474,78 +1474,19 @@
             </div>
         </div>
     </div>
+</body>
 
     <script>
         var initPos = 60; //This value must be same with moduelSVG left postion"
         var moduleWidth = 446;
         var moduleHeight = 680;
         var offset = moduleWidth / 2;
-        // var repeatNumber = 10;
         var containWidth = 600;
         var timeout = 5;
         var currentSelection = 1;
         var currentModule = 'QWR';
-        // function modulePosition() {
-
-        // var contain = document.getElementById('body-center');
-        // var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-
-        // moduleSVG.setAttribute("id", "moduleSVG");
-        // moduleSVG.setAttribute("width", moduleWidth);
-        // moduleSVG.setAttribute("height", moduleHeight);
-        // moduleSVG.style.position = "absolute";
-        // moduleSVG.style.top = "20px";
-        // moduleSVG.style.left = initPos + 'px';
-        // var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-        // newElement.setAttribute("width", moduleWidth);
-        // newElement.setAttribute("height", moduleHeight);
-        // newElement.setAttribute("style", "fill:#014161;stroke:#2959a8;stroke-miterlimit:10;stroke-width:2px;opacity:0.3");
-        // newElement.setAttribute("points", "267 1 1 1 1 273.67 36.64 681 154.02 681 231.36 681 267 273.67 267 1");
-
-        // moduleSVG.appendChild(newElement);
-        // contain.appendChild(moduleSVG);
-        // }
 
         function moduleNaviPositing() {
-            // var bottomDiv = document.getElementById('body-bottom');
-
-            // for (let i = 0; i < 50; i++) {
-            // var divElement = document.createElement("div");
-            // divElement.setAttribute("class", "moduelNavi-contain");
-            // divElement.setAttribute("width", 10);
-            // divElement.setAttribute("height", 30);
-            // divElement.style.position = "absolute";
-            // divElement.style.top = "100px";
-            // divElement.style.right = 480 + (20 * i) + "px";
-            // divElement.style.backgroundColor = "#2959a8";
-            // bottomDiv.appendChild(divElement);
-
-            // var moduleSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            // moduleSVG.setAttribute("class", "moduleNavi");
-            // // moduleSVG.setAttribute("class", "tooltip");
-            // moduleSVG.setAttribute("width", 10);
-            // moduleSVG.setAttribute("height", 30);
-            // moduleSVG.style.opacity = 0.0;
-            // moduleSVG.style.setProperty('--opacity', 1.0);
-            // moduleSVG.style.setProperty('--delay', i / 5);
-
-            // moduleSVG.onclick = function () {
-            //     moveToSelectedModule(i + 1)
-            // };
-
-            // moduleSVG.style.position = "absolute";
-            // moduleSVG.style.right = 480 + (20 * i) + "px";
-            // moduleSVG.style.top = "100px";
-
-            // var moduleElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
-            // moduleElement.setAttribute("width", "10");
-            // moduleElement.setAttribute("height", "30");
-            // moduleElement.setAttribute("style", "fill:#0094c5;stroke:#0094c5; stroke-miterlimit:10;stroke-width:0.5px");
-            // moduleElement.setAttribute("points", "9.49 7.62 9.49 0.25 0.25 0.25 0.25 7.62 0.25 11.45 1.71 28.09 4.87 28.09 8.04 28.09 9.49 11.45 9.49 7.62");
-
-            // moduleSVG.appendChild(moduleElement);
-            // bottomDiv.appendChild(moduleSVG);
-            // }
 
             var moduleNaviSVG = document.getElementsByClassName('moduleNavi-contain');
             for (let i = 0; i < moduleNaviSVG.length; i++) {
@@ -2131,6 +2072,5 @@
 
         }
     </script>
-</body>
 
 </html>
