@@ -1476,601 +1476,603 @@
     </div>
 </body>
 
-    <script>
-        var initPos = 60; //This value must be same with moduelSVG left postion"
-        var moduleWidth = 446;
-        var moduleHeight = 680;
-        var offset = moduleWidth / 2;
-        var containWidth = 600;
-        var timeout = 5;
-        var currentSelection = 1;
-        var currentModule = 'QWR';
+<script>
+    var initPos = 60; //This value must be same with moduelSVG left postion"
+    var moduleWidth = 446;
+    var moduleHeight = 680;
+    var offset = moduleWidth / 2;
+    var containWidth = 600;
+    var timeout = 5;
+    var currentSelection = 1;
+    var currentModule = 'QWR';
 
-        function moduleNaviPositing() {
+    function moduleNaviPositing() {
 
-            var moduleNaviSVG = document.getElementsByClassName('moduleNavi-contain');
-            for (let i = 0; i < moduleNaviSVG.length; i++) {
-                moduleNaviSVG[i].classList.remove('moduleNaviShowUp');
-                void moduleNaviSVG[i].offsetWidth;
-                moduleNaviSVG[i].classList.add('moduleNaviShowUp');
-            }
+        var moduleNaviSVG = document.getElementsByClassName('moduleNavi-contain');
+        for (let i = 0; i < moduleNaviSVG.length; i++) {
+            moduleNaviSVG[i].classList.remove('moduleNaviShowUp');
+            void moduleNaviSVG[i].offsetWidth;
+            moduleNaviSVG[i].classList.add('moduleNaviShowUp');
+        }
+    }
+
+    var moduleID = document.getElementById("moduleSVG");
+    var moduleNumber = document.getElementById("moduleNumber");
+    var id = null;
+
+    function movingStop() {
+        clearInterval(id);
+    }
+
+    function moveToSelectedModule(number) {
+        clearInterval(id);
+
+        var moduleShadow = document.getElementsByClassName("moduleShadow");
+
+        // fadeInOpacity must be removed before setting opacity or opacity will be maintained 1.0
+        for (let i = 0; i < moduleShadow.length; i++) {
+            moduleShadow[i].classList.remove('fadeInOpacity');
+            moduleShadow[i].style.opacity = 0.0;
         }
 
-        var moduleID = document.getElementById("moduleSVG");
-        var moduleNumber = document.getElementById("moduleNumber");
-        var id = null;
 
-        function movingStop() {
-            clearInterval(id);
+        var direction = null;
+        var repeat = Math.abs(currentSelection - number)
+
+        if (currentSelection < number) {
+            direction = 1;
+        } else if (currentSelection > number) {
+            direction = -1;
+        } else {
+            direction = 0;
         }
 
-        function moveToSelectedModule(number) {
-            clearInterval(id);
+        id = setInterval(movingStart, timeout, direction);
 
-            var moduleShadow = document.getElementsByClassName("moduleShadow");
+        var dx = 50;
+        var count = 0;
+        var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
+        var moduleType = 'QWR';
 
-            // fadeInOpacity must be removed before setting opacity or opacity will be maintained 1.0
-            for (let i = 0; i < moduleShadow.length; i++) {
-                moduleShadow[i].classList.remove('fadeInOpacity');
-                moduleShadow[i].style.opacity = 0.0;
-            }
+        // console.log(qwrModuleShadow.style.opacity);
+        function movingStart(dir) {
 
+            var currentPosLeft = parseInt(moduleID.style.left);
 
-            var direction = null;
-            var repeat = Math.abs(currentSelection - number)
-
-            if (currentSelection < number) {
-                direction = 1;
-            } else if (currentSelection > number) {
-                direction = -1;
-            } else {
-                direction = 0;
-            }
-
-            id = setInterval(movingStart, timeout, direction);
-
-            var dx = 50;
-            var count = 0;
-            var movingSpeed = 50 * Math.pow(2, -10 * (count + 1) / repeat) + 30;
-            var moduleType = 'QWR';
-
-            // console.log(qwrModuleShadow.style.opacity);
-            function movingStart(dir) {
-
-                var currentPosLeft = parseInt(moduleID.style.left);
-
-                switch (dir) {
-                    case 1: // move to right >>
-                        if (currentPosLeft >= containWidth) {
-                            moduleID.style.left = -moduleWidth + 'px';
-                            // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
-                            count += 1;
-                            let num = currentSelection + count;
-                            if (num > 22 && num < 36) {
-                                moduleType = 'HWRA'
-                                moduleNumber.innerText = "HWR " + (num - 22);
-                            } else if (num >= 36) {
-                                moduleType = 'HWRB';
-                                moduleNumber.innerText = "HWR " + (num - 22);
-                            } else {
-                                moduleType = 'QWR';
-                                moduleNumber.innerText = "QWR " + num;
-                            }
-
+            switch (dir) {
+                case 1: // move to right >>
+                    if (currentPosLeft >= containWidth) {
+                        moduleID.style.left = -moduleWidth + 'px';
+                        // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
+                        count += 1;
+                        let num = currentSelection + count;
+                        if (num > 22 && num < 36) {
+                            moduleType = 'HWRA'
+                            moduleNumber.innerText = "HWR " + (num - 22);
+                        } else if (num >= 36) {
+                            moduleType = 'HWRB';
+                            moduleNumber.innerText = "HWR " + (num - 22);
                         } else {
-                            moduleID.style.left = currentPosLeft + movingSpeed + 'px';
-
+                            moduleType = 'QWR';
+                            moduleNumber.innerText = "QWR " + num;
                         }
 
-                        if (count == repeat) {
-                            clearInterval(id);
-                            currentSelection = number;
-                            easeOutToRight(-moduleWidth, moduleType);
-                        }
-                        break;
+                    } else {
+                        moduleID.style.left = currentPosLeft + movingSpeed + 'px';
 
-                    case -1: // move to left <<
-                        if (currentPosLeft <= -moduleWidth) {
-                            moduleID.style.left = containWidth + 'px';
-                            // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
-                            count += 1;
-                            let num = currentSelection - count;
-                            if (num > 22 && num < 36) {
-                                moduleType = 'HWRA'
-                                moduleNumber.innerText = "HWR " + (num - 22);
-                            } else if (num >= 36) {
-                                moduleType = 'HWRB';
-                                moduleNumber.innerText = "HWR " + (num - 22);
-                            } else {
-                                moduleType = 'QWR';
-                                moduleNumber.innerText = "QWR " + num;
-                            }
+                    }
+
+                    if (count == repeat) {
+                        clearInterval(id);
+                        currentSelection = number;
+                        easeOutToRight(-moduleWidth, moduleType);
+                    }
+                    break;
+
+                case -1: // move to left <<
+                    if (currentPosLeft <= -moduleWidth) {
+                        moduleID.style.left = containWidth + 'px';
+                        // movingSpeed = 50 * Math.pow(2, -10 * count / repeat) + 30;
+                        count += 1;
+                        let num = currentSelection - count;
+                        if (num > 22 && num < 36) {
+                            moduleType = 'HWRA'
+                            moduleNumber.innerText = "HWR " + (num - 22);
+                        } else if (num >= 36) {
+                            moduleType = 'HWRB';
+                            moduleNumber.innerText = "HWR " + (num - 22);
                         } else {
-                            moduleID.style.left = currentPosLeft - movingSpeed + 'px';
+                            moduleType = 'QWR';
+                            moduleNumber.innerText = "QWR " + num;
                         }
+                    } else {
+                        moduleID.style.left = currentPosLeft - movingSpeed + 'px';
+                    }
 
-                        if (count == repeat) {
-                            clearInterval(id);
-                            currentSelection = number;
-                            easeOutToLeft(containWidth, moduleType);
-                        }
-
-                        break;
-
-                    default:
-                }
-            }
-
-            // 시작 전 clearInterval(id) 필요
-            function easeOutToRight(startPosition, moduleType) {
-                var initPos1 = startPosition;
-                var finalPos1 = initPos;
-                var distance1 = Math.abs(finalPos1 - initPos1);
-                var finalScale1 = 1.0;
-                var scaleFactor1 = 0.5;
-                var opacity1 = 0.0;
-
-                var dt1 = 0.0;
-                var x1 = 0.0;
-                var leftPos1 = 0;
-
-                var id = setInterval(leftToCenter, 10);
-                var count = 1;
-                function leftToCenter() {
-                    if (leftPos1 == finalPos1) {
+                    if (count == repeat) {
                         clearInterval(id);
-                        moduleChange(moduleType);
-
-                        let timeout = 0;
-                        if (currentModule != moduleType) {
-                            timeout = 500;
-                            currentModule = moduleType
-                        }
-
-                        setTimeout(showUpModuleShadow, timeout, moduleType);
+                        currentSelection = number;
+                        easeOutToLeft(containWidth, moduleType);
                     }
-                    else {
-                        dt1 += 0.016;
-                        x1 = 1 - Math.pow(2, -10 * dt1);
-                        leftPos1 = initPos1 + x1 * distance1;
-                        scale1 = 1.0;
-                        opacity1 = 1.0;
 
-                        if (leftPos1 > (finalPos1 - 1)) {
-                            leftPos1 = finalPos1;
-                        }
+                    break;
 
-                        moduleID.style.left = leftPos1 + 'px';
-                        // moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-                        // moduleID.style.opacity = opacity1;
-                    }
-                }
+                default:
             }
+        }
 
-            function easeOutToLeft(startPosition, moduleType) {
-                var initPos1 = startPosition;
-                var finalPos1 = initPos;
-                var distance1 = Math.abs(finalPos1 - initPos1);
-                var finalScale1 = 1.0;
-                var scaleFactor1 = 0.5;
-                var opacity1 = 0.0;
+        // 시작 전 clearInterval(id) 필요
+        function easeOutToRight(startPosition, moduleType) {
+            var initPos1 = startPosition;
+            var finalPos1 = initPos;
+            var distance1 = Math.abs(finalPos1 - initPos1);
+            var finalScale1 = 1.0;
+            var scaleFactor1 = 0.5;
+            var opacity1 = 0.0;
 
-                var dt1 = 0.0;
-                var x1 = 0.0;
-                var leftPos = 0;
+            var dt1 = 0.0;
+            var x1 = 0.0;
+            var leftPos1 = 0;
 
-                var id = setInterval(rightToCenter, 15);
-                var count = 1;
-                function rightToCenter() {
-                    if (leftPos == finalPos1) {
-                        clearInterval(id);
-                        moduleChange(moduleType);
+            var id = setInterval(leftToCenter, 10);
+            var count = 1;
+            function leftToCenter() {
+                if (leftPos1 == finalPos1) {
+                    clearInterval(id);
+                    moduleChange(moduleType);
 
-                        let timeout = 0;
-                        if (currentModule != moduleType) {
-                            timeout = 500;
-                            currentModule = moduleType
-                        }
-
-                        setTimeout(showUpModuleShadow, timeout, moduleType);
+                    let timeout = 0;
+                    if (currentModule != moduleType) {
+                        timeout = 500;
+                        currentModule = moduleType
                     }
-                    else {
-                        dt1 += 0.016;
-                        x1 = 1 - Math.pow(2, -10 * dt1);
-                        leftPos = initPos1 - x1 * distance1;
-                        scale1 = 1.0;
-                        opacity1 = 1.0;
 
-                        if (leftPos < (finalPos1 + 1)) {
-                            leftPos = finalPos1;
-                        }
+                    setTimeout(showUpModuleShadow, timeout, moduleType);
+                }
+                else {
+                    dt1 += 0.016;
+                    x1 = 1 - Math.pow(2, -10 * dt1);
+                    leftPos1 = initPos1 + x1 * distance1;
+                    scale1 = 1.0;
+                    opacity1 = 1.0;
 
-                        moduleID.style.left = leftPos + 'px';
-                        // moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
-                        // moduleID.style.opacity = opacity1;
+                    if (leftPos1 > (finalPos1 - 1)) {
+                        leftPos1 = finalPos1;
                     }
+
+                    moduleID.style.left = leftPos1 + 'px';
+                    // moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+                    // moduleID.style.opacity = opacity1;
                 }
             }
         }
 
-        var modulePolygon = document.getElementById('modulePolygon');
-        var moduleShapeAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-        moduleShapeAni.setAttribute('id', 'modulePolygonAnimation');
-        moduleShapeAni.setAttribute('begin', 'indefinite');
-        moduleShapeAni.setAttribute("attributeName", "points");
+        function easeOutToLeft(startPosition, moduleType) {
+            var initPos1 = startPosition;
+            var finalPos1 = initPos;
+            var distance1 = Math.abs(finalPos1 - initPos1);
+            var finalScale1 = 1.0;
+            var scaleFactor1 = 0.5;
+            var opacity1 = 0.0;
+
+            var dt1 = 0.0;
+            var x1 = 0.0;
+            var leftPos = 0;
+
+            var id = setInterval(rightToCenter, 15);
+            var count = 1;
+            function rightToCenter() {
+                if (leftPos == finalPos1) {
+                    clearInterval(id);
+                    moduleChange(moduleType);
+
+                    let timeout = 0;
+                    if (currentModule != moduleType) {
+                        timeout = 500;
+                        currentModule = moduleType
+                    }
+
+                    setTimeout(showUpModuleShadow, timeout, moduleType);
+                }
+                else {
+                    dt1 += 0.016;
+                    x1 = 1 - Math.pow(2, -10 * dt1);
+                    leftPos = initPos1 - x1 * distance1;
+                    scale1 = 1.0;
+                    opacity1 = 1.0;
+
+                    if (leftPos < (finalPos1 + 1)) {
+                        leftPos = finalPos1;
+                    }
+
+                    moduleID.style.left = leftPos + 'px';
+                    // moduleID.style.transform = 'scale(' + scale1 + ', ' + scale1 + ')';
+                    // moduleID.style.opacity = opacity1;
+                }
+            }
+        }
+    }
+
+    var modulePolygon = document.getElementById('modulePolygon');
+    var moduleShapeAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+    moduleShapeAni.setAttribute('id', 'modulePolygonAnimation');
+    moduleShapeAni.setAttribute('begin', 'indefinite');
+    moduleShapeAni.setAttribute("attributeName", "points");
+    moduleShapeAni.setAttribute('dur', '0.5s');
+    moduleShapeAni.setAttribute('fill', 'freeze');
+    moduleShapeAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+    moduleShapeAni.setAttribute('keyTimes', '0;1');
+    moduleShapeAni.setAttribute('calcMode', 'spline');
+    moduleShapeAni.setAttribute('from', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
+    moduleShapeAni.setAttribute('to', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
+
+    function moduleChange(moduleType) {
+        var currentPolygonPoints = moduleShapeAni.getAttribute('to');
+        switch (moduleType) {
+            case 'QWR':
+                moduleShapeAni.setAttribute('from', currentPolygonPoints);
+                moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+                break;
+
+            case 'HWRA':
+                moduleShapeAni.setAttribute('from', currentPolygonPoints);
+                moduleShapeAni.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
+                break;
+
+            case 'HWRB':
+                moduleShapeAni.setAttribute('from', currentPolygonPoints);
+                moduleShapeAni.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
+                break;
+
+            default:
+        }
+
         moduleShapeAni.setAttribute('dur', '0.5s');
-        moduleShapeAni.setAttribute('fill', 'freeze');
-        moduleShapeAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
-        moduleShapeAni.setAttribute('keyTimes', '0;1');
-        moduleShapeAni.setAttribute('calcMode', 'spline');
-        moduleShapeAni.setAttribute('from', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
-        moduleShapeAni.setAttribute('to', '224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681');
+        modulePolygon.appendChild(moduleShapeAni);
 
-        function moduleChange(moduleType) {
-            var currentPolygonPoints = moduleShapeAni.getAttribute('to');
-            switch (moduleType) {
-                case 'QWR':
-                    moduleShapeAni.setAttribute('from', currentPolygonPoints);
-                    moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-                    break;
+        var animationTrigger = document.getElementById("modulePolygonAnimation");
+        animationTrigger.beginElement();
+    }
 
-                case 'HWRA':
-                    moduleShapeAni.setAttribute('from', currentPolygonPoints);
-                    moduleShapeAni.setAttribute('to', '361.36 681 397 273.67 397 1 51 1 51 273.67 86.64 681 361.36 681');
-                    break;
+    function showUpModuleShadow(moduleType) {
+        var moduleShadow = document.getElementsByClassName("moduleShadow");
 
-                case 'HWRB':
-                    moduleShapeAni.setAttribute('from', currentPolygonPoints);
-                    moduleShapeAni.setAttribute('to', '411.36 681 447 273.67 447 1 1 1 1 273.67 36.64 681 311.36 681');
-                    break;
+        switch (moduleType) {
+            case 'QWR':
+                moduleShadow[0].classList.remove('fadeInOpacity');
+                void moduleShadow[0].offsetWidth;
+                moduleShadow[0].classList.add('fadeInOpacity');
+                break;
 
-                default:
-            }
+            case 'HWRA':
+                moduleShadow[1].classList.remove('fadeInOpacity');
+                void moduleShadow[1].offsetWidth;
+                moduleShadow[1].classList.add('fadeInOpacity');
+                break;
 
-            moduleShapeAni.setAttribute('dur', '0.5s');
-            modulePolygon.appendChild(moduleShapeAni);
+            case 'HWRB':
+                moduleShadow[2].classList.remove('fadeInOpacity');
+                void moduleShadow[2].offsetWidth;
+                moduleShadow[2].classList.add('fadeInOpacity');
+                break;
 
-            var animationTrigger = document.getElementById("modulePolygonAnimation");
-            animationTrigger.beginElement();
+            default:
         }
 
-        function showUpModuleShadow(moduleType) {
-            var moduleShadow = document.getElementsByClassName("moduleShadow");
+    }
 
-            switch (moduleType) {
-                case 'QWR':
-                    moduleShadow[0].classList.remove('fadeInOpacity');
-                    void moduleShadow[0].offsetWidth;
-                    moduleShadow[0].classList.add('fadeInOpacity');
-                    break;
+    function polygonPositing() {
+        var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
+        var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
 
-                case 'HWRA':
-                    moduleShadow[1].classList.remove('fadeInOpacity');
-                    void moduleShadow[1].offsetWidth;
-                    moduleShadow[1].classList.add('fadeInOpacity');
-                    break;
+        var verticalInitPos = 0;
+        var verticalDt = 112;
+        var verticalShiftDt = verticalDt / 2;
+        var horizontalDt = 97;
+        var leftPolygonInitPos = 600;
+        var rightPolygonInitPos = 1200;
 
-                case 'HWRB':
-                    moduleShadow[2].classList.remove('fadeInOpacity');
-                    void moduleShadow[2].offsetWidth;
-                    moduleShadow[2].classList.add('fadeInOpacity');
-                    break;
+        // var numberOfPolygon = polygonSVGElement.length;
+        var polygonCount = 0;
 
-                default:
-            }
+        for (var j = 0; j < 6; j++) {
+            var num = 7 - j;
+            var hShift = j * horizontalDt;
+            var vShift = j * verticalShiftDt;
+            var animationDelay = j / 20;
 
-        }
+            for (var i = 0; i < num; i++) {
+                // leftPolygonSVGElement[polygonCount].style.position = 'absolute';
+                leftPolygonSVGElement[polygonCount].style.setProperty('--opacity', (j + 1) / 80);
+                leftPolygonSVGElement[polygonCount].style.setProperty('--delay', animationDelay);
+                leftPolygonSVGElement[polygonCount].style.setProperty('--scale', 0.8);
 
-        function polygonPositing() {
-            var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
-            var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
+                leftPolygonSVGElement[polygonCount].style.left = leftPolygonInitPos - hShift + 'px';
+                leftPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
 
-            var verticalInitPos = 0;
-            var verticalDt = 112;
-            var verticalShiftDt = verticalDt / 2;
-            var horizontalDt = 97;
-            var leftPolygonInitPos = 600;
-            var rightPolygonInitPos = 1200;
+                // rightPolygonSVGElement[polygonCount].style.position = 'absolute';
+                rightPolygonSVGElement[polygonCount].style.setProperty('--opacity', (j + 1) / 80);
+                rightPolygonSVGElement[polygonCount].style.setProperty('--delay', animationDelay);
+                rightPolygonSVGElement[polygonCount].style.setProperty('--scale', 0.8);
 
-            // var numberOfPolygon = polygonSVGElement.length;
-            var polygonCount = 0;
+                rightPolygonSVGElement[polygonCount].style.left = rightPolygonInitPos + hShift + 'px';
+                rightPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
 
-            for (var j = 0; j < 6; j++) {
-                var num = 7 - j;
-                var hShift = j * horizontalDt;
-                var vShift = j * verticalShiftDt;
-                var animationDelay = j / 20;
-
-                for (var i = 0; i < num; i++) {
-                    // leftPolygonSVGElement[polygonCount].style.position = 'absolute';
-                    leftPolygonSVGElement[polygonCount].style.setProperty('--opacity', (j + 1) / 80);
-                    leftPolygonSVGElement[polygonCount].style.setProperty('--delay', animationDelay);
-                    leftPolygonSVGElement[polygonCount].style.setProperty('--scale', 0.8);
-
-                    leftPolygonSVGElement[polygonCount].style.left = leftPolygonInitPos - hShift + 'px';
-                    leftPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
-
-                    // rightPolygonSVGElement[polygonCount].style.position = 'absolute';
-                    rightPolygonSVGElement[polygonCount].style.setProperty('--opacity', (j + 1) / 80);
-                    rightPolygonSVGElement[polygonCount].style.setProperty('--delay', animationDelay);
-                    rightPolygonSVGElement[polygonCount].style.setProperty('--scale', 0.8);
-
-                    rightPolygonSVGElement[polygonCount].style.left = rightPolygonInitPos + hShift + 'px';
-                    rightPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
-
-                    polygonCount += 1;
-                }
+                polygonCount += 1;
             }
         }
+    }
 
-        function polygonAnimation() {
-            var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
-            var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
+    function polygonAnimation() {
+        var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
+        var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
 
-            var polygonCount = 0;
+        var polygonCount = 0;
 
-            for (var j = 0; j < 6; j++) {
-                var num = 7 - j;
+        for (var j = 0; j < 6; j++) {
+            var num = 7 - j;
 
-                for (var i = 0; i < num; i++) {
-                    leftPolygonSVGElement[polygonCount].classList.remove('startAni');
-                    void leftPolygonSVGElement[polygonCount].offsetWidth;
-                    leftPolygonSVGElement[polygonCount].classList.add('startAni');
+            for (var i = 0; i < num; i++) {
+                leftPolygonSVGElement[polygonCount].classList.remove('startAni');
+                void leftPolygonSVGElement[polygonCount].offsetWidth;
+                leftPolygonSVGElement[polygonCount].classList.add('startAni');
 
-                    rightPolygonSVGElement[polygonCount].classList.remove('startAni');
-                    void rightPolygonSVGElement[polygonCount].offsetWidth;
-                    rightPolygonSVGElement[polygonCount].classList.add('startAni');
+                rightPolygonSVGElement[polygonCount].classList.remove('startAni');
+                void rightPolygonSVGElement[polygonCount].offsetWidth;
+                rightPolygonSVGElement[polygonCount].classList.add('startAni');
 
-                    polygonCount += 1;
-                }
+                polygonCount += 1;
             }
         }
+    }
 
 
-        function randomScalingFactor() {
-            return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
-        }
+    function randomScalingFactor(scale) {
+        // return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * scale);
+        return (Math.random() * scale);
 
-        function chart1Refresh(chart) {
-            chart.config.data.datasets.forEach(function (dataset) {
-                dataset.data.push({
-                    x: Date.now(),
-                    y: randomScalingFactor(),
-                })
-            });
-        }
+    }
 
-        function chart2Refresh(chart) {
-            chart.config.data.datasets.forEach(function (dataset) {
-                dataset.data.push({
-                    x: Date.now(),
-                    y: randomScalingFactor(),
-                })
-            });
-        }
+    function chart1Refresh(chart) {
+        chart.config.data.datasets.forEach(function (dataset) {
+            dataset.data.push({
+                x: Date.now(),
+                y: randomScalingFactor(100),
+            })
+        });
+    }
 
-        function lineChartConfig(details) {
-            // Line chart configuration
-            return chartConfig;
-        }
+    function chart2Refresh(chart) {
+        chart.config.data.datasets.forEach(function (dataset) {
+            dataset.data.push({
+                x: Date.now(),
+                y: randomScalingFactor(0.0000001),
+            })
+        });
+    }
 
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-        }
+    function lineChartConfig(details) {
+        // Line chart configuration
+        return chartConfig;
+    }
 
-        var myVar = setInterval(timer, 1000);
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
 
-        window.onload = function () {
+    var myVar = setInterval(timer, 1000);
 
-            firstShowUp();
-            // modulePosition();
-            // moduleChange('QWR');
-            simulation();
+    window.onload = function () {
 
-            // var details = [
-            //     { label: "Line Chart1", color: window.chartColors.blue },
-            //     { label: "Line Chart2", color: window.chartColors.green },
-            //     { label: "Line Chart3", color: window.chartColors.red }
-            // ]
-            var chart1Config = {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Label1',
-                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                        // borderColor: details.color,
-                        borderColor: window.chartColors.red,
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        data: [],
-                    }, {
-                        label: 'Label 2',
-                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                        // borderColor: details.color,
-                        borderColor: window.chartColors.green,
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        data: [],
-                    }]
+        firstShowUp();
+        // modulePosition();
+        // moduleChange('QWR');
+        simulation();
+
+        // var details = [
+        //     { label: "Line Chart1", color: window.chartColors.blue },
+        //     { label: "Line Chart2", color: window.chartColors.green },
+        //     { label: "Line Chart3", color: window.chartColors.red }
+        // ]
+        var chart1Config = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Label1',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    // borderColor: details.color,
+                    borderColor: window.chartColors.red,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }, {
+                    label: 'Label 2',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    // borderColor: details.color,
+                    borderColor: window.chartColors.green,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Chart 1'
                 },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'Chart 1'
-                    },
-                    legend: {
-                        display: false
-                    },
-                    layout: {
-                        padding: {
-                            bottom: 10
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            type: 'realtime',
-                            realtime: {
-                                duration: 60000,
-                                refresh: 1000,
-                                delay: 2000,
-                                onRefresh: chart1Refresh
-                            },
-                            gridLines: {
-                                display: false
-                            }
-
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'value'
-                            },
-                            gridLines: {
-                                display: false
-                            }
-                        }],
-                    },
-                    tooltips: {
-                        mode: 'nearest',
-                        intersect: false
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: false
-                    }
-                }
-            };
-
-            var chart2Config = {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Label1',
-                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                        // borderColor: details.color,
-                        borderColor: window.chartColors.blue,
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        data: [],
-                    }, {
-                        label: 'Label 2',
-                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                        // borderColor: details.color,
-                        borderColor: window.chartColors.yellow,
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        data: [],
-                    }]
+                legend: {
+                    display: false
                 },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'Chart 2'
-                    },
-                    legend: {
-                        display: false
-                    },
-                    layout: {
-                        padding: {
-                            bottom: 10
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            type: 'realtime',
-                            realtime: {
-                                duration: 60000,
-                                refresh: 1000,
-                                delay: 2000,
-                                onRefresh: chart2Refresh
-                            },
-                            gridLines: {
-                                display: false
-                            }
-
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'value'
-                            },
-                            gridLines: {
-                                display: false
-                            }
-                        }],
-                    },
-                    tooltips: {
-                        mode: 'nearest',
-                        intersect: false
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: false
+                layout: {
+                    padding: {
+                        bottom: 10
                     }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: chart1Refresh
+                        },
+                        gridLines: {
+                            display: false
+                        }
+
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
                 }
-            };
-
-            var ctx1 = document.getElementById('canvas1').getContext('2d');
-            // chartConfig.data.datasets.push(newDataSet1);
-
-            window.myChart = new Chart(ctx1, chart1Config);
-
-            var ctx2 = document.getElementById('canvas2').getContext('2d');
-            window.myChart = new Chart(ctx2, chart2Config);
-
-            // var ctx3 = document.getElementById('canvas3').getContext('2d');
-            // // var lineConfig2 = lineChartConfig(datails2)
-            // window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
-        }
-
-        function firstShowUp() {
-            polygonPositing();
-            polygonAnimation();
-            moduleNaviPositing();
-
-            moduleShapeAni.setAttribute('dur', '1s');
-            moduleShapeAni.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
-            moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
-
-            modulePolygon.appendChild(moduleShapeAni);
-
-            var moduleOpacityAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-            moduleOpacityAni.setAttribute('id', 'moduleOpacityAnimation');
-            moduleOpacityAni.setAttribute('begin', 'indefinite');
-            moduleOpacityAni.setAttribute("attributeName", "opacity");
-            moduleOpacityAni.setAttribute('dur', '1s');
-            moduleOpacityAni.setAttribute('fill', 'freeze');
-            moduleOpacityAni.setAttribute('from', '0');
-            moduleOpacityAni.setAttribute('to', '0.3');
-
-            modulePolygon.appendChild(moduleOpacityAni);
-
-            var animationTrigger = document.getElementById("modulePolygonAnimation");
-            animationTrigger.beginElement();
-
-            var animationOpacityTrigger = document.getElementById("moduleOpacityAnimation");
-            animationOpacityTrigger.beginElement();
-
-            setTimeout(showUpModuleShadow, 1000, 'QWR');
-
-
-        }
-
-        function simulation() {
-            var moduleNaviSplit = document.getElementsByClassName("moduleNavi-split");
-            // moduleSVG.style.setProperty('--opacity', 1.0);
-
-            for (let i = 0; i < moduleNaviSplit.length; i++) {
-                moduleNaviSplit[i].style.setProperty('--splitHeight', Math.floor(Math.random() * 30));
-
-                moduleNaviSplit[i].classList.remove('moduleNaviSplitAnimaiton');
-                void moduleNaviSplit[i].offsetWidth;
-                moduleNaviSplit[i].classList.add('moduleNaviSplitAnimaiton');
             }
+        };
+
+        var chart2Config = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Label1',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    // borderColor: details.color,
+                    borderColor: window.chartColors.blue,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }, {
+                    label: 'Label 2',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    // borderColor: details.color,
+                    borderColor: window.chartColors.yellow,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Chart 2'
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 10
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: chart2Refresh
+                        },
+                        gridLines: {
+                            display: false
+                        }
+
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                }
+            }
+        };
+
+        var ctx1 = document.getElementById('canvas1').getContext('2d');
+        // chartConfig.data.datasets.push(newDataSet1);
+
+        window.myChart = new Chart(ctx1, chart1Config);
+
+        var ctx2 = document.getElementById('canvas2').getContext('2d');
+        window.myChart = new Chart(ctx2, chart2Config);
+
+        // var ctx3 = document.getElementById('canvas3').getContext('2d');
+        // // var lineConfig2 = lineChartConfig(datails2)
+        // window.myChart = new Chart(ctx3, lineChartConfig(details[2]));
+    }
+
+    function firstShowUp() {
+        polygonPositing();
+        polygonAnimation();
+        moduleNaviPositing();
+
+        moduleShapeAni.setAttribute('dur', '1s');
+        moduleShapeAni.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
+        moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
+
+        modulePolygon.appendChild(moduleShapeAni);
+
+        var moduleOpacityAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        moduleOpacityAni.setAttribute('id', 'moduleOpacityAnimation');
+        moduleOpacityAni.setAttribute('begin', 'indefinite');
+        moduleOpacityAni.setAttribute("attributeName", "opacity");
+        moduleOpacityAni.setAttribute('dur', '1s');
+        moduleOpacityAni.setAttribute('fill', 'freeze');
+        moduleOpacityAni.setAttribute('from', '0');
+        moduleOpacityAni.setAttribute('to', '0.3');
+
+        modulePolygon.appendChild(moduleOpacityAni);
+
+        var animationTrigger = document.getElementById("modulePolygonAnimation");
+        animationTrigger.beginElement();
+
+        var animationOpacityTrigger = document.getElementById("moduleOpacityAnimation");
+        animationOpacityTrigger.beginElement();
+
+        setTimeout(showUpModuleShadow, 1000, 'QWR');
 
 
+    }
+
+    function simulation() {
+        var moduleNaviSplit = document.getElementsByClassName("moduleNavi-split");
+        // moduleSVG.style.setProperty('--opacity', 1.0);
+
+        for (let i = 0; i < moduleNaviSplit.length; i++) {
+            moduleNaviSplit[i].style.setProperty('--splitHeight', Math.floor(Math.random() * 30));
+
+            moduleNaviSplit[i].classList.remove('moduleNaviSplitAnimaiton');
+            void moduleNaviSplit[i].offsetWidth;
+            moduleNaviSplit[i].classList.add('moduleNaviSplitAnimaiton');
         }
-    </script>
+
+
+    }
+</script>
 
 </html>
