@@ -6,12 +6,6 @@
 <script src="script/chartjs-plugin-streaming.js"></script>
 <script src="script/common.js"></script>
 
-<head>
-    <style>
-
-    </style>
-</head>
-
 <body>
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
         <div id="time-stamp"></div>
@@ -489,7 +483,7 @@
 
         <!-- Center -->
         <div id="body-center" style="width:600px; height:780px; position: relative; overflow: hidden;">
-            <div id="moduleSVG" style="position: absolute; left:60px; top:20px;">
+            <div id="moduleSVG" style="position: absolute; left:77px; top:20px;">
                 <svg width="446" height="682">
                     <polygon id="modulePolygon"
                         points="224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681"
@@ -498,11 +492,11 @@
                 </svg>
             </div>
             <img class="moduleShadow" src="qwrModuleShadow.svg"
-                style="position:absolute; left:150px; top:20px; opacity: 0.0;">
+                style="position:absolute; left:167px; top:20px; opacity: 0.0;">
             <img class="moduleShadow" src="hwraModuleShadow.svg"
-                style="position:absolute; left:110px; top:20px; opacity: 0.0;">
+                style="position:absolute; left:127px; top:20px; opacity: 0.0;">
             <img class="moduleShadow" src="hwrbModuleShadow.svg"
-                style="position:absolute; left:60px; top:20px; opacity: 0.0;">
+                style="position:absolute; left:77px; top:20px; opacity: 0.0;">
             <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
         </div>
 
@@ -1477,7 +1471,7 @@
 </body>
 
 <script>
-    var initPos = 60; //This value must be same with moduelSVG left postion"
+    var initPos = 77; //This value must be same with moduelSVG left postion"
     var moduleWidth = 446;
     var moduleHeight = 680;
     var offset = moduleWidth / 2;
@@ -1890,7 +1884,7 @@
                     label: 'Label 2',
                     // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
                     // borderColor: details.color,
-                    borderColor: window.chartColors.green,
+                    borderColor: window.chartColors.blue,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
                     data: [],
@@ -1951,7 +1945,7 @@
                     label: 'Label1',
                     // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
                     // borderColor: details.color,
-                    borderColor: window.chartColors.blue,
+                    borderColor: window.chartColors.green,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
                     data: [],
@@ -1959,7 +1953,7 @@
                     label: 'Label 2',
                     // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
                     // borderColor: details.color,
-                    borderColor: window.chartColors.yellow,
+                    borderColor: window.chartColors.purple,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
                     data: [],
