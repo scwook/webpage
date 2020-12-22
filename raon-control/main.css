@@ -19,9 +19,9 @@
 
 body {
     overflow: hidden;
-    margin: 0px;
+    /* margin: 0px;
     width: 1920px;
-    height: 1080px;
+    height: 1080px; */
     background-color: black;
     background-image: url('shadowbg.png');
     background-repeat: no-repeat;
@@ -385,6 +385,12 @@ body {
 .moduleNavi-contain:hover .tooltiptext {
     visibility: visible;
     opacity: 1.0;
+}
+
+.boxEdgeStyle {
+    fill: none;
+    stroke: #ccc;
+    stroke-miterlimit: 10;
 }
 
 @keyframes percentage {
