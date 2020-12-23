@@ -218,7 +218,20 @@ body {
     font-family: "Roboto-Thin";
 }
 
-.box::before {
+.subBox {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 100px;
+    left: -50px;
+    /* transform: translateY(0px); */
+    background: #00acee;
+    border-radius: 40%;
+    z-index: -1;
+
+}
+
+/* .box::before {
     content: "";
     position: absolute;
     width: 200px;
@@ -229,7 +242,7 @@ body {
     border-radius: 40%;
     z-index: -1;
     animation: fill 7s ease-out forwards, rotation 7s linear infinite;
-}
+} */
 
 .level-bar {
     position: relative; 
