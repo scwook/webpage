@@ -225,7 +225,7 @@ body {
     top: 100px;
     left: -50px;
     /* transform: translateY(0px); */
-    background: #00acee;
+    background: var(--b);
     border-radius: 40%;
     z-index: -1;
 

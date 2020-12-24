@@ -404,16 +404,16 @@
 
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width: 100%; height: 100%;">
-                        <div class="box" style="--b:rgba(0,180,170,1.0)">45%
-                            <div class="subBox"></div>
+                        <div class="box">45%
+                            <div class="subBox" style="--b:rgba(0,180,170,1.0)"></div>
                         </div>
                         <div class="data-name"
                             style="position: relative; top: 20px; width: 150px; height: 30px; text-align: center;">LN2
                         </div>
                     </div>
                     <div style="width: 100%; height: 100%;">
-                        <div class="box" style="--b:rgba(0,190,250,1.0)">45%
-                            <div class="subBox"></div>
+                        <div class="box">45%
+                            <div class="subBox" style="--b:rgba(0,190,250,1.0)"></div>
                         </div>
                         <div class="data-name"
                             style="position: relative; top: 20px; width: 150px; height: 30px; text-align: center;">LHe
@@ -1436,37 +1436,61 @@
 </body>
 
 <script>
-    var flowDegree = 0;
     var subBox = document.getElementsByClassName('subBox');
-    var rotationID = null;
-    var moveID = null;
-    
-    function start() {
-        rotationID = setInterval(rotation, 10);
-        moveID = setInterval(move, 10);
+
+    var rotationID = [null, null];
+    var rotationDegree = [0, 0];
+
+    function rotationStart(num) {
+        clearInterval(rotationID[num]);
+
+        rotationID[num] = setInterval(rotation, 10, num);
     }
 
-    function stop() {
-        clearInterval(rotationID);
-        clearInterval(moveID);
+    function rotationStop(num) {
+        clearInterval(rotationID[num]);
+    }
+
+    function rotation(num) {
+        subBox[num].style.transform = 'rotate(' + rotationDegree[num] + 'deg)';
+        rotationDegree[num] += 0.5;
+    }
+
+    var fillID = [null, null];
+    var topPosition = [100, 100];
+
+    function fillStart(num, setPosition) {
+        clearInterval(fillID[num]);
+
+        if (setPosition > topPosition[num]) {
+            direction = 1; // empty
+
+        }
+        else if (setPosition < topPosition[num]) {
+            direction = -1 // fill
+        }
+        else {
+            return;
+        }
+
+        fillID[num] = setInterval(fill, 50, num, setPosition, direction); // fill
 
     }
 
-    function rotation() {
-        subBox[0].style.transform = 'rotate(' + flowDegree + 'deg)';
-        flowDegree += 0.5;
+    function fillStop(num) {
+        clearInterval(fillID[num]);
     }
 
-    var direction = 1;
-    var topLocation = 100;
-    function move() {
+    function fill(num, setPosition, direction) {
 
-        subBox[0].style.top = topLocation + 'px';
+        if (topPosition[num] == setPosition) {
+            clearInterval(fillID[num]);
+        }
 
-        if (topLocation >= 100) direction = -1;
-        else if (topLocation < 50) direction = 1;
+        topPosition[num] += direction;
+        subBox[num].style.top = topPosition[num] + 'px';
 
-        topLocation += direction * 0.1;
+        // console.log(topPosition);
     }
 
     var initPos = 77; //This value must be same with moduelSVG left postion"
@@ -1858,7 +1882,6 @@
     window.onload = function () {
 
         firstShowUp();
-        start();
         // modulePosition();
         // moduleChange('QWR');
         simulation();
@@ -2024,6 +2047,11 @@
         polygonAnimation();
         moduleNaviPositing();
 
+        rotationStart(0);
+        fillStart(0, 50);
+        rotationStart(1);
+        fillStart(1, 50);
+
         moduleShapeAni.setAttribute('dur', '1s');
         moduleShapeAni.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
         moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
@@ -2053,8 +2081,8 @@
     }
 
     function simulation() {
+        // Module Navigation 
         var moduleNaviSplit = document.getElementsByClassName("moduleNavi-split");
-        // moduleSVG.style.setProperty('--opacity', 1.0);
 
         for (let i = 0; i < moduleNaviSplit.length; i++) {
             moduleNaviSplit[i].style.setProperty('--splitHeight', Math.floor(Math.random() * 30));
@@ -2063,6 +2091,48 @@
             void moduleNaviSplit[i].offsetWidth;
             moduleNaviSplit[i].classList.add('moduleNaviSplitAnimaiton');
         }
+
+        var n2Count = 1;
+        var heCount = 1;
+        // N2 Flow
+        setInterval(function () {
+            var valveOpen = Math.floor(Math.random() * 100);
+
+            var isOpen = true;
+            if(n2Count % 5 == 0) {
+                isOpen = false;
+            }
+
+            if (isOpen) {
+                rotationStart(0);
+            }
+            else {
+                rotationStop(0);
+            }
+            fillStart(0, valveOpen);
+            n2Count += 1;
+        }, 5000);
+
+        // He Flow
+
+        setInterval(function () {
+            var valveOpen = Math.floor(Math.random() * 100);
+
+            var isOpen = true;
+            if(heCount % 10 == 0) {
+                isOpen = false;
+            }
+
+            if (isOpen) {
+                rotationStart(1);
+            }
+            else {
+                rotationStop(1);
+            }
+
+            fillStart(1, valveOpen);
+            heCount += 1;
+        }, 5000);
 
 
     }
