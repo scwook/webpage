@@ -50,12 +50,13 @@
         height: 100px;
         border: 1px solid #ccc;
         border-radius: 50%;
-        line-height: 200px;
+        line-height: 100px;
         text-align: center;
         color: #ddd;
         position: relative;
-        overflow: hidden;
-        z-index: -1;
+        /* overflow: hidden; */
+        /* z-index: -1; */
+        font-size: 30px;
     }
 
     .box2::before {
@@ -90,6 +91,10 @@
         /* transform: translateY(0px); */
         background: #00acee;
         border-radius: 40%;
+                z-index: -1;
+
+
+
     }
 
     @keyframes fill {
@@ -119,16 +124,17 @@
     </div>
 
     <div class="box2">
+        45%
     </div>
 
-    <div class="box3">
+    <div class="box3">45%
         <div class="box3-1"></div>
     </div>
 
     <button type="button" class="play-animation">Play Animation</button>
     <button type="button" class="stop-animation">Stop Animation</button>
 
-    <div class="box4">
+    <div class="box4"><span id="box4text">45%</span>
         <div id="box4-1"></div>
     </div>
 
@@ -182,6 +188,7 @@
 
     window.onload = function () {
         // start();
+        document.getElementById('box4text').innerHTML = "test";
     }
 </script>
 

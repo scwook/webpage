@@ -404,7 +404,7 @@
 
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width: 100%; height: 100%;">
-                        <div class="box">45%
+                        <div class="liquid-box"><span id="n2-value">45</span>
                             <div class="subBox" style="--b:rgba(0,180,170,1.0)"></div>
                         </div>
                         <div class="data-name"
@@ -412,7 +412,7 @@
                         </div>
                     </div>
                     <div style="width: 100%; height: 100%;">
-                        <div class="box">45%
+                        <div class="liquid-box"><span id="he-value">45</span>
                             <div class="subBox" style="--b:rgba(0,190,250,1.0)"></div>
                         </div>
                         <div class="data-name"
@@ -422,39 +422,9 @@
                 </div>
 
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
-                    <div style="width: 100%; height: 100%;">
-                        <div class="data-name" style="position: relative; left: 10px; top:25px">Temp.</div>
-                        <div class="data-value" style="position: relative; left: 10px; top:25px">40 k</div>
-                    </div>
-                    <div style="width: 100%; height: 100%;">
-                        <div class="data-name" style="position: relative; left: 10px; top:25px">Temp.</div>
-                        <div class="data-value" style="position: relative; left: 10px; top:25px">40 k</div>
-                    </div>
-                </div>
-
-                <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
-                        <div class="data-name" style="position: relative; left: 25px; top:25px">2K Level</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px">80 cm</div>
-                    </div>
-                    <div style="width:30%; height:100%">
-                        <div class="level-bar">
-                            <div class="level" style="--i:2px; background-color: rgba(14, 200, 63, 1.0);"></div>
-                            <div class="level" style="--i:4px;background-color: rgba(140, 200, 63, 1.0);"></div>
-                            <div class="level" style="--i:6px; background-color: rgba(252, 238, 33, 1.0);"></div>
-                            <div class="level" style="--i:8px; background-color: rgba(251, 186, 59, 1.0);"></div>
-                            <div class="level" style="--i:10px; background-color: rgba(247, 167, 40, 1.0);"></div>
-                            <div class="level" style="--i:12px; background-color: rgba(247, 147, 30, 1.0);"></div>
-                            <div class="level" style="--i:14px; background-color: rgba(241, 90, 36, 1.0);"></div>
-                            <div class="level" style="--i:16px; background-color: rgba(237, 28, 36, 1.0);"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid-item" style="display:flex; width:300px; height:160px;">
-                    <div style="width:70%; height:100%">
-                        <div class="data-name" style="position: relative; left: 25px; top:25px">4K Level</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px">120 cm</div>
+                        <div class="data-name" style="position: relative; left: 25px; top:25px">Temperature</div>
+                        <div class="data-value" style="position: relative; left: 25px; top:40px">4.2</div>
                     </div>
                     <div style="width:30%; height:100%">
                         <div class="level-bar">
@@ -466,6 +436,24 @@
                             <div class="level" style="--i:12px; background-color: rgba(247, 147, 30, 1.0);"></div>
                             <div class="level" style="--i:14px; background-color: rgba(241, 90, 36, 1.0);"></div>
                             <div class="level" style="--i:16px; background-color: rgba(237, 28, 36, 1.0);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item" style="display:flex; width:300px; height:160px;">
+                    <div style="width:70%; height:100%">
+                        <div class="data-name" style="position: relative; left: 25px; top:25px">Pressure</div>
+                        <div class="data-value" style="position: relative; left: 25px; top:40px;">
+                            <span id="pressure-value1">1.9</span><sup id="pressure-exp1" class="exp-value"></sup>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item" style="display:flex; width:300px; height:160px;">
+                    <div style="width:70%; height:100%">
+                        <div class="data-name" style="position: relative; left: 25px; top:25px">Pressure</div>
+                        <div class="data-value" style="position: relative; left: 25px; top:40px;">
+                            <span id="pressure-value2">1.9</span><sup id="pressure-exp2" class="exp-value"></sup>
                         </div>
                     </div>
                 </div>
@@ -498,6 +486,19 @@
                 style="position:absolute; left:127px; top:20px; opacity: 0.0;">
             <img class="moduleShadow" src="hwrbModuleShadow.svg"
                 style="position:absolute; left:77px; top:20px; opacity: 0.0;">
+
+            <svg id="cavity" width="81" height="261" style="position: absolute; left: 260px; top: 350px">
+                <path
+                    d="M40.5.5C18.41.5.5,6.3.5,13.45v234.1c0,7.15,17.91,12.95,40,12.95s40-5.8,40-12.95V13.45C80.5,6.3,62.59.5,40.5.5Z"
+                    style="fill: none; stroke:#fff; stroke-miterlimit: 10; opacity: 0.5;" />
+            </svg>
+
+            <svg id="cavityFill" width="74" height="254" style="position: absolute; left: 263px; top: 353px">
+                <path
+                    d="M37,0C16.57,0,0,5.66,0,12.65v228.7c0,7,16.57,12.65,37,12.65s37-5.66,37-12.65V12.65C74,5.66,57.43,0,37,0Z"
+                    style="fill: #0094c5; opacity: 0.5;" />
+            </svg>
+
             <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
         </div>
 
@@ -554,7 +555,10 @@
                 </div>
 
                 <div class="grid-item" style="width:300px; height:160px;">
-
+                    <div class="data-name" style="position: relative; left: 25px; top:25px">Vacuum</div>
+                    <div class="data-value" style="position: relative; left: 25px; top:40px;">
+                        <span id="vacuum-value">1.9</span><sup id="vacuum-exp" class="exp-value">-9</sup>
+                    </div>
                 </div>
 
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
@@ -2095,11 +2099,14 @@
         var n2Count = 1;
         var heCount = 1;
         // N2 Flow
+        var n2Value = document.getElementById('n2-value');
+
         setInterval(function () {
             var valveOpen = Math.floor(Math.random() * 100);
+            n2Value.innerText = 100 - valveOpen;
 
             var isOpen = true;
-            if(n2Count % 5 == 0) {
+            if (n2Count % 5 == 0) {
                 isOpen = false;
             }
 
@@ -2114,12 +2121,13 @@
         }, 5000);
 
         // He Flow
-
+        var heValue = document.getElementById('he-value');
         setInterval(function () {
             var valveOpen = Math.floor(Math.random() * 100);
+            heValue.innerText = 100 - valveOpen;
 
             var isOpen = true;
-            if(heCount % 10 == 0) {
+            if (heCount % 10 == 0) {
                 isOpen = false;
             }
 
@@ -2134,6 +2142,28 @@
             heCount += 1;
         }, 5000);
 
+        // Pressure
+        var pressureValue1ID = document.getElementById('pressure-value1');
+        var pressureValue2ID = document.getElementById('pressure-value2');
+        setInterval(function () {
+            var dataValue = (Math.random() * 10).toFixed(1);
+            pressureValue1ID.innerText = dataValue;
+
+            dataValue = (Math.random() * 10).toFixed(1);
+            pressureValue2ID.innerText = dataValue;
+
+        }, 3000);
+
+        // Vacuum
+        var vacuumValueID = document.getElementById('vacuum-value');
+        var vacuumExpID = document.getElementById('vacuum-exp');
+        setInterval(function () {
+            var dataValue = (Math.random() * 0.0000001).toExponential(1);
+
+            vacuumValueID.innerText = dataValue.substring(0, 3);
+            vacuumExpID.innerText = dataValue.substring(4, 6);
+
+        }, 3000);
 
     }
 </script>

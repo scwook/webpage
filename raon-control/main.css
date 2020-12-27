@@ -97,12 +97,27 @@ body {
     font-family: "Roboto-Thin";
 }
 
-.pvname {
+.exp-value {
+    font-size: 28px;
+    position: relative;
+    top: -10px;
+    left: 10px;
+}
+
+.exp-value::after {
+    content: "  mbar";
+    position: relative;
+    top: 30px;
+    left: 10px;
+}
+
+
+/* .pvname {
     color: dimgray;
     font-size: 15px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 #polygon-contain{ 
     width:1920px; 
@@ -202,7 +217,7 @@ body {
     font-family: "Roboto-Thin";
 }
 
-.box {
+.liquid-box {
     width: 100px;
     height: 100px;
     border: 2px solid rgba(0, 84, 188, 0.3);
@@ -216,6 +231,10 @@ body {
     top: 15px;
     overflow: hidden;
     font-family: "Roboto-Thin";
+}
+
+#n2-value::after, #he-value::after {
+    content: " %";
 }
 
 .subBox {
