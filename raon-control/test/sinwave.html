@@ -67,13 +67,13 @@
     }
 
     let t2 = 0;
-    let ampC = 50;
+    let ampC = 100;
     let ampS = ampC;
     let phase2 = 10;
     let dt2 = 0.5;
     let easef = 0.0;
-    let ampL = 30;
-    let dist = ampS - ampL;
+    let ampL = 50;
+    let dist = ampL - ampS;
     function myfun() {
 
         let points = xs2.map(x => {
@@ -88,12 +88,13 @@
         document.getElementById('aaa').setAttribute("d", path)
 
         t2 += dt2
-        if (ampC < (ampL-1)) {
+        if (ampC > (ampL+1)) {
+            dy = 1 - Math.pow(2, -10 * easef);
+            ampC = ampS + dy * dist;
+            // ampC = ampS + dy * dist;
+            console.log(ampC);
             easef += 0.016;
-            dy = Math.pow(2, -10 * easef);
-            // ampC = ampL - ampS * dy;
-            ampC = ampS - dy * dist;
-            // console.log(ampC);
+
         }
         else {
             ampC = ampL;
