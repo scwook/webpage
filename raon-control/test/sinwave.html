@@ -19,6 +19,10 @@
         <path d="M10,10 L50,100 L90,50"></path>
     </svg>
 
+    <svg>
+        <path id="aaa" d="M10,10 L50,100 L90,50"></path>
+    </svg>
+
 </body>
 <script>
     let xs = []
@@ -27,10 +31,12 @@
     }
 
     let t = 0;
-    let amp = 50;
+    let amp = 50
+    let phase = 10
+    let dt = 0.5
     function animate() {
         let points = xs.map(x => {
-            let y = 200 + amp * Math.sin((x + t) / 10)
+            let y = 200 + amp * Math.sin((x + t) / phase)
             return [x, y]
         })
 
@@ -40,17 +46,65 @@
 
         document.querySelector("path").setAttribute("d", path)
 
-        t += 0.5
+        t += dt
+        if (amp < 100) amp += 1
+
+        if (phase > 5) {
+            // phase -= 0.1
+            // dt = 0.2
+        }
 
         requestAnimationFrame(animate)
     }
 
-    animate()
+    // animate()
 
-    setInterval(myfun, 1000)
+    var id = setInterval(myfun, 20)
 
+    let xs2 = []
+    for (var i = 0; i < 500; i++) {
+        xs2.push(i)
+    }
+
+    let t2 = 0;
+    let ampC = 50;
+    let ampS = ampC;
+    let phase2 = 10;
+    let dt2 = 0.5;
+    let easef = 0.0;
+    let ampL = 30;
+    let dist = ampS - ampL;
     function myfun() {
-        amp += 10;
+
+        let points = xs2.map(x => {
+            let y = 200 + ampC * Math.sin((x + t2) / phase2)
+            return [x, y]
+        })
+
+        let path = "M" + points.map(p => {
+            return p[0] + "," + p[1]
+        }).join(" L")
+
+        document.getElementById('aaa').setAttribute("d", path)
+
+        t2 += dt2
+        if (ampC < (ampL-1)) {
+            easef += 0.016;
+            dy = Math.pow(2, -10 * easef);
+            // ampC = ampL - ampS * dy;
+            ampC = ampS - dy * dist;
+            // console.log(ampC);
+        }
+        else {
+            ampC = ampL;
+            ampS = ampC;
+            // clearInterval(id);
+        }
+
+        if (phase2 > 5) {
+            // phase -= 0.1
+            // dt = 0.2
+        }
     }
 </script>
 
