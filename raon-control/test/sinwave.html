@@ -23,61 +23,78 @@
         <path id="aaa" d="M10,10 L50,100 L90,50"></path>
     </svg>
 
+ 
+
+    <input type="text" id="amp" value="100">
+    <input type="text" id="phase" value="10">
+    <button id="btn" onclick="changeWave()">Click</button>
+    <button id="btn" onclick="stop()">Stop</button>
+
+    <svg>
+        <path id="bbb" d="M0,100 L100,100, L100,10, L300,10, L300,100, L400,100">
+    </svg>
 </body>
 <script>
-    let xs = []
-    for (var i = 0; i < 500; i++) {
-        xs.push(i)
-    }
+    // let xs = []
+    // for (var i = 0; i < 500; i++) {
+    //     xs.push(i)
+    // }
 
-    let t = 0;
-    let amp = 50
-    let phase = 10
-    let dt = 0.5
-    function animate() {
-        let points = xs.map(x => {
-            let y = 200 + amp * Math.sin((x + t) / phase)
-            return [x, y]
-        })
+    // let t = 0;
+    // let amp = 50
+    // let phase = 10
+    // let dt = 0.5
+    // function animate() {
+    //     let points = xs.map(x => {
+    //         let y = 200 + amp * Math.sin((x + t) / phase)
+    //         return [x, y]
+    //     })
 
-        let path = "M" + points.map(p => {
-            return p[0] + "," + p[1]
-        }).join(" L")
+    //     let path = "M" + points.map(p => {
+    //         return p[0] + "," + p[1]
+    //     }).join(" L")
 
-        document.querySelector("path").setAttribute("d", path)
+    //     document.querySelector("path").setAttribute("d", path)
 
-        t += dt
-        if (amp < 100) amp += 1
+    //     t += dt
+    //     if (amp < 100) amp += 1
 
-        if (phase > 5) {
-            // phase -= 0.1
-            // dt = 0.2
-        }
+    //     if (phase > 5) {
+    //         // phase -= 0.1
+    //         // dt = 0.2
+    //     }
 
-        requestAnimationFrame(animate)
-    }
+    //     requestAnimationFrame(animate)
+    // }
 
     // animate()
 
-    var id = setInterval(myfun, 20)
-
+    var waveId = setInterval(sineWave, 20);
     let xs2 = []
     for (var i = 0; i < 500; i++) {
         xs2.push(i)
     }
 
     let t2 = 0;
-    let ampC = 100;
-    let ampS = ampC;
-    let phase2 = 10;
+    var ampC = 0;
+    var ampS = ampC;
+    let phaseC = 1;
+    let phaseS = phaseC;
+    // let phase = 10; 
     let dt2 = 0.5;
-    let easef = 0.0;
-    let ampL = 50;
-    let dist = ampL - ampS;
-    function myfun() {
+    var easef = 0.0;
+    var easep = 0.0;
+
+    // let ampL = 50;
+    var dist = 0;
+    let distp = 0;
+
+    // let direction = dist / Math.abs(dist);
+
+    function sineWave() {
 
         let points = xs2.map(x => {
-            let y = 200 + ampC * Math.sin((x + t2) / phase2)
+            let y = 200 + ampC * Math.sin((x + t2) / phaseC)
             return [x, y]
         })
 
@@ -87,26 +104,102 @@
 
         document.getElementById('aaa').setAttribute("d", path)
 
-        t2 += dt2
-        if (ampC > (ampL+1)) {
+        t2 -= dt2
+
+    }
+
+    var ampID = null;
+    let dy = 0.0;
+    function sineWaveAmp(ampValue) {
+        if (ampC == ampValue) {
+            ampS = ampC;
+            easef = 0.0;
+            clearInterval(ampID);
+            console.log('Amp clear');
+
+        } else {
             dy = 1 - Math.pow(2, -10 * easef);
             ampC = ampS + dy * dist;
-            // ampC = ampS + dy * dist;
-            console.log(ampC);
-            easef += 0.016;
+            // console.log(ampC);
+
+            easef += 0.02;
+            if (dy >= 0.999) easef = 10;
+        }
+    }
+
+    var phaseID = null;
+    function sineWavePhase(phaseValue) {
+        if (phaseC == phaseValue) {
+            phaseS = phaseC;
+            easep = 0.0;
+            clearInterval(phaseID);
+            console.log('Phase clear');
+
+        } else {
+            dp = 1 - Math.pow(2, -10 * easep);
+            phaseC = phaseS + dp * distp;
+            easep += 0.01;
+
+            if (dp >= 0.999) easep = 10;
+
+            console.log(phaseC);
 
         }
-        else {
-            ampC = ampL;
-            ampS = ampC;
-            // clearInterval(id);
-        }
+    }
 
-        if (phase2 > 5) {
-            // phase -= 0.1
-            // dt = 0.2
-        }
+    function changeWave() {
+        var ampValue = document.getElementById('amp').value;
+        var phaseValue = document.getElementById('phase').value;
+
+        clearInterval(ampID);
+        clearInterval(phaseID);
+
+        dist = ampValue - ampS;
+        distp = phaseValue - phaseS;
+
+        ampID = setInterval(sineWaveAmp, 20, ampValue);
+        phaseID = setInterval(sineWavePhase, 20, phaseValue);
+
+    }
+
+    function stop() {
+        clearInterval(ampID);
+        clearInterval(phaseID);
     }
 </script>
 
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+<style>
+    path {
+        stroke: #2727e6;
+        stroke-width: 2px;
+        stroke-linecap: round;
+        fill: none;
+        stroke-dasharray: 600;
+        stroke-dashoffset: 600;
+              animation: dash 1.0s ease-out forwards;
+
+    }
+    
+    @keyframes dash {
+    	0% {
+          stroke-dashoffset: 600;
+        }
+        
+        100% {
+          stroke-dashoffset: 0;
+        }
+    }
+</style>
+<head>
+</head>
+<body>
+<svg  width="400" height="500">
+  <path d="M0,100 L100,100, L100,10, L300,10, L300,100, L400,100">
+</svg>
+</body>
+</html> -->
