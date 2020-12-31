@@ -522,6 +522,33 @@
                         <polyline class="boxEdgeStyle" points="611.5 161.5 621.5 161.5 621.5 151.5" />
                         <polyline class="boxEdgeStyle" points="0.5 151.5 0.5 161.5 10.5 161.5" />
                     </svg>
+                    <div style="width: 50%; height: 100%; position: relative;">
+                        <svg width="131" height="137">
+                            <polygon
+                                points="78.19 93.42 53.03 93.42 40.45 115.2 53.03 136.99 78.19 136.99 90.77 115.2 78.19 93.42"
+                                style="fill:#014161" />
+                            <polygon
+                                points="118.64 70.06 93.48 70.06 80.91 91.85 93.48 113.64 118.64 113.64 131.22 91.85 118.64 70.06"
+                                style="fill:#3db54a;opacity:0.8" />
+                            <polygon
+                                points="118.67 23.36 93.51 23.36 80.93 45.14 93.51 66.93 118.67 66.93 131.24 45.14 118.67 23.36"
+                                style="fill:#3db54a;opacity:0.8" />
+                            <polygon points="78.19 0 53.03 0 40.45 21.79 53.03 43.57 78.19 43.57 90.77 21.79 78.19 0"
+                                style="fill:#ed2224;opacity:0.8" />
+                            <polygon
+                                points="37.74 70.07 12.58 70.07 0 91.86 12.58 113.64 37.74 113.64 50.31 91.86 37.74 70.07"
+                                style="fill:#014161" />
+                            <polygon
+                                points="37.74 23.36 12.58 23.36 0 45.14 12.58 66.93 37.74 66.93 50.31 45.14 37.74 23.36"
+                                style="fill:#3db54a;opacity:0.8" />
+                        </svg>
+                    </div>
+
+                    <div style="width: 50%; height: 100%; position: relative;">
+                        <svg width="310" height="160">
+                            <path id="sineWave" d="M0,80, L310,80" />
+                        </svg>
+                    </div>
                 </div>
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
@@ -1847,6 +1874,75 @@
         }
     }
 
+    let sinePoints = [];
+    for (let i = 0; i < 310; i++) {
+        sinePoints.push(i);
+    }
+
+    let phase = 0;
+    var ampC = 0;
+    var ampS = ampC;
+    let frequencyC = 10;
+    let frequencyS = frequencyC;
+    // let frequency = 10; 
+    let dp = 0.3;
+    var easea = 0.0;
+    var easef = 0.0;
+
+    // let ampL = 50;
+    var distAmp = 0;
+    let distFreq = 0;
+
+    // let direction = dist / Math.abs(dist);
+
+    function sineWave() {
+
+        let waveData = sinePoints.map(x => {
+            let y = 80 + ampC * Math.sin((x + phase) / frequencyC);
+            return [x, y];
+        })
+
+        let path = "M" + waveData.map(p => {
+            return p[0] + "," + p[1];
+        }).join(" L");
+
+        document.getElementById('sineWave').setAttribute("d", path);
+
+        phase += dp;
+
+    }
+
+    var ampID = null;
+    function sineWaveAmp(ampValue) {
+        if (ampC == ampValue) {
+            ampS = ampC;
+            easea = 0.0;
+            clearInterval(ampID);
+        } else {
+            dy = 1 - Math.pow(2, -10 * easea);
+            ampC = ampS + dy * distAmp;
+            // console.log(ampC);
+
+            easea += 0.02;
+            if (dy >= 0.999) easea = 10;
+        }
+    }
+
+    var frequencyID = null;
+    function sineWaveFrequency(frequencyValue) {
+        if (frequencyC == frequencyValue) {
+            frequencyS = frequencyC;
+            easef = 0.0;
+            clearInterval(frequencyID);
+
+        } else {
+            df = 1 - Math.pow(2, -10 * easef);
+            frequencyC = frequencyS + df * distFreq;
+            easef += 0.01;
+
+            if (df >= 0.999) easef = 10;
+        }
+    }
 
     function randomScalingFactor(scale) {
         // return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * scale);
@@ -2052,11 +2148,13 @@
         polygonAnimation();
         moduleNaviPositing();
 
+
         rotationStart(0);
         fillStart(0, 50);
         rotationStart(1);
         fillStart(1, 50);
 
+        // Module Show Up
         moduleShapeAni.setAttribute('dur', '1s');
         moduleShapeAni.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
         moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
@@ -2081,8 +2179,6 @@
         animationOpacityTrigger.beginElement();
 
         setTimeout(showUpModuleShadow, 1000, 'QWR');
-
-
     }
 
     function simulation() {
@@ -2165,6 +2261,37 @@
             vacuumExpID.innerText = dataValue.substring(4, 6);
 
         }, 3000);
+
+        // RF Frequency
+        var waveId = setInterval(sineWave, 20);
+
+        setTimeout(function () {
+            document.getElementById('sineWave').style.strokeDasharray="none"
+            let ampValue = 50;
+            distAmp = ampValue - ampS;
+
+            clearInterval(ampID);
+            ampID = setInterval(sineWaveAmp, 20, ampValue);
+        }, 1000);
+
+        let ampSimTimer = setTimeout(function sineWaveAmpSim() {
+            let ampValue = 20 + Math.floor(Math.random() * 30);
+            distAmp = ampValue - ampS;
+
+            clearInterval(ampID);
+            ampID = setInterval(sineWaveAmp, 20, ampValue);
+            ampSimTimer = setTimeout(sineWaveAmpSim, 5000);
+        }, 5000);
+
+        let freqSimTimer = setTimeout(function sineWaveFreqSim() {
+            let freqValue = 8 + Math.floor(Math.random() * 2);
+            distFreq = freqValue - frequencyS;
+
+            clearInterval(frequencyID);
+            frequencyID = setInterval(sineWaveFrequency, 20, freqValue);
+
+            freqSimTimer = setTimeout(sineWaveFreqSim, 8000);
+        }, 8000);
 
     }
 </script>

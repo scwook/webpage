@@ -2,8 +2,8 @@
 <html>
 <style>
     svg {
-        width: 600px;
-        height: 400px;
+        width: 310px;
+        height: 160px;
     }
 
     path {
@@ -19,7 +19,7 @@
         <path d="M10,10 L50,100 L90,50"></path>
     </svg>
 
-    <svg>
+    <svg style="background-color: khaki;">
         <path id="aaa" d="M10,10 L50,100 L90,50"></path>
     </svg>
 
@@ -71,7 +71,7 @@
 
     var waveId = setInterval(sineWave, 20);
     let xs2 = []
-    for (var i = 0; i < 500; i++) {
+    for (var i = 0; i < 310; i++) {
         xs2.push(i)
     }
 
@@ -94,7 +94,7 @@
     function sineWave() {
 
         let points = xs2.map(x => {
-            let y = 200 + ampC * Math.sin((x + t2) / phaseC)
+            let y = 80 + ampC * Math.sin((x + t2) / phaseC)
             return [x, y]
         })
 
