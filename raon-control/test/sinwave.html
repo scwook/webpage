@@ -12,6 +12,27 @@
         stroke-linecap: round;
         fill: none;
     }
+
+    #bbb {
+        stroke: #2727e6;
+        stroke-width: 2px;
+        stroke-linecap: round;
+        fill: none;
+        /* stroke-dasharray: 310; */
+        /* stroke-dashoffset: 310; */
+        /* animation: dash 1.0s ease-out forwards; */
+
+    }
+
+    @keyframes dash {
+        0% {
+            stroke-dashoffset: 310;
+        }
+
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
 </style>
 
 <body>
@@ -23,18 +44,44 @@
         <path id="aaa" d="M10,10 L50,100 L90,50"></path>
     </svg>
 
- 
+
 
     <input type="text" id="amp" value="100">
     <input type="text" id="phase" value="10">
     <button id="btn" onclick="changeWave()">Click</button>
     <button id="btn" onclick="stop()">Stop</button>
 
-    <svg>
-        <path id="bbb" d="M0,100 L100,100, L100,10, L300,10, L300,100, L400,100">
-    </svg>
+    <div style="width:310px; height:170px; background-color: antiquewhite;">
+        <svg>            
+            <!-- <path id="bbb" d="M0,160 L100,160, L100,10, L240,10, L240,160, L310,160" /> -->
+            <polygon id="bbb" points=""></polygon>
+        </svg>
+    </div>
+
+    <input type="text" id="width" value="100">
+    <input type="text" id="delay" value="100">
+    <button id="widthBtn" onclick="width()">width</button>
+    <button id="delayBtn" onclick="delay()">delay</button>
 </body>
 <script>
+    var trigger = document.getElementById('bbb');
+    var triggerShapeAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+    triggerShapeAni.setAttribute('id', 'triggerAni');
+    triggerShapeAni.setAttribute('begin', 'indefinite');
+    triggerShapeAni.setAttribute("attributeName", "points");
+    triggerShapeAni.setAttribute('dur', '1s');
+    triggerShapeAni.setAttribute('fill', 'freeze');
+    // triggerShapeAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+    // triggerShapeAni.setAttribute('keyTimes', '0;1');
+    // triggerShapeAni.setAttribute('calcMode', 'spline');
+    triggerShapeAni.setAttribute('from', '0 160 0 160 0 160 0 160 0 160 0 160');
+    triggerShapeAni.setAttribute('to', '0 160 60 160 120 160 180 160 240 160 310 160');
+
+    trigger.appendChild(triggerShapeAni);
+
+    var sss = document.getElementById("triggerAni");
+
+    sss.beginElement();
     // let xs = []
     // for (var i = 0; i < 500; i++) {
     //     xs.push(i)
@@ -166,40 +213,14 @@
         clearInterval(ampID);
         clearInterval(phaseID);
     }
+
+    function width() {
+
+    }
+
+    function delay() {
+
+    }
 </script>
 
 </html>
-
-
-<!-- <!DOCTYPE html>
-<html>
-<style>
-    path {
-        stroke: #2727e6;
-        stroke-width: 2px;
-        stroke-linecap: round;
-        fill: none;
-        stroke-dasharray: 600;
-        stroke-dashoffset: 600;
-              animation: dash 1.0s ease-out forwards;
-
-    }
-    
-    @keyframes dash {
-    	0% {
-          stroke-dashoffset: 600;
-        }
-        
-        100% {
-          stroke-dashoffset: 0;
-        }
-    }
-</style>
-<head>
-</head>
-<body>
-<svg  width="400" height="500">
-  <path d="M0,100 L100,100, L100,10, L300,10, L300,100, L400,100">
-</svg>
-</body>
-</html> -->
