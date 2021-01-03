@@ -5,13 +5,13 @@
     <svg class="lightning" width="59.63" height="103.33">
         <defs>
             <linearGradient id="left-to-right" x1="29" y1="100" x2="29" gradientUnits="userSpaceOnUse">
-                <stop  offset="0" stop-color="#2959a8">
-                    <animate id="stop1" dur="1s" attributeName="offset" fill="freeze" from="0" to="0.5" keySplines=" 0.0 0.4 0.1 1"
-                        keyTimes="0;1" calcMode="spline" />
+                <stop offset="0" stop-color="#2959a8">
+                    <animate begin="indefinite" id="stop1" dur="1s" attributeName="offset" fill="freeze" from="0" to="0"
+                        keySplines=" 0.0 0.4 0.1 1" keyTimes="0;1" calcMode="spline" />
                 </stop>
                 <stop offset="0" stop-color="#2959a8" stop-opacity="0.1">
-                    <animate  id="stop2" dur="1s" attributeName="offset" fill="freeze" from="0" to="0.5" keySplines=" 0.0 0.4 0.1 1"
-                        keyTimes="0;1" calcMode="spline" />
+                    <animate begin="indefinite" id="stop2" dur="1s" attributeName="offset" fill="freeze" from="0" to="0"
+                        keySplines=" 0.0 0.4 0.1 1" keyTimes="0;1" calcMode="spline" />
                 </stop>
             </linearGradient>
         </defs>
@@ -20,35 +20,62 @@
             style="stroke:none;stroke-miterlimit:10" />
     </svg>
 
-    <div id="aaa"></div>
-
+    <input type="text" id="point" value="0.5">
+    <button id="set" onclick="setPoint()">Click</button>
 </body>
 
 <script>
     var stop1 = document.getElementById('stop1');
     var stop2 = document.getElementById('stop2');
 
-    stop1.setAttribute("attributeName", "offset");
-    stop1.setAttribute('dur', '1s');
-    stop1.setAttribute('fill', 'freeze');
-    stop1.setAttribute('keySplines', '0.0 0.4 0.1 1');
-    stop1.setAttribute('keyTimes', '0;1');
-    stop1.setAttribute('calcMode', 'spline');
-    stop1.setAttribute('from', '0');
-    stop1.setAttribute('to', '0.4');
+    var current = 0.0;
 
-    stop2.setAttribute("attributeName", "offset");
-    stop2.setAttribute('dur', '1s');
-    stop2.setAttribute('fill', 'freeze');
-    stop2.setAttribute('keySplines', '0.0 0.4 0.1 1');
-    stop2.setAttribute('keyTimes', '0;1');
-    stop2.setAttribute('calcMode', 'spline');
-    stop2.setAttribute('from', '0');
-    stop2.setAttribute('to', '0.4');
+    // stop1.setAttribute('from', current);
+    // stop1.setAttribute('to', '0.0');
+
+    // stop2.setAttribute('from', current);
+    // stop2.setAttribute('to', '0.0');
 
     var id = document.getElementById('poly');
-    id.setAttribute('fill', 'url(#left-to-right)');
+    // id.setAttribute('fill', 'url(#left-to-right)');
 
+    // setInterval(function () {
+    // var value = Math.random().toFixed(1);
+
+    // stop1.setAttribute('from', current);
+    // stop1.setAttribute('to', value);
+
+    // stop2.setAttribute('from', current);
+    // stop2.setAttribute('to', value);
+
+    // id.setAttribute('fill', 'url(#left-to-right)');
+    // console.log(current, value);
+
+    // current = value;
+    // }, 2000);
+
+    function setPoint() {
+        id.setAttribute('fill', 'url(#left-to-right)');
+        stop1.beginElement();
+        stop2.beginElement();
+    }
+
+    window.onload = function () {
+
+        let data = document.getElementById('point').value;
+
+        stop1.setAttribute('from', '0.0');
+        stop1.setAttribute('to', '0.5');
+
+        stop2.setAttribute('from', '0.0');
+        stop2.setAttribute('to', '0.5');
+
+
+
+        console.log(current, data)
+        current = data;
+        // setPoint();
+    }
 </script>
 
 </html>
