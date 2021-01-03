@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <svg class="lightning" width="59.63" height="103.33">
+        <defs>
+            <linearGradient id="left-to-right" x1="29" y1="100" x2="29" gradientUnits="userSpaceOnUse">
+                <stop  offset="0" stop-color="#2959a8">
+                    <animate id="stop1" dur="1s" attributeName="offset" fill="freeze" from="0" to="0.5" keySplines=" 0.0 0.4 0.1 1"
+                        keyTimes="0;1" calcMode="spline" />
+                </stop>
+                <stop offset="0" stop-color="#2959a8" stop-opacity="0.1">
+                    <animate  id="stop2" dur="1s" attributeName="offset" fill="freeze" from="0" to="0.5" keySplines=" 0.0 0.4 0.1 1"
+                        keyTimes="0;1" calcMode="spline" />
+                </stop>
+            </linearGradient>
+        </defs>
+        <polygon id="poly"
+            points="58.67 0.5 18.67 0.5 6.67 40.5 0.67 60.5 16.67 60.5 4.67 100.5 32.67 60.5 46.67 40.5 30.67 40.5 58.67 0.5"
+            style="stroke:none;stroke-miterlimit:10" />
+    </svg>
+
+    <div id="aaa"></div>
+
+</body>
+
+<script>
+    var stop1 = document.getElementById('stop1');
+    var stop2 = document.getElementById('stop2');
+
+    stop1.setAttribute("attributeName", "offset");
+    stop1.setAttribute('dur', '1s');
+    stop1.setAttribute('fill', 'freeze');
+    stop1.setAttribute('keySplines', '0.0 0.4 0.1 1');
+    stop1.setAttribute('keyTimes', '0;1');
+    stop1.setAttribute('calcMode', 'spline');
+    stop1.setAttribute('from', '0');
+    stop1.setAttribute('to', '0.4');
+
+    stop2.setAttribute("attributeName", "offset");
+    stop2.setAttribute('dur', '1s');
+    stop2.setAttribute('fill', 'freeze');
+    stop2.setAttribute('keySplines', '0.0 0.4 0.1 1');
+    stop2.setAttribute('keyTimes', '0;1');
+    stop2.setAttribute('calcMode', 'spline');
+    stop2.setAttribute('from', '0');
+    stop2.setAttribute('to', '0.4');
+
+    var id = document.getElementById('poly');
+    id.setAttribute('fill', 'url(#left-to-right)');
+
+</script>
+
+</html>
