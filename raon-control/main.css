@@ -308,11 +308,9 @@ body {
     top: 30px; */
 }
 
-/* .tooltip {
-    position: absolute;
-    background-color: blue;
-    color: white;
-  } */
+#power-value::after {
+    content: "  V";
+}
 
 #moduleSVG {
     width: 446;

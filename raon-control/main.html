@@ -553,7 +553,7 @@
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">Power</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px">3000 KV</div>
+                        <div class="data-value" id="power-value" style="position: relative; left: 25px; top:40px">0</div>
                     </div>
                     <div style="width:30%; height:100%; position: relative;">
                         <div class="lightning-contain">
@@ -563,21 +563,22 @@
                                     <linearGradient id="gradient-fill" x1="29" y1="100" x2="29"
                                         gradientUnits="userSpaceOnUse">
                                         <stop offset="0" stop-color="#2959a8">
-                                            <animate id="gradient-point1" dur="1s" attributeName="offset" fill="freeze" from="0" to="0"
+                                            <animate id="gradient-point1" begin="indefinite" dur="1s"
+                                                attributeName="offset" fill="freeze" from="0" to="0"
                                                 keySplines=" 0.0 0.4 0.1 1" keyTimes="0;1" calcMode="spline" />
                                         </stop>
                                         <stop offset="0" stop-color="#2959a8" stop-opacity="0.1">
-                                            <animate id="gradient-point1" dur="1s" attributeName="offset" fill="freeze" from="0" to="0"
+                                            <animate id="gradient-point2" begin="indefinite" dur="1s"
+                                                attributeName="offset" fill="freeze" from="0" to="0"
                                                 keySplines=" 0.0 0.4 0.1 1" keyTimes="0;1" calcMode="spline" />
                                         </stop>
                                     </linearGradient>
                                 </defs>
-                                <polygon
+                                <polygon fill='url(#gradient-fill'
                                     points="58.67 0.5 18.67 0.5 6.67 40.5 0.67 60.5 16.67 60.5 4.67 100.5 32.67 60.5 46.67 40.5 30.67 40.5 58.67 0.5"
                                     style="stroke:none;stroke-miterlimit:10" />
                             </svg>
                         </div>
-
                     </div>
                 </div>
 
@@ -2266,7 +2267,7 @@
         var waveId = setInterval(sineWave, 20);
 
         setTimeout(function () {
-            document.getElementById('sineWave').style.strokeDasharray="none"
+            document.getElementById('sineWave').style.strokeDasharray = "none"
             let ampValue = 50;
             distAmp = ampValue - ampS;
 
@@ -2293,6 +2294,28 @@
             freqSimTimer = setTimeout(sineWaveFreqSim, 8000);
         }, 8000);
 
+        // Power
+        var powerGradientPoint1 = document.getElementById('gradient-point1');
+        var powerGradientPoint2 = document.getElementById('gradient-point2');
+        var powerValueId = document.getElementById('power-value');
+
+        var currentPower = 0.0;
+        var powerId = setInterval(function () {
+            let powerValue = Math.random().toFixed(1);
+            powerValueId.innerText = powerValue * 5000;
+
+            powerGradientPoint1.setAttribute('from', currentPower);
+            powerGradientPoint1.setAttribute('to', powerValue);
+
+            powerGradientPoint2.setAttribute('from', currentPower);
+            powerGradientPoint2.setAttribute('to', powerValue);
+
+            powerGradientPoint1.beginElement();
+            powerGradientPoint2.beginElement();
+
+            currentPower = powerValue;
+
+        }, 3000);
     }
 </script>
 
