@@ -267,10 +267,24 @@ body {
     position: relative; 
     left: 30px; 
     top:15px; 
-    width:36px; 
-    height:130px;
+    width:14px; 
+    height:118px;
     background-color: rgba(0, 64, 96, 0.5);
-    border: 2px solid rgba(0, 84, 188, 0.5);
+    border: 1px solid rgba(0, 84, 188, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#level-bar-split2k, #level-bar-split4k {
+    position: absolute;
+    width: 14px;
+    height: 118px;
+    background-color: rgba(0, 51, 77, 1.0);
+    transition: height 1s;
+}
+
+#level-2k::after, #level-4k::after {
+    content: " cm";
 }
 
 .level {

@@ -553,7 +553,8 @@
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">Power</div>
-                        <div class="data-value" id="power-value" style="position: relative; left: 25px; top:40px">0</div>
+                        <div class="data-value" id="power-value" style="position: relative; left: 25px; top:40px">0
+                        </div>
                     </div>
                     <div style="width:30%; height:100%; position: relative;">
                         <div class="lightning-contain">
@@ -592,18 +593,22 @@
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">2K Level</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px">80 cm</div>
+                        <div class="data-value" id="level-2k" style="position: relative; left: 25px; top:40px">0</div>
                     </div>
                     <div style="width:30%; height:100%">
                         <div class="level-bar">
-                            <div class="level" style="--i:2px; background-color: rgba(14, 200, 63, 1.0);"></div>
-                            <div class="level" style="--i:4px;background-color: rgba(140, 200, 63, 1.0);"></div>
-                            <div class="level" style="--i:6px; background-color: rgba(252, 238, 33, 1.0);"></div>
-                            <div class="level" style="--i:8px; background-color: rgba(251, 186, 59, 1.0);"></div>
-                            <div class="level" style="--i:10px; background-color: rgba(247, 167, 40, 1.0);"></div>
-                            <div class="level" style="--i:12px; background-color: rgba(247, 147, 30, 1.0);"></div>
-                            <div class="level" style="--i:14px; background-color: rgba(241, 90, 36, 1.0);"></div>
-                            <div class="level" style="--i:16px; background-color: rgba(237, 28, 36, 1.0);"></div>
+                            <svg width="14" height="118" style="position:absolute">
+                                <defs>
+                                    <linearGradient id="2k-linear-gradient" x1="7" y1="86.16" x2="7" y2="36.75"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#2baae2" />
+                                        <stop offset="1" stop-color="#00a99d" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M7,118a7,7,0,0,1-7-7V7A7,7,0,0,1,14,7V111A7,7,0,0,1,7,118Z"
+                                    style="fill:url(#2k-linear-gradient)" />
+                            </svg>
+                            <div id="level-bar-split2k"></div>
                         </div>
                     </div>
                 </div>
@@ -611,18 +616,25 @@
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">4K Level</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px">120 cm</div>
+                        <div class="data-value" id="level-4k" style="position: relative; left: 25px; top:40px">0</div>
                     </div>
                     <div style="width:30%; height:100%">
+                        <svg id="level-point4k" width="5" height="6" style="position: absolute; top:15px; left:230px;">
+                            <polygon points="5 3 0 0 0 6 5 3" style="fill:#2baae2" />
+                        </svg>
                         <div class="level-bar">
-                            <div class="level" style="--i:2px; background-color: rgba(0, 200, 63, 0.0);"></div>
-                            <div class="level" style="--i:4px; background-color: rgba(140, 200, 63, 0.0);"></div>
-                            <div class="level" style="--i:6px; background-color: rgba(252, 238, 33, 0.0);"></div>
-                            <div class="level" style="--i:8px; background-color: rgba(251, 186, 59, 1.0);"></div>
-                            <div class="level" style="--i:10px; background-color: rgba(247, 167, 40, 1.0);"></div>
-                            <div class="level" style="--i:12px; background-color: rgba(247, 147, 30, 1.0);"></div>
-                            <div class="level" style="--i:14px; background-color: rgba(241, 90, 36, 1.0);"></div>
-                            <div class="level" style="--i:16px; background-color: rgba(237, 28, 36, 1.0);"></div>
+                            <svg width="14" height="118" style="position:absolute">
+                                <defs>
+                                    <linearGradient id="4k-linear-gradient" x1="7" y1="86.16" x2="7" y2="36.75"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#2baae2" />
+                                        <stop offset="1" stop-color="#00a99d" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M7,118a7,7,0,0,1-7-7V7A7,7,0,0,1,14,7V111A7,7,0,0,1,7,118Z"
+                                    style="fill:url(#4k-linear-gradient)" />
+                            </svg>
+                            <div id="level-bar-split4k"></div>
                         </div>
                     </div>
                 </div>
@@ -2316,6 +2328,28 @@
             currentPower = powerValue;
 
         }, 3000);
+
+        // 2K, 4k Level
+        var levelSplit2kId = document.getElementById('level-bar-split2k');
+        var levelValue2kId = document.getElementById('level-2k');
+        var levelSplit4kId = document.getElementById('level-bar-split4k');
+        var levelValue4kId = document.getElementById('level-4k');
+
+        var level2kId = setInterval(function () {
+            let splitHeight = Math.floor(Math.random() * 118);
+            levelSplit2kId.style.height = splitHeight + 'px';
+
+            let level = Math.floor(-120 / 118 * splitHeight + 120);
+            levelValue2kId.innerText = level;
+
+            splitHeight = Math.floor(Math.random() * 118);
+            levelSplit4kId.style.height = splitHeight + 'px';
+
+            level = Math.floor(-120 / 118 * splitHeight + 120);
+            levelValue4kId.innerText = level;
+
+        }, 5000);
+
     }
 </script>
 
