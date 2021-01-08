@@ -18,7 +18,7 @@
 }
 
 body {
-    overflow: hidden;
+    /* overflow: hidden; */
     /* margin: 0px;
     width: 1920px;
     height: 1080px; */
@@ -286,6 +286,7 @@ body {
 #level-2k::after, #level-4k::after {
     content: " cm";
 }
+
 .level {
     position: relative;
     left: 2px;
