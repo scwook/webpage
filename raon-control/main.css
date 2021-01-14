@@ -437,6 +437,13 @@ body {
     stroke-miterlimit: 10;
 }
 
+.ioc-text {
+    font-size:10px;
+    fill:white;
+    font-family:Roboto;
+    font-weight: 300;
+}
+
 @keyframes percentage {
     from {
       stroke-dashoffset: 440;
