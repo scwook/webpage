@@ -287,12 +287,30 @@ body {
     content: " cm";
 }
 
-.level {
+.temperature-level-bar {
+    position: relative; 
+    left: 30px; 
+    top:15px; 
+    width:18px; 
+    height:120px;
+    background-color: rgba(0, 64, 96, 0.5);
+    border: 1px solid rgba(0, 84, 188, 0.5);
+    overflow: hidden;
+}
+
+.temperature-level1, .temperature-level2 {
     position: relative;
-    left: 2px;
+    left: 1px;
     top: var(--i);
-    width:32px; 
-    height:14px;
+    width:16px; 
+    height:6px;
+    opacity:0.0;
+    transition: opacity 0.5s;
+    transition-delay: var(--tDelay);
+}
+
+#temperature1::after, #temperature2::after{
+    content: " k";
 }
 
 .fadeInOpacity {

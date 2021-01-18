@@ -423,37 +423,61 @@
 
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
+                        <div class="data-name" style="position: relative; left: 25px; top:25px">Pressure</div>
+                        <div class="data-value" style="position: relative; left: 25px; top:40px;">
+                            <span id="pressure-value1">1.9</span><sup id="pressure-exp2" class="exp-value"></sup>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item" style="display:flex; width:300px; height:160px;">
+                    <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">Temperature</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px">4.2</div>
+                        <div class="data-value" id="temperature1" style="position: relative; left: 25px; top:40px">0.0</div>
                     </div>
                     <div style="width:30%; height:100%">
-                        <div class="level-bar">
-                            <div class="level" style="--i:2px; background-color: rgba(0, 200, 63, 0.0);"></div>
-                            <div class="level" style="--i:4px; background-color: rgba(140, 200, 63, 0.0);"></div>
-                            <div class="level" style="--i:6px; background-color: rgba(252, 238, 33, 0.0);"></div>
-                            <div class="level" style="--i:8px; background-color: rgba(251, 186, 59, 1.0);"></div>
-                            <div class="level" style="--i:10px; background-color: rgba(247, 167, 40, 1.0);"></div>
-                            <div class="level" style="--i:12px; background-color: rgba(247, 147, 30, 1.0);"></div>
-                            <div class="level" style="--i:14px; background-color: rgba(241, 90, 36, 1.0);"></div>
-                            <div class="level" style="--i:16px; background-color: rgba(237, 28, 36, 1.0);"></div>
+                        <div class="temperature-level-bar">
+                            <div class="temperature-level1" style="--i:1px; --tDelay:0.28s; background-color: rgb(255, 0, 0);"></div>
+                            <div class="temperature-level1" style="--i:3px; --tDelay:0.26s; background-color: rgb(230, 25, 25);"></div>
+                            <div class="temperature-level1" style="--i:5px; --tDelay:0.24s; background-color: rgb(230, 42, 25);"></div>
+                            <div class="temperature-level1" style="--i:7px; --tDelay:0.22s; background-color: rgb(230, 59, 25);"></div>
+                            <div class="temperature-level1" style="--i:9px; --tDelay:0.20s; background-color: rgb(230, 76, 25);"></div>
+                            <div class="temperature-level1" style="--i:11px; --tDelay:0.18s; background-color: rgb(230, 110, 25);"></div>
+                            <div class="temperature-level1" style="--i:13px; --tDelay:0.16s; background-color: rgb(230, 145, 25);"></div>
+                            <div class="temperature-level1" style="--i:15px; --tDelay:0.14s; background-color: rgb(230, 196, 25);"></div>
+                            <div class="temperature-level1" style="--i:17px; --tDelay:0.12s; background-color: rgb(196, 230, 25);"></div>
+                            <div class="temperature-level1" style="--i:19px; --tDelay:0.10s; background-color: rgb(179, 230, 25);"></div>
+                            <div class="temperature-level1" style="--i:21px; --tDelay:0.08s; background-color: rgb(162, 230, 25);"></div>
+                            <div class="temperature-level1" style="--i:23px; --tDelay:0.06s; background-color: rgb(145, 230, 25);"></div>
+                            <div class="temperature-level1" style="--i:25px; --tDelay:0.04s; background-color: rgb(128, 230, 25);"></div>
+                            <div class="temperature-level1" style="--i:27px; --tDelay:0.02s; background-color: rgb(110, 230, 25);"></div>
+                            <div class="temperature-level1" style="--i:29px; --tDelay:0.0s; background-color: rgb(93, 230, 25);"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
-                        <div class="data-name" style="position: relative; left: 25px; top:25px">Pressure</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px;">
-                            <span id="pressure-value1">1.9</span><sup id="pressure-exp1" class="exp-value"></sup>
-                        </div>
+                        <div class="data-name" style="position: relative; left: 25px; top:25px">Temperature</div>
+                        <div class="data-value" id="temperature2" style="position: relative; left: 25px; top:40px">0.0</div>
                     </div>
-                </div>
-
-                <div class="grid-item" style="display:flex; width:300px; height:160px;">
-                    <div style="width:70%; height:100%">
-                        <div class="data-name" style="position: relative; left: 25px; top:25px">Pressure</div>
-                        <div class="data-value" style="position: relative; left: 25px; top:40px;">
-                            <span id="pressure-value2">1.9</span><sup id="pressure-exp2" class="exp-value"></sup>
+                    <div style="width:30%; height:100%">
+                        <div class="temperature-level-bar">
+                            <div class="temperature-level2" style="--i:1px; background-color: rgba(0, 177, 232, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:3px; background-color: rgba(0, 166, 228, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:5px; background-color: rgba(0, 154, 224, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:7px; background-color: rgba(0, 142, 221, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:9px; background-color: rgba(0, 130, 217, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:11px; background-color: rgba(0, 118, 213, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:13px; background-color: rgba(0, 105, 209, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:15px; background-color: rgba(0, 91, 205, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:17px; background-color: rgba(0, 78, 202, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:19px; background-color: rgba(0, 64, 198, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:21px; background-color: rgba(0, 50, 194, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:23px; background-color: rgba(0, 36, 190, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:25px; background-color: rgba(0, 22, 186, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:27px; background-color: rgba(0, 0, 182, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:29px; background-color: rgba(0, 0, 179, 0.0);"></div>
                         </div>
                     </div>
                 </div>
@@ -2261,13 +2285,27 @@
 
         // Pressure
         var pressureValue1ID = document.getElementById('pressure-value1');
-        var pressureValue2ID = document.getElementById('pressure-value2');
         setInterval(function () {
             var dataValue = (Math.random() * 10).toFixed(1);
             pressureValue1ID.innerText = dataValue;
 
-            dataValue = (Math.random() * 10).toFixed(1);
-            pressureValue2ID.innerText = dataValue;
+        }, 3000);
+
+        // Temperature
+        var temperature1ID = document.getElementById('temperature1');
+        var temperature2ID = document.getElementById('temperature2');
+        var temperature1LevelID = document.getElementsByClassName('temperature-level1');
+        var temperature2LevelID = document.getElementsByClassName('temperature-level2');
+        setInterval(function () {
+            var tempreatureValue = Math.floor(Math.random() * 350);
+            temperature1ID.innerText = tempreatureValue;
+
+            tempreatureValue = (Math.random() * 100).toFixed(1);
+            temperature2ID.innerText = tempreatureValue;
+
+            for(let i=14; i>=0; i--) {
+                temperature1LevelID[i].style.opacity = 1.0;
+            }
 
         }, 3000);
 
