@@ -1,0 +1,301 @@
+:root {
+    --background-image-top: 0px;
+}
+
+@font-face {
+    font-family: "Helvetica-Neue-Light";
+    src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+}
+
+@font-face {
+    font-family: "Roboto-Thin";
+    src: url(fonts/Roboto-Thin.ttf);
+}
+
+@font-face {
+    font-family: "Roboto-Light";
+    src: url(fonts/Roboto-Light.ttf);
+}
+
+body {
+    /* overflow: hidden; */
+    margin: 0px;
+    background-color: black;
+    background-image: url('shadowbg.png');
+    background-repeat: no-repeat;
+    background-position: center var(--background-image-top);
+}
+
+#time-stamp {
+    position: absolute;
+    color: white;
+    font-family: "Roboto-Thin";
+    font-size: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+}
+
+.under-line-box {
+    position: absolute;
+    top: 34px;
+}
+
+.center-top-box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.raon-box {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+
+.accelerator-control {
+    position: absolute;
+    color: white;
+    width: 150px;
+    left: 150px;
+    top: 40px;
+    font-family: "Helvetica-Neue-Light";
+}
+
+.body-box {
+    width: 1920px;
+    height: 980px;
+    margin: auto;
+}
+
+.slide-box {
+    width: 1800px;
+    height: 950px;
+    float: left;
+}
+
+.slide-button {
+    width: 60px;
+    height: 950px;
+    font-size: 32px;
+    margin: 0px;
+    color: white;
+    background-color: black;
+    border: none;
+    outline: none;
+    float: left;
+
+}
+
+.slide-page {
+    width: 1800px;
+    height: 950px;
+    display: none;
+}
+
+.slide-page-title {
+    width: 1800px;
+    height: 64px;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    font-family: "Roboto-Thin";
+
+}
+
+.w3-animate-left {
+    position: relative;
+    animation: animateleft 0.4s
+}
+
+@keyframes animateleft {
+    from {
+        left: -300px;
+        opacity: 0
+    }
+
+    to {
+        left: 0;
+        opacity: 1
+    }
+}
+
+.w3-animate-right {
+    position: relative;
+    animation: animateright 0.4s
+}
+
+@keyframes animateright {
+    from {
+        right: -300px;
+        opacity: 0
+    }
+
+    to {
+        right: 0;
+        opacity: 1
+    }
+}
+
+.contents-box {
+    margin: 10px;
+    width: 280px;
+    height: 280px;
+    float: left;
+    background-color: rgba(26, 26, 26, 0.5);
+    font-family: "Roboto-Thin";
+    position: relative;
+
+    /* border: 2px solid black; */
+}
+
+/* .double-contents-box {
+margin: 5px;
+width: 614px;
+height: 614px;
+float: left;
+background-color: #1d1d1d;
+border: 2px solid black;
+} */
+
+.wide-box {
+    margin: 10px;
+    width: 580px;
+    height: 280px;
+    float: left;
+    background-color: rgba(26, 26, 26, 0.5)
+        /* border: 2px solid black; */
+}
+
+.widget-contents-box {
+    width: 1800px;
+    height: 1080px;
+    background-color: #1d1d1d;
+    /* display: none; */
+}
+
+.widget-box {
+    float: left;
+    margin-bottom: -4px;
+}
+
+.double-widget-box {
+    float: left;
+    margin-bottom: -4px;
+}
+
+
+.title {
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    font-family: Roboto-Thin;
+}
+
+.data {
+    color: white;
+    font-size: 60px;
+    text-align: center;
+    font-family: Roboto-Thin;
+}
+
+.exp-value {
+    font-size: 28px;
+    position: relative;
+    top: -10px;
+    left: 10px;
+}
+
+.exp-value::after {
+    content: "  mbar";
+    position: relative;
+    top: 30px;
+    left: 10px;
+}
+
+.pvname {
+    color: dimgray;
+    font-size: 15px;
+    text-align: center;
+    font-family: Roboto-Thin;
+}
+
+.doughnut-contain {
+    position: relative;
+    width: 176px;
+    height: 176px;
+    transform: rotate(-90deg);
+    margin: auto;
+}
+
+.doughnutBackground {
+    stroke-dashoffset: 0;
+    stroke: rgba(0, 84, 188, 0.3);
+    transform: translate(8px, 8px);
+    stroke-width: 16;
+}
+
+.doughnutForeground {
+    animation-name: percentage;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    /* --i: 200; */
+    stroke: var(--doughuntColor);
+    stroke-width: 16;
+    stroke-linecap: round;
+    stroke-dasharray: 503;
+    transform: translate(8px, 8px);
+}
+
+.doughnutChartText {
+    display: flex;
+    position: absolute;
+    width: 176px;
+    height: 176px;
+    left: 52px;
+    color: white;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    font-family: "Roboto-Thin";
+}
+
+.liquid-box {
+    width: 176px;
+    height: 176px;
+    border: 2px solid rgba(0, 84, 188, 0.5);
+    border-radius: 50%;
+    line-height: 180px;
+    text-align: center;
+    font-size: 40px;
+    left: 52px;
+    color: #ddd;
+    position: relative;
+    overflow: hidden;
+    font-family: "Roboto-Thin";
+}
+
+.subBox {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 176px;
+    left: -62px;
+    /* transform: translateY(0px); */
+    background: var(--b);
+    border-radius: 40%;
+    z-index: -1;
+
+}
+
+@keyframes percentage {
+    from {
+        stroke-dashoffset: 503;
+    }
+
+    to {
+        stroke-dashoffset: var(--chartValue);
+
+    }
+}

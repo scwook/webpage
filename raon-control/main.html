@@ -15,7 +15,7 @@
         <div class="accelerator-control">Accelerator Control</div>
     </div>
 
-    <div style="height:50px"></div>
+    <div style="height:50px;"></div>
 
     <div id="polygon-contain">
         <!-- Left Side Polygon 1-1 -->
@@ -683,7 +683,7 @@
         </div>
 
         <!-- bottom -->
-        <div id="body-bottom" style="width:1920px; height:200px; position:relative;">
+        <div id="body-bottom" style="width:1920px; height:170px; position:relative;">
 
             <!-- module navigation 1 -->
             <div class="moduleNavi-contain" style="--right:1px; --offset:0px; --delay:0;">
@@ -1999,7 +1999,7 @@
             dataset.data.push({
                 x: Date.now(),
                 y: randomScalingFactor(100),
-            })
+            });
         });
     }
 
@@ -2008,7 +2008,7 @@
             dataset.data.push({
                 x: Date.now(),
                 y: randomScalingFactor(0.0000001),
-            })
+            });
         });
     }
 
@@ -2192,14 +2192,14 @@
         polygonAnimation();
         moduleNaviPositing();
 
-
         rotationStart(0);
         fillStart(0, 50);
         rotationStart(1);
         fillStart(1, 50);
 
         // Module Show Up
-        moduleShapeAni.setAttribute('dur', '1s');
+        moduleShapeAni.setAttribute(
+            'dur', '1s');
         moduleShapeAni.setAttribute('from', "224.1 681 224.1 273.67 224.1 1 224.1 1 224.1 273.67 224.1 681 224.1 681");
         moduleShapeAni.setAttribute('to', '321.36 681 357 273.67 357 1 91 1 91 273.67 126.64 681 321.36 681');
 

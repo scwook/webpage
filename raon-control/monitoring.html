@@ -1,208 +1,15 @@
 <!DOCTYPE html>
 <html>
 <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+<link rel="stylesheet" type="text/css" href="monitoring.css">
+
 <script src="script/moment.js"></script>
 <script src="script/chart.js@2.8.0"></script>
 <script src="script/chartjs-plugin-streaming.js"></script>
 <script src="script/common.js"></script>
 
-<style>
-    @font-face {
-        font-family: "Helvetica-Neue-Light";
-        src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-    }
-
-    @font-face {
-        font-family: "Roboto-Thin";
-        src: url(fonts/Roboto-Thin.ttf);
-    }
-
-    @font-face {
-        font-family: "Roboto-Light";
-        src: url(fonts/Roboto-Light.ttf);
-    }
-
-    #time-stamp {
-        position: absolute;
-        color: white;
-        font-family: "Roboto-Thin";
-        font-size: 48px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -70%);
-    }
-
-    .under-line-box {
-        position: absolute;
-        top: 34px;
-    }
-
-    .center-top-box {
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, 0%);
-    }
-
-    .raon-box {
-        position: absolute;
-        left: 10px;
-        top: 20px;
-    }
-
-    .accelerator-control {
-        position: absolute;
-        color: white;
-        width: 150px;
-        left: 150px;
-        top: 40px;
-        font-family: "Helvetica-Neue-Light";
-    }
-
-    .body-box {
-        width: 1920px;
-        height: 960px;
-        margin: auto;
-    }
-
-    .slide-box {
-        width: 1800px;
-        height: 960px;
-        float: left;
-    }
-
-    .slide-page {
-        width: 1800px;
-        height: 960px;
-        display: none;
-    }
-
-    .slide-page-title {
-        width: 1800px;
-        height: 64px;
-        background-color: black;
-        font-size: 40px;
-        text-align: center;
-        color: white;
-        font-family: Helvetica-Neue-Light;
-
-    }
-
-    .slide-button {
-        width: 60px;
-        height: 960px;
-        font-size: 32px;
-        margin: 0px;
-        color: white;
-        background-color: black;
-        border: none;
-        outline: none;
-        float: left;
-
-    }
-
-    .w3-animate-left {
-        position: relative;
-        animation: animateleft 0.4s
-    }
-
-    @keyframes animateleft {
-        from {
-            left: -300px;
-            opacity: 0
-        }
-
-        to {
-            left: 0;
-            opacity: 1
-        }
-    }
-
-    .w3-animate-right {
-        position: relative;
-        animation: animateright 0.4s
-    }
-
-    @keyframes animateright {
-        from {
-            right: -300px;
-            opacity: 0
-        }
-
-        to {
-            right: 0;
-            opacity: 1
-        }
-    }
-
-    .contents-box {
-        margin: 10px;
-        width: 280px;
-        height: 280px;
-        float: left;
-        background-color: #1d1d1d;
-        /* border: 2px solid black; */
-    }
-
-    /* .double-contents-box {
-    margin: 5px;
-    width: 614px;
-    height: 614px;
-    float: left;
-    background-color: #1d1d1d;
-    border: 2px solid black;
-} */
-
-    .wide-box {
-        margin: 10px;
-        width: 580px;
-        height: 280px;
-        float: left;
-        background-color: #1d1d1d;
-        /* border: 2px solid black; */
-    }
-
-    .widget-contents-box {
-        width: 1800px;
-        height: 1080px;
-        background-color: #1d1d1d;
-        /* display: none; */
-    }
-
-    .widget-box {
-        float: left;
-        margin-bottom: -4px;
-    }
-
-    .double-widget-box {
-        float: left;
-        margin-bottom: -4px;
-    }
-
-
-    .title {
-        color: white;
-        font-size: 20px;
-        text-align: center;
-        font-family: Helvetica-Neue-Light;
-    }
-
-    .data {
-        color: white;
-        font-size: 60px;
-        text-align: center;
-        font-family: Roboto-Thin;
-    }
-
-    .pvname {
-        color: dimgray;
-        font-size: 15px;
-        text-align: center;
-        font-family: Helvetica-Neue-Light;
-    }
-</style>
-
 <body style="background-color:black; margin:0px">
-    
+
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
         <div id="time-stamp"></div>
         <div class="under-line-box"><img src="images/under-line.svg"></img></div>
@@ -211,7 +18,7 @@
         <div class="accelerator-control">Accelerator Control</div>
     </div>
 
-    <div style="height:40px"></div>
+    <div style="height:50px"></div>
 
     <div class="body-box">
         <button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
@@ -220,22 +27,37 @@
 
             <!-- Page 1 -->
             <div class="slide-page">
-                <div class="slide-page-title">Page1 Title</div>
+                <div class="slide-page-title">Central Control</div>
 
                 <div class="contents-box">
-                    <p class="title">Temperature</p>
-                    <p class="data" id="scwook-ai1">Not Assigned</p>
-                    <p class="pvname">SYS-SUBSYS:DEV-SUBDEV:SIGNAL</p>
+                    <p class="title">Storage</p>
+                    <div class="doughnutChartText">80%</div>
+                    <div class="doughnut-contain">
+                        <svg width="176" height="176" style="fill:none">
+                            <circle class="doughnutBackground" cx="80" cy="80" r="80" />
+                            <circle class="doughnutForeground" cx="80" cy="80" r="80"
+                                style="--chartValue:100; --doughuntColor:#00ace6" />
+                        </svg>
+                    </div>
                 </div>
 
                 <div class="contents-box">
-                    <p class="title">Humidity</p>
-                    <p class="data" id="scwook-ai2">Not Assigned</p>
+                    <p class="title">Archive</p>
+                    <div class="doughnutChartText">293948</div>
+                    <div class="doughnut-contain">
+                        <svg width="176" height="176" style="fill:none">
+                            <circle class="doughnutBackground" cx="80" cy="80" r="80" />
+                            <circle class="doughnutForeground" cx="80" cy="80" r="80"
+                                style="--chartValue:100; --doughuntColor:#00e639" />
+                        </svg>
+                    </div>
                 </div>
 
                 <div class="contents-box">
                     <p class="title">Pressure</p>
-                    <p class="data" id="scwook-ai3">Not Assigned</p>
+                    <p class="data" id="scwook-ai3">
+                        <span id="pressure-value1">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
+                    </p>
                 </div>
 
                 <div class="contents-box">
@@ -244,13 +66,15 @@
                 </div>
 
                 <div class="contents-box">
-                    <p class="title">Dust</p>
+                    <p class="title">Pressure</p>
                     <p class="data">Not Assigned</p>
                 </div>
 
                 <div class="contents-box">
-                    <p class="title">Dust</p>
-                    <p class="data">Not Assigned</p>
+                    <p class="title">LN2</p>
+                    <div class="liquid-box"><span id="n2-value">45</span>
+                        <div class="subBox" id="n2-flow" style="--b:rgba(0,180,170,1.0)"></div>
+                    </div>
                 </div>
 
                 <div class="wide-box">
@@ -258,7 +82,7 @@
                 </div>
 
                 <div class="contents-box">
-                    <canvas id="storage" width="300" height="300"></canvas>
+
                 </div>
 
                 <!-- <div class="contents-box">
@@ -299,10 +123,20 @@
             <!-- Page 3 -->
             <div class="slide-page">
                 <div class="slide-page-title">Page3 Title</div>
-                <div class="widget-contents-box">
-
+                <div class="contents-box">
+                    <p class="title">Temperature</p>
+                    <p class="data" id="scwook-ai1">Not Assigned</p>
                 </div>
 
+                <div class="contents-box">
+                    <p class="title">Humidity</p>
+                    <p class="data" id="scwook-ai2">Not Assigned</p>
+                </div>
+
+                <div class="contents-box">
+                    <p class="title">Pressure</p>
+                    <p class="data" id="scwook-ai3">Not Assigned</p>
+                </div>
             </div>
         </div>
 
@@ -310,248 +144,274 @@
 
     </div>
 
-    <!--
-    <div class="contents-box">
-        <svg width="300" height="300">
-            <circle cx="150" cy="150" r="80" style="stroke:gray; stroke-width:30; fill:none"/>
-            <circle cx="150" cy="150" r="80" style="stroke:dodgerblue; stroke-width:30; fill:none; stroke-linecap:round"/>
-            <text fill="#ffffff" font-size="30" font-family="Verdana" x="120" y="160">SVG</text> 
-        </svg>
-    </div>
--->
-    <script>
-        function randomScalingFactor() {
-            return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+
+
+</body>
+
+<script>
+    var subBox = document.getElementById('n2-flow');
+
+    var rotationID = null;
+    var rotationDegree = 0;
+
+    function rotationStart() {
+        clearInterval(rotationID);
+
+        rotationID = setInterval(rotation, 10);
+    }
+
+    function rotationStop() {
+        clearInterval(rotationID);
+    }
+
+    function rotation() {
+        subBox.style.transform = 'rotate(' + rotationDegree + 'deg)';
+        rotationDegree += 0.5;
+    }
+
+    var fillID = null;
+    var topPosition = 176;
+
+    function fillStart(setPosition) {
+        clearInterval(fillID);
+
+        if (setPosition > topPosition) {
+            direction = 1; // empty
+
+        }
+        else if (setPosition < topPosition) {
+            direction = -1 // fill
+        }
+        else {
+            return;
         }
 
-        function onRefresh(chart) {
-            chart.config.data.datasets.forEach(function (dataset) {
-                dataset.data.push({
-                    x: Date.now(),
-                    y: randomScalingFactor()
-                });
+        fillID = setInterval(fill, 50, setPosition, direction); // fill
+    }
+
+    function fillStop() {
+        clearInterval(fillID);
+    }
+
+    function fill(setPosition, direction) {
+
+        if (topPosition == setPosition) {
+            clearInterval(fillID);
+        }
+
+        topPosition += direction;
+        subBox.style.top = topPosition + 'px';
+
+        // console.log(topPosition);
+    }
+
+    function randomScalingFactor() {
+        return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+    }
+
+    function onRefresh(chart) {
+        chart.config.data.datasets.forEach(function (dataset) {
+            dataset.data.push({
+                x: Date.now(),
+                y: randomScalingFactor()
             });
-        }
+        });
+    }
 
-        // Line chart configuration
-        function lineChartConfig(details) {
-            // var color = Chart.helpers.color;
-            return {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: details.label,
-                        // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                        borderColor: details.color,
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                        data: [],
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: details.label
-                    },
-                    legend: {
-                        display: false
-                    },
-                    layout: {
-                        padding: {
-                            bottom: 10
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                            type: 'realtime',
-                            realtime: {
-                                duration: 60000,
-                                refresh: 1000,
-                                delay: 2000,
-                                onRefresh: onRefresh
-                            }
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'value'
-                            }
-                        }]
-                    },
-                    tooltips: {
-                        mode: 'nearest',
-                        intersect: false
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: false
-                    }
-                }
-            };
-        }
-        // Doughnut chart configuration
-        var configDoughnut = {
-            type: 'doughnut',
+    // Line chart configuration
+    function lineChartConfig(details) {
+        // var color = Chart.helpers.color;
+        return {
+            type: 'line',
             data: {
-                labels: [
-                    "Red",
-                    "Gray"
-                ],
                 datasets: [{
-                    data: [20, 33],
-                    backgroundColor: [
-                        "#FF6684",
-                        "#ccc"
-                    ],
-                    hoverBackgroundColor: [
-                        "#FF6384",
-                        "#ccc"
-                    ],
+                    label: details.label,
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: details.color,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
                 }]
             },
             options: {
-                legend: {
+                title: {
                     display: true,
+                    text: details.label
                 },
-                elements: {
-                    arc: {
-                        roundedCornersFor: 0,
-                        borderColor: "#000000"
-                    },
-                    center: {
-                        // the longest text that could appear in the center
-                        maxText: '100%',
-                        text: '30%',
-                        fontColor: '#FF6684',
-                        fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                        fontStyle: 'normal',
-                        // fontSize: 12,
-                        // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
-                        // if these are not specified either, we default to 1 and 256
-                        minFontSize: 1,
-                        maxFontSize: 256,
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 10
                     }
                 },
-                cutoutPercentage: 80
-
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: onRefresh
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                }
             }
         };
+    }
 
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-        }
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
 
-        function monitoring() {
-            var pvList = ["scwook-ai1", "scwook-ai2", "scwook-ai3"];
-            requests = new Array(pvList.length);
+    function monitoring() {
+        var pvList = ["scwook-ai1", "scwook-ai2", "scwook-ai3"];
+        requests = new Array(pvList.length);
 
-            for (let i = 0; i < pvList.length; i++) {
-                requests[i] = new XMLHttpRequest();
-                requests[i].open("GET", pvList[i], true);
+        for (let i = 0; i < pvList.length; i++) {
+            requests[i] = new XMLHttpRequest();
+            requests[i].open("GET", pvList[i], true);
 
-                requests[i].onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var jsonValue = JSON.parse(requests[i].responseText);
-                        document.getElementById(pvList[i]).innerHTML = jsonValue.value;
+            requests[i].onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var jsonValue = JSON.parse(requests[i].responseText);
+                    document.getElementById(pvList[i]).innerHTML = jsonValue.value;
 
-                        alarmStatus = jsonValue.alarm.severity;
-                        switch (alarmStatus) {
-                            case 0:
-                                document.getElementById(pvList[i]).style.color = "white";
-                                break;
+                    alarmStatus = jsonValue.alarm.severity;
+                    switch (alarmStatus) {
+                        case 0:
+                            document.getElementById(pvList[i]).style.color = "white";
+                            break;
 
-                            case 1:
-                                document.getElementById(pvList[i]).style.color = "Gold";
-                                break;
+                        case 1:
+                            document.getElementById(pvList[i]).style.color = "Gold";
+                            break;
 
-                            case 2:
-                                document.getElementById(pvList[i]).style.color = "OrangeRed";
-                                break;
-                        }
-
+                        case 2:
+                            document.getElementById(pvList[i]).style.color = "OrangeRed";
+                            break;
                     }
+
                 }
-                requests[i].send();
             }
+            requests[i].send();
+        }
+    }
+
+    // var count = 0;
+    // function changeImage() {
+
+    //     if (count == 0) {
+    //         document.getElementById("img").src = "change.svg";
+    //         count = 1;
+    //     }
+    //     else {
+    //         document.getElementById("img").src = "image1.svg";
+    //         count = 0;
+    //     }
+    // }
+
+    var slideIndex = 1;
+
+    function showDivs(count) {
+
+        slideIndex += count;
+        n = slideIndex;
+
+        var i;
+        var x = document.getElementsByClassName("slide-page");
+
+        if (n > x.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = x.length
         }
 
-        // var count = 0;
-        // function changeImage() {
-
-        //     if (count == 0) {
-        //         document.getElementById("img").src = "change.svg";
-        //         count = 1;
-        //     }
-        //     else {
-        //         document.getElementById("img").src = "image1.svg";
-        //         count = 0;
-        //     }
-        // }
-
-        var slideIndex = 1;
-
-        function showDivs(count) {
-
-            slideIndex += count;
-            n = slideIndex;
-
-            var i;
-            var x = document.getElementsByClassName("slide-page");
-
-            if (n > x.length) {
-                slideIndex = 1
-            }
-            if (n < 1) {
-                slideIndex = x.length
-            }
-
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-
-            console.log(n);
-            if (count < 0) {
-                x[slideIndex - 1].style.position = "relative";
-                x[slideIndex - 1].style.animation = "animateleft 0.4s";
-                x[slideIndex - 1].style.display = "block";
-            }
-            else {
-                x[slideIndex - 1].style.position = "relative";
-                x[slideIndex - 1].style.animation = "animateright 0.4s";
-                x[slideIndex - 1].style.display = "block";
-            }
-
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
         }
 
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        console.log(n);
+        if (count < 0) {
+            x[slideIndex - 1].style.position = "relative";
+            x[slideIndex - 1].style.animation = "animateleft 0.4s";
+            x[slideIndex - 1].style.display = "block";
+        }
+        else {
+            x[slideIndex - 1].style.position = "relative";
+            x[slideIndex - 1].style.animation = "animateright 0.4s";
+            x[slideIndex - 1].style.display = "block";
         }
 
-        window.onload = function () {
+    }
 
-            var details = [
-                { label: "Line Chart1", color: window.chartColors.red }
-            ]
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
 
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myChart1 = new Chart(ctx, lineChartConfig(details[0]));
+    window.onload = function () {
+        firstShowUp();
+        simulation();
 
-            var ctx2 = document.getElementById('storage').getContext('2d');
-            window.myChart2 = new Chart(ctx2, configDoughnut);
+        var details = [
+            { label: "Line Chart1", color: window.chartColors.red }
+        ]
 
-            // doughnutChart('storage', 86);
-            var myVar = setInterval(timer, 1000);
-            // var startMonitoring = setInterval(monitoring, 1000);
-            // var change = setInterval(changeImage, 500);
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myChart1 = new Chart(ctx, lineChartConfig(details[0]));
+
+        // var ctx2 = document.getElementById('storage').getContext('2d');
+        // window.myChart2 = new Chart(ctx2, configDoughnut);
+
+        // doughnutChart('storage', 86);
+        var myVar = setInterval(timer, 1000);
+        // var startMonitoring = setInterval(monitoring, 1000);
+        // var change = setInterval(changeImage, 500);
 
 
-            var x = document.getElementsByClassName("slide-page");
-            x[0].style.display = "block";
-        }
-    </script>
+        var x = document.getElementsByClassName("slide-page");
+        x[0].style.display = "block";
+    }
 
-</body>
+    function firstShowUp() {
+        rotationStart();
+        fillStart(80);
+    }
+
+    function simulation() {
+
+        // Pressure
+        var pressureValue1ID = document.getElementById('pressure-value1');
+        setInterval(function () {
+            var dataValue = (Math.random() * 10).toFixed(1);
+            pressureValue1ID.innerText = dataValue;
+
+        }, 3000);
+    }
+</script>
 
 </html>
