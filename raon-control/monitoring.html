@@ -18,126 +18,131 @@
         <div class="accelerator-control">Accelerator Control</div>
     </div>
 
-    <div style="height:50px"></div>
+    <div style="height:20px"></div>
 
     <div class="body-box">
         <button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
 
         <div class="slide-box">
-
             <!-- Page 1 -->
             <div class="slide-page">
                 <div class="slide-page-title">Central Control</div>
+                <div class="grid-container">
 
-                <div class="contents-box">
-                    <p class="title">Storage</p>
-                    <div class="doughnutChartText">80%</div>
-                    <div class="doughnut-contain">
-                        <svg width="176" height="176" style="fill:none">
-                            <circle class="doughnutBackground" cx="80" cy="80" r="80" />
-                            <circle class="doughnutForeground" cx="80" cy="80" r="80"
-                                style="--chartValue:100; --doughuntColor:#00ace6" />
-                        </svg>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Storage</p>
+                        <div class="doughnutChartText">80%</div>
+                        <div class="doughnut-contain">
+                            <svg width="176" height="176" style="fill:none">
+                                <circle class="doughnutBackground" cx="80" cy="80" r="80" />
+                                <circle class="doughnutForeground" cx="80" cy="80" r="80"
+                                    style="--chartValue:100; --doughuntColor:#00ace6" />
+                            </svg>
+                        </div>
                     </div>
-                </div>
 
-                <div class="contents-box">
-                    <p class="title">Archive</p>
-                    <div class="doughnutChartText">293948</div>
-                    <div class="doughnut-contain">
-                        <svg width="176" height="176" style="fill:none">
-                            <circle class="doughnutBackground" cx="80" cy="80" r="80" />
-                            <circle class="doughnutForeground" cx="80" cy="80" r="80"
-                                style="--chartValue:100; --doughuntColor:#00e639" />
-                        </svg>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Archive</p>
+                        <div class="doughnutChartText">293948</div>
+                        <div class="doughnut-contain">
+                            <svg width="174" height="174" style="fill:none">
+                                <circle class="doughnutBackground" cx="80" cy="80" r="80" />
+                                <circle class="doughnutForeground" cx="80" cy="80" r="80"
+                                    style="--chartValue:100; --doughuntColor:#00e639" />
+                            </svg>
+                        </div>
                     </div>
-                </div>
 
-                <div class="contents-box">
-                    <p class="title">Pressure</p>
-                    <p class="data" id="scwook-ai3">
-                        <span id="pressure-value1">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
-                    </p>
-                </div>
-
-                <div class="contents-box">
-                    <p class="title">Dust</p>
-                    <p class="data">Not Assigned</p>
-                </div>
-
-                <div class="contents-box">
-                    <p class="title">Pressure</p>
-                    <p class="data">Not Assigned</p>
-                </div>
-
-                <div class="contents-box">
-                    <p class="title">LN2</p>
-                    <div class="liquid-box"><span id="n2-value">45</span>
-                        <div class="subBox" id="n2-flow" style="--b:rgba(0,180,170,1.0)"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Pressure
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data" id="scwook-ai3">
+                            <span id="pressure-value1">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
+                        </p>
                     </div>
+
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+
+                    <div class="grid-item grid-3x2" style="grid-column: 1/span 3; grid-row: 2/span 2;"></div>
+
+                    <div class="grid-item grid-2x1" style="grid-column: 4/span 2;">
+                        <canvas id="canvas"></canvas>
+                    </div>
+
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+
+                    <!-- <div class="container-1x1">
+
+                    <div class="container-1x1">
+                        <p class="title">Dust</p>
+                        <p class="data">Not Assigned</p>
+                    </div>
+
+                    <div class="container-1x1">
+                        <p class="title">Pressure
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data">Not Assigned</p>
+                    </div>
+
+                    <div class="container-1x1">
+                        <p class="title">LN2</p>
+                        <div class="liquid-box"><span id="n2-value">45</span>
+                            <div class="subBox" id="n2-flow" style="--b:rgba(0,180,170,1.0)"></div>
+                        </div>
+                    </div>
+
+                    <div class="container-2x1">
+                        <canvas id="canvas"></canvas>
+                    </div>-->
                 </div>
 
-                <div class="wide-box">
-                    <canvas id="canvas"></canvas>
-                </div>
-
-                <div class="contents-box">
-
-                </div>
-
-                <!-- <div class="contents-box">
-                    <div class="widget-box">
-                        <img id="img" src="image1.svg" width="150" height="150">
-                    </div>
-                    <div class="widget-box">
-                        <img src="image1.svg" width="150" height="150">
-                    </div>
-                    <div class="widget-box">
-                        <img src="image1.svg" width="150" height="150">
-                    </div>
-                    <div class="widget-box">
-                        <img src="image1.svg" width="150" height="150">
-                    </div>
-                </div> -->
             </div>
 
             <!-- Page 2 -->
-            <div class="slide-page">
+            <!-- <div class="slide-page">
                 <div class="slide-page-title">Page2 Title</div>
-                <div class="contents-box">
+                <div class="container-1x1">
                     <p class="title">Temperature</p>
                     <p class="data" id="scwook-ai1">Not Assigned</p>
                 </div>
 
-                <div class="contents-box">
+                <div class="container-1x1">
                     <p class="title">Humidity</p>
                     <p class="data" id="scwook-ai2">Not Assigned</p>
                 </div>
 
-                <div class="contents-box">
+                <div class="container-1x1">
                     <p class="title">Pressure</p>
                     <p class="data" id="scwook-ai3">Not Assigned</p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Page 3 -->
-            <div class="slide-page">
+            <!-- <div class="slide-page">
                 <div class="slide-page-title">Page3 Title</div>
-                <div class="contents-box">
+                <div class="container-1x1">
                     <p class="title">Temperature</p>
                     <p class="data" id="scwook-ai1">Not Assigned</p>
                 </div>
 
-                <div class="contents-box">
+                <div class="container-1x1">
                     <p class="title">Humidity</p>
                     <p class="data" id="scwook-ai2">Not Assigned</p>
                 </div>
 
-                <div class="contents-box">
+                <div class="container-1x1">
                     <p class="title">Pressure</p>
                     <p class="data" id="scwook-ai3">Not Assigned</p>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <button class="slide-button" onclick="showDivs(1)">&#10095;</button>
@@ -393,8 +398,8 @@
         // var change = setInterval(changeImage, 500);
 
 
-        var x = document.getElementsByClassName("slide-page");
-        x[0].style.display = "block";
+        // var x = document.getElementsByClassName("slide-page");
+        // x[0].style.display = "block";
     }
 
     function firstShowUp() {

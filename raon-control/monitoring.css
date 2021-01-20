@@ -68,15 +68,9 @@ body {
     margin: auto;
 }
 
-.slide-box {
-    width: 1800px;
-    height: 950px;
-    float: left;
-}
-
 .slide-button {
-    width: 60px;
-    height: 950px;
+    width: 50px;
+    height: 980px;
     font-size: 32px;
     margin: 0px;
     color: white;
@@ -87,20 +81,69 @@ body {
 
 }
 
+.slide-box {
+    width: 1820px;
+    height: 980px;
+    float: left;
+}
+
+
 .slide-page {
-    width: 1800px;
-    height: 950px;
-    display: none;
+    width: 1820px;
+    height: 980px;
+    float: left;
 }
 
 .slide-page-title {
-    width: 1800px;
-    height: 64px;
+    width: 1820px;
+    height: 50px;
     font-size: 40px;
     text-align: center;
     color: white;
     font-family: "Roboto-Thin";
 
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 280px);
+    grid-template-rows: repeat(3, 280px);
+    gap: 20px 20px;
+    width: 1800px;
+    height: 930px;
+    /* background-color: wheat; */
+}
+
+.grid-item {
+    position: relative;
+    margin: 10px;
+    background-color: rgba(26, 26, 26, 0.5);
+    font-family: "Roboto-Thin";
+}
+
+.grid-1x1 {
+    width: 280px;
+    height: 280px; 
+}
+
+.grid-2x1 {
+    width: 580px;
+    height: 280px; 
+}
+
+.grid-2x2 {
+    width: 580px;
+    height: 580px; 
+}
+
+.grid-3x2 {
+    width: 880px;
+    height: 580px; 
+}
+
+.grid-3x3 {
+    width: 880px;
+    height: 880px; 
 }
 
 .w3-animate-left {
@@ -137,14 +180,14 @@ body {
     }
 }
 
-.contents-box {
+.container-1x1 {
     margin: 10px;
     width: 280px;
     height: 280px;
     float: left;
     background-color: rgba(26, 26, 26, 0.5);
     font-family: "Roboto-Thin";
-    position: relative;
+    /* position: relative; */
 
     /* border: 2px solid black; */
 }
@@ -158,32 +201,31 @@ background-color: #1d1d1d;
 border: 2px solid black;
 } */
 
-.wide-box {
+.container-2x1 {
     margin: 10px;
     width: 580px;
     height: 280px;
-    float: left;
+    /* float: left; */
     background-color: rgba(26, 26, 26, 0.5)
         /* border: 2px solid black; */
 }
 
-.widget-contents-box {
-    width: 1800px;
-    height: 1080px;
-    background-color: #1d1d1d;
-    /* display: none; */
+.container-2x2 {
+    margin: 10px;
+    width: 580px;
+    height: 580px;
+    background-color: rgba(26, 26, 26, 0.5);
+    font-family: "Roboto-Thin";
 }
 
-.widget-box {
-    float: left;
-    margin-bottom: -4px;
+.container-3x3 {
+    margin: 10px;
+    width: 880px;
+    height: 880px;
+    background-color: rgba(26, 26, 26, 0.5);
+    font-family: "Roboto-Thin";
+    /* position: relative; */
 }
-
-.double-widget-box {
-    float: left;
-    margin-bottom: -4px;
-}
-
 
 .title {
     color: white;
@@ -222,8 +264,8 @@ border: 2px solid black;
 
 .doughnut-contain {
     position: relative;
-    width: 176px;
-    height: 176px;
+    width: 174px;
+    height: 174px;
     transform: rotate(-90deg);
     margin: auto;
 }
@@ -231,8 +273,8 @@ border: 2px solid black;
 .doughnutBackground {
     stroke-dashoffset: 0;
     stroke: rgba(0, 84, 188, 0.3);
-    transform: translate(8px, 8px);
-    stroke-width: 16;
+    transform: translate(7px, 7px);
+    stroke-width: 14;
 }
 
 .doughnutForeground {
@@ -242,17 +284,17 @@ border: 2px solid black;
     animation-fill-mode: forwards;
     /* --i: 200; */
     stroke: var(--doughuntColor);
-    stroke-width: 16;
+    stroke-width: 14;
     stroke-linecap: round;
     stroke-dasharray: 503;
-    transform: translate(8px, 8px);
+    transform: translate(7px, 7px);
 }
 
 .doughnutChartText {
     display: flex;
     position: absolute;
-    width: 176px;
-    height: 176px;
+    width: 174px;
+    height: 174px;
     left: 52px;
     color: white;
     font-size: 40px;
@@ -287,6 +329,41 @@ border: 2px solid black;
     border-radius: 40%;
     z-index: -1;
 
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 280px;
+    /* background-color: red; */
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    /* margin-left: 40px; */
+    font-family: "Roboto-Thin";
+    opacity: 0;
+    transition: opacity 1s;
+    font-size: 15px;
+}
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+
+  .title:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1.0;
 }
 
 @keyframes percentage {
