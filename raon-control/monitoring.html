@@ -25,7 +25,7 @@
 
         <div class="slide-box">
             <!-- Page 1 -->
-            <div class="slide-page">
+            <div class="slide-page" style="display: block;">
                 <div class="slide-page-title">Central Control</div>
                 <div class="grid-container">
 
@@ -72,79 +72,68 @@
                         <canvas id="canvas"></canvas>
                     </div>
 
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-
-                    <!-- <div class="container-1x1">
-
-                    <div class="container-1x1">
-                        <p class="title">Dust</p>
-                        <p class="data">Not Assigned</p>
-                    </div>
-
-                    <div class="container-1x1">
-                        <p class="title">Pressure
-                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
-                        </p>
-                        <p class="data">Not Assigned</p>
-                    </div>
-
-                    <div class="container-1x1">
+                    <div class="grid-item grid-1x1">
                         <p class="title">LN2</p>
                         <div class="liquid-box"><span id="n2-value">45</span>
                             <div class="subBox" id="n2-flow" style="--b:rgba(0,180,170,1.0)"></div>
                         </div>
                     </div>
-
-                    <div class="container-2x1">
-                        <canvas id="canvas"></canvas>
-                    </div>-->
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
                 </div>
-
             </div>
 
             <!-- Page 2 -->
-            <!-- <div class="slide-page">
-                <div class="slide-page-title">Page2 Title</div>
-                <div class="container-1x1">
-                    <p class="title">Temperature</p>
-                    <p class="data" id="scwook-ai1">Not Assigned</p>
+            <div class="slide-page" style="display: none">
+                <div class="slide-page-title">Cryogenic</div>
+                <div class="grid-container">
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
                 </div>
-
-                <div class="container-1x1">
-                    <p class="title">Humidity</p>
-                    <p class="data" id="scwook-ai2">Not Assigned</p>
-                </div>
-
-                <div class="container-1x1">
-                    <p class="title">Pressure</p>
-                    <p class="data" id="scwook-ai3">Not Assigned</p>
-                </div>
-            </div> -->
+            </div>
 
             <!-- Page 3 -->
-            <!-- <div class="slide-page">
-                <div class="slide-page-title">Page3 Title</div>
-                <div class="container-1x1">
-                    <p class="title">Temperature</p>
-                    <p class="data" id="scwook-ai1">Not Assigned</p>
+            <div class="slide-page" style="display: none">
+                <div class="slide-page-title">Module</div>
+                <div class="grid-container">
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1"></div>
                 </div>
-
-                <div class="container-1x1">
-                    <p class="title">Humidity</p>
-                    <p class="data" id="scwook-ai2">Not Assigned</p>
-                </div>
-
-                <div class="container-1x1">
-                    <p class="title">Pressure</p>
-                    <p class="data" id="scwook-ai3">Not Assigned</p>
-                </div>
-            </div> -->
+            </div>
         </div>
-
         <button class="slide-button" onclick="showDivs(1)">&#10095;</button>
 
     </div>
@@ -389,17 +378,7 @@
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myChart1 = new Chart(ctx, lineChartConfig(details[0]));
 
-        // var ctx2 = document.getElementById('storage').getContext('2d');
-        // window.myChart2 = new Chart(ctx2, configDoughnut);
-
-        // doughnutChart('storage', 86);
         var myVar = setInterval(timer, 1000);
-        // var startMonitoring = setInterval(monitoring, 1000);
-        // var change = setInterval(changeImage, 500);
-
-
-        // var x = document.getElementsByClassName("slide-page");
-        // x[0].style.display = "block";
     }
 
     function firstShowUp() {
