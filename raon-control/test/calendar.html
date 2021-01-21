@@ -111,143 +111,143 @@
     <div id="calendar">
         <!-- 1 week -->
         <div class="day" style="z-index: 2;">
-            <div class="today">1</div>
+            <div class="today"></div>
             <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button>
         </div>
         <div class="day" style="z-index: 1;">
-            <div class="today">2</div>
+            <div class="today"></div>
             <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation
                 2</button>
         </div>
         <div class="day">
-            <div class="today">3</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">4</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">5</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">6</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">7</div>
+            <div class="today"></div>
         </div>
 
         <!-- 2 week -->
         <div class="day">
-            <div class="today">1</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">2</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">3</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">4</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">5</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">6</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">7</div>
+            <div class="today"></div>
         </div>
 
         <!-- 3 week -->
         <div class="day">
-            <div class="today">1</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">2</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">3</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">4</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">5</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">6</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">7</div>
+            <div class="today"></div>
         </div>
 
         <!-- 4 week -->
         <div class="day">
-            <div class="today">1</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">2</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">3</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">4</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">5</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">6</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">7</div>
+            <div class="today"></div>
         </div>
 
         <!-- 5 week -->
         <div class="day">
-            <div class="today">1</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">2</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">3</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">4</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">5</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">6</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">7</div>
+            <div class="today"></div>
         </div>
 
         <!-- 6 week -->
         <div class="day">
-            <div class="today">1</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">2</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">3</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">4</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">5</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">6</div>
+            <div class="today"></div>
         </div>
         <div class="day">
-            <div class="today">7</div>
+            <div class="today"></div>
         </div>
     </div>
 
@@ -273,15 +273,54 @@
     var yearId = document.getElementById("year");
     yearId.innerHTML = month + " " + today.getFullYear();
 
-    var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+    // console.log(firstDate.getDay());
+    // console.log(lastDate.getDate());
+    // console.log(prevMonthLastDate.getDate());
+    // console.log(prevMonthLastDate.getDate() -  firstDate.getDay() + 1);
+    console.log(today.getDate());
+    function prevCalendar() {
+        today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        createCalendar();
+    }
 
-    console.log(firstDate.getDay());
-    console.log(lastDate.getDate());
-    console.log(prevMonthLastDate.getDate());
-    console.log(prevMonthLastDate.getDate() -  firstDate.getDay() + 1);
+    function nextCalendar() {
+        today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        createCalendar();
+    }
 
+    function makeCalendar() {
+        var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+        var dayCalss = document.getElementsByClassName('day');
+        var startDay = firstDate.getDay();
+        var day = 1;
+        for (let i = startDay; i < dayCalss.length; i++) {
+            var todayClass = dayCalss[i].getElementsByClassName('today')[0];
+            todayClass.innerHTML = day;
+
+            // Sunday
+            if (i % 7 == 0) {
+                todayClass.style.color = "tomato";
+
+            }
+
+            // Today
+            if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
+                todayClass.style.backgroundColor = "dodgerblue";
+            }
+
+            day += 1;
+
+            // Last day reset
+            if (day > lastDate.getDate()) {
+                day = 1;
+            }
+        }
+    }
+
+    makeCalendar();
 </script>
 
 </html>
