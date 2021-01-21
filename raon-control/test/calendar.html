@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url(../fonts/Roboto-Light.ttf);
+    }
+
+    @font-face {
+        font-family: "Roboto-Thin";
+        src: url(../fonts/Roboto-Thin.ttf);
+    }
+
+    body {
+        background-color: black;
+        font-family: "Roboto-Light";
+
+    }
+
+    #calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 100px);
+        grid-template-rows: repeat(6, 100px);
+        width: 700px;
+        height: 720px;
+        overflow: auto;
+    }
+
+    #last-button,
+    #next-button {
+        width: 100px;
+        height: 70px;
+        border: none;
+        outline: none;
+        color: white;
+        background-color: #181818;
+
+    }
+
+    #year {
+        width: 500px;
+        height: 70px;
+        display: flex;
+        font-size: 32px;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        background-color: #181818;
+
+    }
+
+    .week {
+        width: 100px;
+        height: 30px;
+        display: flex;
+        text-align: center;
+        color: gray;
+        background-color: #181818;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .day {
+        background-color: #1d1d1d;
+        color: white;
+        overflow: visible;
+    }
+
+    .today {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 20px;
+        /* background-color: dodgerblue; */
+    }
+
+    .shift-button {
+        width: 400px;
+        height: 24px;
+        border: none;
+        outline: none;
+        color: white;
+        border-radius: 12px;
+        position: relative;
+        font-family: "Roboto-Light";
+
+    }
+</style>
+
+<body>
+    <div style="display: flex;">
+        <button id="last-button" onclick="showDivs(-1)">&#10094;</button>
+
+        <div id="year">January 2021</div>
+        <button id="next-button" onclick="showDivs(1)">&#10095;</button>
+    </div>
+
+    <div style="display: flex;">
+        <div class="week">SUN</div>
+        <div class="week">MON</div>
+        <div class="week">TUE</div>
+        <div class="week">WED</div>
+        <div class="week">THU</div>
+        <div class="week">FRI</div>
+        <div class="week">SAT</div>
+    </div>
+
+    <div id="calendar">
+        <!-- 1 week -->
+        <div class="day" style="z-index: 2;">
+            <div class="today">1</div>
+            <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button>
+        </div>
+        <div class="day" style="z-index: 1;">
+            <div class="today">2</div>
+            <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation
+                2</button>
+        </div>
+        <div class="day">
+            <div class="today">3</div>
+        </div>
+        <div class="day">
+            <div class="today">4</div>
+        </div>
+        <div class="day">
+            <div class="today">5</div>
+        </div>
+        <div class="day">
+            <div class="today">6</div>
+        </div>
+        <div class="day">
+            <div class="today">7</div>
+        </div>
+
+        <!-- 2 week -->
+        <div class="day">
+            <div class="today">1</div>
+        </div>
+        <div class="day">
+            <div class="today">2</div>
+        </div>
+        <div class="day">
+            <div class="today">3</div>
+        </div>
+        <div class="day">
+            <div class="today">4</div>
+        </div>
+        <div class="day">
+            <div class="today">5</div>
+        </div>
+        <div class="day">
+            <div class="today">6</div>
+        </div>
+        <div class="day">
+            <div class="today">7</div>
+        </div>
+
+        <!-- 3 week -->
+        <div class="day">
+            <div class="today">1</div>
+        </div>
+        <div class="day">
+            <div class="today">2</div>
+        </div>
+        <div class="day">
+            <div class="today">3</div>
+        </div>
+        <div class="day">
+            <div class="today">4</div>
+        </div>
+        <div class="day">
+            <div class="today">5</div>
+        </div>
+        <div class="day">
+            <div class="today">6</div>
+        </div>
+        <div class="day">
+            <div class="today">7</div>
+        </div>
+
+        <!-- 4 week -->
+        <div class="day">
+            <div class="today">1</div>
+        </div>
+        <div class="day">
+            <div class="today">2</div>
+        </div>
+        <div class="day">
+            <div class="today">3</div>
+        </div>
+        <div class="day">
+            <div class="today">4</div>
+        </div>
+        <div class="day">
+            <div class="today">5</div>
+        </div>
+        <div class="day">
+            <div class="today">6</div>
+        </div>
+        <div class="day">
+            <div class="today">7</div>
+        </div>
+
+        <!-- 5 week -->
+        <div class="day">
+            <div class="today">1</div>
+        </div>
+        <div class="day">
+            <div class="today">2</div>
+        </div>
+        <div class="day">
+            <div class="today">3</div>
+        </div>
+        <div class="day">
+            <div class="today">4</div>
+        </div>
+        <div class="day">
+            <div class="today">5</div>
+        </div>
+        <div class="day">
+            <div class="today">6</div>
+        </div>
+        <div class="day">
+            <div class="today">7</div>
+        </div>
+
+        <!-- 6 week -->
+        <div class="day">
+            <div class="today">1</div>
+        </div>
+        <div class="day">
+            <div class="today">2</div>
+        </div>
+        <div class="day">
+            <div class="today">3</div>
+        </div>
+        <div class="day">
+            <div class="today">4</div>
+        </div>
+        <div class="day">
+            <div class="today">5</div>
+        </div>
+        <div class="day">
+            <div class="today">6</div>
+        </div>
+        <div class="day">
+            <div class="today">7</div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var today = new Date();
+    var date = new Date();
+    var monthArray = new Array();
+    monthArray[0] = "January";
+    monthArray[1] = "February";
+    monthArray[2] = "March";
+    monthArray[3] = "April";
+    monthArray[4] = "May";
+    monthArray[5] = "June";
+    monthArray[6] = "July";
+    monthArray[7] = "August";
+    monthArray[8] = "September";
+    monthArray[9] = "October";
+    monthArray[10] = "November";
+    monthArray[11] = "December";
+    var month = monthArray[today.getMonth()];
+
+    var yearId = document.getElementById("year");
+    yearId.innerHTML = month + " " + today.getFullYear();
+
+    var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+    console.log(firstDate.getDay());
+    console.log(lastDate.getDate());
+    console.log(prevMonthLastDate.getDate());
+    console.log(prevMonthLastDate.getDate() -  firstDate.getDay() + 1);
+
+</script>
+
+</html>
