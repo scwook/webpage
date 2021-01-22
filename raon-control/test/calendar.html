@@ -77,9 +77,9 @@
         /* background-color: dodgerblue; */
     }
 
-    .shift-button {
-        width: 400px;
-        height: 24px;
+    button {
+        /* width: 400px; */
+        /* height: 24px; */
         border: none;
         outline: none;
         color: white;
@@ -92,10 +92,10 @@
 
 <body>
     <div style="display: flex;">
-        <button id="last-button" onclick="showDivs(-1)">&#10094;</button>
+        <button id="last-button" onclick="prevCalendar()">&#10094;</button>
 
         <div id="year">January 2021</div>
-        <button id="next-button" onclick="showDivs(1)">&#10095;</button>
+        <button id="next-button" onclick="nextCalendar()">&#10095;</button>
     </div>
 
     <div style="display: flex;">
@@ -112,12 +112,11 @@
         <!-- 1 week -->
         <div class="day" style="z-index: 2;">
             <div class="today"></div>
-            <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button>
+            <!-- <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button> -->
         </div>
         <div class="day" style="z-index: 1;">
             <div class="today"></div>
-            <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation
-                2</button>
+            <!-- <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation2</button> -->
         </div>
         <div class="day">
             <div class="today"></div>
@@ -268,59 +267,102 @@
     monthArray[9] = "October";
     monthArray[10] = "November";
     monthArray[11] = "December";
-    var month = monthArray[today.getMonth()];
 
-    var yearId = document.getElementById("year");
-    yearId.innerHTML = month + " " + today.getFullYear();
-
-    // console.log(firstDate.getDay());
-    // console.log(lastDate.getDate());
-    // console.log(prevMonthLastDate.getDate());
-    // console.log(prevMonthLastDate.getDate() -  firstDate.getDay() + 1);
-    console.log(today.getDate());
     function prevCalendar() {
         today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-        createCalendar();
+        makeCalendar();
     }
 
     function nextCalendar() {
         today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-        createCalendar();
+        makeCalendar();
     }
 
     function makeCalendar() {
+        // Year and Month
+        var yearId = document.getElementById("year");
+        var month = monthArray[today.getMonth()];
+        yearId.innerHTML = month + " " + today.getFullYear();
+
         var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
         var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
         var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
 
         var dayCalss = document.getElementsByClassName('day');
-        var startDay = firstDate.getDay();
-        var day = 1;
-        for (let i = startDay; i < dayCalss.length; i++) {
+        var thisMonthFirstDay = firstDate.getDay();
+        var day = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+
+
+        // This Month
+        for (let i = 0; i < dayCalss.length; i++) {
             var todayClass = dayCalss[i].getElementsByClassName('today')[0];
+
+            // Last Month last day reset and start this month first day
+            if (i == thisMonthFirstDay) {
+                day = 1;
+            }
+
             todayClass.innerHTML = day;
 
             // Sunday
             if (i % 7 == 0) {
                 todayClass.style.color = "tomato";
-
             }
 
             // Today
+            todayClass.style.backgroundColor = "transparent";
             if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
                 todayClass.style.backgroundColor = "dodgerblue";
             }
 
             day += 1;
 
-            // Last day reset
+            // Last day reset and start next month first day
             if (day > lastDate.getDate()) {
                 day = 1;
             }
         }
     }
 
-    makeCalendar();
+    function schedule() {
+        var dayCalss = document.getElementsByClassName('day');
+        var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
+
+        var scheduleList = [
+            { date: "2021-01-10", days: 2, title: "Beam Commissioning" },
+            { date: "2021-01-21", days: 3, title: "Beam Commissioning" }
+        ];
+
+        var dateArray = scheduleList[0].date.split("-");
+        // console.log(dateArray[0]);
+        // console.log(dateArray[1]);
+        // console.log(dateArray[2]);
+
+        var list = dateArray[0] + '-' + dateArray[1];
+        if (yearMonth == list) {
+            let scheduleButton = document.createElement('BUTTON');
+            let buttonText = document.createTextNode(scheduleList[0].title);
+            scheduleButton.style.backgroundColor = '#283593';
+            scheduleButton.style.width = 100 * scheduleList[0].days + 'px';
+            console.log(scheduleButton.style.width);
+            scheduleButton.style.height = '24px';
+            scheduleButton.appendChild(buttonText);
+
+            var listIndex = today.getDay() + parseInt(dateArray[2]) - 1;
+            dayCalss[listIndex].appendChild(scheduleButton);
+        }
+
+
+
+        // dayCalss[0].appendChild(scheduleButton);
+
+    }
+
+    window.onload = function () {
+        makeCalendar();
+        schedule();
+
+    }
 </script>
 
 </html>
