@@ -83,7 +83,7 @@
         border: none;
         outline: none;
         color: white;
-        border-radius: 12px;
+        /* border-radius: 12px; */
         position: relative;
         font-family: "Roboto-Light";
 
@@ -92,10 +92,10 @@
 
 <body>
     <div style="display: flex;">
-        <button id="last-button" onclick="prevCalendar()" style="border-radius: 0px;">&#10094;</button>
+        <button id="last-button" onclick="prevCalendar()">&#10094;</button>
 
         <div id="year">January 2021</div>
-        <button id="next-button" onclick="nextCalendar()" style="border-radius: 0px;">&#10095;</button>
+        <button id="next-button" onclick="nextCalendar()">&#10095;</button>
     </div>
 
     <div style="display: flex;">
@@ -329,7 +329,7 @@
         var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
 
         var scheduleList = [
-            { date: "2021-01-10", days: 9, title: "Beam Commissioning" },
+            { date: "2021-01-11", days: 3, title: "Beam Commissioning" },
             { date: "2021-01-21", days: 3, title: "Beam Commissioning" }
         ];
 
@@ -342,25 +342,47 @@
         if (yearMonth == list) {
             var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
             var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
-            var endIndex = parseInt(startIndex) + parseInt(dateArray[2]);
-            // console.log(endIndex);
-            for(let i = startIndex; i < endIndex; i++) {
-                if( i % 7 == 0) {
-                    console.log('week', i);
+            var endIndex = parseInt(startIndex) + parseInt(scheduleList[0].days);
+
+            createScheduleButton(startIndex);
+
+            function createScheduleButton(index) {
+                let scheduleButton = document.createElement('BUTTON');
+                let buttonText = document.createTextNode(scheduleList[0].title);
+                scheduleButton.style.backgroundColor = '#283593';
+                // scheduleButton.style.width = 100 * scheduleList[0].days + 'px';
+                scheduleButton.style.height = '24px';
+
+                let buttonWidthScale = 1;
+                for (let i = index; i < endIndex; i++) {
+                    // button head
+                    if( i == startIndex) {
+                        scheduleButton.style.borderTopLeftRadius = '12px';
+                        scheduleButton.style.borderBottomLeftRadius = '12px';
+                    }
+
+                    // button tail
+                    if( i == (endIndex - 1)) {
+                        scheduleButton.style.borderTopRightRadius = '12px';
+                        scheduleButton.style.borderBottomRightRadius = '12px';
+                        scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                        scheduleButton.appendChild(buttonText);
+                        dayCalss[startIndex].appendChild(scheduleButton);
+                        break;
+                    }
+
+
+                    if ((i + 1) % 7 == 0) {
+
+                        startIndex = i;
+
+                        // createScheduleButton();
+                    }
+
+                    buttonWidthScale += 1;
                 }
+
             }
-
-            let scheduleButton = document.createElement('BUTTON');
-            let buttonText = document.createTextNode(scheduleList[0].title);
-            scheduleButton.style.backgroundColor = '#283593';
-            scheduleButton.style.width = 100 * scheduleList[0].days + 'px';
-
-            scheduleButton.style.height = '24px';
-            scheduleButton.appendChild(buttonText);
-
-
-            dayCalss[startIndex].appendChild(scheduleButton);
-
         }
 
     }
