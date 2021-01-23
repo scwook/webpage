@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<style>
+div {
+ width:100px;
+ height:20px;
+ background-color:green;
+}
+</style>
+<body>
+<div id="a"></div>
+<div id="b"></div>
+
+</body>
+<script>
+var ida = document.getElementById('a');
+var idb = document.getElementById('b');
+
+var count = 1;
+var f = 0;
+function my() {
+
+  ida.innerText = 'a';    
+  
+  inside();
+  function inside() {
+    // idb.innerText = 'b';    
+    count += 1;
+
+    if(count < 10) {
+      idb.innerText = f;
+      console.log(count, f);
+      f += 1;
+      inside();
+    }
+
+    console.log("end");
+  }
+}
+
+
+my();
+
+</script>
+</html>

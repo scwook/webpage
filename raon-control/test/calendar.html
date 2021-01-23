@@ -329,7 +329,7 @@
         var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
 
         var scheduleList = [
-            { date: "2021-01-11", days: 3, title: "Beam Commissioning" },
+            { date: "2021-01-11", days: 2, title: "Beam Commissioning" },
             { date: "2021-01-21", days: 3, title: "Beam Commissioning" }
         ];
 
@@ -337,7 +337,6 @@
         // console.log(dateArray[0]);
         // console.log(dateArray[1]);
         // console.log(dateArray[2]);
-
         var list = dateArray[0] + '-' + dateArray[1];
         if (yearMonth == list) {
             var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -347,14 +346,14 @@
             createScheduleButton(startIndex);
 
             function createScheduleButton(index) {
-                let scheduleButton = document.createElement('BUTTON');
-                let buttonText = document.createTextNode(scheduleList[0].title);
+                var scheduleButton = document.createElement('BUTTON');
+                var buttonText = document.createTextNode(scheduleList[0].title);
                 scheduleButton.style.backgroundColor = '#283593';
                 // scheduleButton.style.width = 100 * scheduleList[0].days + 'px';
                 scheduleButton.style.height = '24px';
 
-                let buttonWidthScale = 1;
-                for (let i = index; i < endIndex; i++) {
+                var buttonWidthScale = 1;
+                for (var i = index; i < endIndex; i++) {
                     // button head
                     if( i == startIndex) {
                         scheduleButton.style.borderTopLeftRadius = '12px';
@@ -367,16 +366,20 @@
                         scheduleButton.style.borderBottomRightRadius = '12px';
                         scheduleButton.style.width = 100 * buttonWidthScale + 'px';
                         scheduleButton.appendChild(buttonText);
-                        dayCalss[startIndex].appendChild(scheduleButton);
+                        dayCalss[index].appendChild(scheduleButton);
                         break;
                     }
 
 
                     if ((i + 1) % 7 == 0) {
+                        scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                        scheduleButton.appendChild(buttonText);
+                        dayCalss[index].appendChild(scheduleButton);
 
-                        startIndex = i;
+                        console.log(i + 1);
 
-                        // createScheduleButton();
+                        createScheduleButton(i + 1);
+                        break;
                     }
 
                     buttonWidthScale += 1;
