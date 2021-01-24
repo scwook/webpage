@@ -78,12 +78,12 @@
     }
 
     button {
-        /* width: 400px; */
-        /* height: 24px; */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         border: none;
         outline: none;
         color: white;
-        /* border-radius: 12px; */
         position: relative;
         font-family: "Roboto-Light";
 
@@ -271,11 +271,27 @@
     function prevCalendar() {
         today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
         makeCalendar();
+
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+
+        for (let i = 0; i < scheduleButtonClass.length; i++) {
+            scheduleButtonClass[i].remove();
+        }
+
+        schedule();
     }
 
     function nextCalendar() {
         today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
         makeCalendar();
+
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+
+        for (let i = 0; i < scheduleButtonClass.length; i++) {
+            scheduleButtonClass[i].remove();
+        }
+
+        schedule();
     }
 
     function makeCalendar() {
@@ -327,64 +343,72 @@
     function schedule() {
         var dayCalss = document.getElementsByClassName('day');
         var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
-
+        var colorTable = ['#283593', '#2E7D32', '#EF6C00'];
         var scheduleList = [
-            { date: "2021-01-11", days: 2, title: "Beam Commissioning" },
+            { date: "2021-01-20", days: 2, title: "Beam Commissioning" },
             { date: "2021-01-21", days: 3, title: "Beam Commissioning" }
         ];
 
-        var dateArray = scheduleList[0].date.split("-");
-        // console.log(dateArray[0]);
-        // console.log(dateArray[1]);
-        // console.log(dateArray[2]);
-        var list = dateArray[0] + '-' + dateArray[1];
-        if (yearMonth == list) {
-            var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-            var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
-            var endIndex = parseInt(startIndex) + parseInt(scheduleList[0].days);
+        console.log(scheduleList.length);
+        for (let i = 0; i < scheduleList.length; i++) {
 
-            createScheduleButton(startIndex);
+            var dateArray = scheduleList[i].date.split("-");
+            // console.log(dateArray[0]);
+            // console.log(dateArray[1]);
+            // console.log(dateArray[2]);
+            var list = dateArray[0] + '-' + dateArray[1];
+            if (yearMonth == list) {
+                var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
+                var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
 
-            function createScheduleButton(index) {
-                var scheduleButton = document.createElement('BUTTON');
-                var buttonText = document.createTextNode(scheduleList[0].title);
-                scheduleButton.style.backgroundColor = '#283593';
-                // scheduleButton.style.width = 100 * scheduleList[0].days + 'px';
-                scheduleButton.style.height = '24px';
-
-                var buttonWidthScale = 1;
-                for (var i = index; i < endIndex; i++) {
-                    // button head
-                    if( i == startIndex) {
-                        scheduleButton.style.borderTopLeftRadius = '12px';
-                        scheduleButton.style.borderBottomLeftRadius = '12px';
-                    }
-
-                    // button tail
-                    if( i == (endIndex - 1)) {
-                        scheduleButton.style.borderTopRightRadius = '12px';
-                        scheduleButton.style.borderBottomRightRadius = '12px';
-                        scheduleButton.style.width = 100 * buttonWidthScale + 'px';
-                        scheduleButton.appendChild(buttonText);
-                        dayCalss[index].appendChild(scheduleButton);
-                        break;
-                    }
-
-
-                    if ((i + 1) % 7 == 0) {
-                        scheduleButton.style.width = 100 * buttonWidthScale + 'px';
-                        scheduleButton.appendChild(buttonText);
-                        dayCalss[index].appendChild(scheduleButton);
-
-                        console.log(i + 1);
-
-                        createScheduleButton(i + 1);
-                        break;
-                    }
-
-                    buttonWidthScale += 1;
+                // If schedule exceeds the last date of this month
+                if (endIndex > dayCalss.length) {
+                    endIndex = dayCalss.length;
                 }
 
+                createScheduleButton(startIndex);
+
+                function createScheduleButton(index) {
+                    var scheduleButton = document.createElement('BUTTON');
+                    var buttonText = document.createTextNode(scheduleList[i].title);
+                    scheduleButton.classList.add('scheduleButton');
+                    scheduleButton.style.backgroundColor = colorTable[i];
+                    scheduleButton.style.height = '24px';
+
+                    var buttonWidthScale = 1;
+                    for (var j = index; j < endIndex; j++) {
+                        // button head
+                        if (j == startIndex) {
+                            scheduleButton.style.borderTopLeftRadius = '12px';
+                            scheduleButton.style.borderBottomLeftRadius = '12px';
+                        }
+
+                        // button tail
+                        if (j == (endIndex - 1)) {
+                            scheduleButton.style.borderTopRightRadius = '12px';
+                            scheduleButton.style.borderBottomRightRadius = '12px';
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+                            break;
+                        }
+
+                        // In case of end of week
+                        if ((j + 1) % 7 == 0) {
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+
+                            // create new button for next week
+                            createScheduleButton(j + 1);
+                            break;
+                        }
+
+                        buttonWidthScale += 1;
+                    }
+
+                }
             }
         }
 
