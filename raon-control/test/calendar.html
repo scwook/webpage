@@ -17,15 +17,6 @@
 
     }
 
-    #calendar {
-        display: grid;
-        grid-template-columns: repeat(7, 100px);
-        grid-template-rows: repeat(6, 100px);
-        width: 700px;
-        height: 720px;
-        overflow: auto;
-    }
-
     #last-button,
     #next-button {
         width: 100px;
@@ -59,6 +50,16 @@
         justify-content: center;
         align-items: center;
 
+    }
+
+    #calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 100px);
+        grid-template-rows: repeat(6, 100px);
+        width: 700px;
+        height: 600px;
+        overflow: auto;
+        background-color: tomato;
     }
 
     .day {
@@ -250,6 +251,8 @@
         </div>
     </div>
 
+    <div id = "todo" style="color:white; font-size: 24px;">abcd</div>
+
 </body>
 <script>
     var today = new Date();
@@ -274,7 +277,7 @@
 
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
 
-        for (let i = 0; i < scheduleButtonClass.length; i++) {
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
             scheduleButtonClass[i].remove();
         }
 
@@ -287,7 +290,7 @@
 
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
 
-        for (let i = 0; i < scheduleButtonClass.length; i++) {
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
             scheduleButtonClass[i].remove();
         }
 
@@ -346,10 +349,11 @@
         var colorTable = ['#283593', '#2E7D32', '#EF6C00'];
         var scheduleList = [
             { date: "2021-01-20", days: 2, title: "Beam Commissioning" },
-            { date: "2021-01-21", days: 3, title: "Beam Commissioning" }
+            { date: "2021-01-21", days: 3, title: "Beam Commissioning" },
+            { date: "2021-01-11", days: 1, title: "Beam Commissioning" },
+
         ];
 
-        console.log(scheduleList.length);
         for (let i = 0; i < scheduleList.length; i++) {
 
             var dateArray = scheduleList[i].date.split("-");
@@ -373,6 +377,7 @@
                     var scheduleButton = document.createElement('BUTTON');
                     var buttonText = document.createTextNode(scheduleList[i].title);
                     scheduleButton.classList.add('scheduleButton');
+                    scheduleButton.addEventListener('click', function () { refrashShiftTable(i) });
                     scheduleButton.style.backgroundColor = colorTable[i];
                     scheduleButton.style.height = '24px';
 
@@ -412,6 +417,10 @@
             }
         }
 
+    }
+
+    function refrashShiftTable(i) {
+        document.getElementById('todo').innerHTML = i;
     }
 
     window.onload = function () {

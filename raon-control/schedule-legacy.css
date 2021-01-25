@@ -26,7 +26,6 @@ body {
     background-image: url('shadowbg.png');
     background-repeat: no-repeat;
     background-position: center var(--background-image-top);
-    font-family: "Roboto-Light";
 }
 
 #time-stamp {
@@ -68,136 +67,119 @@ body {
 .body-left {
     float: left;
     width: 750px;
-    height: 980px;
+    height: 1000px;
     /* background-color: tomato; */
 }
 
 .body-center {
     float: left;
     width: 420px;
-    height: 980px;
+    height: 1000px;
+    /* background-color: teal; */
 }
 
 .body-right {
     float: left;
     width: 750px;
-    height: 980px;
+    height: 1000px;
     /* background-color: goldenrod; */
 }
 
-.title-box {
-    /* display: flex;
-    align-items: center; */
-    position: relative;
-    width: 700px;
-    height: 40px;
-    left: 25px;
-    font-size: 32px;
-    color: white;
-}
-
-#last-button,
-#next-button {
-    width: 100px;
-    height: 70px;
-    border: none;
-    outline: none;
-    color: white;
-    background-color: #181818;
-
-}
-
-#year {
-    width: 500px;
-    height: 70px;
-    display: flex;
-    font-size: 32px;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    background-color: #181818;
-
-}
-
-.week {
-    position: relative;
-    width: 100px;
-    height: 30px;
-    left: 25px;
-    display: flex;
-    text-align: center;
-    color: gray;
-    background-color: #181818;
-    justify-content: center;
-    align-items: center;
-
-}
-
-#calendar {
-    display: grid;
-    position: relative;
-    grid-template-columns: repeat(7, 100px);
-    grid-template-rows: repeat(6, 100px);
-    width: 700px;
-    height: 600px;
-    left: 25px;
-    overflow: auto;
-}
-
-.day {
-    background-color: #1d1d1d;
-    color: white;
-    overflow: visible;
-}
-
-.today {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 20px;
-    /* background-color: dodgerblue; */
-}
-
-button {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    border: none;
-    outline: none;
-    color: white;
-    position: relative;
-    font-family: "Roboto-Light";
-
-}
-
-#todo-box {
-    position: relative;
-    left: 25px;
-    width: 700px;
-    height: 180px;
-    color: white;
-    font-size: 24px;
-}
-
-.title-bar {
+.header-box {
     display: inline-block;
-    position: relative;
-    width: 625px;
+    font-size: 32px;
+    font-family: "Helvetica-Neue-Light";
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.header-bar {
+    display: inline-block;
     height: 5px;
-    left: 50px;
     background-color: #283593;
     animation-name: bar-animation;
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
 
+#calendar-header {
+    margin: auto;
+    background-color: #1d1d1d;
+    border-collapse: collapse;
+}
+
+#calendar-header td {
+    width: 105px;
+}
+
+#calendar {
+    background-color: #1d1d1d;
+}
+
+table {
+    border-collapse: collapse;
+    color: white;
+    font-family: "Helvetica-Neue-Light";
+    margin: auto;
+}
+
+
+th,
+td {
+    /* border: 1px solid white; */
+
+}
+
+.year {
+    height: 80px;
+    text-align: center;
+    background-color: #181818;
+}
+
+.week {
+    height: 40px;
+    text-align: center;
+    font-size: 15px;
+    color: gray;
+    background-color: #181818;
+}
+
+button {
+    height: 26px;
+    width: 100%;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    cursor: pointer;
+}
+
+.day-box {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 20px;
+}
+
+.today-box {
+    width: 740px;
+    height: 150px;
+    font-size: 18px;
+    font-family: "Helvetica-Neue-Light";
+    color: white;
+    margin-top: auto;
+    background-color: #181818;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+
 .schedule-list-box {
-    width: 350px;
+    width: 300px;
     height: 150px;
     padding: 10px;
-    /* left: 15px; */
     border-radius: 20px;
     color: white;
     margin: auto;
@@ -254,7 +236,6 @@ button {
     height: 40px;
     font-size: 28px;
     padding-left: 10px;
-    color: white;
 }
 
 .avatar-img {
@@ -289,7 +270,7 @@ button {
     }
 
     to {
-        width: 625px;
+        width: 650px;
     }
 }
 
