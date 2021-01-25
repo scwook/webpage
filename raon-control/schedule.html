@@ -17,7 +17,7 @@
 
     <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
 
-        <div class="body-left">
+        <div id="body-left">
             <div class="title-box">Schedule</div>
 
             <div style="display: flex; position:relative; left: 25px;">
@@ -181,7 +181,9 @@
 
             <div style="height:20px"></div>
 
-            <div class="title-box">Todo</div>
+            <div class="title-box" style="display: inline-block; width:50px;">Todo</div>
+            <div class="title-bar" style="display: inline-block;"></div>
+
             <div id="todo-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -190,9 +192,9 @@
 
         </div>
 
-        <div class="body-center">
+        <div id="body-center">
             <div style="height:40px"></div>
-            <div class="schedule-list-box" id="schedule1">
+            <!-- <div class="schedule-list-box" id="schedule1">
                 <div style="display:inline-block; font-size:32px; font-weight: bold;">4</div>
                 <div style="display:inline-block; font-size:20px; font-weight: bold;">-6</div>
                 <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
@@ -227,11 +229,11 @@
                 <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
                 <div class="day-schedule">Day 13 : Beam Standby</div>
                 <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div>
+            </div> -->
 
         </div>
 
-        <div class="body-right">
+        <div id="body-right">
             <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
             <div class="title-bar" style="display: inline-block;"></div>
 
@@ -586,6 +588,56 @@
 
         }
 
+        function scheduleDetail() {
+            var bodyCenterId = document.getElementById('body-center');
+            var scheduleBox = document.createElement('DIV');
+            var scheduleBegin = document.createElement('DIV');
+            var scheduleEnd = document.createElement('DIV');
+            var scheduleTitle = document.createElement('DIV');
+
+            scheduleBox.appendChild(scheduleBegin);
+            scheduleBox.appendChild(scheduleEnd);
+            scheduleBox.appendChild(scheduleTitle);
+
+            for(let i = 0; i < 3; i++) {
+                var daySchedule = document.createElement('DIV');
+                daySchedule.classList.add('day-schedule');
+                daySchedule.innerText = 'Day 11 : Beam Standby';
+
+                scheduleBox.appendChild(daySchedule);
+            }
+
+
+            scheduleBox.classList.add('schedule-list-box');
+            scheduleBox.style.backgroundColor = '#283593';
+
+            scheduleBegin.innerText = '12';
+            scheduleEnd.innerText = '-15';
+            scheduleTitle.innerText = 'Beam Operation Event 1';
+
+            bodyCenterId.appendChild(scheduleBox);
+
+            // <div class="schedule-list-box" id="schedule2">
+            //     <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
+            //     <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
+            //     <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+            //         Event 1</div>
+            //     <div class="day-schedule">Day 11 : Beam Standby</div>
+            //     <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+            //     <div class="day-schedule">Day 13 : Beam Standby</div>
+            //     <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
+            // </div>
+
+            var scheduleList = [
+                { date: "2021-01-20", days: 2, title: "Beam Commissioning" },
+                { date: "2021-01-21", days: 3, title: "Beam Commissioning" },
+                { date: "2021-01-11", days: 1, title: "Beam Commissioning" },
+
+            ];
+
+
+        }
+
         var svgDeskCode1 = '<svg id="desk1" width="37.6749" height="6.1317" viewBox="0 0 37.6749 6.1317"><style>#desk1-1{fill:#e6e6e6;}#desk1-2{fill:#e6e6e6;}#desk1-3{fill:#e6e6e6;}</style><path id="desk1-1" d="M7.4417,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1863V.9341H1.1626V7.0659H2.3488A11.6573,11.6573,0,0,1,7.4417,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-2" d="M20,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H13.7209V7.0659h1.1862A11.6573,11.6573,0,0,1,20,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-3" d="M32.5583,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H26.2791V7.0659h1.1863A11.6573,11.6573,0,0,1,32.5583,5.839" transform="translate(-1.1626 -0.9341)"/></svg>';
         var svgDeskCode2 = '<svg id="desk2" width="19.3464" height="20.3421"><style>#desk2-1{fill:#e6e6e6;}#desk2-2{fill:#e6e6e6;}#desk2-3{fill:#e6e6e6;}#desk2-4{fill:#e6e6e6;}#desk2-5{fill:#e6e6e6;}#desk2-6{fill:#e6e6e6;}</style><path id="desk2-1" d="M9.1711,16.6943,7.7165,21.171,2.3693,17.286l3.8116-2.7693A5.9935,5.9935,0,0,0,9.1711,16.6943Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-2" d="M5.0323,11a5.9544,5.9544,0,0,0,1.1486,3.5167L2.3693,17.286.3268,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-3" d="M6.181,7.4833,2.3693,4.714,7.7165.829,9.1711,5.3057A5.9938,5.9938,0,0,0,6.181,7.4833Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-4" d="M11.0212,5.0111a5.9784,5.9784,0,0,0-1.85.2946L7.7165.829h6.61L12.8714,5.3058A5.9757,5.9757,0,0,0,11.0212,5.0111Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-5" d="M5.0323,11H.3268L2.3693,4.714,6.181,7.4833A5.9538,5.9538,0,0,0,5.0323,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-6" d="M12.8714,5.3058,14.326.829l5.3472,3.885L15.8615,7.4833A5.9937,5.9937,0,0,0,12.8714,5.3058Z" transform="translate(-0.3268 -0.829)"/></svg>';
         var svgDeskCode3 = '<svg id="desk3" width="19.3464" height="20.3421"><style>.#desk3-1{fill:#e6e6e6;}#desk3-2{fill:#e6e6e6;}#desk3-3{fill:#e6e6e6;}#desk3-4{fill:#e6e6e6;}#desk3-5{fill:#e6e6e6;}#desk3-6{fill:#e6e6e6;}</style><path id="desk3-1" d="M10.5021,15.8654l1.4546,4.4767l5.3472-3.885l-3.8117-2.7693C12.7567,14.6984,11.7163,15.4711,10.5021,15.8654z"/><path id="desk3-2" d="M14.6409,10.1711c0,1.3158-0.4293,2.5285-1.1486,3.5167l3.8117,2.7693l2.0425-6.286H14.6409z"/><path id="desk3-3" d="M13.4922,6.6544l3.8117-2.7694L11.9567,0l-1.4546,4.4767C11.7163,4.8711,12.7566,5.6438,13.4922,6.6544z"/><path id="desk3-4" d="M8.652,4.1822c0.6462,0,1.2671,0.1052,1.8502,0.2946L11.9567,0H5.3472l1.4546,4.4768C7.3848,4.2875,8.0058,4.1822,8.652,4.1822z"/><path id="desk3-5" d="M14.6409,10.1711h4.7056L17.3039,3.885l-3.8117,2.7694C14.2115,7.6426,14.6409,8.8553,14.6409,10.1711z"/><path id="desk3-6" d="M6.8018,4.4768L5.3472,0L0,3.885l3.8117,2.7694C4.5473,5.6438,5.5876,4.8711,6.8018,4.4768z"/></svg>';
@@ -786,6 +838,7 @@
         window.onload = function () {
             makeCalendar();
             schedule();
+            scheduleDetail();
 
             var myVar = setInterval(timer, 1000);
 

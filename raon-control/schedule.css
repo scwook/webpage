@@ -65,20 +65,20 @@ body {
     font-family: "Helvetica-Neue-Light";
 }
 
-.body-left {
+#body-left {
     float: left;
     width: 750px;
     height: 980px;
     /* background-color: tomato; */
 }
 
-.body-center {
+#body-center {
     float: left;
     width: 420px;
     height: 980px;
 }
 
-.body-right {
+#body-right {
     float: left;
     width: 750px;
     height: 980px;
@@ -145,7 +145,7 @@ body {
 }
 
 .day {
-    background-color: #1d1d1d;
+    background-color: rgba(25, 25, 25, 0.5);
     color: white;
     overflow: visible;
 }
@@ -175,10 +175,12 @@ button {
 #todo-box {
     position: relative;
     left: 25px;
-    width: 700px;
-    height: 180px;
+    padding: 15px;
+    width: 670px;
+    height: 150px;
     color: white;
-    font-size: 24px;
+    font-size: 18px;
+    background-color: rgba(25, 25, 25, 0.5);
 }
 
 .title-bar {
@@ -271,7 +273,7 @@ button {
     margin-left: 10px;
 }
 
-#schedule1 {
+/* #schedule1 {
     background-color: #283593;
 }
 
@@ -281,7 +283,7 @@ button {
 
 #schedule3 {
     background-color: #EF6C00;
-}
+} */
 
 @keyframes bar-animation {
     from {
@@ -301,7 +303,7 @@ button {
 
     to {
         bottom: 0;
-        opacity: 1
+        opacity: 1;
     }
 }
 
