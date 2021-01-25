@@ -194,7 +194,7 @@
 
         <div id="body-center">
             <div style="height:40px"></div>
-            <!-- <div class="schedule-list-box" id="schedule1">
+            <div class="schedule-list-box" id="schedule1">
                 <div style="display:inline-block; font-size:32px; font-weight: bold;">4</div>
                 <div style="display:inline-block; font-size:20px; font-weight: bold;">-6</div>
                 <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
@@ -229,7 +229,7 @@
                 <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
                 <div class="day-schedule">Day 13 : Beam Standby</div>
                 <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div> -->
+            </div>
 
         </div>
 
@@ -590,10 +590,23 @@
 
         function scheduleDetail() {
             var bodyCenterId = document.getElementById('body-center');
+
             var scheduleBox = document.createElement('DIV');
+            scheduleBox.classList.add('schedule-list-box');
+            scheduleBox.style.backgroundColor = '#283593';
+
             var scheduleBegin = document.createElement('DIV');
+            scheduleBegin.classList.add('schedule-day-begin');
+            scheduleBegin.innerText = '12';
+
+
             var scheduleEnd = document.createElement('DIV');
+            scheduleEnd.classList.add('schedule-day-end');
+            scheduleEnd.innerText = '-15';
+
             var scheduleTitle = document.createElement('DIV');
+            scheduleTitle.classList.add('schedule-day-title');
+            scheduleTitle.innerText = 'Beam Operation Event 1';
 
             scheduleBox.appendChild(scheduleBegin);
             scheduleBox.appendChild(scheduleEnd);
@@ -601,19 +614,12 @@
 
             for(let i = 0; i < 3; i++) {
                 var daySchedule = document.createElement('DIV');
-                daySchedule.classList.add('day-schedule');
+                daySchedule.classList.add('schedule-day-detail');
                 daySchedule.innerText = 'Day 11 : Beam Standby';
 
                 scheduleBox.appendChild(daySchedule);
             }
 
-
-            scheduleBox.classList.add('schedule-list-box');
-            scheduleBox.style.backgroundColor = '#283593';
-
-            scheduleBegin.innerText = '12';
-            scheduleEnd.innerText = '-15';
-            scheduleTitle.innerText = 'Beam Operation Event 1';
 
             bodyCenterId.appendChild(scheduleBox);
 
@@ -838,7 +844,7 @@
         window.onload = function () {
             makeCalendar();
             schedule();
-            scheduleDetail();
+            // scheduleDetail();
 
             var myVar = setInterval(timer, 1000);
 
@@ -859,3 +865,78 @@
 </body>
 
 </html>
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<style>
+.schedule-list-box {
+    width: 350px;
+    height: 150px;
+    padding: 10px;
+    /* left: 15px; */
+    border-radius: 20px;
+    color: white;
+    margin: auto;
+    font-family: "Roboto-Light";
+
+    position: relative;
+    animation: animatebottom 1s;
+    bottom: -50px;
+    opacity: 0;
+    animation-fill-mode: forwards;
+
+}
+
+#schedule1 {
+    background-color: #283593;
+}
+
+#schedule2 {
+    background-color: #2E7D32;
+}
+
+#schedule3 {
+    animation-delay: 0.2s;
+	margin-top: 40px;
+    background-color: #EF6C00;
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -50px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0;
+        opacity: 1;
+    }
+}
+</style>
+<body>
+           <div class="schedule-list-box" id="schedule2">
+                <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
+                <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
+                <div class="day-schedule">Day 11 : Beam Standby</div>
+                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+                <div class="day-schedule">Day 13 : Beam Standby</div>
+                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
+            </div>
+
+
+           <div class="schedule-list-box" id="schedule3">
+                <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
+                <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
+                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
+                    Event 1</div>
+                <div class="day-schedule">Day 11 : Beam Standby</div>
+                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
+                <div class="day-schedule">Day 13 : Beam Standby</div>
+                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
+            </div>
+</body>
+</html> -->

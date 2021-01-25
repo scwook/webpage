@@ -213,7 +213,26 @@ button {
 
 }
 
-.day-schedule {
+.schedule-day-begin {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.schedule-day-end {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.schedule-day-title {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.schedule-day-detail {
     font-size: 14px;
     margin-left: 10px;
     margin-top: 8px;
@@ -273,7 +292,7 @@ button {
     margin-left: 10px;
 }
 
-/* #schedule1 {
+#schedule1 {
     background-color: #283593;
 }
 
@@ -283,7 +302,7 @@ button {
 
 #schedule3 {
     background-color: #EF6C00;
-} */
+}
 
 @keyframes bar-animation {
     from {
