@@ -17,6 +17,7 @@
 
     <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
 
+        <!-- Left -->
         <div id="body-left">
             <div class="title-box">Schedule</div>
 
@@ -192,47 +193,12 @@
 
         </div>
 
+        <!-- Center -->
         <div id="body-center">
-            <div style="height:40px"></div>
-            <div class="schedule-list-box" id="schedule1">
-                <div style="display:inline-block; font-size:32px; font-weight: bold;">4</div>
-                <div style="display:inline-block; font-size:20px; font-weight: bold;">-6</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
-                    Event 1</div>
-                <div class="day-schedule">Day 11 : Beam Standby</div>
-                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
-                <div class="day-schedule">Day 13 : Beam Standby</div>
-                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div>
-
-            <div style="height:40px"></div>
-
-            <div class="schedule-list-box" id="schedule2">
-                <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
-                <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
-                    Event 1</div>
-                <div class="day-schedule">Day 11 : Beam Standby</div>
-                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
-                <div class="day-schedule">Day 13 : Beam Standby</div>
-                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div>
-
-            <div style="height:40px"></div>
-
-            <div class="schedule-list-box" id="schedule3">
-                <div style="display:inline-block; font-size:32px; font-weight: bold;">25</div>
-                <div style="display:inline-block; font-size:20px; font-weight: bold;">-29</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
-                    Event 1</div>
-                <div class="day-schedule">Day 11 : Beam Standby</div>
-                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
-                <div class="day-schedule">Day 13 : Beam Standby</div>
-                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div>
 
         </div>
 
+        <!-- Right -->
         <div id="body-right">
             <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
             <div class="title-bar" style="display: inline-block;"></div>
@@ -425,6 +391,7 @@
     <script>
         var today = new Date();
         var date = new Date();
+        var colorTable = ['#E74C3C', '#8E44AD', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
 
         var monthArray = new Array();
         monthArray[0] = "January";
@@ -439,6 +406,111 @@
         monthArray[9] = "October";
         monthArray[10] = "November";
         monthArray[11] = "December";
+
+        var scheduleList = [
+            {
+                date: "2021-01-11",
+                days: 2,
+                title: "Beam Commissioning 1",
+                detail: [
+                    'Cool down',
+                    'Beam Injection',
+                    'Pulse Mode Operation'
+                ],
+                shifter: [
+                    { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                    { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                    { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                    { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: "1", leader: 0 },
+                    { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: "2", leader: 0 },
+                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: "3", leader: 0 },
+                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: "4", leader: 0 },
+                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: "5", leader: 0 },
+                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: "6", leader: 0 },
+                    { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: "1", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "2", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "3", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "4", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "5", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+                ]
+            },
+            {
+                date: "2021-01-22",
+                days: 2,
+                title: "Beam Commissioning 2",
+                detail: [
+                    'Cool down',
+                    'Beam Injection',
+                    'Pulse Mode Operation',
+                    'Pulse Mode Operation',
+                    'Pulse Mode Operation',
+                    'Pulse Mode Operation',
+                    'Pulse Mode Operation',
+                    'Pulse Mode Operation'
+
+                ],
+                shifter: [
+                    { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                    { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                    { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                    { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: "1", leader: 0 },
+                    { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: "2", leader: 0 },
+                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: "3", leader: 0 },
+                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: "4", leader: 0 },
+                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: "5", leader: 0 },
+                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: "6", leader: 0 },
+                    { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: "1", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "2", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "3", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "4", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "5", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+                ]
+            },
+
+            {
+                date: "2021-01-25",
+                days: 2,
+                title: "Beam Commissioning 3",
+                detail: [
+                    'Cool down',
+                    'Beam Injection'
+                ],
+                shifter: [
+                    { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                    { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                    { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                    { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: "1", leader: 0 },
+                    { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: "2", leader: 0 },
+                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: "3", leader: 0 },
+                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: "4", leader: 0 },
+                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: "5", leader: 0 },
+                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: "6", leader: 0 },
+                    { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: "1", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "2", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "3", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "4", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "5", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+                ]
+            }
+        ];
 
         function prevCalendar() {
             today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
@@ -515,21 +587,12 @@
         function schedule() {
             var dayCalss = document.getElementsByClassName('day');
             var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
-            var colorTable = ['#283593', '#2E7D32', '#EF6C00'];
-            var scheduleList = [
-                { date: "2021-01-20", days: 2, title: "Beam Commissioning" },
-                { date: "2021-01-21", days: 3, title: "Beam Commissioning" },
-                { date: "2021-01-11", days: 1, title: "Beam Commissioning" },
-
-            ];
 
             for (let i = 0; i < scheduleList.length; i++) {
 
                 var dateArray = scheduleList[i].date.split("-");
-                // console.log(dateArray[0]);
-                // console.log(dateArray[1]);
-                // console.log(dateArray[2]);
                 var list = dateArray[0] + '-' + dateArray[1];
+
                 if (yearMonth == list) {
                     var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
                     var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
@@ -589,60 +652,112 @@
         }
 
         function scheduleDetail() {
+
             var bodyCenterId = document.getElementById('body-center');
+            var delay = 0.0;
+            for (let i = 0; i < scheduleList.length; i++) {
+                var height = 38;
+                var heightLineCount = 1;
 
-            var scheduleBox = document.createElement('DIV');
-            scheduleBox.classList.add('schedule-list-box');
-            scheduleBox.style.backgroundColor = '#283593';
+                var dateArray = scheduleList[i].date.split("-");
+                var beginDay = parseInt(dateArray[2]);
 
-            var scheduleBegin = document.createElement('DIV');
-            scheduleBegin.classList.add('schedule-day-begin');
-            scheduleBegin.innerText = '12';
+                var scheduleBox = document.createElement('DIV');
+                scheduleBox.classList.add('schedule-list-box');
+                scheduleBox.style.setProperty('--listBoxDelay', delay + 's');
+
+                delay += 0.2;
+
+                scheduleBox.style.backgroundColor = colorTable[i];
+
+                var scheduleBegin = document.createElement('DIV');
+                scheduleBegin.classList.add('schedule-day-begin');
+                scheduleBegin.innerText = beginDay;
 
 
-            var scheduleEnd = document.createElement('DIV');
-            scheduleEnd.classList.add('schedule-day-end');
-            scheduleEnd.innerText = '-15';
+                var scheduleEnd = document.createElement('DIV');
+                scheduleEnd.classList.add('schedule-day-end');
+                scheduleEnd.innerText = -(beginDay + scheduleList[i].days);
 
-            var scheduleTitle = document.createElement('DIV');
-            scheduleTitle.classList.add('schedule-day-title');
-            scheduleTitle.innerText = 'Beam Operation Event 1';
+                var scheduleTitle = document.createElement('DIV');
+                scheduleTitle.classList.add('schedule-day-title');
+                scheduleTitle.innerText = scheduleList[i].title;
 
-            scheduleBox.appendChild(scheduleBegin);
-            scheduleBox.appendChild(scheduleEnd);
-            scheduleBox.appendChild(scheduleTitle);
+                scheduleBox.appendChild(scheduleBegin);
+                scheduleBox.appendChild(scheduleEnd);
+                scheduleBox.appendChild(scheduleTitle);
 
-            for(let i = 0; i < 3; i++) {
-                var daySchedule = document.createElement('DIV');
-                daySchedule.classList.add('schedule-day-detail');
-                daySchedule.innerText = 'Day 11 : Beam Standby';
+                for (let j = 0; j < scheduleList[i].detail.length; j++) {
+                    var daySchedule = document.createElement('DIV');
+                    daySchedule.classList.add('schedule-day-detail');
+                    daySchedule.innerText = 'Day ' + parseInt(beginDay + j) + ' : ' + scheduleList[i].detail[j];
 
-                scheduleBox.appendChild(daySchedule);
+                    scheduleBox.appendChild(daySchedule);
+
+                    if (heightLineCount > 3) {
+                        height = 3 * 23;
+                    }
+                    else {
+                        height = heightLineCount * 23;
+                    }
+
+                    heightLineCount += 1;
+                }
+
+                scheduleBox.style.setProperty('--listBoxHeight', 38 + height + 'px');
+                scheduleBox.style.setProperty('--listBoxHeightExpand', 38 + heightLineCount * 23 + 'px');
+
+
+                bodyCenterId.appendChild(scheduleBox);
             }
-
-
-            bodyCenterId.appendChild(scheduleBox);
-
-            // <div class="schedule-list-box" id="schedule2">
-            //     <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
-            //     <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
-            //     <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
-            //         Event 1</div>
-            //     <div class="day-schedule">Day 11 : Beam Standby</div>
-            //     <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
-            //     <div class="day-schedule">Day 13 : Beam Standby</div>
-            //     <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            // </div>
-
-            var scheduleList = [
-                { date: "2021-01-20", days: 2, title: "Beam Commissioning" },
-                { date: "2021-01-21", days: 3, title: "Beam Commissioning" },
-                { date: "2021-01-11", days: 1, title: "Beam Commissioning" },
-
-            ];
-
-
         }
+
+        var desk1SVG = '<svg width="40" height="8"><path class="desk1" d="M6.67,6.4A10.51,10.51,0,0,1,12.07,8h1.26V0H0V8H1.26A10.51,10.51,0,0,1,6.67,6.4" style="fill:#ec2227"/><path class="desk1" d="M20,6.4A10.54,10.54,0,0,1,25.41,8h1.26V0H13.33V8h1.26A10.54,10.54,0,0,1,20,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M33.33,6.4A10.51,10.51,0,0,1,38.74,8H40V0H26.67V8h1.26a10.51,10.51,0,0,1,5.4-1.6" style="fill:#e6e6e5"/></svg>'
+        var desk2SVG = '<svg width="19.97" height="21"><path class="desk2" d="M9.13,16.38,7.63,21,2.11,17,6,14.13A6.25,6.25,0,0,0,9.13,16.38Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5A6.15,6.15,0,0,0,6,14.13L2.11,17,0,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5H0L2.11,4,6,6.87A6.15,6.15,0,0,0,4.86,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M6,6.87,2.11,4,7.63,0l1.5,4.62A6.25,6.25,0,0,0,6,6.87Z" style="fill:#e6e6e5"/><path class="desk2" d="M11,4.32a6.31,6.31,0,0,0-1.91.3L7.63,0h6.82L13,4.62A6.31,6.31,0,0,0,11,4.32Z" style="fill:#e6e6e5"/><path class="desk2" d="M13,4.62,14.45,0,20,4,16,6.87A6.25,6.25,0,0,0,13,4.62Z" style="fill:#2baae2"/></svg>'
+        var desk3SVG = '<svg width="19.97" height="21"><path class="desk3" d="M10.84,16.38,12.34,21l5.52-4-3.93-2.86A6.21,6.21,0,0,1,10.84,16.38Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5a6.15,6.15,0,0,1-1.18,3.63L17.86,17,20,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5H20L17.86,4,13.93,6.87A6.15,6.15,0,0,1,15.11,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M13.93,6.87,17.86,4,12.34,0l-1.5,4.62A6.21,6.21,0,0,1,13.93,6.87Z" style="fill:#e6e6e5"/><path class="desk3" d="M8.93,4.32a6.31,6.31,0,0,1,1.91.3L12.34,0H5.52L7,4.62A6.31,6.31,0,0,1,8.93,4.32Z" style="fill:#e6e6e5"/><path class="desk3" d="M7,4.62,5.52,0,0,4,3.94,6.87A6.18,6.18,0,0,1,7,4.62Z" style="fill:#2baae2"/></svg>'
+        var desk4SVG = '<svg width="25" height="12"><path class="desk4" d="M6.84,7.85,2.39,4.58,0,12H5.5A7.09,7.09,0,0,1,6.84,7.85Z" style="fill:#2baae2"/><path class="desk4" d="M10.34,5.28,8.64,0,2.39,4.58,6.84,7.85A7.06,7.06,0,0,1,10.34,5.28Z" style="fill:#e6e6e5"/><path class="desk4" d="M12.5,4.93a7,7,0,0,1,2.16.35L16.36,0H8.64l1.7,5.28A7,7,0,0,1,12.5,4.93Z" style="fill:#e6e6e5"/><path class="desk4" d="M18.16,7.85l4.45-3.27L16.36,0l-1.7,5.28A7.06,7.06,0,0,1,18.16,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M19.5,12H25L22.61,4.58,18.16,7.85A7.09,7.09,0,0,1,19.5,12Z" style="fill:#e6e6e5"/></svg>'
+
+        function shifterList() {
+            var shiftAvatar = document.getElementsByClassName("avatar-img");
+            var shiftUserTable = document.getElementsByClassName("shift-user");
+            var shiftTeamTable = document.getElementsByClassName("team-name");
+            var shiftDesk = document.getElementsByClassName("desk-img");
+
+            var shiferInfo = scheduleList[0].shifter;
+
+            for (let i = 0; i < shiferInfo.length; i++) {
+                shiftAvatar[i].src = "images/avatar.svg";
+                shiftUserTable[i].innerText = shiferInfo[i].name;
+                shiftTeamTable[i].innerText = shiferInfo[i].team;
+
+                let deskNum = shiferInfo[i].desk;
+                let seatNum = shiferInfo[i].seat;
+                let isShiftLeader = shiferInfo[i].leader;
+
+                switch (deskNum) {
+                    case '1':
+                        shiftDesk[i].innerHTML = desk1SVG;
+                        break;
+
+                    case '2':
+                        shiftDesk[i].innerHTML = desk2SVG;
+                        break;
+
+                    case '3':
+                        shiftDesk[i].innerHTML = desk3SVG;
+                        break;
+
+                    case '4':
+                        shiftDesk[i].innerHTML = desk4SVG;
+                        break;
+                        
+                    default:
+                        break;
+                }
+                // shiftDesk[i].innerHTML = findDeskSeat(i + 1, deskNum, seatNum, isShiftLeader);;
+            }
+        }
+
 
         var svgDeskCode1 = '<svg id="desk1" width="37.6749" height="6.1317" viewBox="0 0 37.6749 6.1317"><style>#desk1-1{fill:#e6e6e6;}#desk1-2{fill:#e6e6e6;}#desk1-3{fill:#e6e6e6;}</style><path id="desk1-1" d="M7.4417,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1863V.9341H1.1626V7.0659H2.3488A11.6573,11.6573,0,0,1,7.4417,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-2" d="M20,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H13.7209V7.0659h1.1862A11.6573,11.6573,0,0,1,20,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-3" d="M32.5583,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H26.2791V7.0659h1.1863A11.6573,11.6573,0,0,1,32.5583,5.839" transform="translate(-1.1626 -0.9341)"/></svg>';
         var svgDeskCode2 = '<svg id="desk2" width="19.3464" height="20.3421"><style>#desk2-1{fill:#e6e6e6;}#desk2-2{fill:#e6e6e6;}#desk2-3{fill:#e6e6e6;}#desk2-4{fill:#e6e6e6;}#desk2-5{fill:#e6e6e6;}#desk2-6{fill:#e6e6e6;}</style><path id="desk2-1" d="M9.1711,16.6943,7.7165,21.171,2.3693,17.286l3.8116-2.7693A5.9935,5.9935,0,0,0,9.1711,16.6943Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-2" d="M5.0323,11a5.9544,5.9544,0,0,0,1.1486,3.5167L2.3693,17.286.3268,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-3" d="M6.181,7.4833,2.3693,4.714,7.7165.829,9.1711,5.3057A5.9938,5.9938,0,0,0,6.181,7.4833Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-4" d="M11.0212,5.0111a5.9784,5.9784,0,0,0-1.85.2946L7.7165.829h6.61L12.8714,5.3058A5.9757,5.9757,0,0,0,11.0212,5.0111Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-5" d="M5.0323,11H.3268L2.3693,4.714,6.181,7.4833A5.9538,5.9538,0,0,0,5.0323,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-6" d="M12.8714,5.3058,14.326.829l5.3472,3.885L15.8615,7.4833A5.9937,5.9937,0,0,0,12.8714,5.3058Z" transform="translate(-0.3268 -0.829)"/></svg>';
@@ -719,12 +834,6 @@
         ]
 
         var shiftInfo = [shiftList1, shiftList2, shiftList3];
-
-
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-        }
 
         function scheduleUpdate(x) {
             var shiftAvatar = document.getElementsByClassName("avatar-img");
@@ -841,102 +950,26 @@
             }
         }
 
+        // Clock
+        function timer() {
+            var d = new Date();
+            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+        }
+
         window.onload = function () {
             makeCalendar();
             schedule();
-            // scheduleDetail();
+            scheduleDetail();
+            shifterList();
 
             var myVar = setInterval(timer, 1000);
 
-            var scheduleList = document.getElementsByClassName("schedule-list-box");
-            var delayTime = 0;
-            for (let i = 0; i < scheduleList.length; i++) {
-                scheduleList[i].style.animationDelay = delayTime + "s";
-
-                delayTime += 0.2;
-            }
-
-            var shiftTableElement = document.getElementById("shift-table");
-            shiftTableElement.style.top = 80;
-            shiftTableElement.style.opacity = 0;
-            showUpShiftTable(0);
+            // var shiftTableElement = document.getElementById("shift-table");
+            // shiftTableElement.style.top = 80;
+            // shiftTableElement.style.opacity = 0;
+            // showUpShiftTable(0);
         }
     </script>
 </body>
 
 </html>
-
-
-
-<!-- <!DOCTYPE html>
-<html>
-<style>
-.schedule-list-box {
-    width: 350px;
-    height: 150px;
-    padding: 10px;
-    /* left: 15px; */
-    border-radius: 20px;
-    color: white;
-    margin: auto;
-    font-family: "Roboto-Light";
-
-    position: relative;
-    animation: animatebottom 1s;
-    bottom: -50px;
-    opacity: 0;
-    animation-fill-mode: forwards;
-
-}
-
-#schedule1 {
-    background-color: #283593;
-}
-
-#schedule2 {
-    background-color: #2E7D32;
-}
-
-#schedule3 {
-    animation-delay: 0.2s;
-	margin-top: 40px;
-    background-color: #EF6C00;
-}
-
-@keyframes animatebottom {
-    from {
-        bottom: -50px;
-        opacity: 0
-    }
-
-    to {
-        bottom: 0;
-        opacity: 1;
-    }
-}
-</style>
-<body>
-           <div class="schedule-list-box" id="schedule2">
-                <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
-                <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
-                    Event 1</div>
-                <div class="day-schedule">Day 11 : Beam Standby</div>
-                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
-                <div class="day-schedule">Day 13 : Beam Standby</div>
-                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div>
-
-
-           <div class="schedule-list-box" id="schedule3">
-                <div style="display:inline-block; font-size:32px; font-weight: bold;">12</div>
-                <div style="display:inline-block; font-size:20px; font-weight: bold;">-15</div>
-                <div style="display:inline-block; font-size:18px; font-weight: bold; margin-left: 15px">Beam Operation
-                    Event 1</div>
-                <div class="day-schedule">Day 11 : Beam Standby</div>
-                <div class="day-schedule">Day 12 : Beam Injection to KOBRA </div>
-                <div class="day-schedule">Day 13 : Beam Standby</div>
-                <div class="day-schedule">Day 14 : Beam Injection to LAMS </div>
-            </div>
-</body>
-</html> -->

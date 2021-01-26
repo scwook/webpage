@@ -196,21 +196,27 @@ button {
 }
 
 .schedule-list-box {
+    overflow: hidden;
     width: 350px;
-    height: 150px;
+    /* height: auto; */
+    height: var(--listBoxHeight);
     padding: 10px;
-    /* left: 15px; */
     border-radius: 20px;
     color: white;
     margin: auto;
     font-family: "Roboto-Light";
-
+    margin-top: 40px;
     position: relative;
     animation: animatebottom 1s;
+    animation-delay: var(--listBoxDelay);
     bottom: -50px;
     opacity: 0;
     animation-fill-mode: forwards;
+    transition: height 0.5s;
+}
 
+.schedule-list-box:hover {
+    height: var(--listBoxHeightExpand);
 }
 
 .schedule-day-begin {
@@ -290,18 +296,6 @@ button {
 .desk-img {
     display: inline-block;
     margin-left: 10px;
-}
-
-#schedule1 {
-    background-color: #283593;
-}
-
-#schedule2 {
-    background-color: #2E7D32;
-}
-
-#schedule3 {
-    background-color: #EF6C00;
 }
 
 @keyframes bar-animation {
