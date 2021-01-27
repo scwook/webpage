@@ -82,7 +82,6 @@ body {
     float: left;
     width: 750px;
     height: 980px;
-    /* background-color: goldenrod; */
 }
 
 .title-box {
@@ -189,7 +188,7 @@ button {
     width: 625px;
     height: 5px;
     left: 50px;
-    background-color: #283593;
+    background-color: var(--barColor);
     animation-name: bar-animation;
     animation-duration: 1s;
     animation-fill-mode: forwards;
@@ -246,7 +245,7 @@ button {
 
 #shift-table {
     position: relative;
-    margin-left: 70px;
+    margin-left: 25px;
     /* animation: animatebottom 1s; */
     /* animation-fill-mode: forwards; */
     /* opacity: 0; */
@@ -264,7 +263,7 @@ button {
 } */
 
 .shift-team {
-    width: 345px;
+    width: 290px;
     height: 20px;
     /* text-align: left; */
     padding-left: 10px;
@@ -277,7 +276,7 @@ button {
 }
 
 .shift-user {
-    width: 345px;
+    width: 290px;
     height: 40px;
     font-size: 28px;
     padding-left: 10px;

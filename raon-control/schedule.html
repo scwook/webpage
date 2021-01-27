@@ -183,7 +183,7 @@
             <div style="height:20px"></div>
 
             <div class="title-box" style="display: inline-block; width:50px;">Todo</div>
-            <div class="title-bar" style="display: inline-block;"></div>
+            <div class="title-bar" style="--barColor: #ec2227; display: inline-block;"></div>
 
             <div id="todo-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -201,7 +201,7 @@
         <!-- Right -->
         <div id="body-right">
             <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
-            <div class="title-bar" style="display: inline-block;"></div>
+            <div class="title-bar" style="--barColor: #283593; display: inline-block;"></div>
 
             <table id="shift-table">
 
@@ -435,8 +435,6 @@
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
                     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 3, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 4, leader: 0 },
                     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
                 ]
             },
@@ -456,18 +454,16 @@
 
                 ],
                 shifter: [
+                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
+                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
+                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
+                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
                     { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
                     { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
                     { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
                     { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
                     { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
-                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
-                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
-                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
-                    { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
+
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
                     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
@@ -609,7 +605,7 @@
                         var scheduleButton = document.createElement('BUTTON');
                         var buttonText = document.createTextNode(scheduleList[i].title);
                         scheduleButton.classList.add('scheduleButton');
-                        // scheduleButton.addEventListener('click', function () { refrashShiftTable(i) });
+                        scheduleButton.addEventListener('click', function () { shifterList(i) });
                         scheduleButton.style.backgroundColor = colorTable[i];
                         scheduleButton.style.height = '24px';
 
@@ -717,13 +713,19 @@
         var desk3SVG = '<svg width="19.97" height="21"><path class="desk3" d="M10.84,16.38,12.34,21l5.52-4-3.93-2.86A6.21,6.21,0,0,1,10.84,16.38Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5a6.15,6.15,0,0,1-1.18,3.63L17.86,17,20,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5H20L17.86,4,13.93,6.87A6.15,6.15,0,0,1,15.11,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M13.93,6.87,17.86,4,12.34,0l-1.5,4.62A6.21,6.21,0,0,1,13.93,6.87Z" style="fill:#e6e6e5"/><path class="desk3" d="M8.93,4.32a6.31,6.31,0,0,1,1.91.3L12.34,0H5.52L7,4.62A6.31,6.31,0,0,1,8.93,4.32Z" style="fill:#e6e6e5"/><path class="desk3" d="M7,4.62,5.52,0,0,4,3.94,6.87A6.18,6.18,0,0,1,7,4.62Z" style="fill:#e6e6e5"/></svg>'
         var desk4SVG = '<svg width="25" height="12"><path class="desk4" d="M6.84,7.85,2.39,4.58,0,12H5.5A7.09,7.09,0,0,1,6.84,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M10.34,5.28,8.64,0,2.39,4.58,6.84,7.85A7.06,7.06,0,0,1,10.34,5.28Z" style="fill:#e6e6e5"/><path class="desk4" d="M12.5,4.93a7,7,0,0,1,2.16.35L16.36,0H8.64l1.7,5.28A7,7,0,0,1,12.5,4.93Z" style="fill:#e6e6e5"/><path class="desk4" d="M18.16,7.85l4.45-3.27L16.36,0l-1.7,5.28A7.06,7.06,0,0,1,18.16,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M19.5,12H25L22.61,4.58,18.16,7.85A7.09,7.09,0,0,1,19.5,12Z" style="fill:#e6e6e5"/></svg>'
 
-        function shifterList() {
+        function shifterList(listNum) {
+
+            var shiftNum = listNum;
             var shiftAvatar = document.getElementsByClassName("avatar-img");
             var shiftUserTable = document.getElementsByClassName("shift-user");
             var shiftTeamTable = document.getElementsByClassName("team-name");
             var shiftDesk = document.getElementsByClassName("desk-img");
 
-            var shiferInfo = scheduleList[0].shifter;
+            var shiferInfo = scheduleList[shiftNum].shifter;
+            var desk1Count = 0;
+            var desk2Count = 0;
+            var desk3Count = 0;
+            var desk4Count = 0;
 
             for (let i = 0; i < shiferInfo.length; i++) {
                 shiftAvatar[i].src = "images/avatar.svg";
@@ -733,13 +735,17 @@
                 let deskNum = shiferInfo[i].desk;
                 let seatNum = shiferInfo[i].seat;
                 let isShiftLeader = shiferInfo[i].leader;
-                var deskColor = '#e6e6e5';
+                var deskColor = '';
+                var numberOfDesk = 0;
+                
                 switch (deskNum) {
                     case '1':
                         shiftDesk[i].innerHTML = desk1SVG;
                         var deskClass = document.getElementsByClassName('desk1');
                         var numberOfDesk = 3;
-                        var deskOffset = deskClass.length - numberOfDesk;
+                        var deskOffset = numberOfDesk * desk1Count;
+                        desk1Count += 1;
+
                         for (let j = 0; j < numberOfDesk; j++) {
                             if (seatNum == j + 1) {
                                 if (isShiftLeader) {
@@ -761,7 +767,9 @@
                         shiftDesk[i].innerHTML = desk2SVG;
                         var deskClass = document.getElementsByClassName('desk2');
                         var numberOfDesk = 6;
-                        var deskOffset = deskClass.length - numberOfDesk;
+                        var deskOffset = numberOfDesk * desk2Count;
+                        desk2Count += 1;
+
                         for (let j = 0; j < numberOfDesk; j++) {
                             if (seatNum == j + 1) {
                                 if (isShiftLeader) {
@@ -783,7 +791,9 @@
                         shiftDesk[i].innerHTML = desk3SVG;
                         var deskClass = document.getElementsByClassName('desk3');
                         var numberOfDesk = 6;
-                        var deskOffset = deskClass.length - numberOfDesk;
+                        var deskOffset = numberOfDesk * desk3Count;
+                        desk3Count += 1;
+
                         for (let j = 0; j < numberOfDesk; j++) {
                             if (seatNum == j + 1) {
                                 if (isShiftLeader) {
@@ -805,7 +815,9 @@
                         shiftDesk[i].innerHTML = desk4SVG;
                         var deskClass = document.getElementsByClassName('desk4');
                         var numberOfDesk = 5;
-                        var deskOffset = deskClass.length - numberOfDesk;
+                        var deskOffset = numberOfDesk * desk4Count;
+                        desk4Count += 1;
+
                         for (let j = 0; j < numberOfDesk; j++) {
                             if (seatNum == j + 1) {
                                 if (isShiftLeader) {
@@ -841,7 +853,7 @@
             makeCalendar();
             schedule();
             scheduleDetail();
-            shifterList();
+            shifterList(0);
 
             var myVar = setInterval(timer, 1000);
 
