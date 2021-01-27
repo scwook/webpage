@@ -463,7 +463,6 @@
                     { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
                     { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
                     { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
                     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
@@ -487,17 +486,6 @@
                     { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
                     { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
                     { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
-                    { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: "1", leader: 0 },
-                    { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: "2", leader: 0 },
-                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: "3", leader: 0 },
-                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: "4", leader: 0 },
-                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: "5", leader: 0 },
-                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: "6", leader: 0 },
-                    { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: "1", leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "2", leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "3", leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "4", leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "5", leader: 0 },
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
                     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
                     { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
@@ -737,7 +725,7 @@
                 let isShiftLeader = shiferInfo[i].leader;
                 var deskColor = '';
                 var numberOfDesk = 0;
-                
+
                 switch (deskNum) {
                     case '1':
                         shiftDesk[i].innerHTML = desk1SVG;
@@ -839,9 +827,15 @@
                         break;
                 }
             }
+
+            // Clear left rows
+            for (let i = shiferInfo.length; i < 20; i++) {
+                shiftAvatar[i].src = '';
+                shiftUserTable[i].innerText = '';
+                shiftTeamTable[i].innerText = '';
+                shiftDesk[i].innerHTML = '';
+            }
         }
-
-
 
         // Clock
         function timer() {
