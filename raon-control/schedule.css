@@ -189,6 +189,9 @@ button {
     height: 5px;
     left: 50px;
     background-color: var(--barColor);
+}
+
+.under-line {
     animation-name: bar-animation;
     animation-duration: 1s;
     animation-fill-mode: forwards;

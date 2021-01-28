@@ -22,7 +22,7 @@
             <div class="title-box">Schedule</div>
 
             <div style="display: flex; position:relative; left: 25px;">
-                <button id="last-button" onclick="prevCalendar()">&#10094;</button>
+                <button id="last-button" onclick="lastCalendar()">&#10094;</button>
 
                 <div id="year">January 2021</div>
                 <button id="next-button" onclick="nextCalendar()">&#10095;</button>
@@ -183,7 +183,7 @@
             <div style="height:20px"></div>
 
             <div class="title-box" style="display: inline-block; width:50px;">Todo</div>
-            <div class="title-bar" style="--barColor: #ec2227; display: inline-block;"></div>
+            <div class="title-bar under-line" style="--barColor: #ec2227;"></div>
 
             <div id="todo-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -201,7 +201,7 @@
         <!-- Right -->
         <div id="body-right">
             <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
-            <div class="title-bar" style="--barColor: #283593; display: inline-block;"></div>
+            <div class="title-bar under-line" style="--barColor: #283593;"></div>
 
             <table id="shift-table">
 
@@ -387,672 +387,576 @@
             </table>
         </div>
     </div>
-
-    <script>
-        var today = new Date();
-        var date = new Date();
-        var colorTable = ['#E74C3C', '#8E44AD', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
-
-        var monthArray = new Array();
-        monthArray[0] = "January";
-        monthArray[1] = "February";
-        monthArray[2] = "March";
-        monthArray[3] = "April";
-        monthArray[4] = "May";
-        monthArray[5] = "June";
-        monthArray[6] = "July";
-        monthArray[7] = "August";
-        monthArray[8] = "September";
-        monthArray[9] = "October";
-        monthArray[10] = "November";
-        monthArray[11] = "December";
-
-        var scheduleList = [
-            {
-                date: "2021-01-11",
-                days: 2,
-                title: "Beam Commissioning 1",
-                detail: [
-                    'Cool down',
-                    'Beam Injection',
-                    'Pulse Mode Operation'
-                ],
-                shifter: [
-                    { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
-                    { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
-                    { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
-                    { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
-                    { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
-                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
-                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
-                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
-                    { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
-                ]
-            },
-            {
-                date: "2021-01-22",
-                days: 2,
-                title: "Beam Commissioning 2",
-                detail: [
-                    'Cool down',
-                    'Beam Injection',
-                    'Pulse Mode Operation',
-                    'Pulse Mode Operation',
-                    'Pulse Mode Operation',
-                    'Pulse Mode Operation',
-                    'Pulse Mode Operation',
-                    'Pulse Mode Operation'
-
-                ],
-                shifter: [
-                    { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
-                    { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
-                    { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
-                    { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
-                    { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
-                    { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
-                    { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
-                    { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
-                    { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 3, leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 4, leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 5, leader: 0 }
-                ]
-            },
-
-            {
-                date: "2021-01-25",
-                days: 2,
-                title: "Beam Commissioning 3",
-                detail: [
-                    'Cool down',
-                    'Beam Injection'
-                ],
-                shifter: [
-                    { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
-                    { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
-                    { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
-                    { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
-                    { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
-                ]
-            }
-        ];
-
-        function prevCalendar() {
-            today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-            makeCalendar();
-
-            var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-
-            for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-                scheduleButtonClass[i].remove();
-            }
-
-            schedule();
-        }
-
-        function nextCalendar() {
-            today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-            makeCalendar();
-
-            var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-
-            for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-                scheduleButtonClass[i].remove();
-            }
-
-            schedule();
-        }
-
-        function makeCalendar() {
-            // Year and Month
-            var yearId = document.getElementById("year");
-            var month = monthArray[today.getMonth()];
-            yearId.innerHTML = month + " " + today.getFullYear();
-
-            var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-            var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-            var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
-
-            var dayCalss = document.getElementsByClassName('day');
-            var thisMonthFirstDay = firstDate.getDay();
-            var day = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
-
-
-            // This Month
-            for (let i = 0; i < dayCalss.length; i++) {
-                var todayClass = dayCalss[i].getElementsByClassName('today')[0];
-
-                // Last Month last day reset and start this month first day
-                if (i == thisMonthFirstDay) {
-                    day = 1;
-                }
-
-                todayClass.innerHTML = day;
-
-                // Sunday
-                if (i % 7 == 0) {
-                    todayClass.style.color = "tomato";
-                }
-
-                // Today
-                todayClass.style.backgroundColor = "transparent";
-                if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
-                    todayClass.style.backgroundColor = "dodgerblue";
-                }
-
-                day += 1;
-
-                // Last day reset and start next month first day
-                if (day > lastDate.getDate()) {
-                    day = 1;
-                }
-            }
-        }
-
-        function schedule() {
-            var dayCalss = document.getElementsByClassName('day');
-            var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
-
-            for (let i = 0; i < scheduleList.length; i++) {
-
-                var dateArray = scheduleList[i].date.split("-");
-                var list = dateArray[0] + '-' + dateArray[1];
-
-                if (yearMonth == list) {
-                    var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-                    var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
-                    var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
-
-                    // If schedule exceeds the last date of this month
-                    if (endIndex > dayCalss.length) {
-                        endIndex = dayCalss.length;
-                    }
-
-                    createScheduleButton(startIndex);
-
-                    function createScheduleButton(index) {
-                        var scheduleButton = document.createElement('BUTTON');
-                        var buttonText = document.createTextNode(scheduleList[i].title);
-                        scheduleButton.classList.add('scheduleButton');
-                        scheduleButton.addEventListener('click', function () { shifterList(i) });
-                        scheduleButton.style.backgroundColor = colorTable[i];
-                        scheduleButton.style.height = '24px';
-
-                        var buttonWidthScale = 1;
-                        for (var j = index; j < endIndex; j++) {
-                            // button head
-                            if (j == startIndex) {
-                                scheduleButton.style.borderTopLeftRadius = '12px';
-                                scheduleButton.style.borderBottomLeftRadius = '12px';
-                            }
-
-                            // button tail
-                            if (j == (endIndex - 1)) {
-                                scheduleButton.style.borderTopRightRadius = '12px';
-                                scheduleButton.style.borderBottomRightRadius = '12px';
-                                scheduleButton.style.width = 100 * buttonWidthScale + 'px';
-                                scheduleButton.appendChild(buttonText);
-                                dayCalss[index].appendChild(scheduleButton);
-                                break;
-                            }
-
-                            // In case of end of week
-                            if ((j + 1) % 7 == 0) {
-                                scheduleButton.style.width = 100 * buttonWidthScale + 'px';
-                                scheduleButton.appendChild(buttonText);
-                                dayCalss[index].appendChild(scheduleButton);
-
-                                // create new button for next week
-                                createScheduleButton(j + 1);
-                                break;
-                            }
-
-                            buttonWidthScale += 1;
-                        }
-
-                    }
-                }
-            }
-
-        }
-
-        function scheduleDetail() {
-
-            var bodyCenterId = document.getElementById('body-center');
-            var delay = 0.0;
-            for (let i = 0; i < scheduleList.length; i++) {
-                var height = 0;
-                var heightLineCount = 1;
-
-                var dateArray = scheduleList[i].date.split("-");
-                var beginDay = parseInt(dateArray[2]);
-
-                var scheduleBox = document.createElement('DIV');
-                scheduleBox.classList.add('schedule-list-box');
-                scheduleBox.style.setProperty('--listBoxDelay', delay + 's');
-
-                delay += 0.2;
-
-                scheduleBox.style.backgroundColor = colorTable[i];
-
-                var scheduleBegin = document.createElement('DIV');
-                scheduleBegin.classList.add('schedule-day-begin');
-                scheduleBegin.innerText = beginDay;
-
-
-                var scheduleEnd = document.createElement('DIV');
-                scheduleEnd.classList.add('schedule-day-end');
-                scheduleEnd.innerText = -(beginDay + scheduleList[i].days);
-
-                var scheduleTitle = document.createElement('DIV');
-                scheduleTitle.classList.add('schedule-day-title');
-                scheduleTitle.innerText = scheduleList[i].title;
-
-                scheduleBox.appendChild(scheduleBegin);
-                scheduleBox.appendChild(scheduleEnd);
-                scheduleBox.appendChild(scheduleTitle);
-
-                for (let j = 0; j < scheduleList[i].detail.length; j++) {
-                    var daySchedule = document.createElement('DIV');
-                    daySchedule.classList.add('schedule-day-detail');
-                    daySchedule.innerText = 'Day ' + parseInt(beginDay + j) + ' : ' + scheduleList[i].detail[j];
-
-                    scheduleBox.appendChild(daySchedule);
-
-                    if (heightLineCount > 3) {
-                        height = 3 * 23;
-                    }
-                    else {
-                        height = heightLineCount * 23;
-                    }
-
-                    heightLineCount += 1;
-                }
-
-                scheduleBox.style.setProperty('--listBoxHeight', 50 + height + 'px');
-                scheduleBox.style.setProperty('--listBoxHeightExpand', 38 + heightLineCount * 23 + 'px');
-
-
-                bodyCenterId.appendChild(scheduleBox);
-            }
-        }
-
-        var desk1SVG = '<svg width="40" height="8"><path class="desk1" d="M6.67,6.4A10.51,10.51,0,0,1,12.07,8h1.26V0H0V8H1.26A10.51,10.51,0,0,1,6.67,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M20,6.4A10.54,10.54,0,0,1,25.41,8h1.26V0H13.33V8h1.26A10.54,10.54,0,0,1,20,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M33.33,6.4A10.51,10.51,0,0,1,38.74,8H40V0H26.67V8h1.26a10.51,10.51,0,0,1,5.4-1.6" style="fill:#e6e6e5"/></svg>'
-        var desk2SVG = '<svg width="19.97" height="21"><path class="desk2" d="M9.13,16.38,7.63,21,2.11,17,6,14.13A6.25,6.25,0,0,0,9.13,16.38Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5A6.15,6.15,0,0,0,6,14.13L2.11,17,0,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5H0L2.11,4,6,6.87A6.15,6.15,0,0,0,4.86,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M6,6.87,2.11,4,7.63,0l1.5,4.62A6.25,6.25,0,0,0,6,6.87Z" style="fill:#e6e6e5"/><path class="desk2" d="M11,4.32a6.31,6.31,0,0,0-1.91.3L7.63,0h6.82L13,4.62A6.31,6.31,0,0,0,11,4.32Z" style="fill:#e6e6e5"/><path class="desk2" d="M13,4.62,14.45,0,20,4,16,6.87A6.25,6.25,0,0,0,13,4.62Z" style="fill:#e6e6e5"/></svg>'
-        var desk3SVG = '<svg width="19.97" height="21"><path class="desk3" d="M10.84,16.38,12.34,21l5.52-4-3.93-2.86A6.21,6.21,0,0,1,10.84,16.38Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5a6.15,6.15,0,0,1-1.18,3.63L17.86,17,20,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5H20L17.86,4,13.93,6.87A6.15,6.15,0,0,1,15.11,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M13.93,6.87,17.86,4,12.34,0l-1.5,4.62A6.21,6.21,0,0,1,13.93,6.87Z" style="fill:#e6e6e5"/><path class="desk3" d="M8.93,4.32a6.31,6.31,0,0,1,1.91.3L12.34,0H5.52L7,4.62A6.31,6.31,0,0,1,8.93,4.32Z" style="fill:#e6e6e5"/><path class="desk3" d="M7,4.62,5.52,0,0,4,3.94,6.87A6.18,6.18,0,0,1,7,4.62Z" style="fill:#e6e6e5"/></svg>'
-        var desk4SVG = '<svg width="25" height="12"><path class="desk4" d="M6.84,7.85,2.39,4.58,0,12H5.5A7.09,7.09,0,0,1,6.84,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M10.34,5.28,8.64,0,2.39,4.58,6.84,7.85A7.06,7.06,0,0,1,10.34,5.28Z" style="fill:#e6e6e5"/><path class="desk4" d="M12.5,4.93a7,7,0,0,1,2.16.35L16.36,0H8.64l1.7,5.28A7,7,0,0,1,12.5,4.93Z" style="fill:#e6e6e5"/><path class="desk4" d="M18.16,7.85l4.45-3.27L16.36,0l-1.7,5.28A7.06,7.06,0,0,1,18.16,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M19.5,12H25L22.61,4.58,18.16,7.85A7.09,7.09,0,0,1,19.5,12Z" style="fill:#e6e6e5"/></svg>'
-
-        function shifterList(listNum) {
-
-            var shiftNum = listNum;
-            var shiftAvatar = document.getElementsByClassName("avatar-img");
-            var shiftUserTable = document.getElementsByClassName("shift-user");
-            var shiftTeamTable = document.getElementsByClassName("team-name");
-            var shiftDesk = document.getElementsByClassName("desk-img");
-
-            var shiferInfo = scheduleList[shiftNum].shifter;
-            var desk1Count = 0;
-            var desk2Count = 0;
-            var desk3Count = 0;
-            var desk4Count = 0;
-
-            for (let i = 0; i < shiferInfo.length; i++) {
-                shiftAvatar[i].src = "images/avatar.svg";
-                shiftUserTable[i].innerText = shiferInfo[i].name;
-                shiftTeamTable[i].innerText = shiferInfo[i].team;
-
-                let deskNum = shiferInfo[i].desk;
-                let seatNum = shiferInfo[i].seat;
-                let isShiftLeader = shiferInfo[i].leader;
-                var deskColor = '';
-                var numberOfDesk = 0;
-
-                switch (deskNum) {
-                    case '1':
-                        shiftDesk[i].innerHTML = desk1SVG;
-                        var deskClass = document.getElementsByClassName('desk1');
-                        var numberOfDesk = 3;
-                        var deskOffset = numberOfDesk * desk1Count;
-                        desk1Count += 1;
-
-                        for (let j = 0; j < numberOfDesk; j++) {
-                            if (seatNum == j + 1) {
-                                if (isShiftLeader) {
-                                    deskColor = '#ec2227';
-                                }
-                                else {
-                                    deskColor = '#2baae2';
-                                }
-                            }
-                            else {
-                                deskColor = '#e6e6e5';
-                            }
-
-                            deskClass[deskOffset + j].style.fill = deskColor;
-                        }
-                        break;
-
-                    case '2':
-                        shiftDesk[i].innerHTML = desk2SVG;
-                        var deskClass = document.getElementsByClassName('desk2');
-                        var numberOfDesk = 6;
-                        var deskOffset = numberOfDesk * desk2Count;
-                        desk2Count += 1;
-
-                        for (let j = 0; j < numberOfDesk; j++) {
-                            if (seatNum == j + 1) {
-                                if (isShiftLeader) {
-                                    deskColor = '#ec2227';
-                                }
-                                else {
-                                    deskColor = '#2baae2';
-                                }
-                            }
-                            else {
-                                deskColor = '#e6e6e5';
-                            }
-
-                            deskClass[deskOffset + j].style.fill = deskColor;
-                        }
-                        break;
-
-                    case '3':
-                        shiftDesk[i].innerHTML = desk3SVG;
-                        var deskClass = document.getElementsByClassName('desk3');
-                        var numberOfDesk = 6;
-                        var deskOffset = numberOfDesk * desk3Count;
-                        desk3Count += 1;
-
-                        for (let j = 0; j < numberOfDesk; j++) {
-                            if (seatNum == j + 1) {
-                                if (isShiftLeader) {
-                                    deskColor = '#ec2227';
-                                }
-                                else {
-                                    deskColor = '#2baae2';
-                                }
-                            }
-                            else {
-                                deskColor = '#e6e6e5';
-                            }
-
-                            deskClass[deskOffset + j].style.fill = deskColor;
-                        }
-                        break;
-
-                    case '4':
-                        shiftDesk[i].innerHTML = desk4SVG;
-                        var deskClass = document.getElementsByClassName('desk4');
-                        var numberOfDesk = 5;
-                        var deskOffset = numberOfDesk * desk4Count;
-                        desk4Count += 1;
-
-                        for (let j = 0; j < numberOfDesk; j++) {
-                            if (seatNum == j + 1) {
-                                if (isShiftLeader) {
-                                    deskColor = '#ec2227';
-                                }
-                                else {
-                                    deskColor = '#2baae2';
-                                }
-                            }
-                            else {
-                                deskColor = '#e6e6e5';
-                            }
-
-                            deskClass[deskOffset + j].style.fill = deskColor;
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
-            // Clear left rows
-            for (let i = shiferInfo.length; i < 20; i++) {
-                shiftAvatar[i].src = '';
-                shiftUserTable[i].innerText = '';
-                shiftTeamTable[i].innerText = '';
-                shiftDesk[i].innerHTML = '';
-            }
-        }
-
-        // Clock
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-        }
-
-        window.onload = function () {
-            makeCalendar();
-            schedule();
-            scheduleDetail();
-            shifterList(0);
-
-            var myVar = setInterval(timer, 1000);
-
-            // var shiftTableElement = document.getElementById("shift-table");
-            // shiftTableElement.style.top = 80;
-            // shiftTableElement.style.opacity = 0;
-            // showUpShiftTable(0);
-        }
-    </script>
 </body>
 
+<script>
+    var today = new Date();
+    var date = new Date();
+    var colorTable = ['#8E44AD', '#E74C3C', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
+
+    var monthArray = new Array();
+    monthArray[0] = "January";
+    monthArray[1] = "February";
+    monthArray[2] = "March";
+    monthArray[3] = "April";
+    monthArray[4] = "May";
+    monthArray[5] = "June";
+    monthArray[6] = "July";
+    monthArray[7] = "August";
+    monthArray[8] = "September";
+    monthArray[9] = "October";
+    monthArray[10] = "November";
+    monthArray[11] = "December";
+
+    var scheduleList = [
+        {
+            date: "2020-12-21",
+            days: 2,
+            title: "Beam Commissioning 1",
+            detail: [
+                'Cool down',
+                'Beam Injection',
+                'Pulse Mode Operation'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
+                { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
+            ]
+        },
+
+        {
+            date: "2021-01-11",
+            days: 2,
+            title: "Beam Commissioning 1",
+            detail: [
+                'Cool down',
+                'Beam Injection',
+                'Pulse Mode Operation'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
+                { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
+            ]
+        },
+        {
+            date: "2021-01-22",
+            days: 2,
+            title: "Beam Commissioning 2",
+            detail: [
+                'Cool down',
+                'Beam Injection',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation'
+
+            ],
+            shifter: [
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 5, leader: 0 }
+            ]
+        },
+
+        {
+            date: "2021-01-25",
+            days: 2,
+            title: "Beam Commissioning 3",
+            detail: [
+                'Cool down',
+                'Beam Injection'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+            ]
+        },
+
+        {
+            date: "2021-02-05",
+            days: 2,
+            title: "Beam Commissioning 5",
+            detail: [
+                'Cool down',
+                'Beam Injection'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+            ]
+        }
+    ];
+
+    function lastCalendar() {
+
+        // Remove this month schedule buttons
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        // Clear this month schedule list
+        var bodyCenterId = document.getElementById('body-center');
+        bodyCenterId.innerHTML = '';
+
+        // Clear shift list
+        var shiftAvatar = document.getElementsByClassName("avatar-img");
+        var shiftUserTable = document.getElementsByClassName("shift-user");
+        var shiftTeamTable = document.getElementsByClassName("team-name");
+        var shiftDesk = document.getElementsByClassName("desk-img");
+        for (let i = 0; i < 20; i++) {
+            shiftAvatar[i].src = '';
+            shiftUserTable[i].innerText = '';
+            shiftTeamTable[i].innerText = '';
+            shiftDesk[i].innerHTML = '';
+        }
+
+        // Create last month
+        today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        makeCalendar();
+
+        // Create schedule and shift list
+        makeSchedule();
+    }
+
+    function nextCalendar() {
+
+        // Remove this month schedule buttons
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        // Clear this month schedule list
+        var bodyCenterId = document.getElementById('body-center');
+        bodyCenterId.innerHTML = '';
+
+        // Clear shift list
+        var shiftAvatar = document.getElementsByClassName("avatar-img");
+        var shiftUserTable = document.getElementsByClassName("shift-user");
+        var shiftTeamTable = document.getElementsByClassName("team-name");
+        var shiftDesk = document.getElementsByClassName("desk-img");
+        for (let i = 0; i < 20; i++) {
+            shiftAvatar[i].src = '';
+            shiftUserTable[i].innerText = '';
+            shiftTeamTable[i].innerText = '';
+            shiftDesk[i].innerHTML = '';
+        }
+
+        // Create next month
+        today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        console.log(today);
+        makeCalendar();
+
+        // Create schedule and shift list
+        makeSchedule();
+    }
+
+    function makeCalendar() {
+        // Year and Month
+        var yearId = document.getElementById("year");
+        var month = monthArray[today.getMonth()];
+        yearId.innerHTML = month + " " + today.getFullYear();
+
+        var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+        var dayCalss = document.getElementsByClassName('day');
+        var thisMonthFirstDay = firstDate.getDay();
+        var day = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+
+
+        // This Month
+        for (let i = 0; i < dayCalss.length; i++) {
+            var todayClass = dayCalss[i].getElementsByClassName('today')[0];
+
+            // Last Month last day reset and start this month first day
+            if (i == thisMonthFirstDay) {
+                day = 1;
+            }
+
+            todayClass.innerHTML = day;
+
+            // Sunday
+            if (i % 7 == 0) {
+                todayClass.style.color = "tomato";
+            }
+
+            // Today
+            todayClass.style.backgroundColor = "transparent";
+            if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
+                todayClass.style.backgroundColor = "dodgerblue";
+            }
+
+            day += 1;
+
+            // Last day reset and start next month first day
+            if (day > lastDate.getDate()) {
+                day = 1;
+            }
+        }
+    }
+
+    function makeSchedule() {
+        var dayCalss = document.getElementsByClassName('day');
+        var monthString = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        var month = monthString[today.getMonth()];
+        var year = today.getFullYear();
+        var yearMonth = year + '-' + month;
+        var listBoxDelay = 0.0;
+        var listBoxColorIndex = 0;
+
+        for (let i = 0; i < scheduleList.length; i++) {
+
+            var dateArray = scheduleList[i].date.split("-");
+            var list = dateArray[0] + '-' + dateArray[1];
+
+            if (yearMonth == list) {
+
+                var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
+                var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
+
+                // If schedule exceeds the last date of this month
+                if (endIndex > dayCalss.length) {
+                    endIndex = dayCalss.length;
+                }
+
+                createScheduleButton(startIndex);
+
+                function createScheduleButton(index) {
+                    var color = colorTable[listBoxColorIndex];
+                    var scheduleButton = document.createElement('BUTTON');
+                    var buttonText = document.createTextNode(scheduleList[i].title);
+                    scheduleButton.classList.add('scheduleButton');
+                    scheduleButton.addEventListener('click', function () { shifterList(i, color) });
+                    scheduleButton.style.backgroundColor = color;
+                    scheduleButton.style.height = '24px';
+
+                    var buttonWidthScale = 1;
+                    for (var j = index; j < endIndex; j++) {
+                        // button head
+                        if (j == startIndex) {
+                            scheduleButton.style.borderTopLeftRadius = '12px';
+                            scheduleButton.style.borderBottomLeftRadius = '12px';
+                        }
+
+                        // button tail
+                        if (j == (endIndex - 1)) {
+                            scheduleButton.style.borderTopRightRadius = '12px';
+                            scheduleButton.style.borderBottomRightRadius = '12px';
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+                            break;
+                        }
+
+                        // In case of end of week
+                        if ((j + 1) % 7 == 0) {
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+
+                            // create new button for next week
+                            createScheduleButton(j + 1);
+                            break;
+                        }
+
+                        buttonWidthScale += 1;
+                    }
+
+                    // Create schedule list box and detail infomation
+                    scheduleDetail(i, listBoxDelay, color);
+                    listBoxDelay += 0.2;
+                    listBoxColorIndex += 1;
+                }
+            }
+        }
+    }
+
+    function scheduleDetail(index, delay, color) {
+
+        var bodyCenterId = document.getElementById('body-center');
+        let i = index;
+        var height = 0;
+        var heightLineCount = 1;
+
+        var dateArray = scheduleList[i].date.split("-");
+        var beginDay = parseInt(dateArray[2]);
+
+        var scheduleBox = document.createElement('DIV');
+        scheduleBox.classList.add('schedule-list-box');
+        scheduleBox.style.setProperty('--listBoxDelay', delay + 's');
+
+
+        scheduleBox.style.backgroundColor = color;
+
+        var scheduleBegin = document.createElement('DIV');
+        scheduleBegin.classList.add('schedule-day-begin');
+        scheduleBegin.innerText = beginDay;
+
+
+        var scheduleEnd = document.createElement('DIV');
+        scheduleEnd.classList.add('schedule-day-end');
+        scheduleEnd.innerText = -(beginDay + scheduleList[i].days);
+
+        var scheduleTitle = document.createElement('DIV');
+        scheduleTitle.classList.add('schedule-day-title');
+        scheduleTitle.innerText = scheduleList[i].title;
+
+        scheduleBox.appendChild(scheduleBegin);
+        scheduleBox.appendChild(scheduleEnd);
+        scheduleBox.appendChild(scheduleTitle);
+
+        for (let j = 0; j < scheduleList[i].detail.length; j++) {
+            var daySchedule = document.createElement('DIV');
+            daySchedule.classList.add('schedule-day-detail');
+            daySchedule.innerText = 'Day ' + parseInt(beginDay + j) + ' : ' + scheduleList[i].detail[j];
+
+            scheduleBox.appendChild(daySchedule);
+
+            if (heightLineCount > 3) {
+                height = 3 * 23;
+            }
+            else {
+                height = heightLineCount * 23;
+            }
+
+            heightLineCount += 1;
+        }
+
+        scheduleBox.style.setProperty('--listBoxHeight', 50 + height + 'px');
+        scheduleBox.style.setProperty('--listBoxHeightExpand', 38 + heightLineCount * 23 + 'px');
+
+
+        bodyCenterId.appendChild(scheduleBox);
+    }
+
+    var desk1SVG = '<svg width="40" height="8"><path class="desk1" d="M6.67,6.4A10.51,10.51,0,0,1,12.07,8h1.26V0H0V8H1.26A10.51,10.51,0,0,1,6.67,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M20,6.4A10.54,10.54,0,0,1,25.41,8h1.26V0H13.33V8h1.26A10.54,10.54,0,0,1,20,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M33.33,6.4A10.51,10.51,0,0,1,38.74,8H40V0H26.67V8h1.26a10.51,10.51,0,0,1,5.4-1.6" style="fill:#e6e6e5"/></svg>'
+    var desk2SVG = '<svg width="19.97" height="21"><path class="desk2" d="M9.13,16.38,7.63,21,2.11,17,6,14.13A6.25,6.25,0,0,0,9.13,16.38Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5A6.15,6.15,0,0,0,6,14.13L2.11,17,0,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5H0L2.11,4,6,6.87A6.15,6.15,0,0,0,4.86,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M6,6.87,2.11,4,7.63,0l1.5,4.62A6.25,6.25,0,0,0,6,6.87Z" style="fill:#e6e6e5"/><path class="desk2" d="M11,4.32a6.31,6.31,0,0,0-1.91.3L7.63,0h6.82L13,4.62A6.31,6.31,0,0,0,11,4.32Z" style="fill:#e6e6e5"/><path class="desk2" d="M13,4.62,14.45,0,20,4,16,6.87A6.25,6.25,0,0,0,13,4.62Z" style="fill:#e6e6e5"/></svg>'
+    var desk3SVG = '<svg width="19.97" height="21"><path class="desk3" d="M10.84,16.38,12.34,21l5.52-4-3.93-2.86A6.21,6.21,0,0,1,10.84,16.38Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5a6.15,6.15,0,0,1-1.18,3.63L17.86,17,20,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5H20L17.86,4,13.93,6.87A6.15,6.15,0,0,1,15.11,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M13.93,6.87,17.86,4,12.34,0l-1.5,4.62A6.21,6.21,0,0,1,13.93,6.87Z" style="fill:#e6e6e5"/><path class="desk3" d="M8.93,4.32a6.31,6.31,0,0,1,1.91.3L12.34,0H5.52L7,4.62A6.31,6.31,0,0,1,8.93,4.32Z" style="fill:#e6e6e5"/><path class="desk3" d="M7,4.62,5.52,0,0,4,3.94,6.87A6.18,6.18,0,0,1,7,4.62Z" style="fill:#e6e6e5"/></svg>'
+    var desk4SVG = '<svg width="25" height="12"><path class="desk4" d="M6.84,7.85,2.39,4.58,0,12H5.5A7.09,7.09,0,0,1,6.84,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M10.34,5.28,8.64,0,2.39,4.58,6.84,7.85A7.06,7.06,0,0,1,10.34,5.28Z" style="fill:#e6e6e5"/><path class="desk4" d="M12.5,4.93a7,7,0,0,1,2.16.35L16.36,0H8.64l1.7,5.28A7,7,0,0,1,12.5,4.93Z" style="fill:#e6e6e5"/><path class="desk4" d="M18.16,7.85l4.45-3.27L16.36,0l-1.7,5.28A7.06,7.06,0,0,1,18.16,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M19.5,12H25L22.61,4.58,18.16,7.85A7.09,7.09,0,0,1,19.5,12Z" style="fill:#e6e6e5"/></svg>'
+
+    function shifterList(listNum, color) {
+
+        var shiftNum = listNum;
+        var shiftAvatar = document.getElementsByClassName("avatar-img");
+        var shiftUserTable = document.getElementsByClassName("shift-user");
+        var shiftTeamTable = document.getElementsByClassName("team-name");
+        var shiftDesk = document.getElementsByClassName("desk-img");
+
+        var shiferInfo = scheduleList[shiftNum].shifter;
+        var desk1Count = 0;
+        var desk2Count = 0;
+        var desk3Count = 0;
+        var desk4Count = 0;
+
+        for (let i = 0; i < shiferInfo.length; i++) {
+            shiftAvatar[i].src = "images/avatar.svg";
+            shiftUserTable[i].innerText = shiferInfo[i].name;
+            shiftTeamTable[i].innerText = shiferInfo[i].team;
+
+            let deskNum = shiferInfo[i].desk;
+            let seatNum = shiferInfo[i].seat;
+            let isShiftLeader = shiferInfo[i].leader;
+            var deskColor = '';
+            var numberOfDesk = 0;
+
+            switch (deskNum) {
+                case '1':
+                    shiftDesk[i].innerHTML = desk1SVG;
+                    var deskClass = document.getElementsByClassName('desk1');
+                    var numberOfDesk = 3;
+                    var deskOffset = numberOfDesk * desk1Count;
+                    desk1Count += 1;
+
+                    for (let j = 0; j < numberOfDesk; j++) {
+                        if (seatNum == j + 1) {
+                            if (isShiftLeader) {
+                                deskColor = '#ec2227';
+                            }
+                            else {
+                                deskColor = '#2baae2';
+                            }
+                        }
+                        else {
+                            deskColor = '#e6e6e5';
+                        }
+
+                        deskClass[deskOffset + j].style.fill = deskColor;
+                    }
+                    break;
+
+                case '2':
+                    shiftDesk[i].innerHTML = desk2SVG;
+                    var deskClass = document.getElementsByClassName('desk2');
+                    var numberOfDesk = 6;
+                    var deskOffset = numberOfDesk * desk2Count;
+                    desk2Count += 1;
+
+                    for (let j = 0; j < numberOfDesk; j++) {
+                        if (seatNum == j + 1) {
+                            if (isShiftLeader) {
+                                deskColor = '#ec2227';
+                            }
+                            else {
+                                deskColor = '#2baae2';
+                            }
+                        }
+                        else {
+                            deskColor = '#e6e6e5';
+                        }
+
+                        deskClass[deskOffset + j].style.fill = deskColor;
+                    }
+                    break;
+
+                case '3':
+                    shiftDesk[i].innerHTML = desk3SVG;
+                    var deskClass = document.getElementsByClassName('desk3');
+                    var numberOfDesk = 6;
+                    var deskOffset = numberOfDesk * desk3Count;
+                    desk3Count += 1;
+
+                    for (let j = 0; j < numberOfDesk; j++) {
+                        if (seatNum == j + 1) {
+                            if (isShiftLeader) {
+                                deskColor = '#ec2227';
+                            }
+                            else {
+                                deskColor = '#2baae2';
+                            }
+                        }
+                        else {
+                            deskColor = '#e6e6e5';
+                        }
+
+                        deskClass[deskOffset + j].style.fill = deskColor;
+                    }
+                    break;
+
+                case '4':
+                    shiftDesk[i].innerHTML = desk4SVG;
+                    var deskClass = document.getElementsByClassName('desk4');
+                    var numberOfDesk = 5;
+                    var deskOffset = numberOfDesk * desk4Count;
+                    desk4Count += 1;
+
+                    for (let j = 0; j < numberOfDesk; j++) {
+                        if (seatNum == j + 1) {
+                            if (isShiftLeader) {
+                                deskColor = '#ec2227';
+                            }
+                            else {
+                                deskColor = '#2baae2';
+                            }
+                        }
+                        else {
+                            deskColor = '#e6e6e5';
+                        }
+
+                        deskClass[deskOffset + j].style.fill = deskColor;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        // Clear left rows
+        for (let i = shiferInfo.length; i < 20; i++) {
+            shiftAvatar[i].src = '';
+            shiftUserTable[i].innerText = '';
+            shiftTeamTable[i].innerText = '';
+            shiftDesk[i].innerHTML = '';
+        }
+
+        // Title under line animation re-trigger
+        var titleBarClass = document.getElementsByClassName('title-bar');
+
+        // 0: Todo under line, 1: Shift under line
+        titleBarClass[1].style.setProperty('--barColor', color);
+        titleBarClass[1].classList.remove('under-line');
+        titleBarClass[1].offsetWidth;
+        titleBarClass[1].classList.add('under-line');
+    }
+
+    // Clock
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
+
+    window.onload = function () {
+        makeCalendar();
+        makeSchedule();
+        // scheduleDetail();
+        shifterList(0, '#8E44AD') ;
+    }
+</script>
+
 </html>
-
-
-
-<!--
-// var svgDeskCode1 = '<svg id="desk1" width="37.6749" height="6.1317" viewBox="0 0 37.6749 6.1317"><style>#desk1-1{fill:#e6e6e6;}#desk1-2{fill:#e6e6e6;}#desk1-3{fill:#e6e6e6;}</style><path id="desk1-1" d="M7.4417,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1863V.9341H1.1626V7.0659H2.3488A11.6573,11.6573,0,0,1,7.4417,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-2" d="M20,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H13.7209V7.0659h1.1862A11.6573,11.6573,0,0,1,20,5.839" transform="translate(-1.1626 -0.9341)"/><path id="desk1-3" d="M32.5583,5.839a11.6573,11.6573,0,0,1,5.0929,1.2269h1.1862V.9341H26.2791V7.0659h1.1863A11.6573,11.6573,0,0,1,32.5583,5.839" transform="translate(-1.1626 -0.9341)"/></svg>';
-// var svgDeskCode2 = '<svg id="desk2" width="19.3464" height="20.3421"><style>#desk2-1{fill:#e6e6e6;}#desk2-2{fill:#e6e6e6;}#desk2-3{fill:#e6e6e6;}#desk2-4{fill:#e6e6e6;}#desk2-5{fill:#e6e6e6;}#desk2-6{fill:#e6e6e6;}</style><path id="desk2-1" d="M9.1711,16.6943,7.7165,21.171,2.3693,17.286l3.8116-2.7693A5.9935,5.9935,0,0,0,9.1711,16.6943Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-2" d="M5.0323,11a5.9544,5.9544,0,0,0,1.1486,3.5167L2.3693,17.286.3268,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-3" d="M6.181,7.4833,2.3693,4.714,7.7165.829,9.1711,5.3057A5.9938,5.9938,0,0,0,6.181,7.4833Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-4" d="M11.0212,5.0111a5.9784,5.9784,0,0,0-1.85.2946L7.7165.829h6.61L12.8714,5.3058A5.9757,5.9757,0,0,0,11.0212,5.0111Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-5" d="M5.0323,11H.3268L2.3693,4.714,6.181,7.4833A5.9538,5.9538,0,0,0,5.0323,11Z" transform="translate(-0.3268 -0.829)"/><path id="desk2-6" d="M12.8714,5.3058,14.326.829l5.3472,3.885L15.8615,7.4833A5.9937,5.9937,0,0,0,12.8714,5.3058Z" transform="translate(-0.3268 -0.829)"/></svg>';
-// var svgDeskCode3 = '<svg id="desk3" width="19.3464" height="20.3421"><style>.#desk3-1{fill:#e6e6e6;}#desk3-2{fill:#e6e6e6;}#desk3-3{fill:#e6e6e6;}#desk3-4{fill:#e6e6e6;}#desk3-5{fill:#e6e6e6;}#desk3-6{fill:#e6e6e6;}</style><path id="desk3-1" d="M10.5021,15.8654l1.4546,4.4767l5.3472-3.885l-3.8117-2.7693C12.7567,14.6984,11.7163,15.4711,10.5021,15.8654z"/><path id="desk3-2" d="M14.6409,10.1711c0,1.3158-0.4293,2.5285-1.1486,3.5167l3.8117,2.7693l2.0425-6.286H14.6409z"/><path id="desk3-3" d="M13.4922,6.6544l3.8117-2.7694L11.9567,0l-1.4546,4.4767C11.7163,4.8711,12.7566,5.6438,13.4922,6.6544z"/><path id="desk3-4" d="M8.652,4.1822c0.6462,0,1.2671,0.1052,1.8502,0.2946L11.9567,0H5.3472l1.4546,4.4768C7.3848,4.2875,8.0058,4.1822,8.652,4.1822z"/><path id="desk3-5" d="M14.6409,10.1711h4.7056L17.3039,3.885l-3.8117,2.7694C14.2115,7.6426,14.6409,8.8553,14.6409,10.1711z"/><path id="desk3-6" d="M6.8018,4.4768L5.3472,0L0,3.885l3.8117,2.7694C4.5473,5.6438,5.5876,4.8711,6.8018,4.4768z"/></svg>';
-// var svgDeskCode4 = '<svg id="desk4" width="25" height="11.8882"><style>#desk4-1{fill:#e6e6e6;}#desk4-2{fill:#e6e6e6;}#desk4-3{fill:#e6e6e6;}#desk4-4{fill:#e6e6e6;}#desk4-5{fill:#e6e6e6;}</style><path id="desk4-1" d="M6.8425,7.8337,2.3873,4.5968,0,11.9441H5.5A6.9591,6.9591,0,0,1,6.8425,7.8337Z" transform="translate(0 -0.0559)"/><path id="desk4-2" d="M18.1574,7.8337l4.4553-3.2369L16.3627.0559l-1.7,5.2325A7.0061,7.0061,0,0,1,18.1574,7.8337Z" transform="translate(0 -0.0559)"/><path id="desk4-3" d="M12.5,4.9441a6.9871,6.9871,0,0,1,2.1625.3443l1.7-5.2325H8.6373l1.7,5.2326A6.9873,6.9873,0,0,1,12.5,4.9441Z" transform="translate(0 -0.0559)"/><path id="desk4-4" d="M19.5,11.9441H25L22.6127,4.5968,18.1574,7.8337A6.9592,6.9592,0,0,1,19.5,11.9441Z" transform="translate(0 -0.0559)"/><path id="desk4-5" d="M10.3374,5.2885,8.6373.0559l-6.25,4.5409L6.8425,7.8337A7.0064,7.0064,0,0,1,10.3374,5.2885Z" transform="translate(0 -0.0559)"/></svg>';
-// var svgDesk = [svgDeskCode1, svgDeskCode2, svgDeskCode3, svgDeskCode4];
-// var shiftList1 = [
-//     { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
-//     { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
-//     { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
-//     { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: "1", leader: 0 },
-//     { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: "2", leader: 0 },
-//     { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: "3", leader: 0 },
-//     { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: "4", leader: 0 },
-//     { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: "5", leader: 0 },
-//     { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: "6", leader: 0 },
-//     { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "2", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "3", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "4", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: "5", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
-// ]
-
-// var shiftList2 = [
-//     { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Kim, YongHak", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Kim TaeKyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, InMyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Shin, JaeHee", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Jo, HyunChul", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 }
-// ]
-
-// var shiftList3 = [
-//     { name: "Kim, YongHak", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Choi, YoungJun", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 },
-//     { name: "Kim TaeKyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, InMyung", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Shin, JaeHee", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Jo, HyunChul", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, Heecheol", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Yoo, JungHyun", team: "Cryogenic", desk: "1", seat: "1", leader: 0 },
-//     { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "1", leader: 0 }
-// ]
-
-// var shiftInfo = [shiftList1, shiftList2, shiftList3];
-
-// function scheduleUpdate(x) {
-//     var shiftAvatar = document.getElementsByClassName("avatar-img");
-//     var shiftUserTable = document.getElementsByClassName("shift-user");
-//     var shiftTeamTable = document.getElementsByClassName("team-name");
-//     var shiftDesk = document.getElementsByClassName("desk-img");
-
-//     for (let i = 0; i < shiftInfo[x].length; i++) {
-//         shiftAvatar[i].src = "images/avatar.svg";
-//         shiftUserTable[i].innerHTML = shiftInfo[x][i].name;
-//         shiftTeamTable[i].innerHTML = shiftInfo[x][i].team;
-
-//         let deskNum = shiftInfo[x][i].desk;
-//         let seatNum = shiftInfo[x][i].seat;
-//         let isShiftLeader = shiftInfo[x][i].leader;
-
-//         shiftDesk[i].innerHTML = findDeskSeat(i + 1, deskNum, seatNum, isShiftLeader);;
-//         // shiftDesk[i].innerHTML = '<svg width="10" height="10"><circle cx="5" cy="5" r="5"stroke="green" stroke-width="4" fill="yellow" />';
-//         // shiftDesk[i].appendChild(svgCode);
-//     }
-
-
-//     // $("#shift-table tr").hide();
-//     // $("#shift-table tr").each(function (index) {
-//     //     $(this).delay(index * 50).show(100);
-//     // });
-
-//     // document.getElementById("shift-table").style.animationName = "animatebottom";
-// }
-
-// function findDeskSeat(shiftNum, deskNum, seatNum, isLeader) {
-//     var operatorSeatColor = "#3498DB";
-//     if (isLeader) {
-//         operatorSeatColor = "#DB3434";
-//     }
-//     var deselectedSeat = "desk" + deskNum + "-" + seatNum + "{fill:#e6e6e6;}";
-//     var operatorSeatColor = "desk" + deskNum + "-" + seatNum + "{fill:" + operatorSeatColor + ";}";
-//     var svgDeskSeat = svgDesk[deskNum - 1].replace(deselectedSeat, operatorSeatColor);
-
-//     //to avoid overlap of path id in svg code(id must have unique name)
-//     var shiftID = null;
-//     var deskID = null;
-//     // console.log(shiftNum, deskNum, seatNum);
-//     switch (deskNum) {
-//         case "1":
-//             for (let i = 1; i <= 3; i++) {
-//                 deskID = "desk" + deskNum + "-" + i;
-//                 shiftID = "shift" + shiftNum + "-" + i;
-//                 svgDeskSeat = svgDeskSeat.split(deskID).join(shiftID);
-//             }
-//             break;
-
-//         case "2":
-//             for (let i = 1; i <= 6; i++) {
-//                 deskID = "desk" + deskNum + "-" + i;
-//                 shiftID = "shift" + shiftNum + "-" + i;
-//                 svgDeskSeat = svgDeskSeat.split(deskID).join(shiftID);
-//             }
-//         case "3":
-//             break;
-
-//         case "4":
-//             for (let i = 1; i <= 5; i++) {
-//                 deskID = "desk" + deskNum + "-" + i;
-//                 shiftID = "shift" + shiftNum + "-" + i;
-//                 svgDeskSeat = svgDeskSeat.split(deskID).join(shiftID);
-//             }
-//             break;
-//     }
-
-//     return svgDeskSeat;
-// }
-
-// function refrashShiftTable(x) {
-//     var shiftTableElement = document.getElementById("shift-table");
-//     var tablePosition = 0;
-//     var tableOpacity = 1.0;
-//     var id = setInterval(frame, 5);
-
-//     function frame() {
-//         if (tablePosition == 80) {
-//             clearInterval(id);
-//             showUpShiftTable(x);
-//         }
-//         else {
-//             tablePosition += 1;
-//             tableOpacity -= 0.02;
-
-//             shiftTableElement.style.top = tablePosition + "px";
-//             shiftTableElement.style.opacity = tableOpacity;
-//         }
-//     }
-// }
-
-// function showUpShiftTable(x) {
-//     scheduleUpdate(x);
-
-//     var shiftTableElement = document.getElementById("shift-table");
-//     var tablePosition = 80;
-//     var tableOpacity = 0.0;
-//     var id = setInterval(frame, 5);
-
-//     function frame() {
-//         if (tablePosition == 0) {
-//             clearInterval(id);
-//         }
-//         else {
-//             tablePosition -= 1;
-//             tableOpacity += 0.02;
-
-//             shiftTableElement.style.top = tablePosition + "px";
-//             shiftTableElement.style.opacity = tableOpacity;
-//         }
-//     }
-// }
-
--->
