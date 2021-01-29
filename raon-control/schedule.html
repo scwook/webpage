@@ -574,7 +574,7 @@
         }
 
         // Create last month
-        today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        today = new Date(today.getFullYear(), today.getMonth() - 1);
         makeCalendar();
 
         // Create schedule and shift list
@@ -584,6 +584,16 @@
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
         if (scheduleButtonClass[0]) {
             scheduleButtonClass[0].click();
+        }
+        else {
+            // Title under line animation re-trigger
+            var titleBarClass = document.getElementsByClassName('title-bar');
+
+            // 0: Todo under line, 1: Shift under line
+            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+            titleBarClass[1].classList.remove('under-line');
+            titleBarClass[1].offsetWidth;
+            titleBarClass[1].classList.add('under-line');
         }
 
     }
@@ -613,7 +623,7 @@
         }
 
         // Create next month
-        today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        today = new Date(today.getFullYear(), today.getMonth() + 1);
         makeCalendar();
 
         // Create schedule and shift list
@@ -623,6 +633,16 @@
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
         if (scheduleButtonClass[0]) {
             scheduleButtonClass[0].click();
+        }
+        else {
+            // Title under line animation re-trigger
+            var titleBarClass = document.getElementsByClassName('title-bar');
+
+            // 0: Todo under line, 1: Shift under line
+            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+            titleBarClass[1].classList.remove('under-line');
+            titleBarClass[1].offsetWidth;
+            titleBarClass[1].classList.add('under-line');
         }
     }
 
