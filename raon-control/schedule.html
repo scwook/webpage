@@ -410,8 +410,8 @@
 
     var scheduleList = [
         {
-            date: "2020-12-21",
-            days: 2,
+            fromDate: "2020-12-21",
+            toDate: "2020-12-22",
             title: "Beam Commissioning 1",
             detail: [
                 'Cool down',
@@ -419,30 +419,30 @@
                 'Pulse Mode Operation'
             ],
             shifter: [
-                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
-                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
-                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
-                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
-                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
-                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
-                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
-                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
-                { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
+                { name: "Son, Changwook", team: "Accelerator Control", desk: 1, seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: 1, seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: 1, seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: 2, seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: 2, seat: 2, leader: 0 },
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: 2, seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: 2, seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: 2, seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: 2, seat: 6, leader: 0 },
+                { name: "Jo, HyunChul", team: "Cryogenic", desk: 3, seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 3, seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 3, seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 4, seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 4, seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 4, seat: 2, leader: 1 }
             ]
         },
 
         {
-            date: "2021-01-11",
-            days: 2,
+            fromDate: "2021-01-11",
+            toDate: "2021-01-12",
             title: "Beam Commissioning 1",
             detail: [
                 'Cool down',
@@ -471,8 +471,8 @@
             ]
         },
         {
-            date: "2021-01-22",
-            days: 2,
+            fromDate: "2021-01-22",
+            toDate: "2021-01-23",
             title: "Beam Commissioning 2",
             detail: [
                 'Cool down',
@@ -507,8 +507,8 @@
         },
 
         {
-            date: "2021-01-25",
-            days: 2,
+            fromDate: "2021-01-25",
+            toDate: "2021-01-26",
             title: "Beam Commissioning 3",
             detail: [
                 'Cool down',
@@ -528,8 +528,8 @@
         },
 
         {
-            date: "2021-02-05",
-            days: 2,
+            fromDate: "2021-02-05",
+            toDate: "2021-02-06",
             title: "Beam Commissioning 5",
             detail: [
                 'Cool down',
@@ -703,14 +703,22 @@
 
         for (let i = 0; i < scheduleList.length; i++) {
 
-            var dateArray = scheduleList[i].date.split("-");
-            var list = dateArray[0] + '-' + dateArray[1];
+            var startDate = new Date(scheduleList[i].fromDate);
+            var endDate = new Date(scheduleList[i].toDate);
+            var days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)) + 1;
+
+            var fromDateArray = scheduleList[i].fromDate.split("-");
+            var list = fromDateArray[0] + '-' + fromDateArray[1];
+
+            // var toDateArray = scheduleList[i].toDate.split("-");
+            // var list = toDateArray[0] + '-' + toDateArray[1];
 
             if (yearMonth == list) {
 
                 var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-                var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
-                var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
+                var startIndex = firstDate.getDay() + parseInt(fromDateArray[2]) - 1;
+                // var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
+                var endIndex = parseInt(startIndex) + parseInt(days);
 
                 // If schedule exceeds the last date of this month
                 if (endIndex > dayCalss.length) {
@@ -776,13 +784,15 @@
         var height = 0;
         var heightLineCount = 1;
 
-        var dateArray = scheduleList[i].date.split("-");
-        var beginDay = parseInt(dateArray[2]);
+        var fromDateArray = scheduleList[i].fromDate.split("-");
+        var beginDay = parseInt(fromDateArray[2]);
+
+        var toDateArray = scheduleList[i].toDate.split("-");
+        var endDay = parseInt(toDateArray[2]);
 
         var scheduleBox = document.createElement('DIV');
         scheduleBox.classList.add('schedule-list-box');
         scheduleBox.style.setProperty('--listBoxDelay', delay + 's');
-
 
         scheduleBox.style.backgroundColor = color;
 
@@ -793,7 +803,7 @@
 
         var scheduleEnd = document.createElement('DIV');
         scheduleEnd.classList.add('schedule-day-end');
-        scheduleEnd.innerText = -(beginDay + scheduleList[i].days);
+        scheduleEnd.innerText = -(endDay);
 
         var scheduleTitle = document.createElement('DIV');
         scheduleTitle.classList.add('schedule-day-title');
@@ -858,7 +868,7 @@
             var numberOfDesk = 0;
 
             switch (deskNum) {
-                case '1':
+                case 1:
                     shiftDesk[i].innerHTML = desk1SVG;
                     var deskClass = document.getElementsByClassName('desk1');
                     var numberOfDesk = 3;
@@ -882,7 +892,7 @@
                     }
                     break;
 
-                case '2':
+                case 2:
                     shiftDesk[i].innerHTML = desk2SVG;
                     var deskClass = document.getElementsByClassName('desk2');
                     var numberOfDesk = 6;
@@ -906,7 +916,7 @@
                     }
                     break;
 
-                case '3':
+                case 3:
                     shiftDesk[i].innerHTML = desk3SVG;
                     var deskClass = document.getElementsByClassName('desk3');
                     var numberOfDesk = 6;
@@ -930,7 +940,7 @@
                     }
                     break;
 
-                case '4':
+                case 4:
                     shiftDesk[i].innerHTML = desk4SVG;
                     var deskClass = document.getElementsByClassName('desk4');
                     var numberOfDesk = 5;
@@ -983,6 +993,8 @@
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
+    getScheduleDatabase(); 
+
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
 
@@ -990,6 +1002,24 @@
         makeSchedule();
         // scheduleDetail();
         shifterList(0, '#8E44AD');
+
+        // setInterval(getScheduleDatabase, 2000);
+
+    }
+
+    function getScheduleDatabase() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                scheduleList = JSON.parse(this.responseText);
+                // console.log(scheduleList);
+            }
+        };
+
+        var server = "http://192.168.0.105/2021-01";
+        xhttp.open("GET", server, true);
+        xhttp.send();
     }
 </script>
 
