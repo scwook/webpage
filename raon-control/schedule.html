@@ -201,7 +201,7 @@
         <!-- Right -->
         <div id="body-right">
             <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
-            <div class="title-bar under-line" style="--barColor: #283593;"></div>
+            <div class="title-bar under-line" style="--barColor: #5D6D7E;"></div>
 
             <table id="shift-table">
 
@@ -394,6 +394,7 @@
     var date = new Date();
     var colorTable = ['#8E44AD', '#E74C3C', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
 
+    var monthString = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
     var monthArray = new Array();
     monthArray[0] = "January";
     monthArray[1] = "February";
@@ -578,7 +579,8 @@
         makeCalendar();
 
         // Create schedule and shift list
-        makeSchedule();
+        getScheduleDatabase();
+        // makeSchedule();
 
         // Show up first shift list
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
@@ -595,10 +597,11 @@
             titleBarClass[1].offsetWidth;
             titleBarClass[1].classList.add('under-line');
         }
-
     }
 
     function nextCalendar() {
+
+        getScheduleDatabase();
 
         // Remove this month schedule buttons
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
@@ -627,7 +630,8 @@
         makeCalendar();
 
         // Create schedule and shift list
-        makeSchedule();
+        getScheduleDatabase();
+        // makeSchedule();
 
         // Show up first shift list
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
@@ -680,7 +684,7 @@
             // Today
             todayClass.style.backgroundColor = "transparent";
             if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
-                todayClass.style.backgroundColor = "dodgerblue";
+                // todayClass.style.backgroundColor = "dodgerblue";
             }
 
             day += 1;
@@ -694,7 +698,6 @@
 
     function makeSchedule() {
         var dayCalss = document.getElementsByClassName('day');
-        var monthString = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         var month = monthString[today.getMonth()];
         var year = today.getFullYear();
         var yearMonth = year + '-' + month;
@@ -993,15 +996,15 @@
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
-    getScheduleDatabase(); 
+    getScheduleDatabase();
 
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
 
         makeCalendar();
-        makeSchedule();
+        // makeSchedule();
         // scheduleDetail();
-        shifterList(0, '#8E44AD');
+        // shifterList(0, '#8E44AD');
 
         // setInterval(getScheduleDatabase, 2000);
 
@@ -1013,12 +1016,14 @@
             if (this.readyState == 4 && this.status == 200) {
 
                 scheduleList = JSON.parse(this.responseText);
+                makeSchedule();
                 // console.log(scheduleList);
             }
         };
 
-        var server = "http://192.168.0.105/2021-01";
-        xhttp.open("GET", server, true);
+        var server = "http://192.168.68.126/" + today.getFullYear() + '-' + monthString[today.getMonth()];
+        console.log(server);
+        xhttp.open("GET", server, false);
         xhttp.send();
     }
 </script>
