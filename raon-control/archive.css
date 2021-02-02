@@ -1,55 +1,123 @@
-.search-box {
-    background-color: black;
-    margin: auto;
-    max-width: 800px;
-    box-sizing: border-box;
+@font-face {
+    font-family: "Helvetica-Neue-Light";
+    src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
 }
 
-.search-box #input {
-    padding: 10px;
-    font-size: 25px;
-    border: 1px solid #1d1d1d;
-    float: left;
-    width: 80%;
+@font-face {
+    font-family: "Roboto-Thin";
+    src: url(fonts/Roboto-Thin.ttf);
+}
+
+@font-face {
+    font-family: "Roboto-Light";
+    src: url(fonts/Roboto-Light.ttf);
+}
+
+body {
+    /* overflow: hidden; */
+    /* margin: 0px;
+width: 1920px;
+height: 1080px; */
+    margin: 0px;
+    background-color: black;
+    background-image: url('shadowbg.png');
+    background-repeat: no-repeat;
+    background-position: center var(--background-image-top);
+    font-family: "Helvetica-Neue-Light";
+}
+
+
+#time-stamp {
+    position: absolute;
+    color: white;
+    font-family: "Roboto-Thin";
+    font-size: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+}
+
+.under-line-box {
+    position: absolute;
+    top: 34px;
+}
+
+.center-top-box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.raon-box {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+
+.accelerator-control {
+    position: absolute;
+    color: white;
+    width: 150px;
+    left: 150px;
+    top: 40px;
+    font-family: "Helvetica-Neue-Light";
+}
+
+.search-box {
+    /* position: relative; */
+    width: 1000px;
+    height: 50px;
+    /* margin: auto; */
+    background-color: darkcyan;
+}
+
+/* .search {
+    background-color: darkgoldenrod;
+    margin: auto;
+    box-sizing: border-box;
+} */
+
+#input {
+    /* padding: 10px; */
+    font-size: 28px;
+    /* border: 1px solid #1d1d1d; */
+    width: 1000px;
+    height: 50px;
     background: #1d1d1d;
     color: white
 }
 
-.search-box #button {
+#button {
     float: left;
     width: 10%;
     padding: 10px;
     background: #1d1d1d;
     color: white;
-    font-size: 25px;
+    font-size: 28px;
     border: 1px solid #1d1d1d;
     border-left: none;
     cursor: pointer;
 }
 
 table {
-    font-family: arial, sans-serif;
     border-collapse: separate;
-    border-spacing: 0 2px;
-    width: 1000px;
+    border-spacing: 0 3px;
+    width: 1200px;
+    font-size: 20px;
     margin: auto;
 }
 
 th {
     color: white;
     background-color: dodgerblue;
-    font-size: 15px;
-    height: 40px;
+    height: 36px;
     text-align: center;
-    font-weight: normal;
 }
 
 td {
     color: white;
-    font-size: 15px;
     height: 40px;
-    text-align: center;
-    font-weight: normal;
+    text-align: left;
 }
 
 tr:nth-child(even) {

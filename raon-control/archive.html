@@ -1,124 +1,12 @@
 <!DOCTYPE html>
 <html>
 <script src="script/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="archive.css">
 <style>
-	@font-face {
-		font-family: "Helvetica-Neue-Light";
-		src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-	}
 
-	@font-face {
-		font-family: "Roboto-Thin";
-		src: url(fonts/Roboto-Thin.ttf);
-	}
-
-	@font-face {
-		font-family: "Roboto-Light";
-		src: url(fonts/Roboto-Light.ttf);
-	}
-
-	#time-stamp {
-		position: absolute;
-		color: white;
-		font-family: "Roboto-Thin";
-		font-size: 48px;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -70%);
-	}
-
-	.under-line-box {
-		position: absolute;
-		top: 34px;
-	}
-
-	.center-top-box {
-		position: absolute;
-		left: 50%;
-		transform: translate(-50%, 0%);
-	}
-
-	.raon-box {
-		position: absolute;
-		left: 10px;
-		top: 20px;
-	}
-
-	.accelerator-control {
-		position: absolute;
-		color: white;
-		width: 150px;
-		left: 150px;
-		top: 40px;
-		font-family: "Helvetica-Neue-Light";
-	}
-
-	.search-box {
-		width:1920px;
-		margin:auto;
-	}
-
-	.search {
-		background-color: black;
-		margin: auto;
-		max-width: 1000px;
-		box-sizing: border-box;
-	}
-
-	.search #input {
-		padding: 10px;
-		font-size: 28px;
-		border: 1px solid #1d1d1d;
-		float: left;
-		width: 80%;
-		background: #1d1d1d;
-		color: white
-	}
-
-	.search #button {
-		float: left;
-		width: 10%;
-		padding: 10px;
-		background: #1d1d1d;
-		color: white;
-		font-size: 28px;
-		border: 1px solid #1d1d1d;
-		border-left: none;
-		cursor: pointer;
-	}
-
-	table {
-		border-collapse: separate;
-		border-spacing: 0 3px;
-		width: 1200px;
-		font-size: 20px;
-		margin: auto;
-	}
-
-	th {
-		color: white;
-		background-color: dodgerblue;
-		height: 36px;
-		text-align: center;
-	}
-
-	td {
-		color: white;
-		height: 40px;
-		text-align: center;
-	}
-
-	tr:nth-child(even) {
-		background-color: #2d2d2d;
-	}
-
-	tr:nth-child(odd) {
-		background-color: #1d1d1d;
-	}
 </style>
 
-<body style="background-color:black; font-family: Helvetica-Neue-Light;">
+<body>
 	<div style="margin:auto; position: relative; width:1920px; height:80px;">
 		<div id="time-stamp"></div>
 		<div class="under-line-box"><img src="images/under-line.svg"></img></div>
@@ -127,129 +15,115 @@
 		<div class="accelerator-control">Accelerator Control</div>
 	</div>
 
-	<div style="height:160px"></div>
+	<div style="height:100px"></div>
 
-	<div class="search-box">
-		<div class="search">
-			<input type="text" id="input" placeholder="Process Variable">
-			<button type="button" id="button" onclick="loadSearch()">
-				<i class="fa fa-search"></i>
-			</button>
+	<div id="body"
+		style="width:1920px; height:780px; margin: auto;  display:flex; justify-content: center;">
+		<div class="search-box">
+			<!-- <input type="text" id="input" placeholder="Process Variable"> -->
+			<!-- <button type="button" id="button" onclick="loadSearch()"></button> -->
 		</div>
+
+		<!-- <div style="background-color: blanchedalmond; width: 200px; height: 100px;"></div> -->
+		<!-- <div style="height:160px"></div>
+
+		<table id="retriveData">
+			<thead id="tableHead">
+			</thead>
+
+			<tbody id="tableData">
+			</tbody>
+		</table> -->
 	</div>
-
-	<div style="height:160px"></div>
-
-	<table id="retriveData">
-		<thead id="tableHead">
-			<!-- <tr>
-				<th>PV Name</th>
-				<th>Status</th>
-				<th>Connected</th>
-				<th>Monitored</th>
-				<th>Sampling Period</th>
-				<th>Last Event</th>
-			</tr> -->
-		</thead>
-		<tbody id="tableData">
-			<!-- <tr>
-				<td>SYS-SUBSYS:DEV-SUBDEV:SIGNAL</td>
-				<td>Being archived</td>
-				<td>true</td>
-				<td>true</td>
-				<td>1.0</td>
-				<td>Apr/11/2020 07:26:40 +09:00</td>
-			</tr> -->
-		</tbody>
-	</table>
 </body>
 
 <script>
-	function loadSearch() {
-		var searchText = document.getElementById("input").value;
-		if (searchText.length) {
-			loadDoc(searchText);
-		}
-		else {
-			alert("No PVs have been specified.");
-		}
-	}
+	// function loadSearch() {
+	// 	var searchText = document.getElementById("input").value;
+	// 	if (searchText.length) {
+	// 		loadDoc(searchText);
+	// 	}
+	// 	else {
+	// 		alert("No PVs have been specified.");
+	// 	}
+	// }
 
-	var input = document.getElementById("input");
-	input.addEventListener("keyup", function (event) {
-		if (event.keyCode === 13) {
-			event.preventDefault();
-			document.getElementById("button").click();
-		}
-	});
+	// var input = document.getElementById("input");
+	// input.addEventListener("keyup", function (event) {
+	// 	if (event.keyCode === 13) {
+	// 		event.preventDefault();
+	// 		loadSearch();
+	// 		// document.getElementById("button").click();
+	// 	}
+	// });
 
 
-	let sortDirection = false;
-	let personData = [
-		{ pvName: 'SYS-SUBSYS:DEV-SUBDEV:SIGNAL', status: 'Being archived', connectionState: 'true', monitored: 'true', samplingPeriod: '1.0', lastEvent: 'Apr/11/2020 07:26:40 +09:00' },
+	// let sortDirection = false;
+	// let personData = [
+	// 	{ pvName: 'SYS-SUBSYS:DEV-SUBDEV:SIGNAL', status: 'Being archived', connectionState: 'true', monitored: 'true', samplingPeriod: '1.0', lastEvent: 'Apr/11/2020 07:26:40 +09:00' },
 
-	];
+	// ];
 
-	function loadDoc(retrievalName) {
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				var jsonValue = JSON.parse(this.responseText);
+	// function loadDoc(retrievalName) {
+	// 	var xhttp = new XMLHttpRequest();
+	// 	xhttp.onreadystatechange = function () {
+	// 		if (this.readyState == 4 && this.status == 200) {
+	// 			var jsonValue = JSON.parse(this.responseText);
 
-				if (jsonValue.length) {
-					let tHead = '';
-					tHead += `<thead><tr>
-						<th>PV Name</th>
-						<th>Status</th>
-						<th>Connected</th>
-						<th>Monitored</th>
-						<th>Sampling Period</th>
-						<th>Last Event</th>
-						</tr></thead>`
+	// 			if (jsonValue.length) {
+	// 				let tHead = '';
+	// 				tHead += `<thead><tr>
+	// 					<th>PV Name</th>
+	// 					<th>Status</th>
+	// 					<th>Connected</th>
+	// 					<th>Monitored</th>
+	// 					<th>Sampling Period</th>
+	// 					<th>Last Event</th>
+	// 					</tr></thead>`
 
-					document.getElementById("tableHead").innerHTML = tHead;
+	// 				document.getElementById("tableHead").innerHTML = tHead;
 
-					let tData = '';
-					for (let i = 0; i < jsonValue.length; i++) {
-						tData += `<tr>
-						<td>${jsonValue[i].pvName}</td>
-						<td>${jsonValue[i].status}</td>
-						<td>${jsonValue[i].connectionState}</td>
-						<td>${jsonValue[i].isMonitored}</td>
-						<td>${jsonValue[i].samplingPeriod}</td>
-						<td>${jsonValue[i].lastEvent}</td>
-						</tr>`
-					}
+	// 				let tData = '';
+	// 				for (let i = 0; i < jsonValue.length; i++) {
+	// 					tData += `<tr>
+	// 					<td>${jsonValue[i].pvName}</td>
+	// 					<td>${jsonValue[i].status}</td>
+	// 					<td>${jsonValue[i].connectionState}</td>
+	// 					<td>${jsonValue[i].isMonitored}</td>
+	// 					<td>${jsonValue[i].samplingPeriod}</td>
+	// 					<td>${jsonValue[i].lastEvent}</td>
+	// 					</tr>`
+	// 				}
 
-					document.getElementById("tableData").innerHTML = tData;
-					$("table tr").hide();
-					$("table tr").each(function (index) {
-						$(this).delay(index * 100).show(500);
-					});
-				}
-				else {
+	// 				document.getElementById("tableData").innerHTML = tData;
+	// 				$("table tr").hide();
+	// 				$("table tr").each(function (index) {
+	// 					$(this).delay(index * 50).show(500);
+	// 				});
+	// 			}
+	// 			else {
 
-				}
-			}
+	// 			}
+	// 		}
 
-		};
-		var rName = "http://192.168.0.105:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
-		xhttp.open("GET", rName, true);
-		xhttp.send();
-	}
+	// 	};
+	// 	var rName = "http://192.168.80.54:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
+	// 	xhttp.open("GET", rName, true);
+	// 	xhttp.send();
+	// }
 
-	function timer() {
-		var d = new Date();
-		document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-	}
+	// function timer() {
+	// 	var d = new Date();
+	// 	document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+	// }
 
-	window.onload = function () {
+	// window.onload = function () {
 
-		// loadTableData(personData);
+	// 	// loadTableData(personData);
 
-		var myVar = setInterval(timer, 1000);
+	// 	var myVar = setInterval(timer, 1000);
 
-	}
+	// }
 
 </script>
 
