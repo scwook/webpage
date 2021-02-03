@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<style>
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url(../fonts/Roboto-Light.ttf);
+    }
+
+    @font-face {
+        font-family: "Roboto-Thin";
+        src: url(../fonts/Roboto-Thin.ttf);
+    }
+
+    body {
+        background-color: black;
+        font-family: "Roboto-Light";
+
+    }
+
+    #last-button,
+    #next-button {
+        width: 100px;
+        height: 70px;
+        border: none;
+        outline: none;
+        color: white;
+        background-color: #181818;
+
+    }
+
+    #year {
+        width: 500px;
+        height: 70px;
+        display: flex;
+        font-size: 32px;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        background-color: #181818;
+
+    }
+
+    .week {
+        width: 100px;
+        height: 30px;
+        display: flex;
+        text-align: center;
+        color: gray;
+        background-color: #181818;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    #calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 100px);
+        grid-template-rows: repeat(6, 100px);
+        width: 700px;
+        height: 600px;
+        overflow: auto;
+        background-color: tomato;
+    }
+
+    .day {
+        background-color: #1d1d1d;
+        color: white;
+        overflow: visible;
+    }
+
+    .today {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 20px;
+        /* background-color: dodgerblue; */
+    }
+
+    button {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border: none;
+        outline: none;
+        color: white;
+        position: relative;
+        font-family: "Roboto-Light";
+
+    }
+</style>
+
+<body>
+    <div style="display: flex;">
+        <button id="last-button" onclick="prevCalendar()">&#10094;</button>
+
+        <div id="year">January 2021</div>
+        <button id="next-button" onclick="nextCalendar()">&#10095;</button>
+    </div>
+
+    <div style="display: flex;">
+        <div class="week">SUN</div>
+        <div class="week">MON</div>
+        <div class="week">TUE</div>
+        <div class="week">WED</div>
+        <div class="week">THU</div>
+        <div class="week">FRI</div>
+        <div class="week">SAT</div>
+    </div>
+
+    <div id="calendar">
+        <!-- 1 week -->
+        <div class="day" style="z-index: 2;">
+            <div class="today"></div>
+            <!-- <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button> -->
+        </div>
+        <div class="day" style="z-index: 1;">
+            <div class="today"></div>
+            <!-- <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation2</button> -->
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+
+        <!-- 2 week -->
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+
+        <!-- 3 week -->
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+
+        <!-- 4 week -->
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+
+        <!-- 5 week -->
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+
+        <!-- 6 week -->
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+        <div class="day">
+            <div class="today"></div>
+        </div>
+    </div>
+
+    <div id = "todo" style="color:white; font-size: 24px;">abcd</div>
+
+</body>
+<script>
+    var today = new Date();
+    var date = new Date();
+    var monthArray = new Array();
+    monthArray[0] = "January";
+    monthArray[1] = "February";
+    monthArray[2] = "March";
+    monthArray[3] = "April";
+    monthArray[4] = "May";
+    monthArray[5] = "June";
+    monthArray[6] = "July";
+    monthArray[7] = "August";
+    monthArray[8] = "September";
+    monthArray[9] = "October";
+    monthArray[10] = "November";
+    monthArray[11] = "December";
+
+    function prevCalendar() {
+        today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        makeCalendar();
+
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        schedule();
+    }
+
+    function nextCalendar() {
+        today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+        makeCalendar();
+
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        schedule();
+    }
+
+    function makeCalendar() {
+        // Year and Month
+        var yearId = document.getElementById("year");
+        var month = monthArray[today.getMonth()];
+        yearId.innerHTML = month + " " + today.getFullYear();
+
+        var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+        var dayCalss = document.getElementsByClassName('day');
+        var thisMonthFirstDay = firstDate.getDay();
+        var day = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+
+
+        // This Month
+        for (let i = 0; i < dayCalss.length; i++) {
+            var todayClass = dayCalss[i].getElementsByClassName('today')[0];
+
+            // Last Month last day reset and start this month first day
+            if (i == thisMonthFirstDay) {
+                day = 1;
+            }
+
+            todayClass.innerHTML = day;
+
+            // Sunday
+            if (i % 7 == 0) {
+                todayClass.style.color = "tomato";
+            }
+
+            // Today
+            todayClass.style.backgroundColor = "transparent";
+            if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
+                todayClass.style.backgroundColor = "dodgerblue";
+            }
+
+            day += 1;
+
+            // Last day reset and start next month first day
+            if (day > lastDate.getDate()) {
+                day = 1;
+            }
+        }
+    }
+
+    function schedule() {
+        var dayCalss = document.getElementsByClassName('day');
+        var yearMonth = today.getFullYear() + '-' + today.getMonth() + 1;
+        var colorTable = ['#283593', '#2E7D32', '#EF6C00'];
+        var scheduleList = [
+            { date: "2021-01-20", days: 2, title: "Beam Commissioning" },
+            { date: "2021-01-21", days: 3, title: "Beam Commissioning" },
+            { date: "2021-01-11", days: 1, title: "Beam Commissioning" },
+
+        ];
+
+        for (let i = 0; i < scheduleList.length; i++) {
+
+            var dateArray = scheduleList[i].date.split("-");
+            // console.log(dateArray[0]);
+            // console.log(dateArray[1]);
+            // console.log(dateArray[2]);
+            var list = dateArray[0] + '-' + dateArray[1];
+            if (yearMonth == list) {
+                var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                var startIndex = firstDate.getDay() + parseInt(dateArray[2]) - 1;
+                var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
+
+                // If schedule exceeds the last date of this month
+                if (endIndex > dayCalss.length) {
+                    endIndex = dayCalss.length;
+                }
+
+                createScheduleButton(startIndex);
+
+                function createScheduleButton(index) {
+                    var scheduleButton = document.createElement('BUTTON');
+                    var buttonText = document.createTextNode(scheduleList[i].title);
+                    scheduleButton.classList.add('scheduleButton');
+                    scheduleButton.addEventListener('click', function () { refrashShiftTable(i) });
+                    scheduleButton.style.backgroundColor = colorTable[i];
+                    scheduleButton.style.height = '24px';
+
+                    var buttonWidthScale = 1;
+                    for (var j = index; j < endIndex; j++) {
+                        // button head
+                        if (j == startIndex) {
+                            scheduleButton.style.borderTopLeftRadius = '12px';
+                            scheduleButton.style.borderBottomLeftRadius = '12px';
+                        }
+
+                        // button tail
+                        if (j == (endIndex - 1)) {
+                            scheduleButton.style.borderTopRightRadius = '12px';
+                            scheduleButton.style.borderBottomRightRadius = '12px';
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+                            break;
+                        }
+
+                        // In case of end of week
+                        if ((j + 1) % 7 == 0) {
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+
+                            // create new button for next week
+                            createScheduleButton(j + 1);
+                            break;
+                        }
+
+                        buttonWidthScale += 1;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    function refrashShiftTable(i) {
+        document.getElementById('todo').innerHTML = i;
+    }
+
+    window.onload = function () {
+        makeCalendar();
+        schedule();
+
+    }
+</script>
+
+</html>

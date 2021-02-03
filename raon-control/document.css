@@ -1,0 +1,158 @@
+:root {
+    --background-image-top: 0px;
+}
+
+@font-face {
+    font-family: "Helvetica-Neue-Light";
+    src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+}
+
+@font-face {
+    font-family: "Roboto-Thin";
+    src: url(fonts/Roboto-Thin.ttf);
+}
+
+@font-face {
+    font-family: "Roboto-Light";
+    src: url(fonts/Roboto-Light.ttf);
+}
+
+body {
+    margin: 0px;
+    background-color: black;
+    background-image: url('shadowbg.png');
+    background-repeat: no-repeat;
+    background-position: center var(--background-image-top);
+    font-family: "Roboto-Thin";
+}
+
+#time-stamp {
+    position: absolute;
+    color: white;
+    font-family: "Roboto-Thin";
+    font-size: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+}
+
+.under-line-box {
+    position: absolute;
+    top: 34px;
+}
+
+.center-top-box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.raon-box {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+
+.accelerator-control {
+    position: absolute;
+    color: white;
+    width: 150px;
+    left: 150px;
+    top: 40px;
+    font-family: "Helvetica-Neue-Light";
+}
+
+.container {
+    position: relative;
+    animation: animatebottom 1s;
+    margin-top: 50px;
+    bottom: -100px;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.letter {
+    width: 1000px;
+    margin: auto;
+    text-align: center;
+    font-size: 24px;
+    color: lightgray;
+    position: relative;
+}
+
+.console-window {
+    width: 1000px;
+    margin: auto;
+    border: 1px solid #3d3d3d;
+    border-radius: 5px;
+    background-color: #2d2d2d;
+}
+
+.console-title {
+    width: 980px;
+    margin-left: 10px;
+    margin-top: 4px;
+    background-color: #2d2d2d;
+}
+
+.console-body {
+    width: 978px;
+    margin-left: 1px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 0px 0px 3px 3px;
+    /* margin: 10px; */
+    font-size: 20px;
+    line-height: 8px;
+}
+
+.title-button {
+    height: 12px;
+    width: 12px;
+    margin: 2px;
+    border-radius: 50%;
+    display: inline-block
+}
+
+.no-selection {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+.button-red {
+    background-color: tomato;
+}
+
+.button-yellow {
+    background-color: gold;
+}
+
+.button-green {
+    background-color: limegreen;
+}
+
+.console-dir {
+    color: dodgerblue;
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0;
+        opacity: 1
+    }
+}
+
+@media all and (max-width: 1920px) {
+    body {
+        background-position: 0px var(--background-image-top);
+    }
+}

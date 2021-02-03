@@ -1,162 +1,19 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="document.css">
 
-<head>
-    <style>
-        @font-face {
-            font-family: "Helvetica-Neue-Light";
-            src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-        }
+<body>
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
+        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+        <div class="accelerator-control">Accelerator Control</div>
+    </div>
 
-        @font-face {
-            font-family: "Roboto-Thin";
-            src: url(fonts/Roboto-Thin.ttf);
-        }
+    <div style="height:160px"></div>
 
-        @font-face {
-            font-family: "Roboto-Light";
-            src: url(fonts/Roboto-Light.ttf);
-        }
-
-        #time-stamp {
-            position: absolute;
-            color: white;
-            font-family: "Roboto-Thin";
-            font-size: 48px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -70%);
-        }
-
-        .under-line-box {
-            position: absolute;
-            top: 34px;
-        }
-
-        .center-top-box {
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, 0%);
-        }
-
-        .raon-box {
-            position: absolute;
-            left: 10px;
-            top: 20px;
-        }
-
-        .accelerator-control {
-            position: absolute;
-            color: white;
-            width: 150px;
-            left: 150px;
-            top: 40px;
-            font-family: "Helvetica-Neue-Light";
-        }
-
-        .document-body {
-            width: 1920px;
-            margin: auto;
-        }
-
-        .container {
-            position: relative;
-            animation: animatebottom 1s;
-            /* animation-delay: 2s; */
-            bottom: -300px;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        .letter {
-            width: 1000px;
-            margin: auto;
-            text-align: center;
-            font-size: 24px;
-            color: lightgray;
-            position: relative;
-        }
-
-        .console-window {
-            width: 1000px;
-            margin: auto;
-            border: 1px solid #3d3d3d;
-            border-radius: 5px;
-            background-color: #2d2d2d;
-        }
-
-        .console-title {
-            width: 980px;
-            margin-left: 10px;
-            margin-top: 4px;
-            background-color: #2d2d2d;
-        }
-
-        .console-body {
-            width: 978px;
-            margin-left: 1px;
-            padding: 10px;
-            background-color: white;
-            border-radius: 0px 0px 3px 3px;
-            /* margin: 10px; */
-            font-size: 20px;
-            line-height: 8px;
-        }
-
-        .title-button {
-            height: 12px;
-            width: 12px;
-            margin: 2px;
-            border-radius: 50%;
-            display: inline-block
-        }
-
-        .button-red {
-            background-color: tomato;
-        }
-
-        .button-yellow {
-            background-color: gold;
-        }
-
-        .button-green {
-            background-color: limegreen;
-        }
-
-        .console-dir {
-            color: dodgerblue;
-        }
-
-        /* .w3-animate-bottom{
-    position:relative;
-    animation:animatebottom 5s
-} */
-
-        @keyframes animatebottom {
-            from {
-                bottom: -100px;
-                opacity: 0
-            }
-
-            to {
-                bottom: 0;
-                opacity: 1
-            }
-        }
-    </style>
-
-<body style="background-color: black; font-family:Helvetica-Neue-Light">
-    <div class="document-body">
-
-        <div style="margin:auto; position: relative; width:1920px; height:80px;">
-            <div id="time-stamp"></div>
-            <div class="under-line-box"><img src="images/under-line.svg"></img></div>
-            <div class="center-top-box"><img src="images/center-top.svg"></img></div>
-            <div class="raon-box"><img src="images/raon-white.svg"></img></div>
-            <div class="accelerator-control">Accelerator Control</div>
-        </div>
-
-        <div style="height:160px"></div>
+    <div id="body-contain" style="margin:auto; position:relative; width:1920px; height:750px;">
 
         <div class="container">
             <div class="letter">
@@ -164,7 +21,6 @@
             </div>
         </div>
 
-        <br><br><br>
 
         <div class="container">
             <div class="letter">
@@ -178,15 +34,13 @@
                     <div class="title-button button-green"></div>
                 </div>
                 <div class="console-body">
-                    <p>$ wget https://epics-controls.org/download/base/base-3.15.7.tar.gz</p>
-                    <p>$ tar xvf base-3.15.7.tar.gz</p>
-                    <p>$ cd base-3.15.7</p>
-                    <p>base-3.15.7$ make</p>
+                    <p><span class="no-selection">$</span> wget https://epics-controls.org/download/base/base-3.15.7.tar.gz</p>
+                    <p><span class="no-selection">$</span> tar xvf base-3.15.7.tar.gz</p>
+                    <p><span class="no-selection">$</span> cd base-3.15.7</p>
+                    <p><span class="no-selection">base-3.15.7$</span> make</p>
                 </div>
             </div>
         </div>
-
-        <br><br><br>
 
         <div class="container">
             <div class="letter">
@@ -206,7 +60,6 @@
             </div>
         </div>
 
-        <br><br><br>
 
         <div class="container">
             <div class="letter">
@@ -230,44 +83,26 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // $(window).scroll(function() {
-        //     var x = document.getElementsByClassName("container");
-
-        //     if ($(this).scrollTop() > 800) {
-        //         // apply effects and animations
-        //         console.log($(this).scrollTop());
-        //         x[2].style.animation = "animaterbottom 0.4s";
-        //         x[2].style.visibility = "visible";
-        //     }
-        // });
-
-        function timer() {
-            var d = new Date();
-            document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-        }
-
-        window.onload = function () {
-            var myVar = setInterval(timer, 1000);
-
-            var x = document.getElementsByClassName("container");
-            console.log(x.length);
-
-            //  x[0].style.visibility = "visible";
-            //  x[0].style.position = "relative";
-            var delayTime = 0;
-            for (let i = 0; i < x.length; i++) {
-                // x[i].style.animation = "animatebottom 1s";
-                x[i].style.animationDelay = delayTime + "s";
-                // x[i].style.display = "block";  
-
-                delayTime += 0.2;
-            }
-            // x[0].style.animation = "animaterbottom 1s";
-            // x[0].style.display ="block";
-        }
-    </script>
 </body>
+<script>
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
+
+    window.onload = function () {
+        setInterval(timer, 1000);
+
+        var x = document.getElementsByClassName("container");
+
+        var delayTime = 0;
+        for (let i = 0; i < x.length; i++) {
+            x[i].style.animationDelay = delayTime + "s";
+
+            delayTime += 0.2;
+        }
+
+    }
+</script>
 
 </html>

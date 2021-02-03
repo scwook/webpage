@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
 <script src="script/jquery.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="archive.css">
-<style>
-
-</style>
-
 <body>
 	<div style="margin:auto; position: relative; width:1920px; height:80px;">
 		<div id="time-stamp"></div>
@@ -17,113 +14,211 @@
 
 	<div style="height:100px"></div>
 
-	<div id="body"
-		style="width:1920px; height:780px; margin: auto;  display:flex; justify-content: center;">
+	<div id="body" style="margin:auto; position:relative; width:1920px; height:750px;">
 		<div class="search-box">
-			<!-- <input type="text" id="input" placeholder="Process Variable"> -->
-			<!-- <button type="button" id="button" onclick="loadSearch()"></button> -->
+			<input type="text" id="input" placeholder="Process Variable">
+			<svg onclick="retrieveData()" style="position: absolute; left:1325px; top: 13px">
+				<defs>
+					<style>
+						.cls-1 {
+							fill: none;
+							stroke: #6d6d6d;
+							stroke-miterlimit: 10;
+							stroke-width: 3px;						
+						}
+					</style>
+				</defs>
+				<circle class="cls-1" cx="10.5" cy="10.5" r="9" />
+				<line class="cls-1" x1="17.04" y1="17.04" x2="25.04" y2="25.04" />
+			</svg>
 		</div>
 
-		<!-- <div style="background-color: blanchedalmond; width: 200px; height: 100px;"></div> -->
-		<!-- <div style="height:160px"></div>
+		<div style="height:100px;"></div>
 
-		<table id="retriveData">
-			<thead id="tableHead">
+		<table>
+			<thead id="tableHead" style="font-family: Roboto-Light">
+				<!-- <tr>
+					<th>PV Name</th>
+					<th>Status</th>
+					<th>Connected</th>
+					<th>Monitored</th>
+					<th>Sampling Period</th>
+					<th>Last Event</th>
+				</tr> -->
 			</thead>
 
-			<tbody id="tableData">
+			<tbody id="tableBody">
+				<!-- <tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr>
+				<tr>
+					<td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+					<td>Being archived</td>
+					<td>true</td>
+					<td>true</td>
+					<td>1.0</td>
+					<td>Feb/02/2021 07:39:45 +09:00</td>
+				</tr> -->
 			</tbody>
-		</table> -->
+		</table>
 	</div>
 </body>
 
 <script>
-	// function loadSearch() {
-	// 	var searchText = document.getElementById("input").value;
-	// 	if (searchText.length) {
-	// 		loadDoc(searchText);
-	// 	}
-	// 	else {
-	// 		alert("No PVs have been specified.");
-	// 	}
-	// }
+	function retrieveData() {
+		var searchText = document.getElementById("input").value;
+		if (searchText.length) {
+			getArchiveData(searchText);
+		}
+		else {
+			alert("No PVs have been specified.");
+		}
+	}
 
-	// var input = document.getElementById("input");
-	// input.addEventListener("keyup", function (event) {
-	// 	if (event.keyCode === 13) {
-	// 		event.preventDefault();
-	// 		loadSearch();
-	// 		// document.getElementById("button").click();
-	// 	}
-	// });
+	var input = document.getElementById("input");
+	input.addEventListener("keyup", function (event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			retrieveData();
+			// document.getElementById("button").click();
+		}
+	});
 
 
-	// let sortDirection = false;
-	// let personData = [
-	// 	{ pvName: 'SYS-SUBSYS:DEV-SUBDEV:SIGNAL', status: 'Being archived', connectionState: 'true', monitored: 'true', samplingPeriod: '1.0', lastEvent: 'Apr/11/2020 07:26:40 +09:00' },
+	let sortDirection = false;
+	let personData = [
+		{ pvName: 'SYS-SUBSYS:DEV-SUBDEV:SIGNAL', status: 'Being archived', connectionState: 'true', monitored: 'true', samplingPeriod: '1.0', lastEvent: 'Apr/11/2020 07:26:40 +09:00' },
 
-	// ];
+	];
 
-	// function loadDoc(retrievalName) {
-	// 	var xhttp = new XMLHttpRequest();
-	// 	xhttp.onreadystatechange = function () {
-	// 		if (this.readyState == 4 && this.status == 200) {
-	// 			var jsonValue = JSON.parse(this.responseText);
+	function getArchiveData(retrievalName) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
 
-	// 			if (jsonValue.length) {
-	// 				let tHead = '';
-	// 				tHead += `<thead><tr>
-	// 					<th>PV Name</th>
-	// 					<th>Status</th>
-	// 					<th>Connected</th>
-	// 					<th>Monitored</th>
-	// 					<th>Sampling Period</th>
-	// 					<th>Last Event</th>
-	// 					</tr></thead>`
+				if (jsonValue.length) {
+					let tHead = '';
+					tHead += `<tr>
+						<th>PV Name</th>
+						<th>Status</th>
+						<th>Connected</th>
+						<th>Monitored</th>
+						<th>Sampling Period</th>
+						<th>Last Event</th>
+						</tr>`
 
-	// 				document.getElementById("tableHead").innerHTML = tHead;
+					document.getElementById("tableHead").innerHTML = tHead;
 
-	// 				let tData = '';
-	// 				for (let i = 0; i < jsonValue.length; i++) {
-	// 					tData += `<tr>
-	// 					<td>${jsonValue[i].pvName}</td>
-	// 					<td>${jsonValue[i].status}</td>
-	// 					<td>${jsonValue[i].connectionState}</td>
-	// 					<td>${jsonValue[i].isMonitored}</td>
-	// 					<td>${jsonValue[i].samplingPeriod}</td>
-	// 					<td>${jsonValue[i].lastEvent}</td>
-	// 					</tr>`
-	// 				}
+					let tData = '';
+					for (let i = 0; i < jsonValue.length; i++) {
+						tData += `<tr>
+						<td>${jsonValue[i].pvName}</td>
+						<td>${jsonValue[i].status}</td>
+						<td>${jsonValue[i].connectionState}</td>
+						<td>${jsonValue[i].isMonitored}</td>
+						<td>${jsonValue[i].samplingPeriod}</td>
+						<td>${jsonValue[i].lastEvent}</td>
+						</tr>`
+					}
 
-	// 				document.getElementById("tableData").innerHTML = tData;
-	// 				$("table tr").hide();
-	// 				$("table tr").each(function (index) {
-	// 					$(this).delay(index * 50).show(500);
-	// 				});
-	// 			}
-	// 			else {
+					document.getElementById("tableBody").innerHTML = tData;
+					$("table tr").hide();
+					$("table tr").each(function (index) {
+						$(this).delay(index * 50).show(500);
+					});
+				}
+				else {
 
-	// 			}
-	// 		}
+				}
+			}
+		};
+		var rName = "http://192.168.80.54:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
+		xhttp.open("GET", rName, true);
+		xhttp.send();
+	}
 
-	// 	};
-	// 	var rName = "http://192.168.80.54:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
-	// 	xhttp.open("GET", rName, true);
-	// 	xhttp.send();
-	// }
+	function timer() {
+		var d = new Date();
+		document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+	}
 
-	// function timer() {
-	// 	var d = new Date();
-	// 	document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-	// }
+	window.onload = function () {
 
-	// window.onload = function () {
+		// loadtableBody(personData);
 
-	// 	// loadTableData(personData);
+		var myVar = setInterval(timer, 1000);
 
-	// 	var myVar = setInterval(timer, 1000);
-
-	// }
+	}
 
 </script>
 
