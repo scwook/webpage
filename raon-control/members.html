@@ -1,57 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-.card {
-  /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); */
-  max-width: 300px;
-  margin: auto;
-  text-align: center;
-  font-family: arial;
-  background-color: white;
-}
+<link rel="stylesheet" type="text/css" href="member.css">
 
-.title {
-  color: grey;
-  font-size: 18px;
-}
-
-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #1d1d1d;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
-
-a {
-  text-decoration: none;
-  font-size: 22px;
-  color: black;
-}
-
-button:hover, a:hover {
-  opacity: 0.7;
-}
-</style>
 <body style="background-color: black;">
-<div class="card">
-    <img src="images/profile-image.svg" alt="John" style="width:100%">
-    <h1>Son, Changwook</h1>
-    <p class="title">Senior Enginner</p>
-    <p>Accelerator Control System Team</p>
-    <div style="margin: 24px 0;">
-      <a href="#"><i class="fa fa-dribbble"></i></a> 
-      <a href="#"><i class="fa fa-twitter"></i></a>
-      <a href="#"><i class="fa fa-linkedin"></i></a>  
-      <a href="#"><i class="fa fa-facebook"></i></a> 
+  <div style="margin:auto; position: relative; width:1920px; height:80px;">
+    <div id="time-stamp"></div>
+    <div class="under-line-box"><img src="images/under-line.svg"></img></div>
+    <div class="center-top-box"><img src="images/center-top.svg"></img></div>
+    <div class="raon-box"><img src="images/raon-white.svg"></img></div>
+    <div class="accelerator-control">Accelerator Control</div>
+  </div>
+
+  <div style="height:100px"></div>
+
+  <div id="body" style="margin:auto; position:relative; width:1920px; height:750px; display: flex;">
+
+    <div class="card">
+      <img src="images/profile-image.svg">
+      <div class="name">Son, Changwook</div>
+      <p class="title">Senior Enginner</p>
+      <p class="email">scwook@ibs.re.kr</p>
+      <button>Contact</button>
     </div>
-    <p><button>Contact</button></p>
+
   </div>
 </body>
+
 </html>

@@ -1,0 +1,106 @@
+:root {
+    --background-image-top: 0px;
+  }
+
+  @font-face {
+    font-family: "Helvetica-Neue-Light";
+    src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+  }
+
+  @font-face {
+    font-family: "Roboto-Thin";
+    src: url(fonts/Roboto-Thin.ttf);
+  }
+
+  @font-face {
+    font-family: "Roboto-Light";
+    src: url(fonts/Roboto-Light.ttf);
+  }
+
+  body {
+    margin: 0px;
+    background-color: black;
+    background-image: url('shadowbg.png');
+    background-repeat: no-repeat;
+    background-position: center var(--background-image-top);
+    font-family: "Helvetica-Neue-Light";
+  }
+
+  #time-stamp {
+    position: absolute;
+    color: white;
+    font-family: "Roboto-Thin";
+    font-size: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+  }
+
+  .under-line-box {
+    position: absolute;
+    top: 34px;
+  }
+
+  .center-top-box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+
+  .raon-box {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+  }
+
+  .accelerator-control {
+    position: absolute;
+    color: white;
+    width: 150px;
+    left: 150px;
+    top: 40px;
+    font-family: "Helvetica-Neue-Light";
+  }
+
+  .card {
+    /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); */
+    width: 300px;
+    height: 500px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    background-color: white;
+  }
+
+  .name {
+    font-size: 32px;
+  }
+
+  .title {
+    color: grey;
+    font-size: 18px;
+  }
+
+  button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #1d1d1d;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+  }
+
+  button:hover,
+  a:hover {
+    opacity: 0.7;
+  }
