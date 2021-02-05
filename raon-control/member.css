@@ -62,45 +62,52 @@
     font-family: "Helvetica-Neue-Light";
   }
 
+  #title {
+    width:1920px; 
+    height:40px; 
+    margin:auto;
+    text-align: center; 
+    font-size: 36px;
+    color: white
+
+  }
+
   .card {
     /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); */
-    width: 300px;
-    height: 500px;
+    width: 250px;
+    height: 400px;
     margin: auto;
     text-align: center;
-    font-family: arial;
-    background-color: white;
+    background-color: rgba(26,26,26,0.5);
+  }
+
+  .avatar {
+
+    width: 150px;
+    height: 150px;
+    margin-top: 40px;
   }
 
   .name {
-    font-size: 32px;
-  }
-
-  .title {
-    color: grey;
-    font-size: 18px;
-  }
-
-  button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
+    margin-top: 10px;
+    font-size: 24px;
     color: white;
-    background-color: #1d1d1d;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-size: 18px;
   }
 
-  a {
-    text-decoration: none;
-    font-size: 22px;
-    color: black;
+  .charge {
+    margin-top: 15px;
+    color: #CCCCCC;
+    font-size: 16px;
   }
 
-  button:hover,
-  a:hover {
-    opacity: 0.7;
+  .task {
+    margin-top: 5px;
+    color: #808080;
+    font-size: 12px;
+  }
+
+  .email, .phone, .location{
+      margin-top: 10px;
+      color: white;
+      font-size: 10px;
   }
