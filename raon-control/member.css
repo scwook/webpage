@@ -1,131 +1,121 @@
 :root {
-    --background-image-top: 0px;
-  }
+  --background-image-top: 0px;
+}
 
-  @font-face {
-    font-family: "Helvetica-Neue-Light";
-    src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
-  }
+@font-face {
+  font-family: "Helvetica-Neue-Light";
+  src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+}
 
-  @font-face {
-    font-family: "Roboto-Thin";
-    src: url(fonts/Roboto-Thin.ttf);
-  }
+@font-face {
+  font-family: "Roboto-Thin";
+  src: url(fonts/Roboto-Thin.ttf);
+}
 
-  @font-face {
-    font-family: "Roboto-Light";
-    src: url(fonts/Roboto-Light.ttf);
-  }
+@font-face {
+  font-family: "Roboto-Light";
+  src: url(fonts/Roboto-Light.ttf);
+}
 
-  body {
-    margin: 0px;
-    background-color: black;
-    background-image: url('shadowbg.png');
-    background-repeat: no-repeat;
-    background-position: center var(--background-image-top);
-    font-family: "Helvetica-Neue-Light";
-  }
+body {
+  margin: 0px;
+  background-color: black;
+  background-image: url('shadowbg.png');
+  background-repeat: no-repeat;
+  background-position: center var(--background-image-top);
+  font-family: "Helvetica-Neue-Light";
+}
 
-  #time-stamp {
-    position: absolute;
-    color: white;
-    font-family: "Roboto-Thin";
-    font-size: 48px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -70%);
-  }
+#time-stamp {
+  position: absolute;
+  color: white;
+  font-family: "Roboto-Thin";
+  font-size: 48px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+}
 
-  .under-line-box {
-    position: absolute;
-    top: 34px;
-  }
+.under-line-box {
+  position: absolute;
+  top: 34px;
+}
 
-  .center-top-box {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0%);
-  }
+.center-top-box {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
 
-  .raon-box {
-    position: absolute;
-    left: 10px;
-    top: 20px;
-  }
+.raon-box {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+}
 
-  .accelerator-control {
-    position: absolute;
-    color: white;
-    width: 150px;
-    left: 150px;
-    top: 40px;
-    font-family: "Helvetica-Neue-Light";
-  }
+.accelerator-control {
+  position: absolute;
+  color: white;
+  width: 150px;
+  left: 150px;
+  top: 40px;
+  font-family: "Helvetica-Neue-Light";
+}
 
-  #title {
-    width:1920px; 
-    height:40px; 
-    margin:auto;
-    text-align: center; 
-    font-size: 44px;
-    color: white
+.card {
+  /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); */
+  /* position: relative; */
+  width: 300px;
+  height: 500px;
+  margin: auto;
+  text-align: center;
+  background-color: rgba(26, 26, 26, 0.3);
+}
 
-  }
+.topleft {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 500px solid rgba(26, 26, 26, 0.3);
+  border-right: 300px solid transparent;
+  z-index: -1;
+}
 
-  .card {
-    /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); */
-    position: relative;
-    width: 300px;
-    height: 500px;
-    margin: auto;
-    text-align: center;
-    background-color: rgba(26,26,26,0.5);
-  }
+.avatar {
+  width: 200px;
+  height: 200px;
+  margin-top: 40px;
+  border-radius: 50%;
+}
 
-  .avatar {
-    width: 200px;
-    height: 200px;
-    margin-top: 40px;
-    border-radius: 50%;
-  }
+.name {
+  margin-top: 10px;
+  font-size: 30px;
+  color: white;
+}
 
-  .name {
-    margin-top: 10px;
-    font-size: 30px;
-    color: white;
-  }
+.title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #CCCCCC;
+  font-size: 20px;
+}
 
-  .charge {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    color: #CCCCCC;
-    font-size: 20px;
-  }
+.task {
+  margin-top: 5px;
+  color: #808080;
+  font-size: 16px;
+}
 
-  .task {
-    margin-top: 5px;
-    color: #808080;
-    font-size: 16px;
-  }
+.location, .email, .phone {
+  margin-bottom: 5px;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .location, .email, .phone {
-      margin-bottom: 5px;
-      color: white;
-      font-size: 16px;
-      display: flex; 
-      justify-content: center; 
-      align-items: center;
-  }
-
-  .location {
-      margin-top: 40px;
-  }
-
-  .topleft {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 500px solid rgba(26,26,26,0.5);
-    border-right: 300px solid transparent;
-    z-index: -1;
-  }
+.location {
+  margin-top: 40px;
+}
