@@ -67,47 +67,61 @@
     height:40px; 
     margin:auto;
     text-align: center; 
-    font-size: 36px;
+    font-size: 44px;
     color: white
 
   }
 
   .card {
     /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); */
-    width: 250px;
-    height: 400px;
+    position: relative;
+    width: 300px;
+    height: 500px;
     margin: auto;
     text-align: center;
     background-color: rgba(26,26,26,0.5);
   }
 
   .avatar {
-
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     margin-top: 40px;
   }
 
   .name {
     margin-top: 10px;
-    font-size: 24px;
+    font-size: 30px;
     color: white;
   }
 
   .charge {
     margin-top: 15px;
+    margin-bottom: 15px;
     color: #CCCCCC;
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .task {
     margin-top: 5px;
     color: #808080;
-    font-size: 12px;
+    font-size: 16px;
   }
 
-  .email, .phone, .location{
-      margin-top: 10px;
+  .location, .email, .phone {
+      margin-bottom: 5px;
       color: white;
-      font-size: 10px;
+      font-size: 16px;
+  }
+
+  .location {
+      margin-top: 40px;
+  }
+
+  .topleft {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 500px solid rgba(26,26,26,0.5);
+    border-right: 300px solid transparent;
+    z-index: -1;
   }
