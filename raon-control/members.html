@@ -24,7 +24,8 @@
     Accelerator Control Team
   </div>
 
-  <div id="body" style="margin:auto; width:1920px; height:900px; display: flex; justify-content: center; align-items: center;">
+  <div id="body"
+    style="margin:auto; width:1920px; height:900px; display: flex; justify-content: center; align-items: center;">
 
     <!-- Lee SangIl -->
     <div class="card">
@@ -201,5 +202,19 @@
       </div>
     </div>
 </body>
+
+<script>
+  function timer() {
+    var d = new Date();
+    document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+  }
+
+  window.onload = function () {
+    setInterval(timer, 1000);
+
+  }
+
+</script>
+
 
 </html>

@@ -67,10 +67,20 @@ body {
   position: absolute;
   width: 700px;
   height: 80px;
-  left: 800px;
-  margin: auto;
+  left: 1200px;
+  justify-content: space-evenly;
   color: white;
-  background-color: rosybrown;
+  font-size: 18px;
+  /* background-color: rosybrown; */
+}
+
+#menu p {
+  margin: auto;
+  /* width: 200px; */
+}
+
+#menu p:hover {
+  color: red;
 }
 
 .card {
