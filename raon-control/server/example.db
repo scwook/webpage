@@ -9,3 +9,11 @@ INSERT INTO `shifter` VALUES
 (1,'Park, MiJeong','Accelerator Control',1,3,0),
 (1,'Chio, YoungJun','Accelerator Control',1,2,0),
 (1,'Kim, YongHak','Accelerator Control',2,2,0);
+(1,'Kim, Gi Dong','Beam Transport',4,0,0);
+(1,'Woo, Hyung Joo','Beam Transport',4,0,0);
+(1,'Chung, Yeon Sei','System Integration',4,3,1);
+(1,'Kwon, Jangwon','Beam Transport',4,1,0);
+(1,'Lim, EunHun','Beam Transport',4,2,0);
+(1,'Kim, Hyung Jin','Beam Transport',4,0,0);
+(1,'Heo, JeongIl','Beam ransport',4,4,0);
+(1,'Mun, Seokho','Beam Transport',4,5,0);
