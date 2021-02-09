@@ -1,0 +1,11 @@
+INSERT INTO `schedule` VALUES (1,'2020-12-21','2020-12-22','Beam Commissioning');
+
+INSERT INTO `detail` VALUES 
+(1,'Cool down'),(1,'Beam Injection');
+
+INSERT INTO `shifter` VALUES 
+(1,'Son, Changwook','Accelerator Control',1,1,1),
+(1,'Lee, SangIl','Accelerator Control',2,1,0),
+(1,'Park, MiJeong','Accelerator Control',1,3,0),
+(1,'Chio, YoungJun','Accelerator Control',1,2,0),
+(1,'Kim, YongHak','Accelerator Control',2,2,0);

@@ -26,7 +26,6 @@ body {
     font-family: "Roboto-Thin";
 }
 
-
 #time-stamp {
     position: absolute;
     color: white;
@@ -37,30 +36,55 @@ body {
     transform: translate(-50%, -70%);
 }
 
-.under-line-box {
+#under-line {
     position: absolute;
-    top: 34px;
+    top: 40px;
 }
 
-.center-top-box {
+#center-top {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
 }
 
-.raon-box {
+#raon-box {
     position: absolute;
     left: 10px;
     top: 20px;
 }
 
-.accelerator-control {
+#accelerator-control {
     position: absolute;
     color: white;
     width: 150px;
     left: 150px;
     top: 40px;
     font-family: "Helvetica-Neue-Light";
+}
+
+#menu {
+    display: flex;
+    position: absolute;
+    width: 700px;
+    height: 80px;
+    left: 1200px;
+    justify-content: space-evenly;
+    color: white;
+    font-size: 18px;
+}
+
+#menu a {
+    margin: auto;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+#menu a:visited {
+    color: white;
+}
+
+#menu a:hover {
+    transform: scale(1.3);
 }
 
 .search-box {
@@ -137,7 +161,6 @@ td:nth-child(1) {
     padding-left: 10px;
     text-align: left;
 }
-
 
 @media all and (max-width: 1920px) {
     body {

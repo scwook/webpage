@@ -9,10 +9,32 @@
 <body>
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
         <div id="time-stamp"></div>
-        <div class="under-line-box"><img src="images/under-line.svg"></img></div>
-        <div class="center-top-box"><img src="images/center-top.svg"></img></div>
-        <div class="raon-box"><img src="images/raon-white.svg"></img></div>
-        <div class="accelerator-control">Accelerator Control</div>
+        <svg id="under-line" width="1920" height="42">
+            <style>
+                .under-line-style {
+                    fill: none;
+                    stroke: #f3f3f3;
+                    stroke-miterlimit: 10;
+                    stroke-width: 2px;
+                }
+            </style>
+            <polyline class="under-line-style" points="0 40 760 40 791 0" />
+            <polyline class="under-line-style" points="1920 40 1160 40 1129 0" />
+        </svg>
+        <svg id="center-top" width="400" height="80">
+            <path
+                d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
+                style="fill:#f3f3f3" />
+        </svg>
+        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+        <div id="accelerator-control">Accelerator Control</div>
+        <div id="menu">
+            <a href="monitoring.html">Monitoring</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="archive.html">Archive</a>
+            <a href="downloads.html">Download</a>
+            <a href="documents.html">Document</a>
+        </div>
     </div>
 
     <div style="height:50px;"></div>
