@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<script src="script/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="asset.css">
+
+<body>
+	<div style="margin:auto; position: relative; width:1920px; height:80px;">
+		<div id="time-stamp"></div>
+		<svg id="under-line" width="1920" height="42">
+			<style>
+				.under-line-style {
+					fill: none;
+					stroke: #f3f3f3;
+					stroke-miterlimit: 10;
+					stroke-width: 2px;
+				}
+			</style>
+			<polyline class="under-line-style" points="0 40 760 40 791 0" />
+			<polyline class="under-line-style" points="1920 40 1160 40 1129 0" />
+		</svg>
+		<svg id="center-top" width="400" height="80">
+			<path
+				d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
+				style="fill:#f3f3f3" />
+		</svg>
+        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+		<div id="accelerator-control">Accelerator Control</div>
+		<div id="menu">
+			<a href="monitoring.html">Monitoring</a>
+			<a href="schedule.html">Schedule</a>
+			<a href="archive.html">Archive</a>
+			<a href="downloads.html">Download</a>
+			<a href="documents.html">Document</a>
+		</div>
+	</div>
+
+	<div style="height:100px"></div>
+
+	<div id="body" style="margin:auto; position:relative; width:1920px; height:750px;">
+		<div class="search-box">
+			<input type="text" id="input" placeholder="Asset Number">
+			<svg onclick="retrieveData()" style="position: absolute; left:1325px; top: 13px">
+				<defs>
+					<style>
+						.cls-1 {
+							fill: none;
+							stroke: #6d6d6d;
+							stroke-miterlimit: 10;
+							stroke-width: 3px;
+						}
+					</style>
+				</defs>
+				<circle class="cls-1" cx="10.5" cy="10.5" r="9" />
+				<line class="cls-1" x1="17.04" y1="17.04" x2="25.04" y2="25.04" />
+			</svg>
+		</div>
+
+		<div style="height:100px;"></div>
+
+		<table>
+			<thead id="tableHead" style="font-family: Roboto-Light">
+				<tr>
+					<th>Asset Number</th>
+                    <th>Date</th>
+					<th>Device Name</th>
+					<th>Manager</th>
+					<th>Location</th>
+				</tr>
+			</thead>
+
+			<tbody id="tableBody">
+				<tr>
+					<td>201300460</td>
+					<td>2013-06-19</td>
+					<td>ELMA VME</td>
+					<td>Son, Changwook</td>
+					<td>SCL3 Gallery</td>
+				</tr>
+			</tbody>
+		</table>
+
+        <img src="http://192.168.68.126:4879/1.jpg" style="display:block; width:25%; height:auto; margin-top: 100px; margin-left: auto; margin-right: auto;">
+
+	</div>
+</body>
+
+<script>
+	// function retrieveData() {
+	// 	var searchText = document.getElementById("input").value;
+	// 	if (searchText.length) {
+	// 		getInventoryData(searchText);
+	// 	}
+	// 	else {
+	// 		alert("No PVs have been specified.");
+	// 	}
+	// }
+
+	// var input = document.getElementById("input");
+	// input.addEventListener("keyup", function (event) {
+	// 	if (event.keyCode === 13) {
+	// 		event.preventDefault();
+	// 		retrieveData();
+	// 		// document.getElementById("button").click();
+	// 	}
+	// });
+
+
+	let sortDirection = false;
+    
+	function getInventoryData(retrievalName) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+
+				if (jsonValue.length) {
+					let tHead = '';
+					tHead += `<tr>
+						<th>Asset Number</th>
+                        <th>Date</th>
+						<th>Device Name</th>
+						<th>Manager</th>
+						<th>Location</th>
+						</tr>`
+
+					document.getElementById("tableHead").innerHTML = tHead;
+
+					let tData = '';
+					for (let i = 0; i < jsonValue.length; i++) {
+						tData += `<tr>
+						<td>${jsonValue[i].assetNumber}</td>
+                        <td>${jsonValue[i].date}</td>
+						<td>${jsonValue[i].deviceName}</td>
+						<td>${jsonValue[i].manager}</td>
+						<td>${jsonValue[i].location}</td>
+						</tr>`
+					}
+
+					document.getElementById("tableBody").innerHTML = tData;
+					$("table tr").hide();
+					$("table tr").each(function (index) {
+						$(this).delay(index * 50).show(500);
+					});
+				}
+				else {
+
+				}
+			}
+		};
+		var rName = "http://192.168.68.126:4879/bpl/getPVStatus?pv=" + retrievalName;
+		xhttp.open("GET", rName, true);
+		xhttp.send();
+	}
+
+	function timer() {
+		var d = new Date();
+		document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+	}
+
+	window.onload = function () {
+
+		// loadtableBody(personData);
+
+		var myVar = setInterval(timer, 1000);
+
+	}
+
+</script>
+</html>
