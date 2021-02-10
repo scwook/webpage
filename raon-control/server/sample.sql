@@ -55,9 +55,9 @@ INSERT INTO shifter values
 (4,'Kim, Gi Dong','Beam Transport',4,0,0),
 (4,'Kwon, Jangwon','Beam Transport',4,1,0),
 (4,'Lim, EunHun','Beam Transport',4,2,0),
-(4,'Kim, Hyung Jin','Beam Transport',4,0,0);
-(4,'Heo, JeongIl','Beam ransport',4,4,0);
-(4,'Mun, Seokho','Beam Transport',4,5,0);
+(4,'Kim, Hyung Jin','Beam Transport',4,0,0),
+(4,'Heo, JeongIl','Beam ransport',4,4,0),
+(4,'Mun, Seokho','Beam Transport',4,5,0),
 (4, 'Park, Burm Sik','Beam Transport',2,6,0),
 (4,'Son, Changwook','Accelerator Control',1,1,0),
 (4,'Park, MiJeong','Accelerator Control',1,2,0),
