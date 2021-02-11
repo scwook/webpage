@@ -5,9 +5,10 @@ import json
 from flask import Flask
 
 app = Flask(__name__)
-@app.route('/<date>')
+
+@app.route('/schedule/<date>')
 def get_data(date):
-    conn = pymysql.connect(host='localhost', user='scwook', password='light299', db='shift', charset='utf8')
+    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='shift', charset='utf8')
     schedule = conn.cursor()
     detail = conn.cursor()
     shifter = conn.cursor()
