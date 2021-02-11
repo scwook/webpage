@@ -16,7 +16,7 @@
             }
 		};
 
-		var rName = "http://localhost:8080/inventory";
+		var rName = "http://192.168.0.105:8080/inventory";
         xhttp.open("POST", rName, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
 		xhttp.send(JSON.stringify(data));
