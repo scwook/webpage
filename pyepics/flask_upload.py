@@ -1,11 +1,14 @@
 import os
 from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from flask_cors import CORS
 
 UPLOAD_FOLDER = '/home/scwook/flask/upload'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
+CORS(app)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -42,4 +45,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-	app.run(host='192.168.0.105', port=8080, debug=True)
+	app.run(host='localhost', port=8080, debug=True)
