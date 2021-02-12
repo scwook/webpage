@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<style>
+  input[type=text],
+  select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  #save-button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #save-button:hover {
+    background-color: #45a049;
+  }
+
+  div.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+</style>
+
+<body>
+  <!--
+    <form method=post action="http://192.168.0.105:8080/" enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+-->
+
+  <div class="container">
+      <label>Asset Number</label>
+      <input type="text" id="asset-number" placeholder="ex) 20130619">
+
+      <label>Date</label>
+      <input type="text" id="asset-date" placeholder="ex) 2013-06-19">
+
+      <label>Device Name</label>
+      <input type="text" id="device-name" placeholder="">
+
+      <label>Manager</label>
+      <select id="asset-manager">
+        <option>이상일</option>
+        <option>최용준</option>
+        <option>김용학</option>
+        <option>손창욱</option>
+        <option>박미정</option>
+      </select>
+
+      <label>Location</label>
+      <select id="asset-location">
+        <option>SCL3 2층 갤러리</option>
+        <option>중앙제어센터</option>
+        <option>ISOL 지하 1층</option>
+      </select>
+
+      <button id="save-button" onclick="test()">Save</button>
+    </div>
+
+</body>
+
+<script>
+  data = {
+    assetNum: '20130617',
+    date: '2013-07-17',
+    deviceName: 'iPad',
+    manager: 'Son, Changwook',
+    location: 'SCL2 Gallery',
+    fileName: 'picture.jpg'
+  };
+
+  function getArchiveData() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var jsonValue = JSON.parse(this.responseText);
+        console.log(jsonValue);
+      }
+    };
+
+    var rName = "http://localhost:8080/inventory";
+    xhttp.open("POST", rName, true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+    console.log(JSON.stringify(data));
+
+  }
+
+  //getArchiveData();
+
+  function test() {
+    var assetNumberID = document.getElementById('asset-number');
+    var assetDateID = document.getElementById('asset-date');
+    var deviceNameID = document.getElementById('device-name');
+    var managerListID = document.getElementById("asset-manager");
+    var locationID = document.getElementById("asset-location");
+
+    var assetNumber = assetNumberID.value;
+    var assetDate = assetDateID.value;
+    var assetDeviceName = deviceNameID.value;
+    var assetManager = managerListID.options[managerListID.selectedIndex].value;
+    var assetLocation = locationID.options[locationID.selectedIndex].value;
+  
+    //console.log('Asset Number : ', assetNumber);
+    //console.log('Date : ', assetDate);
+    //console.log('Device Name : ', assetDeviceName);
+    //console.log('Manager : ', assetManager);
+    //console.log('Location : ', assetLocation);
+
+    data.assetNum = assetNumber;
+    data.date = assetDate;
+    data.deviceName = assetDeviceName;
+    data.manager = assetManager;
+    data.location = assetLocation;
+
+    console.log(data);
+
+    getArchiveData();
+  }
+
+
+</script>
+
+</html>

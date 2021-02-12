@@ -17,13 +17,16 @@ def get_inventory():
     jsonData = request.get_json()
     print(jsonData)
     #temp = {'assetNum':'20130619', 'date':'2013-06', 'deviceName':'IPhone', 'manager':'Son, Changwook', 'location':'SCL3 Gallery','fileName':'pict$    assetNum = "'" + jsonData['assetNum'] + "'"
+    assetNum = "'" + jsonData['assetNum'] + "'"
     date = "'" + jsonData['date'] + "'"
     deviceName = "'" + jsonData['deviceName'] + "'"
     manager = "'" + jsonData['manager'] + "'"
     location = "'" + jsonData['location'] + "'"
     fileName = "'" + jsonData['fileName'] + "'"
 
-    insertQuery = 'INSERT INTO asset_list(AssetNumber,Date,DeviceName,Manager,Location,FileName) VALUES(' + assetNum + "," + date + "," + deviceNam$    inventory.execute(insertQuery)
+    insertQuery = 'INSERT INTO asset_list(AssetNumber,Date,DeviceName,Manager,Location,FileName) VALUES(' + assetNum + "," + date + "," + deviceName + "," + manager + "," + location + "," + fileName + ")"
+
+    inventory.execute(insertQuery)
     conn.commit()
     conn.close()
 
@@ -33,4 +36,4 @@ def get_inventory():
     return json.dumps(jsonData)
 
 if __name__ == "__main__":
-    app.run(host="192.168.0.105", port="8080")
+    app.run(host="localhost", port="8080")
