@@ -1,7 +1,48 @@
 <!DOCTYPE html>
 <html>
-<script src="script/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="asset.css">
+<link rel="stylesheet" type="text/css" href="script/swiper-bundle.min.css">
+<script src="script/swiper-bundle.min.js"></script>
+
+<style>
+	.swiper-slide {
+		background-position: center;
+		background-size: cover;
+		width: 252px;
+		height: 400px;
+		background-color: #fff;
+		box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+		/* filter: blur(4px); */
+		/* background: #d1ebff; */
+		border-radius: 10px;
+	}
+
+	.swiper-slide-active {
+		filter: blur(0px);
+		background: #fff;
+	}
+
+	.swiper-container-3d .swiper-slide-shadow-left,
+	.swiper-container-3d .swiper-slide-shadow-right {
+		background-image: none;
+	}
+
+	.swiper-pagination-bullet {
+		width: 20px;
+		height: 20px;
+		text-align: center;
+		line-height: 20px;
+		font-size: 12px;
+		color: #fff;
+		opacity: 1;
+		background: rgba(0, 0, 0, 0.2);
+	}
+
+	.swiper-pagination-bullet-active {
+		color: #fff;
+		background: #007aff;
+	}
+</style>
 
 <body>
 	<div style="margin:auto; position: relative; width:1920px; height:80px;">
@@ -23,7 +64,7 @@
 				d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
 				style="fill:#f3f3f3" />
 		</svg>
-        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+		<div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
 		<div id="accelerator-control">Accelerator Control</div>
 		<div id="menu">
 			<a href="monitoring.html">Monitoring</a>
@@ -34,11 +75,11 @@
 		</div>
 	</div>
 
-	<div style="height:100px"></div>
+	<div style="height:50px"></div>
 
-	<div id="body" style="margin:auto; position:relative; width:1920px; height:750px;">
+	<div id="body" style="margin:auto; position:relative; width:1920px; height:900px;">
 		<div class="search-box">
-			<input type="text" id="input" placeholder="Asset Number">
+			<input type="text" id="input" placeholder="Process Variable">
 			<svg onclick="retrieveData()" style="position: absolute; left:1325px; top: 13px">
 				<defs>
 					<style>
@@ -55,115 +96,106 @@
 			</svg>
 		</div>
 
-		<div style="height:100px;"></div>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<!-- <div class="swiper-slide">
+					<div class="asset-container">
+						<div class='asset-image-container'>
+							<img src="images/1.JPG" class="asset-image">
+						</div>
+						<div class="asset-name">19인치 Rack (SHR-27SS)</div>
+						<div class="asset-location">신동3 중앙제어센터 1층 가속기제어팀</div>
+						<div class="asset-date">1983-06-19</div>
+						<div class="asset-manager">손창욱</div>
+						<div class="asset-number">198306194</div>
+					</div>
+				</div> -->
 
-		<table>
-			<thead id="tableHead" style="font-family: Roboto-Light">
-				<tr>
-					<th>Asset Number</th>
-                    <th>Date</th>
-					<th>Device Name</th>
-					<th>Manager</th>
-					<th>Location</th>
-				</tr>
-			</thead>
+			</div>
 
-			<tbody id="tableBody">
-				<tr>
-					<td>201300460</td>
-					<td>2013-06-19</td>
-					<td>ELMA VME</td>
-					<td>Son, Changwook</td>
-					<td>SCL3 Gallery</td>
-				</tr>
-			</tbody>
-		</table>
+			<div class="swiper-pagination"></div>
 
-        <img src="http://192.168.68.126:4879/1.jpg" style="display:block; width:25%; height:auto; margin-top: 100px; margin-left: auto; margin-right: auto;">
-
+		</div>
+		<button onclick="test()">click</button>
 	</div>
 </body>
-
 <script>
-	// function retrieveData() {
-	// 	var searchText = document.getElementById("input").value;
-	// 	if (searchText.length) {
-	// 		getInventoryData(searchText);
-	// 	}
-	// 	else {
-	// 		alert("No PVs have been specified.");
-	// 	}
-	// }
+	var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
 
-	// var input = document.getElementById("input");
-	// input.addEventListener("keyup", function (event) {
-	// 	if (event.keyCode === 13) {
-	// 		event.preventDefault();
-	// 		retrieveData();
-	// 		// document.getElementById("button").click();
-	// 	}
-	// });
+	for (let i = 0; i < 10; i++) {
 
+		var slideItemElem = document.createElement('DIV');
+		slideItemElem.classList.add('swiper-slide');
 
-	let sortDirection = false;
-    
-	function getInventoryData(retrievalName) {
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				var jsonValue = JSON.parse(this.responseText);
+		var assetContainerElem = document.createElement('DIV');
+		assetContainerElem.classList.add('asset-container');
 
-				if (jsonValue.length) {
-					let tHead = '';
-					tHead += `<tr>
-						<th>Asset Number</th>
-                        <th>Date</th>
-						<th>Device Name</th>
-						<th>Manager</th>
-						<th>Location</th>
-						</tr>`
+		var assetImageContainerElem = document.createElement('DIV');
+		assetImageContainerElem.classList.add('asset-image-container');
 
-					document.getElementById("tableHead").innerHTML = tHead;
+		var assetImageElem = document.createElement('IMG');
+		var assetNameElem = document.createElement('DIV');
+		var assetLocationElem = document.createElement('DIV');
+		var assetDateElem = document.createElement('DIV');
+		var assetManagerElem = document.createElement('DIV');
+		var assetNumberElem = document.createElement('DIV');
 
-					let tData = '';
-					for (let i = 0; i < jsonValue.length; i++) {
-						tData += `<tr>
-						<td>${jsonValue[i].assetNumber}</td>
-                        <td>${jsonValue[i].date}</td>
-						<td>${jsonValue[i].deviceName}</td>
-						<td>${jsonValue[i].manager}</td>
-						<td>${jsonValue[i].location}</td>
-						</tr>`
-					}
+		assetImageElem.classList.add('asset-image');
+		assetNameElem.classList.add('asset-name');
+		assetLocationElem.classList.add('asset-location');
+		assetDateElem.classList.add('asset-date');
+		assetManagerElem.classList.add('asset-manager');
+		assetNumberElem.classList.add('asset-number');
 
-					document.getElementById("tableBody").innerHTML = tData;
-					$("table tr").hide();
-					$("table tr").each(function (index) {
-						$(this).delay(index * 50).show(500);
-					});
-				}
-				else {
+		// assetNameElem.appendChild(document.createTextNode('aaaa'));
+		assetImageElem.src = 'images/1.JPG';
+		assetNameElem.innerText = "aaaaa";
+		assetLocationElem.innerText = "bbbbb";
+		assetDateElem.innerText = 'ccccc';
+		assetManagerElem.innerText = 'dddddd';
+		assetNumberElem.innerText = 'eeeeee';
 
-				}
-			}
-		};
-		var rName = "http://192.168.68.126:4879/bpl/getPVStatus?pv=" + retrievalName;
-		xhttp.open("GET", rName, true);
-		xhttp.send();
+		assetImageContainerElem.appendChild(assetImageElem);
+
+		assetContainerElem.appendChild(assetImageContainerElem);
+		assetContainerElem.appendChild(assetNameElem);
+		assetContainerElem.appendChild(assetLocationElem);
+		assetContainerElem.appendChild(assetDateElem);
+		assetContainerElem.appendChild(assetManagerElem);
+		assetContainerElem.appendChild(assetNumberElem);
+
+		slideItemElem.appendChild(assetContainerElem);
+
+		swiperWrapperClass[0].appendChild(slideItemElem);
 	}
 
-	function timer() {
-		var d = new Date();
-		document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+	var swiper = new Swiper('.swiper-container', {
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+			renderBullet: function (index, className) {
+				// console.log(className, index);
+				return '<span class="' + className + '">' + (index + 1) + '</span>';
+			},
+		},
+
+		effect: 'coverflow',
+		grabCursor: true,
+		centeredSlides: true,
+		slidesPerView: 'auto',
+		coverflowEffect: {
+			rotate: 0,
+			stretch: 0,
+			depth: 100,
+			modifier: 1,
+			slideShadows: true,
+		},
+		// loop: true
+	});
+
+	function test() {
+		swiper.slideTo(5,500,false);
 	}
-
-	window.onload = function () {
-
-		// loadtableBody(personData);
-
-		var myVar = setInterval(timer, 1000);
-
-	}
-
 </script>
+
 </html>

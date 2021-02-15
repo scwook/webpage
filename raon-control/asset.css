@@ -128,42 +128,97 @@ body {
     cursor: pointer;
 }
 
-table {
-    border-collapse: separate;
-    border-spacing: 0 3px;
-    width: 1200px;
-    font-size: 20px;
-    margin: auto;
+.swiper-container {
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+    /* background-color: brown; */
 }
 
-th {
-    color: white;
-    background-color: dodgerblue;
-    height: 36px;
-    text-align: center;
+.asset-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* background-color: fuchsia; */
+    /* padding: 14px; */
+    overflow: hidden;
 }
 
-td {
-    color: white;
+.asset-image-container {
+    position: relative;
+    width: 224px;
+    height: auto;
+    margin-left: 14px;
+    margin-top: 14px;
+
+}
+.asset-image {
+    width: 100%;
+    height: 100%;
+}
+
+.asset-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
     height: 40px;
+    top: 360px;
+    background-color: dodgerblue;
+    color: white;
+    font-size: 24px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.asset-name {
+    margin: auto;
+    margin-top: 10px;
+    width: 224px;
+    color: #4D4D4D;
+    font-size: 20px;
     text-align: center;
 }
 
-tr:nth-child(even) {
-    background-color: #2d2d2d;
+.asset-manager {
+    margin: auto;
+    margin-top: 10px;
+    width: 200px;
+    color: #4D4D4D;
+    font-size: 14px;
+    text-align: center;
 }
 
-tr:nth-child(odd) {
-    background-color: #1d1d1d;
+.asset-date {
+    margin: auto;
+    margin-top: 40px;
+    width: 200px;
+    color: #4D4D4D;
+    font-size: 14px;
+    text-align: center;
 }
 
-/* td:nth-child(1) {
-    padding-left: 10px;
-    text-align: left;
-} */
+.asset-location {
+    margin: auto;
+    margin-top: 10px;
+    width: 200px;
+    color: #4D4D4D;
+    font-size: 16px;
+    text-align: center;
+}
 
 @media all and (max-width: 1920px) {
     body {
         background-position: 0px var(--background-image-top);
     }
 }
+
+/* 
+position: relative;
+width: 100%;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #2196f3;
+overflow: hidden; */
