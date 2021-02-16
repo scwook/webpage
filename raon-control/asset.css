@@ -112,6 +112,20 @@ body {
     outline: none;
 }
 
+/* Hide spin arrows */
+/* Chrome, Safari, Edge, Opera */
+#input::-webkit-outer-spin-button,
+#input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
 #input:focus {
     border: 3px solid dodgerblue;
 }
@@ -135,76 +149,66 @@ body {
     /* background-color: brown; */
 }
 
-.asset-container {
-    position: relative;
+.asset-image {
+    position: absolute;
     width: 100%;
     height: 100%;
+    background-size: cover;
+    /* background-color: rgba(0, 0, 0, 0.0); */
     /* background-color: fuchsia; */
     /* padding: 14px; */
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
-.asset-image-container {
-    position: relative;
-    width: 224px;
-    height: auto;
-    margin-left: 14px;
-    margin-top: 14px;
-
-}
-.asset-image {
+.asset-container {
+    position: absolute;
     width: 100%;
     height: 100%;
+    /* padding: 20px; */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* background-color: fuchsia; */
 }
 
 .asset-number {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
-    width: 100%;
-    height: 40px;
-    top: 360px;
-    background-color: dodgerblue;
+    left: 10px;
+    top: 10px;
     color: white;
-    font-size: 24px;
-    border-radius: 0px 0px 10px 10px;
-}
-
-.asset-name {
-    margin: auto;
-    margin-top: 10px;
-    width: 224px;
-    color: #4D4D4D;
-    font-size: 20px;
-    text-align: center;
-}
-
-.asset-manager {
-    margin: auto;
-    margin-top: 10px;
-    width: 200px;
-    color: #4D4D4D;
-    font-size: 14px;
-    text-align: center;
+    font-size: 40px;
+    /* border-radius: 0px 0px 10px 10px; */
 }
 
 .asset-date {
-    margin: auto;
-    margin-top: 40px;
-    width: 200px;
-    color: #4D4D4D;
-    font-size: 14px;
-    text-align: center;
+    position: absolute;
+    left: 10px;
+    top: 60px;
+    color: #CCCCCC;
+    font-size: 24px;
+}
+
+.asset-manager {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #FFF;
+    font-size: 48px;
+    opacity: 0.2;
+}
+
+.asset-name {
+    position: absolute;
+    left: 10px;
+    bottom: 50px;
+    color: #CCCCCC;
+    font-size: 24px;
 }
 
 .asset-location {
-    margin: auto;
-    margin-top: 10px;
-    width: 200px;
-    color: #4D4D4D;
-    font-size: 16px;
-    text-align: center;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    color: #CCCCCC;
+    font-size: 24px;
 }
 
 @media all and (max-width: 1920px) {
