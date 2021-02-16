@@ -43,7 +43,7 @@ def set_asset_list():
     #return json.dumps(jsonData)
     return 'success'
 
-@app.route('/inventory/insert', methods=['GET', 'POST'])
+@app.route('/inventory/update', methods=['GET', 'POST'])
 def update_asset_list():
     conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
     inventory = conn.cursor()
