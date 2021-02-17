@@ -18,7 +18,7 @@
 	}
 
 	.swiper-slide-active {
-		filter: blur(0px);
+		/* filter: blur(0px); */
 		/* background: #fff; */
 	}
 
@@ -114,59 +114,8 @@
 	</div>
 </body>
 <script>
-	var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
-	var count = 0;
+
 	var index = {};
-
-	for (let i = 0; i < 10; i++) {
-
-		var sampleAsset = count * 11;
-
-		var slideItemElem = document.createElement('DIV');
-		slideItemElem.classList.add('swiper-slide');
-
-		var assetImageElem = document.createElement('DIV');
-		assetImageElem.classList.add('asset-image');
-		// assetImageElem.style.backgroundImage = 'url("images/1.JPG")';
-
-		var assetContainerElem = document.createElement('DIV');
-		assetContainerElem.classList.add('asset-container');
-
-		var assetNumberElem = document.createElement('DIV');
-		var assetDateElem = document.createElement('DIV');
-		var assetManagerElem = document.createElement('DIV');
-		var assetNameElem = document.createElement('DIV');
-		var assetLocationElem = document.createElement('DIV');
-
-		assetNumberElem.classList.add('asset-number');
-		assetDateElem.classList.add('asset-date');
-		assetManagerElem.classList.add('asset-manager');
-		assetNameElem.classList.add('asset-name');
-		assetLocationElem.classList.add('asset-location');
-
-		assetNumberElem.innerText = sampleAsset;
-		assetDateElem.innerText = '2013-06-19';
-		assetManagerElem.innerText = 'CW';
-		assetNameElem.innerText = "19인치 Rack (SHR-27SS)";
-		assetLocationElem.innerText = "중앙제어센터 2층 제어실험실";
-
-		assetContainerElem.appendChild(assetNumberElem);
-		assetContainerElem.appendChild(assetDateElem);
-		assetContainerElem.appendChild(assetManagerElem);
-		assetContainerElem.appendChild(assetNameElem);
-		assetContainerElem.appendChild(assetLocationElem);
-
-		slideItemElem.appendChild(assetImageElem);
-		slideItemElem.appendChild(assetContainerElem);
-
-		swiperWrapperClass[0].appendChild(slideItemElem);
-
-		index[sampleAsset] = count;
-		count += 1;
-
-	}
-
-	console.log(index);
 	var swiper = new Swiper('.swiper-container', {
 		// pagination: {
 		// 	el: '.swiper-pagination',
@@ -192,12 +141,14 @@
 	});
 
 	function searchData() {
+		console.log(index);
+
 		var searchText = document.getElementById("input").value;
 		if (searchText.length) {
 			var assetNumber = document.getElementById('input').value;
 			var assetIndex = index[assetNumber];
-			if(assetIndex) {
-				swiper.slideTo(assetIndex, 500, false);
+			if (assetIndex) {
+				swiper.slideTo(assetIndex, 1000, false);
 			}
 			else {
 				alert("No Result");
@@ -217,6 +168,86 @@
 			// document.getElementById("button").click();
 		}
 	});
+
+	function getAssetData() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+				createSwiperSlide(jsonValue);
+
+			}
+		};
+		var rName = "http://192.168.68.126:8080/inventory/retrieve/*";
+		xhttp.open("GET", rName, false);
+		xhttp.send();
+	}
+
+	var imageServer = 'http://192.168.68.126:4879/image/'
+	function createSwiperSlide(jsonData) {
+		// var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
+		var count = 0;
+		var nameDic = {'이상일':'SI', '최용준':'YJ', '김용학':'YH', '손창욱':'CW', '박미정':'MJ'};
+
+		for (let i = 0; i < jsonData.length; i++) {
+			// var sampleAsset = count * 11;
+
+			var slideItemElem = document.createElement('DIV');
+			slideItemElem.classList.add('swiper-slide');
+
+			var assetImageElem = document.createElement('DIV');
+			assetImageElem.classList.add('asset-image');
+			assetImageElem.style.backgroundImage = 'url("' + imageServer + jsonData[i].id + '/' + jsonData[i].fileName + '")';
+
+			var assetContainerElem = document.createElement('DIV');
+			assetContainerElem.classList.add('asset-container');
+
+			var assetNumberElem = document.createElement('DIV');
+			var assetDateElem = document.createElement('DIV');
+			var assetManagerElem = document.createElement('DIV');
+			var assetNameElem = document.createElement('DIV');
+			var assetLocationElem = document.createElement('DIV');
+
+			assetNumberElem.classList.add('asset-number');
+			assetDateElem.classList.add('asset-date');
+			assetManagerElem.classList.add('asset-manager');
+			assetNameElem.classList.add('asset-name');
+			assetLocationElem.classList.add('asset-location');
+
+			// Set Asset Data
+			assetNumberElem.innerText = jsonData[i].assetNum;
+			assetDateElem.innerText = jsonData[i].date;
+			assetManagerElem.innerText = nameDic[jsonData[i].manager];
+			assetNameElem.innerText = jsonData[i].deviceName;
+			assetLocationElem.innerText = jsonData[i].location;
+
+			assetContainerElem.appendChild(assetNumberElem);
+			assetContainerElem.appendChild(assetDateElem);
+			assetContainerElem.appendChild(assetManagerElem);
+			assetContainerElem.appendChild(assetNameElem);
+			assetContainerElem.appendChild(assetLocationElem);
+
+			slideItemElem.appendChild(assetImageElem);
+			slideItemElem.appendChild(assetContainerElem);
+
+			swiper.appendSlide(slideItemElem)
+			// swiperWrapperClass[0].appendChild(slideItemElem);
+
+			index[jsonData[i].assetNum] = count;
+			count += 1;
+		}
+	}
+
+	function timer() {
+		var d = new Date();
+		document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+	}
+
+	window.onload = function () {
+		var myVar = setInterval(timer, 1000);
+
+		getAssetData();
+	}
 </script>
 
 </html>
