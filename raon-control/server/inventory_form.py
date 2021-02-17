@@ -1,6 +1,7 @@
 import os
 import time
 import pymysql
+import json
 
 from flask import Flask, jsonify
 from flask import request
@@ -74,7 +75,7 @@ def update_asset_list():
     conn.commit()
     conn.close()
 
-@app.route('/inventory/retrieve')
+@app.route('/inventory/retrieve/<asset>')
 def get_asset_list(asset):
     conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
     inventory = conn.cursor()
