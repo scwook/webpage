@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `asset_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `asset_list` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT AUTO_INCREMENT,
   `AssetNumber` int(11) NOT NULL,
   `Date` varchar(255) DEFAULT NULL,
   `DeviceName` varchar(255) DEFAULT NULL,
