@@ -66,14 +66,52 @@ def set_asset_list():
 @app.route('/inventory/update', methods=['POST'])
 def update_asset_list():
     conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
-    
     inventory = conn.cursor()
-    updateQuery = 'UPDATE asset_list SET fileName = "test.jpg" WHERE ID = 1'
 
+    formData = request.form
+
+    referenceNum = "'" + formData['reference'] + "'"
+    assetNum = "'" + formData['assetNumber'] + "'"
+    date = "'" + formData['assetDate'] + "'"
+    deviceName = "'" + formData['assetName'] + "'"
+    manager = "'" + formData['assetManager'] + "'"
+    location = "'" + formData['assetLocation'] + "'"
+
+    file = request.files['file']
+    fileName = "'" + file.filename + "'"
+
+    retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNum
+    retrieve.execute(retrieveQuery)
+    result = retrieve.fetchall()
+
+    if len(result):
+        return 'overlap'
+
+    updateQuery = 'UPDATE asset_list SET AssetNumber=' + assetNum + ',Date=' + date + ',DeviceName=' + deviceName + ',Manager=' + manager + ',Location=' + location + ",FileName=" + fileName + ' WHERE AssetNumber=' + referenceNum
 
     inventory.execute(updateQuery)
     conn.commit()
     conn.close()
+
+    inventory.execute(insertQuery)
+    conn.commit()
+
+    retrieveQuery = 'SELECT ID FROM asset_list WHERE AssetNumber=' + assetNum
+    inventory.execute(retrieveQuery)
+    ID = inventory.fetchone()[0]
+
+    conn.close()
+
+    folder = UPLOAD_FOLDER + '/' + str(ID)
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+        
+    if file:
+        file.save(os.path.join(folder, file.filename))
+        return 'success'
+
+    else:
+        return 'fail'
 
 @app.route('/inventory/retrieve/<asset>')
 def get_asset_list(asset):
