@@ -65,7 +65,7 @@
                 <input type="text" id="asset-date" placeholder="ex) 2013-06-19" name="assetDate" value="1983-06-19">
 
                 <label>Device Name</label>
-                <input type="text" id="device-name" placeholder="" name="deviceName" value="iPhone">
+                <input type="text" id="device-name" placeholder="" name="assetName" value="iPhone">
 
                 <label>Manager</label>
                 <select id="asset-manager" name="assetManager">
@@ -136,8 +136,8 @@
             }
         };
 
-        var rName = "http://localhost:8080";
-        xhttp.open("POST", rName, true);
+        var rName = "http://192.168.68.126:8080/inventory/insert";
+        xhttp.open("POST", rName, false);
         xhttp.send(formData);
     }
 </script>

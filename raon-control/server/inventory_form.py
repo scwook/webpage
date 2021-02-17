@@ -1,7 +1,7 @@
 import os
 import time
+import pymysql
 
-from pvaccess import *
 from flask import Flask, jsonify
 from flask import request
 from werkzeug.utils import secure_filename
@@ -12,17 +12,7 @@ CORS(app)
 
 UPLOAD_FOLDER = '/home/scwook/flask/upload'
 
-# @app.route('/', methods = ['GET', 'POST'])
-# def get_data():
-#     print(request.form)
-#     file = request.files['file']
-#     print(file.filename)
-
-#     filename = secure_filename(file.filename)
-#     file.save(os.path.join('/home/scwook', filename))
-#     return 'OK'
-
-@app.route('/inventory/insert', methods=['GET', 'POST'])
+@app.route('/inventory/insert', methods=['POST'])
 def set_asset_list():
     conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
     inventory = conn.cursor()
@@ -30,16 +20,16 @@ def set_asset_list():
     # jsonData = request.get_json()
     formData = request.form
 
-    assetNum = "'" + formData['assetNum'] + "'"
-    date = "'" + formData['date'] + "'"
-    deviceName = "'" + formData['deviceName'] + "'"
-    manager = "'" + formData['manager'] + "'"
-    location = "'" + formData['location'] + "'"
+    assetNum = "'" + formData['assetNumber'] + "'"
+    date = "'" + formData['assetDate'] + "'"
+    deviceName = "'" + formData['assetName'] + "'"
+    manager = "'" + formData['assetManager'] + "'"
+    location = "'" + formData['assetLocation'] + "'"
 
-    file = request.file['file']
+    file = request.files['file']
     sercureFileName = secure_filename(file.filename)
     fileName = "'" + sercureFileName + "'"
-
+   
     retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNum
     retrieve.execute(retrieveQuery)
     result = retrieve.fetchall()
@@ -60,7 +50,7 @@ def set_asset_list():
 
     folder = UPLOAD_FOLDER + '/' + str(lastID)
     if not os.path.exists(folder):
-    os.makedirs(folder)
+        os.makedirs(folder)
         
     if file:
         file.save(os.path.join(folder, sercureFileName))
@@ -69,8 +59,20 @@ def set_asset_list():
     else:
         return 'fail'
 
-    #return json.dumps(jsonData)
+   # return 'OK'
+  #return json.dumps(jsonData)
+
+@app.route('/inventory/update', methods=['POST'])
+def update_asset_list():
+    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
+    
+    inventory = conn.cursor()
+    updateQuery = 'UPDATE asset_list SET fileName = "test.jpg" WHERE ID = 1'
+
+
+    inventory.execute(updateQuery)
+    conn.commit()
+    conn.close()
 
 if __name__ == "__main__":
-    app.run(host="localhost", port="8080")
-
+    app.run(host="192.168.68.126", port="8080")
