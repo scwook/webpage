@@ -27,8 +27,8 @@ def set_asset_list():
     location = "'" + formData['assetLocation'] + "'"
 
     file = request.files['file']
-    sercureFileName = secure_filename(file.filename)
-    fileName = "'" + sercureFileName + "'"
+    #sercureFileName = secure_filename(file.filename)
+    fileName = "'" + file.filename + "'"
    
     retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNum
     retrieve.execute(retrieveQuery)
@@ -53,7 +53,7 @@ def set_asset_list():
         os.makedirs(folder)
         
     if file:
-        file.save(os.path.join(folder, sercureFileName))
+        file.save(os.path.join(folder, file.filename))
         return 'success'
 
     else:
