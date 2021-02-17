@@ -2,7 +2,7 @@
 <html>
 <style>
     #form-container {
-        display: none;
+        /* display: none; */
         position: fixed;
         z-index: 1;
         left: 0;
@@ -59,20 +59,20 @@
         <div id="form-container">
             <div id="new-asset-container">
                 <label>Asset Number</label>
-                <input type="text" id="asset-number" placeholder="ex) 20130619" name="assetNumber" value="19830619">
+                <input type="text" id="asset-number" placeholder="ex) 20130619" name="assetNumber" value="" minlength="9" maxlength="9">
 
                 <label>Date</label>
-                <input type="text" id="asset-date" placeholder="ex) 2013-06-19" name="assetDate" value="1983-06-19">
+                <input type="text" id="asset-date" placeholder="ex) 2013-06-19" name="assetDate" value="">
 
                 <label>Device Name</label>
-                <input type="text" id="device-name" placeholder="" name="assetName" value="iPhone">
+                <input type="text" id="device-name" placeholder="" name="assetName" value="">
 
                 <label>Manager</label>
                 <select id="asset-manager" name="assetManager">
                     <option>이상일</option>
                     <option>최용준</option>
                     <option>김용학</option>
-                    <option>손창욱</option>
+                    <option  selected="selected">손창욱</option>
                     <option>박미정</option>
                 </select>
 
@@ -84,7 +84,7 @@
                     <option>중앙제어센터 1층 서버실</option>
                     <option>중앙제어센터 1층 TPS</option>
                     <option>중앙제어센터 2층 제어실험실</option>
-                    <option>중앙제어센터 2층 장비보관실</option>
+                    <option selected="selected">중앙제어센터 2층 장비보관실</option>
                     <option>중앙제어센터 2층 연구실</option>
                     <option>가속기동 SCL3 터널</option>
                     <option>가속기동 SCL3 갤러리</option>

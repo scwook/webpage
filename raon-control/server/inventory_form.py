@@ -74,5 +74,24 @@ def update_asset_list():
     conn.commit()
     conn.close()
 
+@app.route('/inventory/retrieve')
+def get_asset_list(asset):
+    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
+    inventory = conn.cursor()
+    assetListArray = []
+
+    search = asset.replace("*", "%")
+    retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + "'" + search + "'"
+
+    inventory.execute(retrieveQuery)
+
+    for x in inventory:
+        inventoryDic = {'id':x[0], 'assetNum':x[1], 'date':x[2], 'deviceName':x[3], 'manager':x[4], 'location':x[5], 'fileName':x[6]}
+        assetListArray.append(inventoryDic)
+    
+    conn.close()
+
+    return json.dumps(assetListArray, ensure_ascii=False)
+
 if __name__ == "__main__":
     app.run(host="192.168.68.126", port="8080")
