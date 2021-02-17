@@ -67,6 +67,7 @@ def set_asset_list():
 def update_asset_list():
     conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
     inventory = conn.cursor()
+    retrieve = conn.cursor()
 
     formData = request.form
 
@@ -91,11 +92,7 @@ def update_asset_list():
 
     inventory.execute(updateQuery)
     conn.commit()
-    conn.close()
-
-    inventory.execute(insertQuery)
-    conn.commit()
-
+    
     retrieveQuery = 'SELECT ID FROM asset_list WHERE AssetNumber=' + assetNum
     inventory.execute(retrieveQuery)
     ID = inventory.fetchone()[0]
