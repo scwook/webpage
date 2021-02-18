@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="../script/swiper-bundle.min.css">
+<script src="../script/swiper-bundle.min.js"></script>
+
+<style>
+    .swiper-container {
+        margin-top: 100px;
+        width: 100%;
+        height: auto;
+        /* background-color: brown; */
+    }
+
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 600px;
+        height: 400px;
+        /* background-color: #fff; */
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        /* filter: blur(4px); */
+        /* background: #d1ebff; */
+        border-radius: 10px;
+    }
+
+    /* .swiper-slide-active {
+		filter: blur(0px);
+		background: #fff;
+	} */
+
+    .swiper-container-3d .swiper-slide-shadow-left,
+    .swiper-container-3d .swiper-slide-shadow-right {
+        background-image: none;
+    }
+
+    .swiper-pagination-bullet {
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+        color: #fff;
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .swiper-pagination-bullet-active {
+        color: #fff;
+        background: #007aff;
+    }
+</style>
+
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+        </div>
+
+    </div>
+</body>
+<script>
+    var swiper = new Swiper(".swiper-container", {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: '3',
+        coverflowEffect: {
+            rotate: 0,
+            stretch: -150,
+            depth: 200,
+            modifier: 2,
+            slideShadows: true,
+        },
+
+        virtual: {
+            slides: []
+        }
+    });
+
+    var slideItemElem = document.createElement('DIV');
+    slideItemElem.classList.add('swiper-slide');
+
+    var assetImageElem = document.createElement('DIV');
+    assetImageElem.innerText = "scwook";
+
+    slideItemElem.appendChild(assetImageElem);
+    swiper.virtual.appendSlide('<div>test</div>');
+    swiper.virtual.appendSlide(slideItemElem.outerHTML);
+
+    // console.log(slideItemElem);
+</script>
+
+</html>

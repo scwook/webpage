@@ -17,10 +17,10 @@
 		border-radius: 10px;
 	}
 
-	.swiper-slide-active {
-		/* filter: blur(0px); */
-		/* background: #fff; */
-	}
+	/* .swiper-slide-active {
+		filter: blur(0px);
+		background: #fff;
+	} */
 
 	.swiper-container-3d .swiper-slide-shadow-left,
 	.swiper-container-3d .swiper-slide-shadow-right {
@@ -117,19 +117,10 @@
 
 	var index = {};
 	var swiper = new Swiper('.swiper-container', {
-		// pagination: {
-		// 	el: '.swiper-pagination',
-		// 	clickable: true,
-		// 	renderBullet: function (index, className) {
-		// 		// console.log(className, index);
-		// 		return '<span class="' + className + '">' + (index + 1) + '</span>';
-		// 	},
-		// },
-
 		effect: 'coverflow',
 		grabCursor: true,
 		centeredSlides: true,
-		slidesPerView: 'auto',
+		slidesPerView: '3',
 		coverflowEffect: {
 			rotate: 0,
 			stretch: -150,
@@ -137,6 +128,10 @@
 			modifier: 2,
 			slideShadows: true,
 		},
+
+		virtual: {
+			slides: []
+		}
 		// loop: true
 	});
 
@@ -188,6 +183,7 @@
 		// var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
 		var count = 0;
 		var nameDic = {'이상일':'SI', '최용준':'YJ', '김용학':'YH', '손창욱':'CW', '박미정':'MJ'};
+		var slideArray = [];
 
 		for (let i = 0; i < jsonData.length; i++) {
 			// var sampleAsset = count * 11;
@@ -230,12 +226,20 @@
 			slideItemElem.appendChild(assetImageElem);
 			slideItemElem.appendChild(assetContainerElem);
 
-			swiper.appendSlide(slideItemElem)
+
+			// swiper.appendSlide(slideItemElem)
+			slideArray.push(slideItemElem.outerHTML);
+			// swiper.virtual.appendSlide(slideItemElem.outerHTML);
+			
 			// swiperWrapperClass[0].appendChild(slideItemElem);
 
 			index[jsonData[i].assetNum] = count;
 			count += 1;
 		}
+
+		swiper.virtual.appendSlide(slideArray);
+		swiper.update();
+		// swiper.init();
 	}
 
 	function timer() {

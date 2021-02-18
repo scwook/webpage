@@ -59,20 +59,23 @@
         <div id="form-container">
             <div id="new-asset-container">
                 <label>Asset Number</label>
-                <input type="text" id="asset-number" placeholder="ex) 20130619" name="assetNumber" value="" minlength="9" maxlength="9">
+                <input type="text" id="asset-number" placeholder="ex) 20130619" name="assetNumber" value=""
+                    minlength="9" maxlength="9" onkeydown="if (event.keyCode == 13) { return false;}">
 
                 <label>Date</label>
-                <input type="text" id="asset-date" placeholder="ex) 2013-06-19" name="assetDate" value="">
+                <input type="text" id="asset-date" placeholder="ex) 2013-06-19" name="assetDate" value=""
+                    onkeydown="if (event.keyCode == 13) { return false;}">
 
                 <label>Device Name</label>
-                <input type="text" id="device-name" placeholder="" name="assetName" value="">
+                <input type="text" id="device-name" placeholder="" name="assetName" value="" onkeydown="if
+                (event.keyCode == 13) { return false;}">
 
                 <label>Manager</label>
                 <select id="asset-manager" name="assetManager">
                     <option>이상일</option>
                     <option>최용준</option>
                     <option>김용학</option>
-                    <option  selected="selected">손창욱</option>
+                    <option selected="selected">손창욱</option>
                     <option>박미정</option>
                 </select>
 
@@ -108,9 +111,6 @@
 
     <button id="save-button" onclick="setInventoryData()">Save</button>
     <button onclick="document.getElementById('form-container').style.display='none'">Cancel</button>
-    </div>
-    </div>
-
 
     <div id="output"></div>
 </body>
@@ -118,7 +118,7 @@
 <script>
     function setInventoryData() {
         var formData = new FormData(document.forms.namedItem("fileInfo"));
-        formData.append('reference', '19830619');
+        // formData.append('reference', '19830619');
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -137,7 +137,7 @@
             }
         };
 
-        var rName = "http://192.168.0.105:8080/inventory/update";
+        var rName = "http://192.168.68.126:8080/inventory/insert";
         xhttp.open("POST", rName, false);
         xhttp.send(formData);
     }
