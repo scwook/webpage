@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+</style>
+
+<body>
+    <form>
+        <textarea></textarea>
+      </form></body>
+<script>
+const form = document.querySelector('form');
+const textarea = document.querySelector('textarea');
+
+// 새로운 이벤트를 생성하고, 버블링을 허용하며, "details" 프로퍼티로 전달할 데이터를 제공합니다
+const eventAwesome = new CustomEvent('awesome', {
+  bubbles: true,
+  detail: { text: () => textarea.value }
+});
+
+// form 엘리먼트는 커스텀 "awesome" 이벤트를 리슨한 후 전달된 text() 메소드의 결과를 콘솔에 출력합니다
+form.addEventListener('keyup', console.log('aa'));
+
+// 사용자가 입력한대로, form 내의 textarea 는 이벤트를 디스패치/트리거하여 시작점으로 사용합니다
+textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
+
+</script>
+
+</html>

@@ -63,9 +63,68 @@
 
 	<div style="height:50px"></div>
 
+	<div id="form-container">
+		<form method=post name="fileInfo" enctype=multipart/form-data id="form-asset">
+			<div id="form-asset-container">
+				<span onclick="document.getElementById('form-container').style.display='none'" id="close">&times;</span>
+
+				<label>Asset Number</label>
+				<input type="text" id="form-asset-number" placeholder="ex) 20130619" name="assetNumber" value=""
+					minlength="9" maxlength="9" onkeydown="if (event.keyCode == 13) { return false;}">
+
+				<label>Date</label>
+				<input type="text" id="form-asset-date" placeholder="ex) 2013-06-19" name="assetDate" value=""
+					onkeydown="if (event.keyCode == 13) { return false;}">
+
+				<label>Device Name</label>
+				<input type="text" id="form-device-name" placeholder="" name="assetName" value="" onkeydown="if
+                (event.keyCode == 13) { return false;}">
+
+				<label>Manager</label>
+				<select id="form-asset-manager" name="assetManager">
+					<option selected="selected">이상일</option>
+					<option>최용준</option>
+					<option>김용학</option>
+					<option>손창욱</option>
+					<option>박미정</option>
+				</select>
+
+				<label>Location</label>
+				<select id="form-asset-location" name="assetLocation">
+					<option>중앙제어센터 1층 중앙제어실</option>
+					<option>중앙제어센터 1층 관람 및 회의실</option>
+					<option>중앙제어센터 1층 서버실</option>
+					<option>중앙제어센터 1층 TPS</option>
+					<option>중앙제어센터 2층 제어실험실</option>
+					<option selected="selected">중앙제어센터 2층 장비보관실</option>
+					<option>중앙제어센터 2층 연구실</option>
+					<option>가속기동 SCL3 터널</option>
+					<option>가속기동 SCL3 갤러리</option>
+					<option>가속기동 SCL2 터널</option>
+					<option>가속기동 SCL2 갤러리</option>
+					<option>가속기동 SCL 터널 굴절부</option>
+					<option>가속기동 SCL 터널 갤러리</option>
+					<option>가속기동 ISOL 지하 1층</option>
+					<option>가속기동 ISOL 1층</option>
+					<option>헬륨압축기동</option>
+					<option>극저온설비동</option>
+					<option>신동 SRF 시험동</option>
+					<option>신동 초전도 조립동</option>
+					<option>KAIST 문지캠퍼스 1층</option>
+					<option>KAIST 문지캠퍼스 2층</option>
+				</select>
+
+				<input type=file name=file>
+			</div>
+		</form>
+	</div>
+
 	<div id="body" style="margin:auto; position:relative; width:1920px; height:900px;">
+		<button id="new-asset-button" onclick="showNewAssetForm()">+</button>
+		<!-- <button class="update-asset-button" onclick="showUpdateAssetForm()">-</button> -->
+
 		<div class="search-box">
-			<input type="number" id="input" placeholder="Asset Number">
+			<input type="number" id="input-search" placeholder="Asset Number">
 			<svg onclick="searchData()" style="position: absolute; left:1325px; top: 13px">
 				<defs>
 					<style>
@@ -92,15 +151,15 @@
 						<div class="asset-date">1983-06-19</div>
 						<div class="asset-manager">손창욱</div>
 						<div class="asset-number">198306194</div>
+						<button class="update-asset-button" onclick="console.log('wefwef')">-</button>
 					</div>
 				</div> -->
-
 			</div>
 		</div>
 	</div>
 </body>
-<script>
 
+<script>
 	var index = {};
 	var swiper = new Swiper('.swiper-container', {
 		effect: 'coverflow',
@@ -121,11 +180,167 @@
 		// loop: true
 	});
 
+
+	var imageServer = 'http://192.168.68.126:4879/image/'
+	function createSwiperSlide(jsonData) {
+		// var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
+		var count = 0;
+		var nameDic = { '이상일': 'SI', '최용준': 'YJ', '김용학': 'YH', '손창욱': 'CW', '박미정': 'MJ' };
+		var slideArray = [];
+
+		for (let i = 0; i < jsonData.length; i++) {
+			// var sampleAsset = count * 11;
+
+			var slideItemElem = document.createElement('DIV');
+			slideItemElem.classList.add('swiper-slide');
+
+			var assetImageElem = document.createElement('DIV');
+			assetImageElem.classList.add('asset-image');
+
+			if (jsonData[i].fileName) {
+				assetImageElem.style.backgroundImage = 'url("' + imageServer + jsonData[i].id + '/' + jsonData[i].fileName + '")';
+			}
+			else {
+				assetImageElem.style.backgroundImage = 'url(images/noImage.svg)';
+			}
+
+			var assetContainerElem = document.createElement('DIV');
+			assetContainerElem.classList.add('asset-container');
+
+			var assetNumberElem = document.createElement('DIV');
+			var assetDateElem = document.createElement('DIV');
+			var assetManagerElem = document.createElement('DIV');
+			var assetNameElem = document.createElement('DIV');
+			var assetLocationElem = document.createElement('DIV');
+
+			assetNumberElem.classList.add('asset-number');
+			assetDateElem.classList.add('asset-date');
+			assetManagerElem.classList.add('asset-manager');
+			assetNameElem.classList.add('asset-name');
+			assetLocationElem.classList.add('asset-location');
+
+			// Update Button
+			var assetUpdateButton = document.createElement('BUTTON');
+			assetUpdateButton.classList.add('update-asset-button');
+			assetUpdateButton.addEventListener('click', function () { console.log('abc'); testFun(); });
+			assetUpdateButton.innerText = "A";
+			assetUpdateButton.style.backgroundColor = '#008CBA';
+
+
+			// Set Asset Data
+			assetNumberElem.innerText = jsonData[i].assetNum;
+			assetDateElem.innerText = jsonData[i].date;
+			assetManagerElem.innerText = nameDic[jsonData[i].manager];
+			assetNameElem.innerText = jsonData[i].deviceName;
+			assetLocationElem.innerText = jsonData[i].location;
+
+			assetContainerElem.appendChild(assetNumberElem);
+			assetContainerElem.appendChild(assetDateElem);
+			assetContainerElem.appendChild(assetManagerElem);
+			assetContainerElem.appendChild(assetNameElem);
+			assetContainerElem.appendChild(assetLocationElem);
+			assetContainerElem.appendChild(assetUpdateButton);
+
+			slideItemElem.appendChild(assetImageElem);
+			slideItemElem.appendChild(assetContainerElem);
+
+			// swiper.appendSlide(slideItemElem)
+			slideArray.push(slideItemElem.outerHTML);
+			// swiper.virtual.appendSlide(slideItemElem.outerHTML);
+
+			// swiperWrapperClass[0].appendChild(slideItemElem);
+
+			index[jsonData[i].assetNum] = count;
+			count += 1;
+		}
+
+		swiper.virtual.appendSlide(slideArray);
+		swiper.update();
+		// swiper.init();
+	}
+
+	function testFun() {
+		console.log('aaa');
+	}
+
+	function showNewAssetForm() {
+		// Remove Button
+		var saveButton = document.getElementsByClassName('save-button');
+		for (let i = 0; i < saveButton.length; i++) {
+			saveButton[i].remove();
+		}
+
+		var formContainerID = document.getElementById('form-container');
+
+		var newSaveButtonElem = document.createElement('BUTTON');
+		newSaveButtonElem.classList.add('save-button');
+		newSaveButtonElem.addEventListener('click', function () { setInventoryData() });
+		newSaveButtonElem.style.backgroundColor = '#4CAF50';
+		newSaveButtonElem.innerText = 'Save';
+		document.getElementById('form-asset-container').appendChild(newSaveButtonElem);
+
+		formContainerID.style.display = 'block';
+
+	}
+
+	function showUpdateAssetForm(jsonData) {
+		console.log(jsonData);
+
+		// Remove Button
+		var saveButton = document.getElementsByClassName('save-button');
+		for (let i = 0; i < saveButton.length; i++) {
+			saveButton[i].remove();
+		}
+
+		var formContainerID = document.getElementById('form-container');
+
+		managerSelectionIndex = { '이상일': 0, '최용준': 1, '김용학': 2, '손창욱': 3, '박미정': 4 };
+		locationSelectionIndex = {
+			'중앙제어센터 1층 중앙제어실': 0,
+			'중앙제어센터 1층 관람 및 회의실': 1,
+			'중앙제어센터 1층 서버실': 2,
+			'중앙제어센터 1층 TPS': 3,
+			'중앙제어센터 2층 장비보관실': 4,
+			'중앙제어센터 2층 연구실': 5,
+			'가속기동 SCL3 터널': 6,
+			'가속기동 SCL3 갤러리': 7,
+			'가속기동 SCL2 터널': 8,
+			'가속기동 SCL2 갤러리': 9,
+			'가속기동 SCL 터널 굴절부': 10,
+			'가속기동 SCL 터널 갤러리': 11,
+			'가속기동 ISOL 지하 1층': 12,
+			'가속기동 ISOL 1층': 13,
+			'헬륨압축기동': 14,
+			'극저온설비동': 15,
+			'신동 SRF 시험동': 16,
+			'신동 초전도 조립동': 17,
+			'KAIST 문지캠퍼스 1층': 18,
+			'KAIST 문지캠퍼스 2층': 19
+		};
+
+		// Set Current Asset Data
+		document.getElementById('form-asset-number').value = jsonData.assetNum;
+		document.getElementById('form-asset-date').value = jsonData.date;
+		document.getElementById('form-device-name').value = jsonData.deviceName;
+		document.getElementById('form-asset-manager').selectedIndex = managerSelectionIndex[jsonData.manager];
+		document.getElementById('form-asset-location').selectedIndex = locationSelectionIndex[jsonData.location];
+
+		var newSaveButtonElem = document.createElement('BUTTON');
+		newSaveButtonElem.classList.add('save-button');
+		newSaveButtonElem.addEventListener('click', function () { updateInventoryData() });
+		newSaveButtonElem.style.backgroundColor = '#008CBA';
+		newSaveButtonElem.innerText = 'Update';
+		document.getElementById('form-asset-container').appendChild(newSaveButtonElem);
+
+		formContainerID.style.display = 'block';
+	}
+
+
 	function searchData() {
-		var searchText = document.getElementById("input").value;
-		if (searchText.length) {
-			var assetNumber = document.getElementById('input').value;
-			var assetIndex = index[assetNumber];
+		var searchAssetNumber = document.getElementById("input-search").value;
+		if (searchAssetNumber.length) {
+			// var assetNumber = document.getElementById('input').value;
+			var assetIndex = index[searchAssetNumber];
 			if (assetIndex) {
 				swiper.slideTo(assetIndex, 1000, false);
 			}
@@ -138,20 +353,14 @@
 		}
 	}
 
-	var input = document.getElementById("input");
-	input.addEventListener("keyup", function (event) {
-		if (event.keyCode === 13) {
-			event.preventDefault();
-			searchData();
-			// document.getElementById("button").click();
-		}
-	});
-
-	var slideMove = document.getElementsByClassName("swiper-container")[0];
-
 	document.addEventListener("keydown", function (event) {
-		console.log(event.keyCode);
+		var slideMove = document.getElementsByClassName("swiper-container")[0];
+
 		switch (event.keyCode) {
+			case 13:
+				searchData();
+				break;
+
 			case 37: // Arrow Left
 				swiper.slidePrev(500, false);
 				break;
@@ -175,74 +384,34 @@
 		xhttp.send();
 	}
 
-	var imageServer = 'http://192.168.68.126:4879/image/'
-	function createSwiperSlide(jsonData) {
-		// var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
-		var count = 0;
-		var nameDic = { '이상일': 'SI', '최용준': 'YJ', '김용학': 'YH', '손창욱': 'CW', '박미정': 'MJ' };
-		var slideArray = [];
+	function setInventoryData() {
+		var formData = new FormData(document.forms.namedItem("fileInfo"));
+		// formData.append('reference', '19830619');
 
-		for (let i = 0; i < jsonData.length; i++) {
-			// var sampleAsset = count * 11;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				if (this.responseText == 'success') {
 
-			var slideItemElem = document.createElement('DIV');
-			slideItemElem.classList.add('swiper-slide');
+				}
+				else {
 
-			var assetImageElem = document.createElement('DIV');
-			assetImageElem.classList.add('asset-image');
+				}
 
-			if( jsonData[i].fileName) {
-				assetImageElem.style.backgroundImage = 'url("' + imageServer + jsonData[i].id + '/' + jsonData[i].fileName + '")';
+				console.log('return:', this.responseText);
 			}
 			else {
-				assetImageElem.style.backgroundImage = 'url(images/noImage.svg)';
+				console.log(this.readyState, this.status);
 			}
+		};
 
-			var assetContainerElem = document.createElement('DIV');
-			assetContainerElem.classList.add('asset-container');
+		var rName = "http://192.168.68.126:8080/inventory/insert";
+		xhttp.open("POST", rName, false);
+		xhttp.send(formData);
+	}
 
-			var assetNumberElem = document.createElement('DIV');
-			var assetDateElem = document.createElement('DIV');
-			var assetManagerElem = document.createElement('DIV');
-			var assetNameElem = document.createElement('DIV');
-			var assetLocationElem = document.createElement('DIV');
-
-			assetNumberElem.classList.add('asset-number');
-			assetDateElem.classList.add('asset-date');
-			assetManagerElem.classList.add('asset-manager');
-			assetNameElem.classList.add('asset-name');
-			assetLocationElem.classList.add('asset-location');
-
-			// Set Asset Data
-			assetNumberElem.innerText = jsonData[i].assetNum;
-			assetDateElem.innerText = jsonData[i].date;
-			assetManagerElem.innerText = nameDic[jsonData[i].manager];
-			assetNameElem.innerText = jsonData[i].deviceName;
-			assetLocationElem.innerText = jsonData[i].location;
-
-			assetContainerElem.appendChild(assetNumberElem);
-			assetContainerElem.appendChild(assetDateElem);
-			assetContainerElem.appendChild(assetManagerElem);
-			assetContainerElem.appendChild(assetNameElem);
-			assetContainerElem.appendChild(assetLocationElem);
-
-			slideItemElem.appendChild(assetImageElem);
-			slideItemElem.appendChild(assetContainerElem);
-
-
-			// swiper.appendSlide(slideItemElem)
-			slideArray.push(slideItemElem.outerHTML);
-			// swiper.virtual.appendSlide(slideItemElem.outerHTML);
-
-			// swiperWrapperClass[0].appendChild(slideItemElem);
-
-			index[jsonData[i].assetNum] = count;
-			count += 1;
-		}
-
-		swiper.virtual.appendSlide(slideArray);
-		swiper.update();
-		// swiper.init();
+	function updateInventoryData() {
+		consoel.log('aa');
 	}
 
 	function timer() {
@@ -255,6 +424,10 @@
 
 		getAssetData();
 	}
+
+
+
+
 </script>
 
 </html>
