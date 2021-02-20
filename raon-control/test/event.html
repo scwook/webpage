@@ -1,28 +1,74 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="../script/swiper-bundle.min.css">
+<script src="../script/swiper-bundle.min.js"></script>
 <style>
+    .swiper-container {
+        width: 600px;
+        height: 300px;
+    }
 
+    .swiper-slide {
+        width: 100%;
+        height: 300px;
+    }
 </style>
 
 <body>
-    <form>
-        <textarea></textarea>
-      </form></body>
+    <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide">
+                <a href="http://www.google.de">Slide 1 to Google</a>
+            </div>
+            <div class="swiper-slide" id="slide2">
+                <a href="http://www.google.de">Slide 2 to Google</a>
+            </div>
+            <div class="swiper-slide">
+                <a href="http://www.google.de">Slide 3 to Google</a>
+            </div>
+
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+
+    <button id="clickTrigger">click the Button for trigger onClick Slide</button>
+</body>
 <script>
-const form = document.querySelector('form');
-const textarea = document.querySelector('textarea');
+    var mySwiper = new Swiper('.swiper-container', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: false,
+        preventClicks: true,
+        preventClicksPropagation: false,
 
-// 새로운 이벤트를 생성하고, 버블링을 허용하며, "details" 프로퍼티로 전달할 데이터를 제공합니다
-const eventAwesome = new CustomEvent('awesome', {
-  bubbles: true,
-  detail: { text: () => textarea.value }
-});
+        // Navigation arrows
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
 
-// form 엘리먼트는 커스텀 "awesome" 이벤트를 리슨한 후 전달된 text() 메소드의 결과를 콘솔에 출력합니다
-form.addEventListener('keyup', console.log('aa'));
+        onClick: function (sw, e) {
+            e.preventDefault();
+            alert('clickSlide');
+        },
+        onTap: function (sw, e) {
+            e.preventDefault();
+            sw.allowClick = false;
+        }
+    })
 
-// 사용자가 입력한대로, form 내의 textarea 는 이벤트를 디스패치/트리거하여 시작점으로 사용합니다
-textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
+    $('#clickTrigger').on('click', function () {
+        $('#slide2').click();
+        alert('clickButton');
+    });
 
 </script>
 

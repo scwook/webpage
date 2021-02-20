@@ -166,6 +166,8 @@
 		grabCursor: true,
 		centeredSlides: true,
 		slidesPerView: '3',
+		// preventClicks: false,
+		// preventClicksProgagation: false,
 		coverflowEffect: {
 			rotate: 0,
 			stretch: -160,
@@ -179,6 +181,8 @@
 		}
 		// loop: true
 	});
+
+	var test = ['a','b','c','d','e'];
 
 
 	var imageServer = 'http://192.168.68.126:4879/image/'
@@ -219,36 +223,42 @@
 			assetNameElem.classList.add('asset-name');
 			assetLocationElem.classList.add('asset-location');
 
-			// Update Button
-			var assetUpdateButton = document.createElement('BUTTON');
-			assetUpdateButton.classList.add('update-asset-button');
-			assetUpdateButton.addEventListener('click', function () { console.log('abc'); testFun(); });
-			assetUpdateButton.innerText = "A";
-			assetUpdateButton.style.backgroundColor = '#008CBA';
+			// Edit Button
+			// var assetEditButtonElem = document.createElement('BUTTON');
+			// assetEditButtonElem.classList.add('update-asset-button');
+			// assetEditButtonElem.addEventListener('click', function () { showUpdateAssetForm(jsonData[i]) });
+			// assetEditButtonElem.innerText = "C";
+			// assetEditButtonElem.style.backgroundColor = '#008CBA';
 
+			var assetUpdateButtonHTML = '<button onclick="showUpdateAssetForm(' 
+			+ "'" + jsonData[i].assetNum + "'" + ',' 
+			+ "'" + jsonData[i].date + "'" + ','
+			+ "'" + jsonData[i].deviceName + "'" + ','
+			+ "'" + jsonData[i].manager + "'" + ','
+			+ "'" + jsonData[i].location + "'" +
+			')">button</button>';
+			// console.log(assetUpdateButtonHTML);
+			// document.getElementsByClassName('content')[0].innerHTML = buttonHTML;
 
 			// Set Asset Data
 			assetNumberElem.innerText = jsonData[i].assetNum;
 			assetDateElem.innerText = jsonData[i].date;
-			assetManagerElem.innerText = nameDic[jsonData[i].manager];
 			assetNameElem.innerText = jsonData[i].deviceName;
+			assetManagerElem.innerText = nameDic[jsonData[i].manager];
 			assetLocationElem.innerText = jsonData[i].location;
 
 			assetContainerElem.appendChild(assetNumberElem);
 			assetContainerElem.appendChild(assetDateElem);
-			assetContainerElem.appendChild(assetManagerElem);
 			assetContainerElem.appendChild(assetNameElem);
+			assetContainerElem.appendChild(assetManagerElem);
 			assetContainerElem.appendChild(assetLocationElem);
-			assetContainerElem.appendChild(assetUpdateButton);
+			// assetContainerElem.appendChild(assetEditButtonElem);
+			assetContainerElem.innerHTML += assetUpdateButtonHTML;
 
 			slideItemElem.appendChild(assetImageElem);
 			slideItemElem.appendChild(assetContainerElem);
 
-			// swiper.appendSlide(slideItemElem)
 			slideArray.push(slideItemElem.outerHTML);
-			// swiper.virtual.appendSlide(slideItemElem.outerHTML);
-
-			// swiperWrapperClass[0].appendChild(slideItemElem);
 
 			index[jsonData[i].assetNum] = count;
 			count += 1;
@@ -283,8 +293,8 @@
 
 	}
 
-	function showUpdateAssetForm(jsonData) {
-		console.log(jsonData);
+	function showUpdateAssetForm(assetNumber, assetDate, assetName, assetManager, assetLocation) {
+		// console.log(assetNumber, assetDate, assetName, assetManager, assetLocation);
 
 		// Remove Button
 		var saveButton = document.getElementsByClassName('save-button');
@@ -319,11 +329,11 @@
 		};
 
 		// Set Current Asset Data
-		document.getElementById('form-asset-number').value = jsonData.assetNum;
-		document.getElementById('form-asset-date').value = jsonData.date;
-		document.getElementById('form-device-name').value = jsonData.deviceName;
-		document.getElementById('form-asset-manager').selectedIndex = managerSelectionIndex[jsonData.manager];
-		document.getElementById('form-asset-location').selectedIndex = locationSelectionIndex[jsonData.location];
+		document.getElementById('form-asset-number').value = assetNumber;
+		document.getElementById('form-asset-date').value = assetDate;
+		document.getElementById('form-device-name').value = assetName;
+		document.getElementById('form-asset-manager').selectedIndex = managerSelectionIndex[assetManager];
+		document.getElementById('form-asset-location').selectedIndex = locationSelectionIndex[assetLocation];
 
 		var newSaveButtonElem = document.createElement('BUTTON');
 		newSaveButtonElem.classList.add('save-button');
