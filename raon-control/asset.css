@@ -3,6 +3,11 @@
 }
 
 @font-face {
+    font-family: "Helvetica-Neue-Light";
+    src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
+}
+
+@font-face {
     font-family: "Roboto-Thin";
     src: url(fonts/Roboto-Thin.ttf);
 }
@@ -62,6 +67,14 @@ body {
     font-family: "Helvetica-Neue-Light";
 }
 
+#accelerator-control a {
+    text-decoration: none;
+}
+
+#accelerator-control a:link, a:visited {
+    color: white;
+}
+
 #menu {
     display: flex;
     position: absolute;
@@ -79,7 +92,7 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
-#menu a:visited {
+#menu a:link, a:visited {
     color: white;
 }
 
@@ -88,7 +101,6 @@ body {
 }
 
 .search-box {
-    /* position: relative; */
     width: 800px;
     height: 50px;
     margin: auto;
@@ -107,16 +119,13 @@ body {
 }
 
 /* Hide spin arrows */
-
 /* Chrome, Safari, Edge, Opera */
-
 #input-search::-webkit-outer-spin-button, #input-search::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
 /* Firefox */
-
 #input-search {
     -moz-appearance: textfield;
 }
@@ -129,7 +138,6 @@ body {
     margin-top: 100px;
     width: 100%;
     height: auto;
-    /* background-color: brown; */
 }
 
 .asset-image {
@@ -137,20 +145,14 @@ body {
     width: 100%;
     height: 100%;
     background-size: cover;
-    /* background-color: rgba(0, 0, 0, 0.0); */
-    /* background-color: fuchsia; */
-    /* padding: 14px; */
-    /* overflow: hidden; */
 }
 
 .asset-container {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* padding: 20px; */
     background-color: rgba(0, 0, 0, 0.8);
     transition: background-color 0.5s;
-    /* background-color: fuchsia; */
 }
 
 .asset-number {
@@ -159,7 +161,6 @@ body {
     top: 15px;
     color: white;
     font-size: 40px;
-    /* border-radius: 0px 0px 10px 10px; */
 }
 
 .asset-date {
@@ -197,8 +198,9 @@ body {
     font-family: "NotoSansKR-Thin";
 }
 
+/*                           */
 /* New asset modal container */
-
+/*                           */
 #new-asset-button {
     position: absolute;
     right: 10px;
@@ -208,14 +210,10 @@ body {
     background-color: transparent;
     color: white;
     font-size: 32px;
-    /* padding: 10px; */
-    /* margin: 8px 0; */
     border: none;
     outline: none;
     text-align: center;
     text-decoration: none;
-    /* border-radius: 4px; */
-    /* cursor: pointer; */
 }
 
 .update-asset-button {
@@ -227,8 +225,6 @@ body {
     background-color: transparent;
     color: white;
     font-size: 32px;
-    /* padding: 10px; */
-    /* margin: 8px 0; */
     border: none;
     outline: none;
     text-align: center;
@@ -260,7 +256,6 @@ body {
     margin: auto;
     justify-content: center;
     align-items: center;
-    /* background-color: rosybrown; */
 }
 
 #form-asset-container {
@@ -299,7 +294,6 @@ input[type=text], select {
 
 .save-button {
     width: 100%;
-    /* background-color: #4CAF50; */
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -307,17 +301,6 @@ input[type=text], select {
     border-radius: 4px;
     cursor: pointer;
 }
-
-/* .-button {
-    width: 100%;
-    background-color: #008CBA;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-} */
 
 #save-button:hover {
     background-color: #45a049;

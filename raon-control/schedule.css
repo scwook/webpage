@@ -62,6 +62,23 @@ body {
     font-family: "Helvetica-Neue-Light";
 }
 
+#accelerator-control {
+    position: absolute;
+    color: white;
+    width: 150px;
+    left: 150px;
+    top: 40px;
+    font-family: "Helvetica-Neue-Light";
+}
+
+#accelerator-control a {
+    text-decoration: none;
+}
+
+#accelerator-control a:link, a:visited {
+    color: white;
+}
+
 #menu {
     display: flex;
     position: absolute;
