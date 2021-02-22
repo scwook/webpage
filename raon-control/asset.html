@@ -160,6 +160,12 @@
 </body>
 
 <script>
+	var imageServer = 'http://192.168.68.126:4879/image/'
+	var serverAddr = 'http://192.168.68.126:8080/inventory'
+	var retrieveAddr = serverAddr + '/retrieve/*';
+	var insertAddr = serverAddr + '/insert';
+	var updateAddr = serverAddr + '/update';
+
 	var slideIndex = {};
 	var swiper = new Swiper('.swiper-container', {
 		effect: 'coverflow',
@@ -183,7 +189,6 @@
 		// loop: true
 	});
 
-	var imageServer = 'http://192.168.68.126:4879/image/'
 	function createSwiperSlide(jsonData) {
 		// var swiperWrapperClass = document.getElementsByClassName('swiper-wrapper');
 		var count = 0;
@@ -234,7 +239,7 @@
 			// 	')">E</button>';
 
 			// Set Asset Data
-			assetNumberElem.innerText = jsonData[i].assetNum;
+			assetNumberElem.innerText = jsonData[i].assetNumber;
 			assetDateElem.innerText = jsonData[i].date;
 			assetNameElem.innerText = jsonData[i].deviceName;
 			assetManagerElem.innerText = nameDic[jsonData[i].manager];
@@ -256,14 +261,14 @@
 
 			var indexData = {
 				'index': count,
-				'assetNum': jsonData[i].assetNum,
+				'assetNumber': jsonData[i].assetNumber,
 				'date': jsonData[i].date,
 				'deviceName': jsonData[i].deviceName,
 				'manager': jsonData[i].manager,
 				'location': jsonData[i].location
 			};
 
-			slideIndex[jsonData[i].assetNum] = indexData;
+			slideIndex[jsonData[i].assetNumber] = indexData;
 			count += 1;
 		}
 
@@ -283,7 +288,7 @@
 
 		var newSaveButtonElem = document.createElement('BUTTON');
 		newSaveButtonElem.classList.add('save-button');
-		newSaveButtonElem.addEventListener('click', function () { setInventoryData() });
+		newSaveButtonElem.addEventListener('click', function () { setAssetData() });
 		newSaveButtonElem.style.backgroundColor = '#4CAF50';
 		newSaveButtonElem.innerText = 'Save';
 		document.getElementById('form-asset-container').appendChild(newSaveButtonElem);
@@ -338,7 +343,7 @@
 
 		var newSaveButtonElem = document.createElement('BUTTON');
 		newSaveButtonElem.classList.add('save-button');
-		newSaveButtonElem.addEventListener('click', function () { updateInventoryData(assetData.assetNum) });
+		newSaveButtonElem.addEventListener('click', function () { updateAssetData(assetData.assetNum) });
 		newSaveButtonElem.style.backgroundColor = '#008CBA';
 		newSaveButtonElem.innerText = 'Update';
 		document.getElementById('form-asset-container').appendChild(newSaveButtonElem);
@@ -381,6 +386,7 @@
 		}
 	});
 
+	// Get Asset Data From Database
 	function getAssetData() {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
@@ -391,14 +397,15 @@
 			// else {
 			// 	alert('Status Error : ' + this.status);
 			// }
-			
+
 		};
-		var rName = "http://192.168.68.126:8080/inventory/retrieve/*";
-		xhttp.open("GET", rName, false);
+		// var rName = "http://192.168.68.126:8080/inventory/retrieve/*";
+		xhttp.open("GET", retrieveAddr, false);
 		xhttp.send();
 	}
 
-	function setInventoryData() {
+	// Insert New Asset Data to Database
+	function setAssetData() {
 		var formData = new FormData(document.forms.namedItem("fileInfo"));
 
 		var xhttp = new XMLHttpRequest();
@@ -419,12 +426,13 @@
 			// }
 		};
 
-		var rName = "http://192.168.68.126:8080/inventory/insert";
-		xhttp.open("POST", rName, false);
+		// var rName = "http://192.168.68.126:8080/inventory/insert";
+		xhttp.open("POST", insertAddr, false);
 		xhttp.send(formData);
 	}
 
-	function updateInventoryData(referenceAssetNumber) {
+	// Update Asset Data
+	function updateAssetData(referenceAssetNumber) {
 		var formData = new FormData(document.forms.namedItem("fileInfo"));
 		formData.append('reference', referenceAssetNumber);
 
@@ -446,8 +454,8 @@
 			// }
 		};
 
-		var rName = "http://192.168.68.126:8080/inventory/update";
-		xhttp.open("POST", rName, false);
+		// var rName = "http://192.168.68.126:8080/inventory/update";
+		xhttp.open("POST", updateAddr, false);
 		xhttp.send(formData);
 	}
 

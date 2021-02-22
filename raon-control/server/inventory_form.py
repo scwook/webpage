@@ -12,16 +12,20 @@ app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = '/home/scwook/flask/upload'
+DB_HOST = 'localhost'
+DB_USER = 'scwook'
+DB_PASSWORD = 'qwer1234'
+DB_DATABASE = 'inventory'
 
 @app.route('/inventory/insert', methods=['POST'])
 def set_asset_list():
-    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     inventory = conn.cursor()
     retrieve = conn.cursor()
     # jsonData = request.get_json()
     formData = request.form
 
-    assetNum = "'" + formData['assetNumber'] + "'"
+    assetNumber = "'" + formData['assetNumber'] + "'"
     date = "'" + formData['assetDate'] + "'"
     deviceName = "'" + formData['assetName'] + "'"
     manager = "'" + formData['assetManager'] + "'"
@@ -31,14 +35,14 @@ def set_asset_list():
     #sercureFileName = secure_filename(file.filename)
     fileName = "'" + file.filename + "'"
    
-    retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNum
+    retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNumber
     retrieve.execute(retrieveQuery)
     result = retrieve.fetchall()
 
     if len(result):
         return 'overlap'
 
-    insertQuery = 'INSERT INTO asset_list(AssetNumber,Date,DeviceName,Manager,Location,FileName) VALUES(' + assetNum + "," + date + "," + deviceName + "," + manager + "," + location + "," + fileName + ")"
+    insertQuery = 'INSERT INTO asset_list(AssetNumber,Date,DeviceName,Manager,Location,FileName) VALUES(' + assetNumber + "," + date + "," + deviceName + "," + manager + "," + location + "," + fileName + ")"
 
     inventory.execute(insertQuery)
     conn.commit()
@@ -65,14 +69,14 @@ def set_asset_list():
 
 @app.route('/inventory/update', methods=['POST'])
 def update_asset_list():
-    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     inventory = conn.cursor()
     retrieve = conn.cursor()
 
     formData = request.form
 
     referenceNum = "'" + formData['reference'] + "'"
-    assetNum = "'" + formData['assetNumber'] + "'"
+    assetNumber = "'" + formData['assetNumber'] + "'"
     date = "'" + formData['assetDate'] + "'"
     deviceName = "'" + formData['assetName'] + "'"
     manager = "'" + formData['assetManager'] + "'"
@@ -81,20 +85,20 @@ def update_asset_list():
     file = request.files['file']
     fileName = "'" + file.filename + "'"
 
-    retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNum
+    retrieveQuery = 'SELECT * FROM asset_list WHERE AssetNumber LIKE ' + assetNumber
     retrieve.execute(retrieveQuery)
     result = retrieve.fetchall()
 
     for x in retrieve:
-        if x[1] != assetNum:
+        if x[1] != assetNumber:
             return 'overlap'
 
-    updateQuery = 'UPDATE asset_list SET AssetNumber=' + assetNum + ',Date=' + date + ',DeviceName=' + deviceName + ',Manager=' + manager + ',Location=' + location + ",FileName=" + fileName + ' WHERE AssetNumber=' + referenceNum
+    updateQuery = 'UPDATE asset_list SET AssetNumber=' + assetNumber + ',Date=' + date + ',DeviceName=' + deviceName + ',Manager=' + manager + ',Location=' + location + ",FileName=" + fileName + ' WHERE AssetNumber=' + referenceNum
 
     inventory.execute(updateQuery)
     conn.commit()
     
-    retrieveQuery = 'SELECT ID FROM asset_list WHERE AssetNumber=' + assetNum
+    retrieveQuery = 'SELECT ID FROM asset_list WHERE AssetNumber=' + assetNumber
     inventory.execute(retrieveQuery)
     ID = inventory.fetchone()[0]
 
@@ -113,7 +117,7 @@ def update_asset_list():
 
 @app.route('/inventory/retrieve/<asset>')
 def get_asset_list(asset):
-    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='inventory', charset='utf8')
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     inventory = conn.cursor()
     assetListArray = []
 
@@ -123,7 +127,7 @@ def get_asset_list(asset):
     inventory.execute(retrieveQuery)
 
     for x in inventory:
-        inventoryDic = {'id':x[0], 'assetNum':x[1], 'date':x[2], 'deviceName':x[3], 'manager':x[4], 'location':x[5], 'fileName':x[6]}
+        inventoryDic = {'id':x[0], 'assetNumber':x[1], 'date':x[2], 'deviceName':x[3], 'manager':x[4], 'location':x[5], 'fileName':x[6]}
         assetListArray.append(inventoryDic)
     
     conn.close()
