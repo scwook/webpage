@@ -160,7 +160,7 @@
 </body>
 
 <script>
-	var index = {};
+	var slideIndex = {};
 	var swiper = new Swiper('.swiper-container', {
 		effect: 'coverflow',
 		grabCursor: true,
@@ -181,9 +181,6 @@
 		}
 		// loop: true
 	});
-
-	var test = ['a','b','c','d','e'];
-
 
 	var imageServer = 'http://192.168.68.126:4879/image/'
 	function createSwiperSlide(jsonData) {
@@ -227,17 +224,22 @@
 			// var assetEditButtonElem = document.createElement('BUTTON');
 			// assetEditButtonElem.classList.add('update-asset-button');
 			// assetEditButtonElem.addEventListener('click', function () { showUpdateAssetForm(jsonData[i]) });
-			// assetEditButtonElem.innerText = "C";
+			// assetEditButtonElem.innerText = "D";
 			// assetEditButtonElem.style.backgroundColor = '#008CBA';
 
-			var assetUpdateButtonHTML = '<button onclick="showUpdateAssetForm(' 
-			+ "'" + jsonData[i].assetNum + "'" + ',' 
-			+ "'" + jsonData[i].date + "'" + ','
-			+ "'" + jsonData[i].deviceName + "'" + ','
-			+ "'" + jsonData[i].manager + "'" + ','
-			+ "'" + jsonData[i].location + "'" +
-			')">button</button>';
-			// console.log(assetUpdateButtonHTML);
+			// var assetUpdateButtonHTML = '<button class="update-asset-button" onclick="showUpdateAssetForm('
+			// 	+ "'" + jsonData[i].assetNum + "'" + ','
+			// 	+ "'" + jsonData[i].date + "'" + ','
+			// 	+ "'" + jsonData[i].deviceName + "'" + ','
+			// 	+ "'" + jsonData[i].manager + "'" + ','
+			// 	+ "'" + jsonData[i].location + "'" +
+			// 	')">E</button>';
+
+			var assetUpdateButtonHTML = '<button class="update-asset-button" onclick="showUpdateAssetForm('
+				+ "'" + jsonData[i].assetNum + "'" +
+				')">E</button>';
+
+				console.log(assetUpdateButtonHTML);
 			// document.getElementsByClassName('content')[0].innerHTML = buttonHTML;
 
 			// Set Asset Data
@@ -252,6 +254,7 @@
 			assetContainerElem.appendChild(assetNameElem);
 			assetContainerElem.appendChild(assetManagerElem);
 			assetContainerElem.appendChild(assetLocationElem);
+
 			// assetContainerElem.appendChild(assetEditButtonElem);
 			assetContainerElem.innerHTML += assetUpdateButtonHTML;
 
@@ -260,17 +263,22 @@
 
 			slideArray.push(slideItemElem.outerHTML);
 
-			index[jsonData[i].assetNum] = count;
+			var indexData = {
+				'index': count,
+				'assetNum': jsonData[i].assetNum,
+				'date': jsonData[i].date,
+				'deviceName': jsonData[i].deviceName,
+				'manager': jsonData[i].manager,
+				'location': jsonData[i].location
+			};
+
+			slideIndex[jsonData[i].assetNum] = indexData;
 			count += 1;
 		}
 
 		swiper.virtual.appendSlide(slideArray);
 		swiper.update();
 		// swiper.init();
-	}
-
-	function testFun() {
-		console.log('aaa');
 	}
 
 	function showNewAssetForm() {
@@ -293,8 +301,10 @@
 
 	}
 
-	function showUpdateAssetForm(assetNumber, assetDate, assetName, assetManager, assetLocation) {
+	function showUpdateAssetForm(assetNumber) {
 		// console.log(assetNumber, assetDate, assetName, assetManager, assetLocation);
+
+		var assetData = slideIndex[assetNumber];
 
 		// Remove Button
 		var saveButton = document.getElementsByClassName('save-button');
@@ -329,11 +339,11 @@
 		};
 
 		// Set Current Asset Data
-		document.getElementById('form-asset-number').value = assetNumber;
-		document.getElementById('form-asset-date').value = assetDate;
-		document.getElementById('form-device-name').value = assetName;
-		document.getElementById('form-asset-manager').selectedIndex = managerSelectionIndex[assetManager];
-		document.getElementById('form-asset-location').selectedIndex = locationSelectionIndex[assetLocation];
+		document.getElementById('form-asset-number').value = assetData.assetNum;
+		document.getElementById('form-asset-date').value = assetData.date;
+		document.getElementById('form-device-name').value = assetData.deviceName;
+		document.getElementById('form-asset-manager').selectedIndex = managerSelectionIndex[assetData.manager];
+		document.getElementById('form-asset-location').selectedIndex = locationSelectionIndex[assetData.location];
 
 		var newSaveButtonElem = document.createElement('BUTTON');
 		newSaveButtonElem.classList.add('save-button');
@@ -350,7 +360,7 @@
 		var searchAssetNumber = document.getElementById("input-search").value;
 		if (searchAssetNumber.length) {
 			// var assetNumber = document.getElementById('input').value;
-			var assetIndex = index[searchAssetNumber];
+			var assetIndex = slideIndex[searchAssetNumber].index;
 			if (assetIndex) {
 				swiper.slideTo(assetIndex, 1000, false);
 			}

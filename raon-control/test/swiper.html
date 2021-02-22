@@ -76,31 +76,6 @@
                         <div style="width:100px; height: 300px; background-color: blueviolet;"></div>
                     </div>
                 </div>
-
-                <div class="swiper-slide">
-                    <div class="testimonialBox" class="quite">
-                        <div class="content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, dolor optio nemo
-                                similique quidem fugit eligendi magnam, quos soluta, cupiditate recusandae possimus est!
-                                Inventore cum ex mollitia officiis nemo amet!z
-                            </p>
-                        </div>
-                        <div style="width:100px; height: 300px; background-color: blueviolet;"></div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="testimonialBox" class="quite">
-                        <div class="content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, dolor optio nemo
-                                similique quidem fugit eligendi magnam, quos soluta, cupiditate recusandae possimus est!
-                                Inventore cum ex mollitia officiis nemo amet!z
-                            </p>
-                        </div>
-                        <div style="width:100px; height: 300px; background-color: blueviolet;"></div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -110,30 +85,50 @@
         effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 'auto',
+        slidesPerView: '3',
         coverflowEffect: {
             rotate: 0,
-            stretch: -150,
+            stretch: -160,
             depth: 200,
             modifier: 2,
             slideShadows: true,
         },
-        // loop: true
+
+        virtual: {
+            slides: []
+        }
     });
 
-    var button = document.createElement('BUTTON');
-    button.addEventListener('click', function () {
-        testFun();
-    });
-    button.innerText = "Button";
+    var slideArray = [];
 
-    var buttonHTML = '<button onclick="testFun()">button</button>'
-    document.getElementsByClassName('content')[0].innerHTML = buttonHTML;
-    
-    console.log(document.getElementsByClassName('content')[0]);
+    function createSlide() {
+        for (let i = 0; i < 10; i++) {
+            var slideItemElem = document.createElement('DIV');
+            slideItemElem.innerText = "aaaaa";
+            slideItemElem.style.width = "100px";
+            slideItemElem.style.height = "200px";
+            slideItemElem.style.backgroundColor = "green";
 
-    function testFun() {
-        console.log('aaaa');
+            var assetEditButtonElem = document.createElement('BUTTON');
+            assetEditButtonElem.classList.add('update-asset-button');
+            assetEditButtonElem.addEventListener('click', function () { console.log("test"); });
+            assetEditButtonElem.innerText = "SCWOOK";
+            assetEditButtonElem.style.backgroundColor = '#008CBA';
+
+            slideItemElem.appendChild(assetEditButtonElem);
+            // slideArray.push(slideItemElem.outerHTML);
+            swiper.virtual.appendSlide(slideItemElem);
+
+        }
+
+        console.log(slideArray);
+
+        // swiper.virtual.appendSlide(slideArray);
+    }
+
+
+    window.onload = function () {
+        createSlide();
     }
 </script>
 
