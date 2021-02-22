@@ -85,8 +85,9 @@ def update_asset_list():
     retrieve.execute(retrieveQuery)
     result = retrieve.fetchall()
 
-    if len(result):
-        return 'overlap'
+    for x in retrieve:
+        if x[1] != assetNum:
+            return 'overlap'
 
     updateQuery = 'UPDATE asset_list SET AssetNumber=' + assetNum + ',Date=' + date + ',DeviceName=' + deviceName + ',Manager=' + manager + ',Location=' + location + ",FileName=" + fileName + ' WHERE AssetNumber=' + referenceNum
 
