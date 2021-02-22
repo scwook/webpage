@@ -177,6 +177,7 @@
 		},
 
 		virtual: {
+			// cache: true,
 			slides: []
 		}
 		// loop: true
@@ -221,12 +222,12 @@
 			assetLocationElem.classList.add('asset-location');
 
 			// Edit Button
-			var assetUpdateButtonHTML = '<svg width="38" height="36" class="update-asset-button"' + 
-			'onclick="showUpdateAssetForm(' + "'" + jsonData[i].assetNum + "'" + ')">' +
-			'<path d="M34.84.5h1.39a2,2,0,0,1,2,2V4.42a0,0,0,0,1,0,0H32.84a0,0,0,0,1,0,0V2.5A2,2,0,0,1,34.84.5Z" transform="translate(12.15 -24.41) rotate(45)" style="fill:#fff" />' +
-			'<polygon points="31.23 2.96 12.74 21.45 10.83 27.17 16.55 25.26 35.04 6.77 31.23 2.96" style="fill:#fff" />' + 
-			'<polygon points="28.77 20.7 28.77 32.77 3.23 32.77 3.23 7.23 20.5 7.23 23.74 4 0 4 0 36 32 36 32 17.47 28.77 20.7" style="fill:#fff" />' +
-			'</svg>';
+			var assetUpdateButtonHTML = '<svg width="38" height="36" class="update-asset-button"' +
+				'onclick="showUpdateAssetForm(' + "'" + jsonData[i].assetNum + "'" + ')">' +
+				'<path d="M34.84.5h1.39a2,2,0,0,1,2,2V4.42a0,0,0,0,1,0,0H32.84a0,0,0,0,1,0,0V2.5A2,2,0,0,1,34.84.5Z" transform="translate(12.15 -24.41) rotate(45)" style="fill:#fff" />' +
+				'<polygon points="31.23 2.96 12.74 21.45 10.83 27.17 16.55 25.26 35.04 6.77 31.23 2.96" style="fill:#fff" />' +
+				'<polygon points="28.77 20.7 28.77 32.77 3.23 32.77 3.23 7.23 20.5 7.23 23.74 4 0 4 0 36 32 36 32 17.47 28.77 20.7" style="fill:#fff" />' +
+				'</svg>';
 
 			// var assetUpdateButtonHTML = '<button class="update-asset-button" onclick="showUpdateAssetForm('
 			// 	+ "'" + jsonData[i].assetNum + "'" +
@@ -386,8 +387,11 @@
 			if (this.readyState == 4 && this.status == 200) {
 				var jsonValue = JSON.parse(this.responseText);
 				createSwiperSlide(jsonValue);
-
 			}
+			// else {
+			// 	alert('Status Error : ' + this.status);
+			// }
+			
 		};
 		var rName = "http://192.168.68.126:8080/inventory/retrieve/*";
 		xhttp.open("GET", rName, false);
@@ -400,18 +404,19 @@
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				if (this.responseText == 'success') {
-
+				switch (this.responseText) {
+					case 'success':
+						break;
+					case 'overlab':
+						alert('Asset Number alrady exist');
+						break;
+					case 'fail':
+						alert('File Upload Error');
 				}
-				else {
-
-				}
-
-				console.log('return:', this.responseText);
 			}
-			else {
-				console.log(this.readyState, this.status);
-			}
+			// else {
+			// 	alert('Status Error : ' + this.status);
+			// }
 		};
 
 		var rName = "http://192.168.68.126:8080/inventory/insert";
@@ -426,18 +431,19 @@
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				if (this.responseText == 'success') {
-					console.log('success');
+				switch (this.responseText) {
+					case 'success':
+						break;
+					case 'overlab':
+						alert('Asset Number alrady exist');
+						break;
+					case 'fail':
+						alert('File Upload Error');
 				}
-				else {
-					console.log('fail');
-				}
-
-				console.log('return:', this.responseText);
 			}
-			else {
-				console.log(this.readyState, this.status);
-			}
+			// else {
+			// 	alert('Status Error : ' + this.status);
+			// }
 		};
 
 		var rName = "http://192.168.68.126:8080/inventory/update";
