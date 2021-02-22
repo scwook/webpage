@@ -216,10 +216,10 @@ body {
 
 .update-asset-button {
     position: absolute;
-    right:20px;
-    bottom:20px;
-    /* width: 36px;
-    height: 38px; */
+    right:10px;
+    bottom:10px;
+    width: 36px;
+    height: 38px;
     background-color: transparent;
     color: white;
     font-size: 32px;
