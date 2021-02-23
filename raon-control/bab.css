@@ -1,0 +1,47 @@
+#img4 {
+    animation-name: example2;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
+
+#img5 {
+    animation-name: example;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#img9 {
+    animation-name: example;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+}
+
+.image-box {
+    position: absolute;
+    top: 80px;
+}
+
+@keyframes example {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes example2 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(1080deg);
+    }
+}

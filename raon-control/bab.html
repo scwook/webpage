@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="common.css">
+<link rel="stylesheet" type="text/css" href="bab.css">
+
+<body>
+  <div style="margin:auto; position: relative; width:1920px; height:80px;">
+    <div id="time-stamp"></div>
+    <svg id="under-line" width="1920" height="42">
+      <style>
+        .under-line-style {
+          fill: none;
+          stroke: #f3f3f3;
+          stroke-miterlimit: 10;
+          stroke-width: 2px;
+        }
+      </style>
+      <polyline class="under-line-style" points="0 40 760 40 791 0" />
+      <polyline class="under-line-style" points="1920 40 1160 40 1129 0" />
+    </svg>
+    <svg id="center-top" width="400" height="80">
+      <path
+        d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
+        style="fill:#f3f3f3" />
+    </svg>
+    <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+    <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+    <div id="left-menu">
+      <a href="asset.html">Asset</a>
+      <a href="bab.html" class="secret-menu">Bab</a>
+      <a href="" class="secret-menu">Logbook</a>
+      <a href="" class="secret-menu">Finder</a>
+      <a href="" class="secret-menu">Naming</a>
+    </div>
+    <div id="right-menu">
+      <a href="monitoring.html">Monitoring</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="archive.html">Archive</a>
+      <a href="downloads.html">Download</a>
+      <a href="documents.html">Document</a>
+    </div>
+  </div>
+
+  <div style="height:50px"></div>
+
+  <div id="body" style="margin:auto; width:1920px; height:900px; position: relative;">
+    <div style="margin:auto; position: relative; width:500px; height:500px;">
+      <div class="image-box"><img id="img1" src="images/img1.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img2" src="images/img2.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img3" src="images/img3.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img4" src="images/img4.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img5" src="images/img5.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img6" src="images/img6.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img7" src="images/img7.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img8" src="images/img8.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img9" src="images/img9.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img10" src="images/img10.svg" style="width:500; height:500;"></img></div>
+      <div class="image-box"><img id="img11" src="images/img11.svg" style="width:500; height:500;"></img></div>
+    </div>
+  </div>
+</body>
+
+<script>
+  function timer() {
+    var d = new Date();
+    document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+  }
+
+  window.onload = function () {
+    setInterval(timer, 1000);
+
+  }
+
+</script>
+
+
+</html>
