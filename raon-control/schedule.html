@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="common.css">
 <link rel="stylesheet" type="text/css" href="schedule.css">
 <script src="script/jquery.min.js"></script>
 
@@ -24,8 +25,15 @@
                 style="fill:#f3f3f3" />
         </svg>
         <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
-		<div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
-        <div id="menu">
+        <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+        <div id="left-menu">
+            <a href="asset.html">Asset</a>
+            <a href="bab.html" class="secret-menu">Bab</a>
+            <a href="" class="secret-menu">Logbook</a>
+            <a href="" class="secret-menu">Finder</a>
+            <a href="" class="secret-menu">Naming</a>
+        </div>
+        <div id="right-menu">
             <a href="monitoring.html">Monitoring</a>
             <a href="schedule.html">Schedule</a>
             <a href="archive.html">Archive</a>
@@ -839,7 +847,7 @@
 
                         buttonWidthScale += 1;
                     }
-                    
+
                     // Create schedule list box and detail infomation
                     scheduleDetail(i, listBoxDelay, color);
                     listBoxDelay += 0.2;
@@ -1070,7 +1078,7 @@
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
 
-        thisCalendar() 
+        thisCalendar()
         // makeSchedule();
         // scheduleDetail();
         // shifterList(0, '#8E44AD');

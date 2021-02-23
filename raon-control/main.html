@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="common.css">
 <link rel="stylesheet" type="text/css" href="main.css">
 <script src="script/moment.js"></script>
 <script src="script/chart.js@2.8.0"></script>
@@ -27,8 +28,15 @@
                 style="fill:#f3f3f3" />
         </svg>
         <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
-		<div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
-        <div id="menu">
+        <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+        <div id="left-menu">
+            <a href="asset.html">Asset</a>
+            <a href="bab.html" class="secret-menu">Bab</a>
+            <a href="" class="secret-menu">Logbook</a>
+            <a href="" class="secret-menu">Finder</a>
+            <a href="" class="secret-menu">Naming</a>
+        </div>
+        <div id="right-menu">
             <a href="monitoring.html">Monitoring</a>
             <a href="schedule.html">Schedule</a>
             <a href="archive.html">Archive</a>
@@ -455,25 +463,41 @@
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">Temperature</div>
-                        <div class="data-value" id="temperature1" style="position: relative; left: 25px; top:40px">0.0</div>
+                        <div class="data-value" id="temperature1" style="position: relative; left: 25px; top:40px">0.0
+                        </div>
                     </div>
                     <div style="width:30%; height:100%">
                         <div class="temperature-level-bar">
-                            <div class="temperature-level1" style="--i:1px; --tDelay:0.28s; background-color: rgb(255, 0, 0);"></div>
-                            <div class="temperature-level1" style="--i:3px; --tDelay:0.26s; background-color: rgb(230, 25, 25);"></div>
-                            <div class="temperature-level1" style="--i:5px; --tDelay:0.24s; background-color: rgb(230, 42, 25);"></div>
-                            <div class="temperature-level1" style="--i:7px; --tDelay:0.22s; background-color: rgb(230, 59, 25);"></div>
-                            <div class="temperature-level1" style="--i:9px; --tDelay:0.20s; background-color: rgb(230, 76, 25);"></div>
-                            <div class="temperature-level1" style="--i:11px; --tDelay:0.18s; background-color: rgb(230, 110, 25);"></div>
-                            <div class="temperature-level1" style="--i:13px; --tDelay:0.16s; background-color: rgb(230, 145, 25);"></div>
-                            <div class="temperature-level1" style="--i:15px; --tDelay:0.14s; background-color: rgb(230, 196, 25);"></div>
-                            <div class="temperature-level1" style="--i:17px; --tDelay:0.12s; background-color: rgb(196, 230, 25);"></div>
-                            <div class="temperature-level1" style="--i:19px; --tDelay:0.10s; background-color: rgb(179, 230, 25);"></div>
-                            <div class="temperature-level1" style="--i:21px; --tDelay:0.08s; background-color: rgb(162, 230, 25);"></div>
-                            <div class="temperature-level1" style="--i:23px; --tDelay:0.06s; background-color: rgb(145, 230, 25);"></div>
-                            <div class="temperature-level1" style="--i:25px; --tDelay:0.04s; background-color: rgb(128, 230, 25);"></div>
-                            <div class="temperature-level1" style="--i:27px; --tDelay:0.02s; background-color: rgb(110, 230, 25);"></div>
-                            <div class="temperature-level1" style="--i:29px; --tDelay:0.0s; background-color: rgb(93, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:1px; --tDelay:0.28s; background-color: rgb(255, 0, 0);"></div>
+                            <div class="temperature-level1"
+                                style="--i:3px; --tDelay:0.26s; background-color: rgb(230, 25, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:5px; --tDelay:0.24s; background-color: rgb(230, 42, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:7px; --tDelay:0.22s; background-color: rgb(230, 59, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:9px; --tDelay:0.20s; background-color: rgb(230, 76, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:11px; --tDelay:0.18s; background-color: rgb(230, 110, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:13px; --tDelay:0.16s; background-color: rgb(230, 145, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:15px; --tDelay:0.14s; background-color: rgb(230, 196, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:17px; --tDelay:0.12s; background-color: rgb(196, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:19px; --tDelay:0.10s; background-color: rgb(179, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:21px; --tDelay:0.08s; background-color: rgb(162, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:23px; --tDelay:0.06s; background-color: rgb(145, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:25px; --tDelay:0.04s; background-color: rgb(128, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:27px; --tDelay:0.02s; background-color: rgb(110, 230, 25);"></div>
+                            <div class="temperature-level1"
+                                style="--i:29px; --tDelay:0.0s; background-color: rgb(93, 230, 25);"></div>
                         </div>
                     </div>
                 </div>
@@ -481,25 +505,41 @@
                 <div class="grid-item" style="display:flex; width:300px; height:160px;">
                     <div style="width:70%; height:100%">
                         <div class="data-name" style="position: relative; left: 25px; top:25px">Temperature</div>
-                        <div class="data-value" id="temperature2" style="position: relative; left: 25px; top:40px">0.0</div>
+                        <div class="data-value" id="temperature2" style="position: relative; left: 25px; top:40px">0.0
+                        </div>
                     </div>
                     <div style="width:30%; height:100%">
                         <div class="temperature-level-bar">
-                            <div class="temperature-level2" style="--i:1px; background-color: rgba(0, 177, 232, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:3px; background-color: rgba(0, 166, 228, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:5px; background-color: rgba(0, 154, 224, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:7px; background-color: rgba(0, 142, 221, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:9px; background-color: rgba(0, 130, 217, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:11px; background-color: rgba(0, 118, 213, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:13px; background-color: rgba(0, 105, 209, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:15px; background-color: rgba(0, 91, 205, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:17px; background-color: rgba(0, 78, 202, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:19px; background-color: rgba(0, 64, 198, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:21px; background-color: rgba(0, 50, 194, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:23px; background-color: rgba(0, 36, 190, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:25px; background-color: rgba(0, 22, 186, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:27px; background-color: rgba(0, 0, 182, 0.0);"></div>
-                            <div class="temperature-level2" style="--i:29px; background-color: rgba(0, 0, 179, 0.0);"></div>
+                            <div class="temperature-level2" style="--i:1px; background-color: rgba(0, 177, 232, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:3px; background-color: rgba(0, 166, 228, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:5px; background-color: rgba(0, 154, 224, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:7px; background-color: rgba(0, 142, 221, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:9px; background-color: rgba(0, 130, 217, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:11px; background-color: rgba(0, 118, 213, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:13px; background-color: rgba(0, 105, 209, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:15px; background-color: rgba(0, 91, 205, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:17px; background-color: rgba(0, 78, 202, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:19px; background-color: rgba(0, 64, 198, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:21px; background-color: rgba(0, 50, 194, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:23px; background-color: rgba(0, 36, 190, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:25px; background-color: rgba(0, 22, 186, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:27px; background-color: rgba(0, 0, 182, 0.0);">
+                            </div>
+                            <div class="temperature-level2" style="--i:29px; background-color: rgba(0, 0, 179, 0.0);">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2325,7 +2365,7 @@
             tempreatureValue = (Math.random() * 100).toFixed(1);
             temperature2ID.innerText = tempreatureValue;
 
-            for(let i=14; i>=0; i--) {
+            for (let i = 14; i >= 0; i--) {
                 temperature1LevelID[i].style.opacity = 1.0;
             }
 
