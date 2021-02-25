@@ -1098,7 +1098,7 @@
             }
         };
 
-        var server = "http://192.168.68.126/schedule/" + today.getFullYear() + '-' + monthString[today.getMonth()];
+        var server = "http://192.168.68.126:8081/schedule/" + today.getFullYear() + '-' + monthString[today.getMonth()];
         console.log(server);
         xhttp.open("GET", server, true);
         xhttp.send();

@@ -3,8 +3,10 @@ import pymysql
 import json
 
 from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/schedule/<date>')
 def get_data(date):
@@ -45,4 +47,4 @@ def get_data(date):
     return json.dumps(shiftArray)
 
 if __name__ == "__main__":
-    app.run(host="localhost", port="8080")
+    app.run(host="192.168.68.126", port="8081")
