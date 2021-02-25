@@ -1,7 +1,0 @@
-record(ai,"client")
-{
-  field(DTYP, "stream")
-  field(INP, "@client.proto request_data(client) UART")
-  field(SCAN, "1 second")
-}
-

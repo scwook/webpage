@@ -6,16 +6,14 @@ from pvaccess import *
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-jsonData = dict()
-test = {'a':'b'}
+pvObjectDict = dict()
 
 class ChannelMonitor:
     def __init__(self, name):
         self.name = name
 
     def monitor(self, data):
-        jsonData[self.name] = data.toJSON(False)
-	print(jsonData[self.name])
+        pvObjectDict[self.name] = dict(data)
 
 ### Read Channel List
 pvList = list(line.strip() for line in open('pvList'))
@@ -31,14 +29,13 @@ for name in pvList:
         channelList[index].monitor(monitoringList[index].monitor, 'field(value,alarm)')
         index += 1
 
-
 ### Flask App
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def get_data():
-        return json.dumps(jsonData)
+        return json.dumps(pvObjectDict)
 
 
 if __name__ == "__main__":

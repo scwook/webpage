@@ -1,31 +1,52 @@
 <!DOCTYPE html>
 <html>
-	<body>
-		<div id="a"></div>
-	</body>
-	<script>
+
+<body>
+    <div id='a'></div>
+</body>
+<script>
+
+    for(let i = 0; i < 100; i++) {
+        var testElem = document.createElement('DIV');
+        testElem.classList.add('value');
+
+        document.getElementById('a').appendChild(testElem);
+    }
+
     function getData() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
 
                 let jsonValue = JSON.parse(this.responseText);
-		console.log(jsonValue);
-		document.getElementById('a').innerText = jsonValue;
+                // console.log(jsonValue);
 
+                let index = 0;
+                for(i in jsonValue) {
+                    document.getElementsByClassName('value')[index].innerHTML = jsonValue[i].value;
+                    index += 1;
+                    // console.log(jsonValue[i].value);
+                }
+                // document.getElementById('a').innerText = jsonValue['PI1:ai1'].value;
+                // document.getElementById('b').innerText = jsonValue['PI1:ai1'].alarm.status;
+
+                // document.getElementById('c').innerText = jsonValue['PI1:ai2'].value;
+                // document.getElementById('d').innerText = jsonValue['PI1:ai2'].alarm.status;
+
+                // document.getElementById('e').innerText = jsonValue['PI1:ai3'].value;
+                // document.getElementById('f').innerText = jsonValue['PI1:ai3'].alarm.status;
             }
 
         };
-        var server = "http://192.168.68.126";
+        var server = "http://192.168.68.126:8080";
         xhttp.open("GET", server, true);
         xhttp.send();
     }
-	
 
-window.on = function () {
 
-	setTimeInteval(1000, getData);
-}
-	</script>
+    window.onload = function () {
+        setInterval(getData, 1000);
+    }
+</script>
 
 </html>
