@@ -83,6 +83,10 @@
     animation: animateleft 0.4s
 }
 
+#n2-value::after, #he-value::after {
+    content: " %";
+}
+
 @keyframes animateleft {
     from {
         left: -300px;

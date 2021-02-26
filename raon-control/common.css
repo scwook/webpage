@@ -25,7 +25,7 @@
 body {
     margin: 0px;
     background-color: black;
-    background-image: url('shadowbg.png');
+    background-image: url('images/shadowbg.png');
     background-repeat: no-repeat;
     background-position: center var(--background-image-top);
     font-family: "Roboto-Thin";

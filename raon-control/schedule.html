@@ -419,6 +419,9 @@
 </body>
 
 <script>
+    var serverAddr = 'http://localhost'
+	var scheduleAddr = serverAddr + ':8081/schedule/'
+
     var today = new Date();
     var date = new Date();
     var colorTable = ['#8E44AD', '#E74C3C', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
@@ -608,7 +611,7 @@
 
         // Create schedule and shift list
         getScheduleDatabase();
-        // makeSchedule();
+        //makeSchedule();
 
         // Show up first shift list
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
@@ -657,7 +660,7 @@
 
         // Create schedule and shift list
         getScheduleDatabase();
-        // makeSchedule();
+        //makeSchedule();
 
         // Show up first shift list
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
@@ -678,7 +681,7 @@
 
     function nextCalendar() {
 
-        getScheduleDatabase();
+        //getScheduleDatabase();
 
         // Remove this month schedule buttons
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
@@ -1073,7 +1076,7 @@
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
-    getScheduleDatabase();
+    //getScheduleDatabase();
 
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
@@ -1094,12 +1097,15 @@
 
                 scheduleList = JSON.parse(this.responseText);
                 makeSchedule();
-                // console.log(scheduleList);
+                
+                var schedule = document.getElementsByClassName('scheduleButton');
+                if ( schedule.length ) {
+                    schedule[0].click();
+                }
             }
         };
 
-        var server = "http://192.168.68.126:8081/schedule/" + today.getFullYear() + '-' + monthString[today.getMonth()];
-        console.log(server);
+        var server = scheduleAddr + today.getFullYear() + '-' + monthString[today.getMonth()];
         xhttp.open("GET", server, true);
         xhttp.send();
     }

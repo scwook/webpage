@@ -5,7 +5,6 @@
 <script src="script/moment.js"></script>
 <script src="script/chart.js@2.8.0"></script>
 <script src="script/chartjs-plugin-streaming.js"></script>
-<script src="script/common.js"></script>
 
 <body>
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
@@ -27,7 +26,7 @@
                 d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
                 style="fill:#f3f3f3" />
         </svg>
-        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></a></div>
         <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
         <div id="left-menu">
             <a href="asset.html">Asset</a>
@@ -566,24 +565,24 @@
                     </polygon>
                 </svg>
             </div>
-            <img class="moduleShadow" src="qwrModuleShadow.svg"
+            <img class="moduleShadow" src="images/qwrModuleShadow.svg"
                 style="position:absolute; left:167px; top:20px; opacity: 0.0;">
-            <img class="moduleShadow" src="hwraModuleShadow.svg"
+            <img class="moduleShadow" src="images/hwraModuleShadow.svg"
                 style="position:absolute; left:127px; top:20px; opacity: 0.0;">
-            <img class="moduleShadow" src="hwrbModuleShadow.svg"
+            <img class="moduleShadow" src="images/hwrbModuleShadow.svg"
                 style="position:absolute; left:77px; top:20px; opacity: 0.0;">
 
-            <svg id="cavity" width="81" height="261" style="position: absolute; left: 260px; top: 350px">
+            <!-- <svg id="cavity" width="81" height="261" style="position: absolute; left: 260px; top: 350px">
                 <path
                     d="M40.5.5C18.41.5.5,6.3.5,13.45v234.1c0,7.15,17.91,12.95,40,12.95s40-5.8,40-12.95V13.45C80.5,6.3,62.59.5,40.5.5Z"
                     style="fill: none; stroke:#fff; stroke-miterlimit: 10; opacity: 0.5;" />
-            </svg>
+            </svg> -->
 
-            <svg id="cavityFill" width="74" height="254" style="position: absolute; left: 263px; top: 353px">
+            <!-- <svg id="cavityFill" width="74" height="254" style="position: absolute; left: 263px; top: 353px">
                 <path
                     d="M37,0C16.57,0,0,5.66,0,12.65v228.7c0,7,16.57,12.65,37,12.65s37-5.66,37-12.65V12.65C74,5.66,57.43,0,37,0Z"
                     style="fill: #0094c5; opacity: 0.5;" />
-            </svg>
+            </svg> -->
 
             <div id="moduleName" style="color:white"><span id="moduleNumber">QWR 1</span></div>
         </div>
@@ -1573,6 +1572,16 @@
 </body>
 
 <script>
+    var chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
     var subBox = document.getElementsByClassName('subBox');
 
     var rotationID = [null, null];

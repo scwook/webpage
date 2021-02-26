@@ -8,6 +8,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+SERVER_ADDR = 'localhost'
+
 @app.route('/schedule/<date>')
 def get_data(date):
     conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='shift', charset='utf8')
@@ -47,4 +49,4 @@ def get_data(date):
     return json.dumps(shiftArray)
 
 if __name__ == "__main__":
-    app.run(host="192.168.68.126", port="8081")
+    app.run(host=SERVER_ADDR, port="8081")

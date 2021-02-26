@@ -11,6 +11,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+SERVER_ADDR = 'localhost'
 UPLOAD_FOLDER = '/home/scwook/flask/upload'
 DB_HOST = 'localhost'
 DB_USER = 'scwook'
@@ -135,4 +136,4 @@ def get_asset_list(asset):
     return json.dumps(assetListArray, ensure_ascii=False)
 
 if __name__ == "__main__":
-    app.run(host="192.168.68.126", port="8080")
+    app.run(host=SERVER_ADDR, port="8080")
