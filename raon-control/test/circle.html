@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+        margin: 0px;
+        background-color: black;
+    }
+
+    .container {
+        position: absolute;
+        width: 800px;
+        height: 800px;
+    }
+
+    .out-container {
+        position: absolute;
+        width: 1100px;
+        height: 800px;
+        left: 410px;
+    }
+
+    #nuclear {
+        /* background-color: blueviolet; */
+        z-index: 10000;;
+    }
+
+    #circle1 {
+        animation-name: scaleUp;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
+
+        /* background-color: brown; */
+    }
+
+    @keyframes scaleUp {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+
+    #circle2 {
+        animation-name: rotationAni2;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        /* animation-direction: reverse; */
+        animation-direction: alternate;
+    }
+
+    #circle4 {
+        animation-name: rotationAni;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    #circle8 {
+        animation: rotationAni 30s infinite linear, scaleUp 0.5s ease-in-out forwards;
+        /* animation-duration: 30s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear; */
+        /* animation-direction: reverse; */
+    }
+
+    @keyframes rotationAni {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes rotationAni2 {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(1080deg);
+        }
+    }
+
+    #nuclear:hover {
+        transform: scale(10);
+    }
+</style>
+
+<body>
+    <div style="width:1920px; height:1080px; display: flex; justify-content: center; align-items: center;">
+        <div style="width:800px; height:800px;">
+            <div class="container"><img id="nuclear" src="../images/bab/nuclear.svg">
+            </div>
+            <div class="container" ><img id="circle1" src="../images/bab/circle1.svg"></div>
+            <div class="container"><img id="circle2" src="../images/bab/circle2.svg"></div>
+            <div class="container"><img id="circle3" src="../images/bab/circle3.svg"></div>
+            <div class="container"><img id="circle4" src="../images/bab/circle4.svg"></div>
+            <div class="container"><img id="circle5" src="../images/bab/circle5.svg"></div>
+            <div class="container"><img id="circle6" src="../images/bab/circle6.svg"></div>
+            <div class="container"><img id="circle7" src="../images/bab/circle7.svg"></div>
+            <div class="container"><img id="circle8" src="../images/bab/circle8.svg"></div>
+            <div class="container"><img id="wheel" src="../images/bab/wheel.svg"></div>
+            <div class="container"><img id="menu" src="../images/bab/menu.svg"></div>
+        </div>
+        <div class="out-container"><img id="outside" src="../images/bab/outside.svg"></div>
+
+    </div>
+</body>
+<script>
+
+</script>
+
+</html>
