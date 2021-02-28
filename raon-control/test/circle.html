@@ -20,8 +20,8 @@
     }
 
     #nuclear {
-        /* background-color: blueviolet; */
-        z-index: 10000;;
+        z-index: 100000;
+
     }
 
     #circle1 {
@@ -33,23 +33,12 @@
         /* background-color: brown; */
     }
 
-    @keyframes scaleUp {
-        from {
-            transform: scale(0);
-        }
-        to {
-            transform: scale(1);
-        }
-    }
-
-
     #circle2 {
         animation-name: rotationAni2;
-        animation-duration: 5s;
+        animation-duration: 15s;
         animation-iteration-count: infinite;
-        animation-timing-function: ease-in-out;
-        /* animation-direction: reverse; */
-        animation-direction: alternate;
+        animation-timing-function: linear;
+        /* animation-direction: alternate; */
     }
 
     #circle4 {
@@ -57,14 +46,29 @@
         animation-duration: 5s;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
+        animation-direction: reverse;
+
     }
 
     #circle8 {
-        animation: rotationAni 30s infinite linear, scaleUp 0.5s ease-in-out forwards;
+        animation: rotationAni 30s linear infinite, scaleUp 0.5s;
         /* animation-duration: 30s;
         animation-iteration-count: infinite;
         animation-timing-function: linear; */
         /* animation-direction: reverse; */
+        /* example 5s linear 2s infinite alternate */
+    }
+
+    @keyframes scaleUp {
+        from {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
     }
 
     @keyframes rotationAni {
@@ -86,19 +90,44 @@
             transform: rotate(1080deg);
         }
     }
-
-    #nuclear:hover {
-        transform: scale(10);
-    }
 </style>
+<!-- <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+    <defs>
+        <style>
+            .cls-1 {
+                fill: none;
+                stroke: #07536e;
+                stroke-miterlimit: 10;
+                stroke-width: 8px;
+                stroke-dasharray: 62.82 62.82;
+            }
+        </style>
+    </defs>
+    <circle class="cls-1" cx="400" cy="400" r="40" />
+</svg> -->
 
 <body>
     <div style="width:1920px; height:1080px; display: flex; justify-content: center; align-items: center;">
         <div style="width:800px; height:800px;">
             <div class="container"><img id="nuclear" src="../images/bab/nuclear.svg">
             </div>
-            <div class="container" ><img id="circle1" src="../images/bab/circle1.svg"></div>
-            <div class="container"><img id="circle2" src="../images/bab/circle2.svg"></div>
+            <!-- <div class="container"><img id="circle1" src="../images/bab/circle1.svg"></div> -->
+            <div class="container">
+                <svg id="circle2" width="800" height="800">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: none;
+                                stroke: #07536e;
+                                stroke-miterlimit: 10;
+                                stroke-width: 8px;
+                                stroke-dasharray: 58.91 58.91;
+                            }
+                        </style>
+                    </defs>
+                    <circle id="circle2-radius" class="cls-1" cx="400" cy="400" r="75" />
+                </svg>
+            </div>
             <div class="container"><img id="circle3" src="../images/bab/circle3.svg"></div>
             <div class="container"><img id="circle4" src="../images/bab/circle4.svg"></div>
             <div class="container"><img id="circle5" src="../images/bab/circle5.svg"></div>
@@ -108,11 +137,56 @@
             <div class="container"><img id="wheel" src="../images/bab/wheel.svg"></div>
             <div class="container"><img id="menu" src="../images/bab/menu.svg"></div>
         </div>
-        <div class="out-container"><img id="outside" src="../images/bab/outside.svg"></div>
+        <div id="over" style="width:400px; height: 100px; background-color: blueviolet;"></div>
+        <!-- <div class="out-container"><img id="outside" src="../images/bab/outside.svg"></div> -->
 
     </div>
 </body>
 <script>
+    var moduleShapeAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+    moduleShapeAni.setAttribute('id', 'circlePathAnimation');
+    moduleShapeAni.setAttribute('begin', 'indefinite');
+    moduleShapeAni.setAttribute("attributeName", "r");
+    moduleShapeAni.setAttribute('dur', '0.5s');
+    moduleShapeAni.setAttribute('fill', 'freeze');
+    moduleShapeAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+    moduleShapeAni.setAttribute('keyTimes', '0;1');
+    moduleShapeAni.setAttribute('calcMode', 'spline');
+    moduleShapeAni.setAttribute('dur', '0.5s');
+
+    var modulePolygon = document.getElementById('circle2-radius');
+    modulePolygon.appendChild(moduleShapeAni);
+
+    // Mouse Over
+    var nuclearID = document.getElementById('over');
+    nuclearID.addEventListener("mouseover", function (event) {
+        // var modulePolygon = document.getElementById('circle2-radius');
+        modulePolygon.style.strokeDasharray = "62.82 62.82";
+
+        var ani = document.getElementById('circlePathAnimation');
+        ani.setAttribute('from', '75');
+        ani.setAttribute('to', '45');
+
+        // modulePolygon.appendChild(moduleShapeAni);
+
+        ani.beginElement();
+
+        console.log('over');
+    });
+
+    // Mouse Leave
+    nuclearID.addEventListener("mouseleave", function (event) {
+        // var modulePolygon = document.getElementById('circle2-radius');
+        modulePolygon.style.strokeDasharray = "58.91 58.91";
+
+        var ani = document.getElementById("circlePathAnimation");
+        ani.setAttribute('from', '40');
+        ani.setAttribute('to', '75');
+
+        ani.beginElement();
+
+        console.log('leave');
+    });
 
 </script>
 
