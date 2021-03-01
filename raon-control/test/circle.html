@@ -14,9 +14,9 @@
 
     .out-container {
         position: absolute;
-        width: 1100px;
+        width: 1000px;
         height: 800px;
-        left: 410px;
+        left: 460px;
     }
 
     #nuclear {
@@ -43,20 +43,36 @@
 
     #circle4 {
         animation-name: rotationAni;
-        animation-duration: 5s;
+        animation-duration: 60s;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
         animation-direction: reverse;
 
     }
+    
+    #circle5 {
+        animation: rotationAni 60s linear infinite;
+    }
 
-    #circle8 {
-        animation: rotationAni 30s linear infinite, scaleUp 0.5s;
+    #circle8-1 {
+        animation: rotationAni 60s linear infinite reverse, scaleUp 0.5s;
         /* animation-duration: 30s;
         animation-iteration-count: infinite;
         animation-timing-function: linear; */
         /* animation-direction: reverse; */
         /* example 5s linear 2s infinite alternate */
+    }
+
+    #circle8-2 {
+        animation: rotationAni 60s linear infinite, scaleUp 0.5s;
+    }
+
+    #circle8-3 {
+        animation: rotationAni 80s linear infinite, scaleUp 0.5s;
+    }
+
+    #wheel, #menu {
+        animation: rotationAni2 3s ease-in-out;
     }
 
     @keyframes scaleUp {
@@ -132,13 +148,21 @@
             <div class="container"><img id="circle4" src="../images/bab/circle4.svg"></div>
             <div class="container"><img id="circle5" src="../images/bab/circle5.svg"></div>
             <div class="container"><img id="circle6" src="../images/bab/circle6.svg"></div>
-            <div class="container"><img id="circle7" src="../images/bab/circle7.svg"></div>
-            <div class="container"><img id="circle8" src="../images/bab/circle8.svg"></div>
+            <!-- <div class="container"><img id="circle7" src="../images/bab/circle7.svg"></div> -->
+            <!-- <div class="container"><img id="circle8" src="../images/bab/circle8.svg"></div> -->
+            <div class="container"><img id="circle8-1" src="../images/bab/circle8-1.svg"></div>
+            <div class="container"><img id="circle8-2" src="../images/bab/circle8-2.svg"></div>
+            <div class="container"><img id="circle8-3" src="../images/bab/circle8-3.svg"></div>
+
             <div class="container"><img id="wheel" src="../images/bab/wheel.svg"></div>
             <div class="container"><img id="menu" src="../images/bab/menu.svg"></div>
         </div>
-        <div id="over" style="width:400px; height: 100px; background-color: blueviolet;"></div>
-        <!-- <div class="out-container"><img id="outside" src="../images/bab/outside.svg"></div> -->
+        <!-- <div id="over" style="width:400px; height: 100px; background-color: blueviolet;"></div> -->
+        <div class="out-container"><img id="out1" src="../images/bab/out1.svg"></div>
+        <div class="out-container"><img id="out2" src="../images/bab/out2.svg"></div>
+        <div class="out-container"><img id="out3" src="../images/bab/out3.svg"></div>
+        <div class="out-container"><img id="out4" src="../images/bab/out4.svg"></div>
+
 
     </div>
 </body>
