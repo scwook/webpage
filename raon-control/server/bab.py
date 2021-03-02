@@ -8,20 +8,20 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+SERVER_ADDR = 'localhost'
 DB_HOST = 'localhost'
 DB_USER = 'scwook'
 DB_PASSWORD = 'qwer1234'
 DB_DATABASE = 'bab'
 
 @app.route('/bab/retrieve')
-def get_data(date):
+def get_data():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     bab = conn.cursor()
 
     babArray = []
 
     retrieveQuery = 'SELECT * FROM bab_list'
-
     bab.execute(retrieveQuery)
 
     for x in bab:
