@@ -38,6 +38,7 @@
         animation-duration: 15s;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
+        --degree: 1080deg;
         /* animation-direction: alternate; */
     }
 
@@ -49,13 +50,13 @@
         animation-direction: reverse;
 
     }
-    
+
     #circle5 {
         animation: rotationAni 60s linear infinite;
     }
 
     #circle8-1 {
-        animation: rotationAni 60s linear infinite reverse, scaleUp 0.5s;
+        animation: scaleUp 0.5s, rotationAni 60s linear infinite reverse;
         /* animation-duration: 30s;
         animation-iteration-count: infinite;
         animation-timing-function: linear; */
@@ -64,15 +65,21 @@
     }
 
     #circle8-2 {
-        animation: rotationAni 60s linear infinite, scaleUp 0.5s;
+        animation: scaleUp 1s, rotationAni 60s linear infinite;
     }
 
     #circle8-3 {
-        animation: rotationAni 80s linear infinite, scaleUp 0.5s;
+        animation: scaleUp 1s, rotationAni 80s linear infinite;
     }
 
-    #wheel, #menu {
-        animation: rotationAni2 3s ease-in-out;
+    #wheel,
+    #menu {
+        --degree: 360deg;
+
+    }
+
+    .roulette {
+        animation: rotationAni2 3s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
     }
 
     @keyframes scaleUp {
@@ -103,24 +110,10 @@
         }
 
         to {
-            transform: rotate(1080deg);
+            transform: rotate(var(--degree));
         }
     }
 </style>
-<!-- <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
-    <defs>
-        <style>
-            .cls-1 {
-                fill: none;
-                stroke: #07536e;
-                stroke-miterlimit: 10;
-                stroke-width: 8px;
-                stroke-dasharray: 62.82 62.82;
-            }
-        </style>
-    </defs>
-    <circle class="cls-1" cx="400" cy="400" r="40" />
-</svg> -->
 
 <body>
     <div style="width:1920px; height:1080px; display: flex; justify-content: center; align-items: center;">
@@ -157,13 +150,11 @@
             <div class="container"><img id="wheel" src="../images/bab/wheel.svg"></div>
             <div class="container"><img id="menu" src="../images/bab/menu.svg"></div>
         </div>
-        <!-- <div id="over" style="width:400px; height: 100px; background-color: blueviolet;"></div> -->
         <div class="out-container"><img id="out1" src="../images/bab/out1.svg"></div>
         <div class="out-container"><img id="out2" src="../images/bab/out2.svg"></div>
         <div class="out-container"><img id="out3" src="../images/bab/out3.svg"></div>
         <div class="out-container"><img id="out4" src="../images/bab/out4.svg"></div>
-
-
+        <div id="over" style="position:absolute; width:100px; height: 100px;"></div>
     </div>
 </body>
 <script>
@@ -210,6 +201,25 @@
         ani.beginElement();
 
         console.log('leave');
+    });
+
+    nuclearID.addEventListener("click", function () {
+        var rotationDegree = 1080 + 360 * Math.random() + 'deg';
+
+        var wheelID = document.getElementById('wheel');
+        var menuID = document.getElementById('menu');
+
+        wheelID.style.setProperty('--degree', rotationDegree);
+        menu.style.setProperty('--degree', rotationDegree);
+
+        wheelID.classList.remove('roulette');
+        menuID.classList.remove('roulette');
+
+        void wheelID.offsetWidth;
+        void menuID.offsetWidth;
+
+        wheelID.classList.add('roulette');
+        menuID.classList.add('roulette');
     });
 
 </script>

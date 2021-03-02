@@ -1,47 +1,131 @@
-#img4 {
-    animation-name: example2;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    animation-direction: alternate;
+#polygon-contain {
+    width: 1920px;
+    height: 780px;
+    position: absolute;
+    left: 50%;
+    margin-left: -960px;
 }
 
-#img5 {
-    animation-name: example;
-    animation-duration: 10s;
+.leftPolygon {
+    opacity: 0.0;
+    position: absolute;
+}
+
+.rightPolygon {
+    opacity: 0.0;
+    position: absolute;
+}
+
+.startAni {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-delay: calc(0s + 1s * var(--delay));
+    animation-fill-mode: forwards;
+}
+
+.container {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+}
+
+.out-container {
+    position: absolute;
+    width: 1000px;
+    height: 800px;
+    left: 460px;
+}
+
+/* #circle1 {
+    animation-name: scaleUp;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+} */
+
+#circle2 {
+    animation-name: rotationAni2;
+    animation-duration: var(--duration);
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    --degree: 360deg;
+    /* animation-direction: alternate; */
 }
 
-#img9 {
-    animation-name: example;
-    animation-duration: 20s;
+#circle4 {
+    animation-name: rotationAni;
+    animation-duration: 60s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     animation-direction: reverse;
 }
 
-.image-box {
-    position: absolute;
-    top: 80px;
+#circle5 {
+    animation: rotationAni 60s linear infinite;
 }
 
-@keyframes example {
+#circle8-1 {
+    animation: scaleUp 0.5s, rotationAni 60s linear infinite reverse;
+    /* animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; */
+    /* animation-direction: reverse; */
+    /* example 5s linear 2s infinite alternate */
+}
+
+#circle8-2 {
+    animation: scaleUp 1s, rotationAni 60s linear infinite;
+}
+
+#circle8-3 {
+    animation: scaleUp 1s, rotationAni 80s linear infinite;
+}
+
+#wheel, #menu {
+    --degree: 360deg;
+}
+
+.roulette {
+    animation: rotationAni2 3s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes rotationAni {
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
 }
 
-@keyframes example2 {
+@keyframes rotationAni2 {
     from {
         transform: rotate(0deg);
     }
-
     to {
-        transform: rotate(1080deg);
+        transform: rotate(var(--degree));
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(var(--scale));
+    }
+    to {
+        opacity: var(--opacity);
+        transform: scale(1.0);
     }
 }
