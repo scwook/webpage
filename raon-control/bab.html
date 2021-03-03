@@ -41,8 +41,6 @@
     </div>
   </div>
 
-  <div style="height:50px"></div>
-
   <div id="polygon-contain">
     <!-- Left Side Polygon 1-1 -->
     <svg class="leftPolygon" width="120" height="200">
@@ -313,10 +311,9 @@
     </svg>
   </div>
 
-  <div id="body" style="width:1920px; height:900px; display: flex; justify-content: center; align-items: center;">
-    <div style="width:800px; height:800px;">
-      <div class="container"><img id="nuclear" src="images/bab/nuclear.svg">
-      </div>
+  <div id="body-container">
+    <div style="width:800px; height:800px; position: relative;">
+      <div class="container"><img id="nuclear" src="images/bab/nuclear.svg"></div>
       <!-- <div class="container"><img id="circle1" src="../images/bab/circle1.svg"></div> -->
       <div class="container">
         <svg id="circle2" width="800" height="800">
@@ -338,25 +335,107 @@
       </div>
 
       <div class="container"><img id="circle3" src="images/bab/circle3.svg"></div>
-      <div class="container"><img id="circle4" src="images/bab/circle4.svg"></div>
-      <div class="container"><img id="circle5" src="images/bab/circle5.svg"></div>
+
+      <div class="container"><img id="circle4-1" src="images/bab/circle4-1.svg"></div>
+      <div class="container"><img id="circle4-2" src="images/bab/circle4-2.svg"></div>
+      <div class="container"><img id="circle4-3" src="images/bab/circle4-3.svg"></div>
+
+      <div class="container">
+        <svg id="circle5" width="800" height="800">
+          <circle cx="400" cy="400" r="150"
+            style="fill: none;stroke: #2ca8e0;stroke-miterlimit: 10;stroke-dasharray: 1.01 9.12 1.01 9.12 1.01 9.12;" />
+        </svg>
+      </div>
       <div class="container"><img id="circle6" src="images/bab/circle6.svg"></div>
-      <!-- <div class="container"><img id="circle7" src="../images/bab/circle7.svg"></div> -->
-      <!-- <div class="container"><img id="circle8" src="../images/bab/circle8.svg"></div> -->
       <div class="container"><img id="circle8-1" src="images/bab/circle8-1.svg"></div>
       <div class="container"><img id="circle8-2" src="images/bab/circle8-2.svg"></div>
       <div class="container"><img id="circle8-3" src="images/bab/circle8-3.svg"></div>
 
-      <div class="container"><img id="wheel" src="images/bab/wheel.svg"></div>
-      <div class="container" id="menu"></div>
-      <div class="container"><img id="selection" src="images/bab/selection.svg"></div>
+      <div class="container" id="wheel">
+        <!-- 12 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.1s; position: absolute;">
+          <path class="wheel-even"
+            d="M443.13,239.05l21.56-80.48a248.49,248.49,0,0,0-129.29,0L357,239.05A165.81,165.81,0,0,1,443.13,239.05Z" />
+        </svg>
 
+        <!-- 1 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.15s; position: absolute;">
+          <path class="wheel-odd"
+            d="M517.82,282.18l58.92-58.92a248.62,248.62,0,0,0-112-64.68l-21.56,80.49A167.4,167.4,0,0,1,517.82,282.18Z" />
+        </svg>
+
+        <!-- 2 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.2s; position: absolute;">
+          <path class="wheel-even"
+            d="M560.93,356.88l80.5-21.57a248.6,248.6,0,0,0-64.62-112l-58.92,58.92A165.81,165.81,0,0,1,560.93,356.88Z" />
+        </svg>
+
+        <!-- 3 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.25s; position: absolute;">
+          <path class="wheel-odd"
+            d="M561,443.13l80.48,21.56a248.49,248.49,0,0,0,0-129.29L561,357A165.81,165.81,0,0,1,561,443.13Z" />
+        </svg>
+
+        <!-- 4 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.3s; position: absolute;">
+          <path class="wheel-even"
+            d="M517.82,517.82l58.92,58.92a248.62,248.62,0,0,0,64.68-112l-80.49-21.56A167.4,167.4,0,0,1,517.82,517.82Z" />
+        </svg>
+
+        <!-- 5 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.35s; position: absolute;">
+          <path class="wheel-odd"
+            d="M443.12,560.93l21.57,80.5a248.6,248.6,0,0,0,112-64.62l-58.92-58.92A165.81,165.81,0,0,1,443.12,560.93Z" />
+        </svg>
+
+        <!-- 6 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.4s; position: absolute;">
+          <path class="wheel-even"
+            d="M356.87,561l-21.56,80.48a248.49,248.49,0,0,0,129.29,0L443,561A165.81,165.81,0,0,1,356.87,561Z" />
+        </svg>
+
+        <!-- 7 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.45s; position: absolute;">
+          <path class="wheel-odd"
+            d="M282.18,517.82l-58.92,58.92a248.62,248.62,0,0,0,112,64.68l21.56-80.49A167.4,167.4,0,0,1,282.18,517.82Z" />
+        </svg>
+
+        <!-- 8 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.5s; position: absolute;">
+          <path class="wheel-even"
+            d="M239.07,443.12l-80.5,21.57a248.6,248.6,0,0,0,64.62,112l58.92-58.92A165.81,165.81,0,0,1,239.07,443.12Z" />
+        </svg>
+
+        <!-- 9 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.55s; position: absolute;">
+          <path class="wheel-odd"
+            d="M239.05,356.87l-80.48-21.56a248.49,248.49,0,0,0,0,129.29L239.05,443A165.81,165.81,0,0,1,239.05,356.87Z" />
+        </svg>
+
+        <!-- 10 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.6s; position: absolute;">
+          <path class="wheel-even"
+            d="M282.18,282.18l-58.92-58.92a248.62,248.62,0,0,0-64.68,112l80.49,21.56A167.4,167.4,0,0,1,282.18,282.18Z" />
+        </svg>
+
+        <!-- 11 -->
+        <svg class="wheelSVG" width="800" height="800" style="--delay: 0.65s; position: absolute;">
+          <path class="wheel-odd"
+            d="M356.88,239.07l-21.57-80.5a248.6,248.6,0,0,0-112,64.62l58.92,58.92A165.81,165.81,0,0,1,356.88,239.07Z" />
+        </svg>
+
+      </div>
+
+      <div class="container" id="menu"></div>
+      <div class="container" id="selection"><img src="images/bab/selection.svg"></div>
+
+      <div class="out-container"><img id="out1" src="images/bab/out1.svg"></div>
+      <div class="out-container"><img id="out2" src="images/bab/out2.svg"></div>
+      <div class="out-container"><img id="out3" src="images/bab/out3.svg"></div>
+      <div class="out-container"><img id="out4" src="images/bab/out4.svg"></div>
+      <div id="over"></div>
     </div>
-    <div class="out-container"><img id="out1" src="images/bab/out1.svg"></div>
-    <div class="out-container"><img id="out2" src="images/bab/out2.svg"></div>
-    <div class="out-container"><img id="out3" src="images/bab/out3.svg"></div>
-    <div class="out-container"><img id="out4" src="images/bab/out4.svg"></div>
-    <div id="over" style="position:absolute; width:100px; height: 100px;"></div>
+
 </body>
 
 <script>
@@ -496,6 +575,7 @@
     }
   });
 
+  // Mouse Click
   nuclearID.addEventListener("click", function () {
     var rotationDegree = 1080 + 360 * Math.random() + 'deg';
 
@@ -515,6 +595,8 @@
     menuID.classList.add('roulette');
   });
 
+
+  // Menu
   var menuTranslateArray = {
     1: ["translate(391.67 196.89) rotate(0.03)"],
     2: [
@@ -558,7 +640,6 @@
     ]
   };
 
-
   var babMenuArray = ['맥도날드', '설어정', '서브웨이', '국수나무', '스바라시라멘', '우쿠야', '홍기와쭈꾸미', '진본', '역전우동', '냄비요리연구소', '만석장', '롯데리아'];
 
   function createBabList(babListJSON) {
@@ -582,7 +663,7 @@
 
     var count = 0;
     for (let i = 0; i < random.length; i++) {
-       var percentage = Math.floor(10 / babListJSON[random[i]].tier);
+      var percentage = Math.floor(10 / babListJSON[random[i]].tier);
 
       for (let k = 0; k < percentage; k++) {
         gachaMenu[count] = babListJSON[random[i]].menu;
@@ -590,7 +671,7 @@
       }
     }
 
-    for(let i = 0; i < babMenuArray.length; i++) {
+    for (let i = 0; i < babMenuArray.length; i++) {
       newManuNumber = Math.floor(Math.random() * gachaMenu.length);
       babMenuArray[i] = gachaMenu[newManuNumber];
     }
@@ -609,7 +690,7 @@
       var charLength = babMenuArray[i].length;
       for (let k = 0; k < charLength; k++) {
         var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute('class', 'cls-1');
+        text.setAttribute('class', 'menu-text');
         text.setAttribute('transform', menuTranslateArray[charLength][k]);
         text.textContent = babMenuArray[i][k];
 
@@ -635,8 +716,12 @@
 
     getBabDatabase();
 
-  }
 
+    var menuID = document.getElementById('menu');
+    menuID.style.transition = "opacity 0.5s linear 1.0s";
+    menuID.style.opacity = "1";
+
+  }
 
   function getBabDatabase() {
     var xhttp = new XMLHttpRequest();
