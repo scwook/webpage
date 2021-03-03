@@ -10,7 +10,7 @@
     font-size: 32px;
     margin: 0px;
     color: white;
-    background-color: black;
+    background-color: transparent;
     border: none;
     outline: none;
     float: left;
@@ -33,7 +33,6 @@
     font-size: 40px;
     text-align: center;
     color: white;
-    font-family: "Roboto-Thin";
 }
 
 .grid-container {
@@ -50,7 +49,6 @@
     position: relative;
     margin: 10px;
     background-color: rgba(26, 26, 26, 0.5);
-    font-family: "Roboto-Thin";
 }
 
 .grid-1x1 {
@@ -87,31 +85,10 @@
     content: " %";
 }
 
-@keyframes animateleft {
-    from {
-        left: -300px;
-        opacity: 0
-    }
-    to {
-        left: 0;
-        opacity: 1
-    }
-}
 
 .w3-animate-right {
     position: relative;
     animation: animateright 0.4s
-}
-
-@keyframes animateright {
-    from {
-        right: -300px;
-        opacity: 0
-    }
-    to {
-        right: 0;
-        opacity: 1
-    }
 }
 
 .title {
@@ -119,6 +96,8 @@
     font-size: 30px;
     text-align: center;
     font-family: Roboto-Thin;
+    line-height: 0.6;
+    /* background-color: tomato; */
 }
 
 .data {
@@ -178,16 +157,21 @@
 }
 
 .doughnutChartText {
-    display: flex;
     position: absolute;
-    width: 174px;
-    height: 174px;
-    left: 52px;
+    width: 100%;
+    top: 140px;
     color: white;
-    font-size: 40px;
-    justify-content: center;
-    align-items: center;
-    font-family: "Roboto-Thin";
+    font-size: 30px;
+    text-align: center;
+}
+
+.doughnutChartTextUnder {
+    position: absolute;
+    width: 100%;
+    top: 180px;
+    color: gray;
+    font-size: 18px;
+    text-align: center;
 }
 
 .liquid-box {
@@ -202,7 +186,6 @@
     color: #ddd;
     position: relative;
     overflow: hidden;
-    font-family: "Roboto-Thin";
 }
 
 .subBox {
@@ -230,7 +213,6 @@
     top: 0px;
     left: 0px;
     /* margin-left: 40px; */
-    font-family: "Roboto-Thin";
     opacity: 0;
     transition: opacity 1s;
     font-size: 15px;
@@ -250,6 +232,28 @@
 .title:hover .tooltiptext {
     visibility: visible;
     opacity: 1.0;
+}
+
+@keyframes animateleft {
+    from {
+        left: -300px;
+        opacity: 0
+    }
+    to {
+        left: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animateright {
+    from {
+        right: -300px;
+        opacity: 0
+    }
+    to {
+        right: 0;
+        opacity: 1
+    }
 }
 
 @keyframes percentage {
