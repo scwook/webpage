@@ -82,6 +82,11 @@
     animation: scaleUp 1s, rotationAni 80s linear infinite;
 }
 
+.cls-1 {
+    font-size: 18px;
+    fill: #f1f2f2;
+}
+
 #wheel, #menu {
     --degree: 360deg;
 }
