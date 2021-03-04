@@ -28,21 +28,21 @@
                 style="fill:#f3f3f3" />
         </svg>
         <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></a></div>
-		<div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
-		<div id="left-menu">
-			<a href="asset.html">Asset</a>
-			<a href="bab.html" class="secret-menu">Bab</a>
-			<a href="" class="secret-menu">Logbook</a>
-			<a href="" class="secret-menu">Finder</a>
-			<a href="" class="secret-menu">Naming</a>
-		</div>
-		<div id="right-menu">
-			<a href="monitoring.html">Monitoring</a>
-			<a href="schedule.html">Schedule</a>
-			<a href="archive.html">Archive</a>
-			<a href="downloads.html">Download</a>
-			<a href="documents.html">Document</a>
-		</div>
+        <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+        <div id="left-menu">
+            <a href="asset.html">Asset</a>
+            <a href="bab.html" class="secret-menu">Bab</a>
+            <a href="" class="secret-menu">Logbook</a>
+            <a href="" class="secret-menu">Finder</a>
+            <a href="" class="secret-menu">Naming</a>
+        </div>
+        <div id="right-menu">
+            <a href="monitoring.html">Monitoring</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="archive.html">Archive</a>
+            <a href="downloads.html">Download</a>
+            <a href="documents.html">Document</a>
+        </div>
     </div>
 
     <div style="height:20px"></div>
@@ -56,6 +56,7 @@
                 <div class="slide-page-title">Central Control</div>
                 <div class="grid-container">
 
+                    <!-- 1 / 1 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Storage</p>
                         <div class="doughnutChartText">24TB</div>
@@ -70,6 +71,7 @@
                         </div>
                     </div>
 
+                    <!-- 1 / 2 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Archive</p>
                         <div class="doughnutChartText">192840</div>
@@ -78,11 +80,12 @@
                             <svg width="174" height="174" style="fill:none">
                                 <circle class="doughnutBackground" cx="80" cy="80" r="80" />
                                 <circle class="doughnutForeground" cx="80" cy="80" r="80"
-                                    style="--chartValue:100; --doughuntColor:#00e639" />
+                                    style="--chartValue:100; --doughuntColor:#00A651" />
                             </svg>
                         </div>
                     </div>
 
+                    <!-- 1 / 4 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Pressure
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
@@ -92,7 +95,75 @@
                         </p>
                     </div>
 
-                    <div class="grid-item grid-1x1"></div>
+                    <!-- 1 / 5 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">FPS</p>
+                        <div id="fps-container">
+                            <!-- Node 1 -->
+                            <div class="fps-node" style="--delay: 0.0s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.0s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+
+                            <!-- Node 2 -->
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.16s;"></div>
+                            <div class="fps-node" style="--delay: 0.11s;"></div>
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.0s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.15s;"></div>
+
+                            <!-- Node 3 -->
+                            <div class="fps-node" style="--delay: 0.15s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.17s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.11s;"></div>
+
+                            <!-- Node 4 -->
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.0s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+
+                            <!-- Node 5 -->
+                            <div class="fps-node" style="--delay: 0s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.15s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+                            <div class="fps-node" style="--delay: 0.11s;"></div>
+
+                            <!-- Node 6 -->
+                            <div class="fps-node" style="--delay: 0.16s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.15s;"></div>
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+
+                            <!-- Node 7 -->
+                            <div class="fps-node" style="--delay: 0.11s;"></div>
+                            <div class="fps-node" style="--delay: 0.15s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.1s;"></div>
+                            <div class="fps-node" style="--delay: 0.13s;"></div>
+                            <div class="fps-node" style="--delay: 0.12s;"></div>
+                            <div class="fps-node" style="--delay: 0.14s;"></div>
+                        </div>
+                    </div>
+
                     <div class="grid-item grid-1x1"></div>
                     <div class="grid-item grid-1x1"></div>
 
@@ -181,7 +252,7 @@
         purple: 'rgb(153, 102, 255)',
         grey: 'rgb(201, 203, 207)'
     };
-    
+
     var subBox = document.getElementById('n2-flow');
 
     var rotationID = null;
@@ -434,6 +505,43 @@
             pressureValue1ID.innerText = dataValue;
 
         }, 3000);
+
+        // FPS Node
+        var fpsNodeClass = document.getElementsByClassName('fps-node');
+        var colorArray = ['#004060','#00A651','#ED1A3B'];
+        setTimeout(function () {
+
+            setInterval(function () {
+                var randomNode = Math.floor(Math.random() * fpsNodeClass.length);
+                var colorIndex = Math.floor(Math.random() * 3)
+
+                var count = 0;
+                var id = setInterval(function () {
+                    if (count == 4) {
+                        clearInterval(id);
+                    }
+
+                    switch (count) {
+                        case 0:
+                        case 2:
+                        case 4:
+                            fpsNodeClass[randomNode].style.backgroundColor = colorArray[colorIndex];
+                            break;
+
+                        case 1:
+                        case 3:
+                            fpsNodeClass[randomNode].style.backgroundColor = colorArray[0];
+                            break;
+                    }
+
+                    count += 1;
+
+                }, 50);
+            }, 3000);
+
+
+        }, 1000);
+
     }
 </script>
 

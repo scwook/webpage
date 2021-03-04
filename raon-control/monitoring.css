@@ -200,6 +200,26 @@
     z-index: -1;
 }
 
+#fps-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(7, 20px);
+    grid-template-rows: repeat(7, 20px);
+    gap: 5px 5px;
+    width: 170px;
+    height: 170px;
+    /* background-color: wheat; */
+}
+
+.fps-node {
+    /* background-color: #00A651; */
+    background-color: #004060;
+    width:100%;
+    height:100%;
+    animation: scaleUp 0.5s linear var(--delay) forwards;
+    transform: scale(0);
+}
+
 .tooltiptext {
     visibility: hidden;
     width: 280px;
@@ -262,6 +282,15 @@
     }
     to {
         stroke-dashoffset: var(--chartValue);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
     }
 }
 
