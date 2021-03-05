@@ -15,13 +15,14 @@
             if (this.readyState == 4 && this.status == 200) {
 
                 let jsonValue = JSON.parse(this.responseText);
-                let channelLength = jsonValue.channelName.length;
-                let valueLength = jsonValue.value.length
+                console.log(this.responseText);
+                // let channelLength = jsonValue.channelName.length;
+                // let valueLength = jsonValue.value.length
 
-                for (let i = 0; i < channelLength; i++) {
-                    pvData[jsonValue.channelName[i]] = jsonValue.value[i];
-                    console.log(jsonValue.channelName[i], jsonValue.value[i]);
-                }
+                // for (let i = 0; i < channelLength; i++) {
+                //     pvData[jsonValue.channelName[i]] = jsonValue.value[i];
+                //     console.log(jsonValue.channelName[i], jsonValue.value[i]);
+                // }
 
 
                 // if (jsonValue.length)
@@ -30,23 +31,7 @@
             }
 
         };
-        var server = "http://192.168.68.126";
-        xhttp.open("GET", server, true);
-        xhttp.send();
-    }
-
-    function getScheduleDatabase() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-
-                let jsonValue = JSON.parse(this.responseText);
-                document.getElementById('value').innerHTML = jsonValue[0];
-                console.log(this.responseText);
-            }
-
-        };
-        var server = "http://192.168.0.105/2021-01";
+        var server = "http://192.168.0.105:8080";
         xhttp.open("GET", server, true);
         xhttp.send();
     }
@@ -57,7 +42,7 @@
 
     window.onload = function () {
 
-        //var getPVData = setInterval(getData, 2000);
+        var getPVData = setInterval(getData, 1000);
         var getDBData = setInterval(getScheduleDatabase, 2000);
         //var startMonitoring = setInterval(monitoring, 1000);
     }

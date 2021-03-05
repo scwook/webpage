@@ -178,23 +178,59 @@
                         </div>
                     </div>
 
-                    <div class="grid-item grid-1x1"></div>
+                    <!-- 1 / 5 -->
                     <div class="grid-item grid-1x1"></div>
 
-                    <div class="grid-item grid-3x2" style="grid-column: 1/span 3; grid-row: 2/span 2;"></div>
+                    <!-- 1 / 6 -->
+                    <div class="grid-item grid-1x1"></div>
 
-                    <div class="grid-item grid-2x1" style="grid-column: 4/span 2;">
-                        <canvas id="canvas"></canvas>
+                    <!-- 2 / 1 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Network
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <div class="data">6.19 Gb/s</div>
+                        <div class="sub-data">12.10 Gb/s</div>
+                        <div class="sub-title">SCL</div>
                     </div>
 
-                    <div class="grid-item grid-1x1">
+                    <!-- 2 / 2 - 3 -->
+                    <div class="grid-item grid-2x1" style="grid-column: 2/span 2;">
+                        <canvas id="canvas-2x2"></canvas>
+                    </div>
+
+                    <!-- 2 / 4 -->
+                    <div class="grid-item grid-1x1"></div>
+
+                    <!-- 2 / 5 -->
+                    <div class="grid-item grid-1x1"></div>
+
+                    <!-- 2 / 6 -->
+                    <div class="grid-item grid-1x1"></div>
+
+
+                    <!-- <div class="grid-item grid-1x1">
                         <p class="title">LN2</p>
                         <div class="liquid-box"><span id="n2-value">45</span>
                             <div class="subBox" id="n2-flow" style="--b:rgba(0,180,170,1.0)"></div>
                         </div>
+                    </div> -->
+
+                    <!-- 3 / 1 -->
+                    <div class="grid-item grid-1x1"></div>
+
+                    <!-- 3 / 2 - 3 -->
+                    <div class="grid-item grid-2x1" style="grid-column: 2/span 2;">
+                        <canvas id="canvas-3x2"></canvas>
                     </div>
+
+                    <!-- 3 / 4 -->
                     <div class="grid-item grid-1x1"></div>
+
+                    <!-- 3 / 5 -->
                     <div class="grid-item grid-1x1"></div>
+
+                    <!-- 3 / 6 -->
                     <div class="grid-item grid-1x1"></div>
                 </div>
             </div>
@@ -492,15 +528,19 @@
     }
 
     window.onload = function () {
-        firstShowUp();
+        // firstShowUp();
         simulation();
 
         var details = [
-            { label: "Line Chart1", color: window.chartColors.red }
+            { label: "Line Chart1", color: window.chartColors.red },
+            { label: "Line Chart2", color: window.chartColors.blue }
         ]
 
-        var ctx = document.getElementById('canvas').getContext('2d');
-        window.myChart1 = new Chart(ctx, lineChartConfig(details[0]));
+        var ctx1 = document.getElementById('canvas-2x2').getContext('2d');
+        window.myChart1 = new Chart(ctx1, lineChartConfig(details[0]));
+
+        var ctx2 = document.getElementById('canvas-3x2').getContext('2d');
+        window.myChart3 = new Chart(ctx2, lineChartConfig(details[1]));
 
         var myVar = setInterval(timer, 1000);
     }
@@ -513,12 +553,12 @@
     function simulation() {
 
         // Pressure
-        var pressureValue1ID = document.getElementById('pressure-value1');
-        setInterval(function () {
-            var dataValue = (Math.random() * 10).toFixed(1);
-            pressureValue1ID.innerText = dataValue;
+        // var pressureValue1ID = document.getElementById('pressure-value1');
+        // setInterval(function () {
+        //     var dataValue = (Math.random() * 10).toFixed(1);
+        //     pressureValue1ID.innerText = dataValue;
 
-        }, 3000);
+        // }, 3000);
 
         // FPS Node
         var fpsNodeClass = document.getElementsByClassName('fps-node');
