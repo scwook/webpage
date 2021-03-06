@@ -335,6 +335,28 @@
     }
 }
 
+.timing-container {
+    position: relative;
+    margin: auto;
+    width: 190px;
+    height: 160px;
+}
+
+.timing {
+    animation: timing 0.5s ease-out forwards;
+    stroke-width: 2px;
+    stroke-dasharray: 290;
+}
+
+@keyframes timing {
+    from {
+        stroke-dashoffset: 290;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
 @keyframes scaleUp {
     from {
         transform: scale(0);

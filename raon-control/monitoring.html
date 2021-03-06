@@ -180,29 +180,62 @@
 
                     <!-- 1 / 5 -->
                     <div class="grid-item grid-1x1">
-                        <div class="timestamp-container" style="position: relative; width: 180px; height:180px; margin: auto;">
-                            <svg id="timestamp1" width="48" height="48" style="position: absolute; left: 66px; top: 66px;">
+                        <p class="title">Timestamp</p>
+
+                        <div class="timestamp-container"
+                            style="position: relative; width: 180px; height:180px; margin: auto;">
+                            <svg id="timestamp1" width="48" height="48"
+                                style="position: absolute; left: 66px; top: 66px;">
                                 <circle cx="24" cy="24" r="20"
                                     style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
                                 <circle cx="24" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
 
-                            <svg id="timestamp2" width="68" height="68" style="position: absolute; left: 56px; top: 56px;">
+                            <svg id="timestamp2" width="68" height="68"
+                                style="position: absolute; left: 56px; top: 56px;">
                                 <circle cx="34" cy="34" r="30"
                                     style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
                                 <circle cx="34" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
 
-                            <svg id="timestamp3" width="88" height="88" style="position: absolute; left: 46px; top: 46px;">
+                            <svg id="timestamp3" width="88" height="88"
+                                style="position: absolute; left: 46px; top: 46px;">
                                 <circle cx="44" cy="44" r="40"
                                     style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
                                 <circle cx="44" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
+
+                            <svg id="timestamp4" width="108" height="108"
+                                style="position: absolute; left: 36px; top: 36px;">
+                                <circle cx="54" cy="54" r="50"
+                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="54" cy="4" r="4" style="fill:#2baae2" />
+                            </svg>
+
+                            <svg id="timestamp5" width="128" height="128"
+                                style="position: absolute; left: 26px; top: 26px;">
+                                <circle cx="64" cy="64" r="60"
+                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="64" cy="4" r="4" style="fill:#00A651" />
+                            </svg>
+
                         </div>
                     </div>
 
                     <!-- 1 / 6 -->
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Timing</p>
+                        <div class="timing-container">
+                            <div
+                                style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
+                                100us</div>
+                            <svg id="timing-chopper" width="190" height="52" style="margin-top: 10px;">
+                                <polyline class="timing" points="0 1 60 1 60 51 130 51 130 1 190 1"
+                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
+                            </svg>
+                        </div>
+                        <div class="sub-title">Chopper</div>
+                    </div>
 
                     <!-- 2 / 1 -->
                     <div class="grid-item grid-1x1">
@@ -226,7 +259,7 @@
                         </p>
                         <div class="server-state-container"
                             style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
-                            <div class="cpu-status">
+                            <div id="web-server" class="cpu-status">
                                 <div class="server-value">60%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -286,14 +319,93 @@
                                 <div class="server-title">Network</div>
                             </div>
                         </div>
-                        <div class="sub-title">SCL</div>
+                        <div class="sub-title">Web</div>
                     </div>
 
                     <!-- 2 / 5 -->
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Server
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <div class="server-state-container"
+                            style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
+                            <div id="gateway-server" class="cpu-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">CPU</div>
+                            </div>
+
+                            <div class="memory-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Memory</div>
+                            </div>
+
+                            <div class="disk-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Disk</div>
+                            </div>
+
+                            <div class="network-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Network</div>
+                            </div>
+                        </div>
+                        <div class="sub-title">Gateway</div>
+                    </div>
 
                     <!-- 2 / 6 -->
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Timing</p>
+                        <div class="timing-container">
+                            <div
+                                style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
+                                100us</div>
+                            <svg id="timing-acct" width="190" height="52" style="margin-top: 10px;">
+                                <polyline class="timing" points="0 51 60 51 60 1 130 1 130 51 190 51"
+                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
+                            </svg>
+                        </div>
+                        <div class="sub-title">ACCT</div>
+                    </div>
 
 
                     <!-- <div class="grid-item grid-1x1">
@@ -319,13 +431,159 @@
                     </div>
 
                     <!-- 3 / 4 -->
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Server
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <div class="server-state-container"
+                            style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
+                            <div id="repository-server" class="cpu-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">CPU</div>
+                            </div>
+
+                            <div class="memory-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Memory</div>
+                            </div>
+
+                            <div class="disk-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Disk</div>
+                            </div>
+
+                            <div class="network-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Network</div>
+                            </div>
+                        </div>
+                        <div class="sub-title">Repository</div>
+                    </div>
 
                     <!-- 3 / 5 -->
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Server
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <div class="server-state-container"
+                            style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
+                            <div id="archive-server" class="cpu-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">CPU</div>
+                            </div>
+
+                            <div class="memory-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Memory</div>
+                            </div>
+
+                            <div class="disk-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Disk</div>
+                            </div>
+
+                            <div class="network-status">
+                                <div class="server-value">60%</div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="level-bar"></div>
+                                <div class="server-title">Network</div>
+                            </div>
+                        </div>
+                        <div class="sub-title">Archive</div>
+                    </div>
 
                     <!-- 3 / 6 -->
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Timing</p>
+                        <div class="timing-container">
+                            <div
+                                style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
+                                250us</div>
+                            <svg id="timing-rfq" width="190" height="52" style="margin-top: 10px;">
+                                <polyline class="timing" points="0 51 40 51 40 1 150 1 150 51 190 51"
+                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
+                            </svg>
+                        </div>
+                        <div class="sub-title">RFQ</div>
+                    </div>
                 </div>
             </div>
 
@@ -697,15 +955,19 @@
             var timestamp1ID = document.getElementById('timestamp1');
             var timestamp2ID = document.getElementById('timestamp2');
             var timestamp3ID = document.getElementById('timestamp3');
+            var timestamp4ID = document.getElementById('timestamp4');
+            var timestamp5ID = document.getElementById('timestamp5');
 
             timestamp1ID.style.transform = 'rotateZ(' + deg + 'deg)';
             timestamp2ID.style.transform = 'rotateZ(' + deg + 'deg)';
             timestamp3ID.style.transform = 'rotateZ(' + deg + 'deg)';
+            timestamp4ID.style.transform = 'rotateZ(' + deg + 'deg)';
+            timestamp5ID.style.transform = 'rotateZ(' + deg + 'deg)';
+
 
             deg += 0.3;
         }, 30)
     }
-
 </script>
 
 </html>
