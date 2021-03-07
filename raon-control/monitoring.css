@@ -270,6 +270,19 @@
     text-align: center;
 }
 
+.timing-container {
+    position: relative;
+    margin: auto;
+    width: 190px;
+    height: 160px;
+}
+
+.timing {
+    animation: timing 0.5s ease-out forwards;
+    stroke-width: 2px;
+    stroke-dasharray: 290;
+}
+
 .tooltiptext {
     visibility: hidden;
     width: 280px;
@@ -333,19 +346,6 @@
     to {
         stroke-dashoffset: var(--chartValue);
     }
-}
-
-.timing-container {
-    position: relative;
-    margin: auto;
-    width: 190px;
-    height: 160px;
-}
-
-.timing {
-    animation: timing 0.5s ease-out forwards;
-    stroke-width: 2px;
-    stroke-dasharray: 290;
 }
 
 @keyframes timing {

@@ -30,11 +30,12 @@
         <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></a></div>
         <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
         <div id="left-menu">
-            <a href="asset.html">Asset</a>
-            <a href="bab.html" class="secret-menu">Bab</a>
             <a href="" class="secret-menu">Logbook</a>
             <a href="" class="secret-menu">Finder</a>
             <a href="" class="secret-menu">Naming</a>
+            <a href="bab.html">Bab</a>
+            <a href="asset.html">Asset</a>
+
         </div>
         <div id="right-menu">
             <a href="monitoring.html">Monitoring</a>
@@ -59,14 +60,13 @@
                     <!-- 1 / 1 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Storage</p>
-                        <div class="doughnutChartText">24TB</div>
+                        <div id="storage-value" class="doughnutChartText"></div>
                         <div class="doughnutChartTextUnder">100TB</div>
 
                         <div class="doughnut-contain">
                             <svg width="176" height="176" style="fill:none">
                                 <circle class="doughnutBackground" cx="80" cy="80" r="80" />
-                                <circle class="doughnutForeground" cx="80" cy="80" r="80"
-                                    style="--chartValue:100; --doughuntColor:#00ace6" />
+                                <circle id="storage-chart" cx="80" cy="80" r="80" style="--doughuntColor:#00ace6" />
                             </svg>
                         </div>
                     </div>
@@ -74,13 +74,12 @@
                     <!-- 1 / 2 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Archive</p>
-                        <div class="doughnutChartText">192840</div>
+                        <div id="archive-value" class="doughnutChartText"></div>
                         <div class="doughnutChartTextUnder">300000</div>
                         <div class="doughnut-contain">
                             <svg width="174" height="174" style="fill:none">
                                 <circle class="doughnutBackground" cx="80" cy="80" r="80" />
-                                <circle class="doughnutForeground" cx="80" cy="80" r="80"
-                                    style="--chartValue:100; --doughuntColor:#00A651" />
+                                <circle id="archive-chart" cx="80" cy="80" r="80" style="--doughuntColor:#00A651" />
                             </svg>
                         </div>
                     </div>
@@ -88,13 +87,12 @@
                     <!-- 1 / 3 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">IOC</p>
-                        <div class="doughnutChartText">1200</div>
+                        <div id="ioc-value" class="doughnutChartText"></div>
                         <div class="doughnutChartTextUnder">2000</div>
                         <div class="doughnut-contain">
                             <svg width="174" height="174" style="fill:none">
                                 <circle class="doughnutBackground" cx="80" cy="80" r="80" />
-                                <circle class="doughnutForeground" cx="80" cy="80" r="80"
-                                    style="--chartValue:100; --doughuntColor:#D4145A" />
+                                <circle id="ioc-chart" cx="80" cy="80" r="80" style="--doughuntColor:#D4145A" />
                             </svg>
                         </div>
                     </div>
@@ -912,6 +910,52 @@
 
         // }, 3000);
 
+        var chartMaxLength = 503;
+
+        // Storage
+        var storageRealMaxValue = 100;
+        var storageRealValue = Math.random() * storageRealMaxValue;
+
+        var storageValueID = document.getElementById('storage-value');
+        storageValueID.innerText = Math.floor(storageRealValue) + 'TB';
+
+        var storageChartID = document.getElementById('storage-chart');
+        var valueToLength = chartMaxLength - chartMaxLength / storageRealMaxValue * storageRealValue;
+        storageChartID.style.setProperty('--chartValue', Math.floor(valueToLength));
+
+        storageChartID.classList.remove('doughnutForeground');
+        void storageChartID.offsetWidth;
+        storageChartID.classList.add('doughnutForeground');
+
+        // Archive
+        var archiveRealMaxValue = 300000;
+        var archiveRealValue = Math.random() * archiveRealMaxValue;
+
+        var archiveValueID = document.getElementById('archive-value');
+        archiveValueID.innerText = Math.floor(archiveRealValue);
+
+        var archiveChartID = document.getElementById('archive-chart');
+        var valueToLength = chartMaxLength - chartMaxLength / archiveRealMaxValue * archiveRealValue;
+        archiveChartID.style.setProperty('--chartValue', Math.floor(valueToLength));
+
+        archiveChartID.classList.remove('doughnutForeground');
+        void archiveChartID.offsetWidth;
+        archiveChartID.classList.add('doughnutForeground');
+        
+        // IOC
+        var iocRealMaxValue = 2000;
+        var iocRealValue = Math.random() * iocRealMaxValue;
+
+        var iocValueID = document.getElementById('ioc-value');
+        iocValueID.innerText = Math.floor(iocRealValue);
+
+        var iocChartID = document.getElementById('ioc-chart');
+        var valueToLength = chartMaxLength - chartMaxLength / iocRealMaxValue * iocRealValue;
+        iocChartID.style.setProperty('--chartValue', Math.floor(valueToLength));
+
+        iocChartID.classList.remove('doughnutForeground');
+        void iocChartID.offsetWidth;
+        iocChartID.classList.add('doughnutForeground');
         // FPS Node
         var fpsNodeClass = document.getElementsByClassName('fps-node');
         var colorArray = ['#004060', '#00A651', '#ED1A3B'];

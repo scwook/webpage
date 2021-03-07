@@ -29,6 +29,7 @@ body {
     background-repeat: no-repeat;
     background-position: center var(--background-image-top);
     font-family: "Roboto-Thin";
+    overflow: hidden;
 }
 
 #time-stamp {
