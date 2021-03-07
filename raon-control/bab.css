@@ -69,32 +69,60 @@
     /* animation-direction: alternate; */
 }
 
+#circle3 {
+    animation: circle-scaleDown 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
+}
+
+.circle4 {
+    animation: circle-scaleUp 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
+}
+
 #circle4-1 {
-    animation: rotationAni 60s linear infinite reverse;
+    --degree: -360deg;
+    animation: circle-rotation 60s linear infinite;
 }
 
 #circle4-2 {
-    animation: rotationAni 60s linear infinite;
+    --degree: 360deg;
+    animation: circle-rotation 60s linear infinite;
 }
 
 #circle4-3 {
-    animation: rotationAni 80s linear infinite;
+    --degree: 360deg;
+    animation: circle-rotation 80s linear infinite;
 }
 
 #circle5 {
-    animation: rotationAni 60s linear infinite reverse;
+    animation: circle-scaleUp 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) 0.0s forwards;
+}
+
+.circle5 {
+    --degree: -360deg;
+    animation: circle-rotation 60s linear infinite;
+}
+
+.circle6 {
+    opacity: 0;
+    animation: showUp 0.5s linear var(--delay) forwards;
+}
+
+.circle8 {
+    animation: circle-scaleUp 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) 0.0s forwards;
 }
 
 #circle8-1 {
-    animation: rotationAni 60s linear infinite reverse;
+    --degree: -360deg;
+    animation: circle-rotation 60s linear infinite;
 }
 
 #circle8-2 {
-    animation: rotationAni 60s linear infinite;
+    --degree: 360deg;
+    animation: circle-rotation 60s linear infinite;
 }
 
 #circle8-3 {
-    animation: rotationAni 80s linear infinite;
+    --degree: 360deg;
+    animation: circle-rotation 80s linear infinite;
 }
 
 .menu-text {
@@ -115,21 +143,20 @@
     --degree: 360deg;
 }
 
-.wheelSVG {
-    animation: showUp 0.5s linear var(--delay) forwards;
-    opacity: 0;
-}
-
 .wheel-odd {
+    opacity: 0;
     fill: #07536e;
     stroke: #231f20;
     stroke-miterlimit: 10;
+    animation: showUp 0.5s linear var(--delay) forwards;
 }
 
 .wheel-even {
+    opacity: 0;
     fill: #0F495A;
     stroke: #231f20;
     stroke-miterlimit: 10;
+    animation: showUp 0.5s linear var(--delay) forwards;
 }
 
 .roulette {
@@ -180,7 +207,6 @@
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1.0;
     }
@@ -191,9 +217,37 @@
         top: -10px;
         opacity: 0;
     }
-
     to {
         top: 0px;
         opacity: 1;
+    }
+}
+
+@keyframes circle-scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes circle-scaleDown {
+    from {
+        transform: scale(2);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes circle-rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(var(--degree));
     }
 }
