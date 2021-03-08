@@ -184,36 +184,31 @@
                             style="position: relative; width: 180px; height:180px; margin: auto;">
                             <svg id="timestamp1" width="48" height="48"
                                 style="position: absolute; left: 66px; top: 66px;">
-                                <circle cx="24" cy="24" r="20"
-                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="24" cy="24" r="20" style="fill:none;stroke:#2baae2;opacity:0.2" />
                                 <circle cx="24" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
 
                             <svg id="timestamp2" width="68" height="68"
                                 style="position: absolute; left: 56px; top: 56px;">
-                                <circle cx="34" cy="34" r="30"
-                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="34" cy="34" r="30" style="fill:none;stroke:#2baae2;opacity:0.2" />
                                 <circle cx="34" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
 
                             <svg id="timestamp3" width="88" height="88"
                                 style="position: absolute; left: 46px; top: 46px;">
-                                <circle cx="44" cy="44" r="40"
-                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="44" cy="44" r="40" style="fill:none;stroke:#2baae2;opacity:0.2" />
                                 <circle cx="44" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
 
                             <svg id="timestamp4" width="108" height="108"
                                 style="position: absolute; left: 36px; top: 36px;">
-                                <circle cx="54" cy="54" r="50"
-                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="54" cy="54" r="50" style="fill:none;stroke:#2baae2;opacity:0.2" />
                                 <circle cx="54" cy="4" r="4" style="fill:#2baae2" />
                             </svg>
 
                             <svg id="timestamp5" width="128" height="128"
                                 style="position: absolute; left: 26px; top: 26px;">
-                                <circle cx="64" cy="64" r="60"
-                                    style="fill:none;stroke:#2baae2;stroke-miterlimit:10;opacity:0.2" />
+                                <circle cx="64" cy="64" r="60" style="fill:none;stroke:#2baae2;opacity:0.2" />
                                 <circle cx="64" cy="4" r="4" style="fill:#00A651" />
                             </svg>
 
@@ -257,8 +252,8 @@
                         </p>
                         <div class="server-state-container"
                             style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
-                            <div id="web-server" class="cpu-status">
-                                <div class="server-value">60%</div>
+                            <div id="web-server-cpu" class="cpu-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -272,8 +267,8 @@
                                 <div class="server-title">CPU</div>
                             </div>
 
-                            <div class="memory-status">
-                                <div class="server-value">60%</div>
+                            <div id="web-server-memory" class="memory-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -287,8 +282,8 @@
                                 <div class="server-title">Memory</div>
                             </div>
 
-                            <div class="disk-status">
-                                <div class="server-value">60%</div>
+                            <div id="web-server-disk" class="disk-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -302,8 +297,8 @@
                                 <div class="server-title">Disk</div>
                             </div>
 
-                            <div class="network-status">
-                                <div class="server-value">60%</div>
+                            <div id="web-server-network" class="network-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -327,8 +322,8 @@
                         </p>
                         <div class="server-state-container"
                             style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
-                            <div id="gateway-server" class="cpu-status">
-                                <div class="server-value">60%</div>
+                            <div id="gateway-server-cpu" class="cpu-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -342,8 +337,8 @@
                                 <div class="server-title">CPU</div>
                             </div>
 
-                            <div class="memory-status">
-                                <div class="server-value">60%</div>
+                            <div id="gateway-server-memory" class="memory-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -357,8 +352,8 @@
                                 <div class="server-title">Memory</div>
                             </div>
 
-                            <div class="disk-status">
-                                <div class="server-value">60%</div>
+                            <div id="gateway-server-disk" class="disk-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -372,8 +367,8 @@
                                 <div class="server-title">Disk</div>
                             </div>
 
-                            <div class="network-status">
-                                <div class="server-value">60%</div>
+                            <div id="gateway-server-network" class="network-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -435,8 +430,8 @@
                         </p>
                         <div class="server-state-container"
                             style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
-                            <div id="repository-server" class="cpu-status">
-                                <div class="server-value">60%</div>
+                            <div id="repository-server-cpu" class="cpu-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -450,8 +445,8 @@
                                 <div class="server-title">CPU</div>
                             </div>
 
-                            <div class="memory-status">
-                                <div class="server-value">60%</div>
+                            <div id="repository-server-memory" class="memory-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -465,8 +460,8 @@
                                 <div class="server-title">Memory</div>
                             </div>
 
-                            <div class="disk-status">
-                                <div class="server-value">60%</div>
+                            <div id="repository-server-disk" class="disk-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -480,8 +475,8 @@
                                 <div class="server-title">Disk</div>
                             </div>
 
-                            <div class="network-status">
-                                <div class="server-value">60%</div>
+                            <div id="repository-server-network" class="network-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -505,8 +500,8 @@
                         </p>
                         <div class="server-state-container"
                             style="display: flex; width:180px; height:152px; margin: auto; justify-content: space-between;">
-                            <div id="archive-server" class="cpu-status">
-                                <div class="server-value">60%</div>
+                            <div id="archive-server-cpu" class="cpu-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -520,8 +515,8 @@
                                 <div class="server-title">CPU</div>
                             </div>
 
-                            <div class="memory-status">
-                                <div class="server-value">60%</div>
+                            <div id="archive-server-memory" class="memory-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -535,8 +530,8 @@
                                 <div class="server-title">Memory</div>
                             </div>
 
-                            <div class="disk-status">
-                                <div class="server-value">60%</div>
+                            <div id="archive-server-disk" class="disk-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -550,8 +545,8 @@
                                 <div class="server-title">Disk</div>
                             </div>
 
-                            <div class="network-status">
-                                <div class="server-value">60%</div>
+                            <div id="archive-server-network" class="network-status">
+                                <div class="server-value">0%</div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
                                 <div class="level-bar"></div>
@@ -589,10 +584,42 @@
             <div class="slide-page" style="display: none">
                 <div class="slide-page-title">Cryogenic</div>
                 <div class="grid-container">
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Pressure
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data">
+                            <span id="">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
+                        </p>
+                        <div class="sub-title">Gas Bag</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Pressure
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data">
+                            <span id="">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
+                        </p>
+                        <div class="sub-title">Gas Bag</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Pressure
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data">
+                            <span id="">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
+                        </p>
+                        <div class="sub-title">Gas Bag</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Temperature
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data">
+                            <span id="">2.5</span>
+                        </p>
+                        <div class="sub-title">Gas Bag</div>
+                    </div>
                     <div class="grid-item grid-1x1"></div>
                     <div class="grid-item grid-1x1"></div>
                     <div class="grid-item grid-1x1"></div>
@@ -637,9 +664,6 @@
         </div>
         <button class="slide-button" onclick="showDivs(1)">&#10095;</button>
     </div>
-
-
-
 </body>
 
 <script>
@@ -941,7 +965,7 @@
         archiveChartID.classList.remove('doughnutForeground');
         void archiveChartID.offsetWidth;
         archiveChartID.classList.add('doughnutForeground');
-        
+
         // IOC
         var iocRealMaxValue = 2000;
         var iocRealValue = Math.random() * iocRealMaxValue;
@@ -956,6 +980,7 @@
         iocChartID.classList.remove('doughnutForeground');
         void iocChartID.offsetWidth;
         iocChartID.classList.add('doughnutForeground');
+
         // FPS Node
         var fpsNodeClass = document.getElementsByClassName('fps-node');
         var colorArray = ['#004060', '#00A651', '#ED1A3B'];
@@ -993,7 +1018,25 @@
         }, 1000);
 
         // Timestamp
-        var deg = 0;
+        var deg1 = 0;
+        var deg2 = 0;
+        var deg3 = 0;
+        var deg4 = 0;
+        var deg5 = 0;
+
+        var dt1 = 0.3
+        var dt2 = 0.3
+        var dt3 = 0.3
+        var dt4 = 0.3
+        var dt5 = 0.3
+        var dir = -1;
+        setInterval( function () {
+            dt2 += 0.02 * dir;
+            dt4 += 0.01 * dir;
+            dir *= -1;
+
+            console.log(dt4, dir);
+        }, 10000); 
 
         setInterval(function () {
             var timestamp1ID = document.getElementById('timestamp1');
@@ -1002,15 +1045,390 @@
             var timestamp4ID = document.getElementById('timestamp4');
             var timestamp5ID = document.getElementById('timestamp5');
 
-            timestamp1ID.style.transform = 'rotateZ(' + deg + 'deg)';
-            timestamp2ID.style.transform = 'rotateZ(' + deg + 'deg)';
-            timestamp3ID.style.transform = 'rotateZ(' + deg + 'deg)';
-            timestamp4ID.style.transform = 'rotateZ(' + deg + 'deg)';
-            timestamp5ID.style.transform = 'rotateZ(' + deg + 'deg)';
+            timestamp1ID.style.transform = 'rotateZ(' + deg1 + 'deg)';
+            timestamp2ID.style.transform = 'rotateZ(' + deg2 + 'deg)';
+            timestamp3ID.style.transform = 'rotateZ(' + deg3 + 'deg)';
+            timestamp4ID.style.transform = 'rotateZ(' + deg4 + 'deg)';
+            timestamp5ID.style.transform = 'rotateZ(' + deg5 + 'deg)';
 
+            deg1 += dt1;
+            deg2 += dt2;
+            deg3 += dt3;
+            deg4 += dt4;
+            deg5 += dt5;
+        }, 30);
 
-            deg += 0.3;
-        }, 30)
+        // Web Server
+        var webServerMaxCPU = 100;
+        var webServerMaxMemory = 100;
+        var webServerMaxDisk = 100;
+        var webServerMaxNetwork = 100;
+
+        setInterval(function () {
+            // CPU
+            var webServerCPUValue = Math.floor(Math.random() * webServerMaxCPU);
+
+            var webServerCPULevelClass = document.getElementById('web-server-cpu').getElementsByClassName('level-bar');
+            var webServerCPUValueClass = document.getElementById('web-server-cpu').getElementsByClassName('server-value');
+
+            webServerCPUValueClass[0].innerText = webServerCPUValue + '%';
+
+            var level = Math.floor(webServerCPUValue / 10);
+            var maxIndex = webServerCPULevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                webServerCPULevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                webServerCPULevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Memory
+            var webServerMemoryValue = Math.floor(Math.random() * webServerMaxMemory);
+
+            var webServerMemoryLevelClass = document.getElementById('web-server-memory').getElementsByClassName('level-bar');
+            var webServerMemoryValueClass = document.getElementById('web-server-memory').getElementsByClassName('server-value');
+
+            webServerMemoryValueClass[0].innerText = webServerMemoryValue + '%';
+
+            var level = Math.floor(webServerMemoryValue / 10);
+            var maxIndex = webServerMemoryLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                webServerMemoryLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                webServerMemoryLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Disk
+            var webServerDiskValue = Math.floor(Math.random() * webServerMaxDisk);
+
+            var webServerDiskLevelClass = document.getElementById('web-server-disk').getElementsByClassName('level-bar');
+            var webServerDiskValueClass = document.getElementById('web-server-disk').getElementsByClassName('server-value');
+
+            webServerDiskValueClass[0].innerText = webServerDiskValue + '%';
+
+            var level = Math.floor(webServerDiskValue / 10);
+            var maxIndex = webServerDiskLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                webServerDiskLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                webServerDiskLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Network
+            var webServerNetworkValue = Math.floor(Math.random() * webServerMaxNetwork);
+
+            var webServerNetworkLevelClass = document.getElementById('web-server-network').getElementsByClassName('level-bar');
+            var webServerNetworkValueClass = document.getElementById('web-server-network').getElementsByClassName('server-value');
+
+            webServerNetworkValueClass[0].innerText = webServerNetworkValue + '%';
+
+            var level = Math.floor(webServerNetworkValue / 10);
+            var maxIndex = webServerNetworkLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                webServerNetworkLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                webServerNetworkLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+        }, 5000);
+
+        // Gateway Server
+        var gatewayServerMaxCPU = 100;
+        var gatewayServerMaxMemory = 100;
+        var gatewayServerMaxDisk = 100;
+        var gatewayServerMaxNetwork = 100;
+
+        setInterval(function () {
+            // CPU
+            var gatewayServerCPUValue = Math.floor(Math.random() * gatewayServerMaxCPU);
+
+            var gatewayServerCPULevelClass = document.getElementById('gateway-server-cpu').getElementsByClassName('level-bar');
+            var gatewayServerCPUValueClass = document.getElementById('gateway-server-cpu').getElementsByClassName('server-value');
+
+            gatewayServerCPUValueClass[0].innerText = gatewayServerCPUValue + '%';
+
+            var level = Math.floor(gatewayServerCPUValue / 10);
+            var maxIndex = gatewayServerCPULevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                gatewayServerCPULevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                gatewayServerCPULevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Gateway
+            var gatewayServerMemoryValue = Math.floor(Math.random() * gatewayServerMaxMemory);
+
+            var gatewayServerMemoryLevelClass = document.getElementById('gateway-server-memory').getElementsByClassName('level-bar');
+            var gatewayServerMemoryValueClass = document.getElementById('gateway-server-memory').getElementsByClassName('server-value');
+
+            gatewayServerMemoryValueClass[0].innerText = gatewayServerMemoryValue + '%';
+
+            var level = Math.floor(gatewayServerMemoryValue / 10);
+            var maxIndex = gatewayServerMemoryLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                gatewayServerMemoryLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                gatewayServerMemoryLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Disk
+            var gatewayServerDiskValue = Math.floor(Math.random() * gatewayServerMaxDisk);
+
+            var gatewayServerDiskLevelClass = document.getElementById('gateway-server-disk').getElementsByClassName('level-bar');
+            var gatewayServerDiskValueClass = document.getElementById('gateway-server-disk').getElementsByClassName('server-value');
+
+            gatewayServerDiskValueClass[0].innerText = gatewayServerDiskValue + '%';
+
+            var level = Math.floor(gatewayServerDiskValue / 10);
+            var maxIndex = gatewayServerDiskLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                gatewayServerDiskLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                gatewayServerDiskLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Network
+            var gatewayServerNetworkValue = Math.floor(Math.random() * gatewayServerMaxNetwork);
+
+            var gatewayServerNetworkLevelClass = document.getElementById('gateway-server-network').getElementsByClassName('level-bar');
+            var gatewayServerNetworkValueClass = document.getElementById('gateway-server-network').getElementsByClassName('server-value');
+
+            gatewayServerNetworkValueClass[0].innerText = gatewayServerNetworkValue + '%';
+
+            var level = Math.floor(gatewayServerNetworkValue / 10);
+            var maxIndex = gatewayServerNetworkLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                gatewayServerNetworkLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                gatewayServerNetworkLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+        }, 5000);
+
+        // Repository Server
+        var repositoryServerMaxCPU = 100;
+        var repositoryServerMaxMemory = 100;
+        var repositoryServerMaxDisk = 100;
+        var repositoryServerMaxNetwork = 100;
+
+        setInterval(function () {
+            // CPU
+            var repositoryServerCPUValue = Math.floor(Math.random() * repositoryServerMaxCPU);
+
+            var repositoryServerCPULevelClass = document.getElementById('repository-server-cpu').getElementsByClassName('level-bar');
+            var repositoryServerCPUValueClass = document.getElementById('repository-server-cpu').getElementsByClassName('server-value');
+
+            repositoryServerCPUValueClass[0].innerText = repositoryServerCPUValue + '%';
+
+            var level = Math.floor(repositoryServerCPUValue / 10);
+            var maxIndex = repositoryServerCPULevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                repositoryServerCPULevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                repositoryServerCPULevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // repository
+            var repositoryServerMemoryValue = Math.floor(Math.random() * repositoryServerMaxMemory);
+
+            var repositoryServerMemoryLevelClass = document.getElementById('repository-server-memory').getElementsByClassName('level-bar');
+            var repositoryServerMemoryValueClass = document.getElementById('repository-server-memory').getElementsByClassName('server-value');
+
+            repositoryServerMemoryValueClass[0].innerText = repositoryServerMemoryValue + '%';
+
+            var level = Math.floor(repositoryServerMemoryValue / 10);
+            var maxIndex = repositoryServerMemoryLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                repositoryServerMemoryLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                repositoryServerMemoryLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Disk
+            var repositoryServerDiskValue = Math.floor(Math.random() * repositoryServerMaxDisk);
+
+            var repositoryServerDiskLevelClass = document.getElementById('repository-server-disk').getElementsByClassName('level-bar');
+            var repositoryServerDiskValueClass = document.getElementById('repository-server-disk').getElementsByClassName('server-value');
+
+            repositoryServerDiskValueClass[0].innerText = repositoryServerDiskValue + '%';
+
+            var level = Math.floor(repositoryServerDiskValue / 10);
+            var maxIndex = repositoryServerDiskLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                repositoryServerDiskLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                repositoryServerDiskLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Network
+            var repositoryServerNetworkValue = Math.floor(Math.random() * repositoryServerMaxNetwork);
+
+            var repositoryServerNetworkLevelClass = document.getElementById('repository-server-network').getElementsByClassName('level-bar');
+            var repositoryServerNetworkValueClass = document.getElementById('repository-server-network').getElementsByClassName('server-value');
+
+            repositoryServerNetworkValueClass[0].innerText = repositoryServerNetworkValue + '%';
+
+            var level = Math.floor(repositoryServerNetworkValue / 10);
+            var maxIndex = repositoryServerNetworkLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                repositoryServerNetworkLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                repositoryServerNetworkLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+        }, 5000);
+
+        // Archive Server
+        var archiveServerMaxCPU = 100;
+        var archiveServerMaxMemory = 100;
+        var archiveServerMaxDisk = 100;
+        var archiveServerMaxNetwork = 100;
+
+        setInterval(function () {
+            // CPU
+            var archiveServerCPUValue = Math.floor(Math.random() * archiveServerMaxCPU);
+
+            var archiveServerCPULevelClass = document.getElementById('archive-server-cpu').getElementsByClassName('level-bar');
+            var archiveServerCPUValueClass = document.getElementById('archive-server-cpu').getElementsByClassName('server-value');
+
+            archiveServerCPUValueClass[0].innerText = archiveServerCPUValue + '%';
+
+            var level = Math.floor(archiveServerCPUValue / 10);
+            var maxIndex = archiveServerCPULevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                archiveServerCPULevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                archiveServerCPULevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // archive
+            var archiveServerMemoryValue = Math.floor(Math.random() * archiveServerMaxMemory);
+
+            var archiveServerMemoryLevelClass = document.getElementById('archive-server-memory').getElementsByClassName('level-bar');
+            var archiveServerMemoryValueClass = document.getElementById('archive-server-memory').getElementsByClassName('server-value');
+
+            archiveServerMemoryValueClass[0].innerText = archiveServerMemoryValue + '%';
+
+            var level = Math.floor(archiveServerMemoryValue / 10);
+            var maxIndex = archiveServerMemoryLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                archiveServerMemoryLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                archiveServerMemoryLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Disk
+            var archiveServerDiskValue = Math.floor(Math.random() * archiveServerMaxDisk);
+
+            var archiveServerDiskLevelClass = document.getElementById('archive-server-disk').getElementsByClassName('level-bar');
+            var archiveServerDiskValueClass = document.getElementById('archive-server-disk').getElementsByClassName('server-value');
+
+            archiveServerDiskValueClass[0].innerText = archiveServerDiskValue + '%';
+
+            var level = Math.floor(archiveServerDiskValue / 10);
+            var maxIndex = archiveServerDiskLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                archiveServerDiskLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                archiveServerDiskLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+            // Network
+            var archiveServerNetworkValue = Math.floor(Math.random() * archiveServerMaxNetwork);
+
+            var archiveServerNetworkLevelClass = document.getElementById('archive-server-network').getElementsByClassName('level-bar');
+            var archiveServerNetworkValueClass = document.getElementById('archive-server-network').getElementsByClassName('server-value');
+
+            archiveServerNetworkValueClass[0].innerText = archiveServerNetworkValue + '%';
+
+            var level = Math.floor(archiveServerNetworkValue / 10);
+            var maxIndex = archiveServerNetworkLevelClass.length;
+            var valueIndex = maxIndex - level;
+
+            var i = 0;
+            for (i; i < valueIndex; i++) {
+                archiveServerNetworkLevelClass[i].style.backgroundColor = "#004060";
+            }
+
+            for (i; i < maxIndex; i++) {
+                archiveServerNetworkLevelClass[i].style.backgroundColor = "#29ABE2";
+            }
+
+        }, 5000);
     }
 </script>
 
