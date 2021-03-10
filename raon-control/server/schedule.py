@@ -9,10 +9,14 @@ app = Flask(__name__)
 CORS(app)
 
 SERVER_ADDR = 'localhost'
+DB_HOST = 'localhost'
+DB_USER = 'scwook'
+DB_PASSWORD = 'qwer1234'
+DB_DATABASE = 'shift'
 
 @app.route('/schedule/<date>')
 def get_data(date):
-    conn = pymysql.connect(host='localhost', user='scwook', password='qwer1234', db='shift', charset='utf8')
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     schedule = conn.cursor()
     detail = conn.cursor()
     shifter = conn.cursor()
@@ -49,4 +53,4 @@ def get_data(date):
     return json.dumps(shiftArray)
 
 if __name__ == "__main__":
-    app.run(host=SERVER_ADDR, port="8081")
+    app.run(host=SERVER_ADDR, port="9011")

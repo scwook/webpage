@@ -326,10 +326,14 @@
               }
             </style>
           </defs>
-          <path class="cls-2 circle2-d" d="M372.64,324.82a80.06,80.06,0,0,1,54.72,0" style="fill:none;stroke:#07789e;stroke-width: 10px;"/>
-          <path class="cls-2 circle2-d" d="M324.82,427.36a80.06,80.06,0,0,1,0-54.72" style="fill:none;stroke:#05526d;stroke-width: 10px;" />
-          <path class="cls-2 circle2-d" d="M427.36,475.18a80.06,80.06,0,0,1-54.72,0" style="fill:none;stroke:#07789e;stroke-width: 10px;" />
-          <path class="cls-2 circle2-d" d="M475.18,372.64a80.06,80.06,0,0,1,0,54.72" style="fill:none;stroke:#05526d;stroke-width: 10px;" />
+          <path class="cls-2 circle2-d" d="M372.64,324.82a80.06,80.06,0,0,1,54.72,0"
+            style="fill:none;stroke:#07789e;stroke-width: 10px;" />
+          <path class="cls-2 circle2-d" d="M324.82,427.36a80.06,80.06,0,0,1,0-54.72"
+            style="fill:none;stroke:#05526d;stroke-width: 10px;" />
+          <path class="cls-2 circle2-d" d="M427.36,475.18a80.06,80.06,0,0,1-54.72,0"
+            style="fill:none;stroke:#07789e;stroke-width: 10px;" />
+          <path class="cls-2 circle2-d" d="M475.18,372.64a80.06,80.06,0,0,1,0,54.72"
+            style="fill:none;stroke:#05526d;stroke-width: 10px;" />
         </svg>
       </div>
 
@@ -440,6 +444,14 @@
 </body>
 
 <script>
+  // Control Server
+  // var serverAddr = 'http://192.168.68.14'
+  // var retrieveAddr = serverAddr + ':9009/bab/retrieve';
+
+  // scwook Server
+  var serverAddr = 'http://localhost'
+  var retrieveAddr = serverAddr + ':9009/bab/retrieve';
+
   function polygonPositing() {
     var leftPolygonSVGElement = document.getElementsByClassName('leftPolygon');
     var rightPolygonSVGElement = document.getElementsByClassName('rightPolygon');
@@ -733,7 +745,7 @@
       }
     };
 
-    xhttp.open("GET", "http://192.168.68.126:8082/bab/retrieve", true);
+    xhttp.open("GET", retrieveAddr, true);
     xhttp.send();
   }
 

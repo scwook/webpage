@@ -33,4 +33,4 @@ def get_data():
     return json.dumps(babArray)
 
 if __name__ == "__main__":
-    app.run(host=SERVER_ADDR, port="8082")
+    app.run(host=SERVER_ADDR, port="9009")

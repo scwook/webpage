@@ -136,4 +136,4 @@ def get_asset_list(asset):
     return json.dumps(assetListArray, ensure_ascii=False)
 
 if __name__ == "__main__":
-    app.run(host=SERVER_ADDR, port="8080")
+    app.run(host=SERVER_ADDR, port="9010")

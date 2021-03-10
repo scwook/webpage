@@ -168,7 +168,16 @@
 </body>
 
 <script>
-	var serverAddr = 'http://localhost'
+	// Control Server
+	// var serverAddr = 'http://192.168.68.14'
+	// var imageServer = serverAddr + ':4879/asset_image/'
+	// var inventoryAddr = serverAddr + ':9010/inventory'
+	// var retrieveAddr = inventoryAddr + '/retrieve/*';
+	// var insertAddr = inventoryAddr + '/insert';
+	// var updateAddr = inventoryAddr + '/update';
+
+	// scwook Server
+	var serverAddr = 'http://192.168.68.126'
 	var imageServer = serverAddr + ':4879/image/'
 	var inventoryAddr = serverAddr + ':8080/inventory'
 	var retrieveAddr = inventoryAddr + '/retrieve/*';
@@ -308,7 +317,6 @@
 
 	function showUpdateAssetForm(assetNumber) {
 		// console.log(assetNumber, assetDate, assetName, assetManager, assetLocation);
-
 		var assetData = slideIndex[assetNumber];
 
 		// Remove Button
@@ -344,7 +352,7 @@
 		};
 
 		// Set Current Asset Data
-		document.getElementById('form-asset-number').value = assetData.assetNum;
+		document.getElementById('form-asset-number').value = assetData.assetNumber;
 		document.getElementById('form-asset-date').value = assetData.date;
 		document.getElementById('form-device-name').value = assetData.deviceName;
 		document.getElementById('form-asset-manager').selectedIndex = managerSelectionIndex[assetData.manager];
@@ -352,7 +360,7 @@
 
 		var newSaveButtonElem = document.createElement('BUTTON');
 		newSaveButtonElem.classList.add('save-button');
-		newSaveButtonElem.addEventListener('click', function () { updateAssetData(assetData.assetNum) });
+		newSaveButtonElem.addEventListener('click', function () { updateAssetData(assetData.assetNumber) });
 		newSaveButtonElem.style.backgroundColor = '#008CBA';
 		newSaveButtonElem.innerText = 'Update';
 		document.getElementById('form-asset-container').appendChild(newSaveButtonElem);
