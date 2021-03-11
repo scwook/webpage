@@ -667,6 +667,18 @@
 </body>
 
 <script>
+    // Control Server
+    // var serverAddr = 'http://192.168.68.14'
+    // var imageServer = serverAddr + ':4879/asset_image/'
+    // var inventoryAddr = serverAddr + ':9010/inventory'
+    // var retrieveAddr = inventoryAddr + '/retrieve/*';
+    // var insertAddr = inventoryAddr + '/insert';
+    // var updateAddr = inventoryAddr + '/update';
+
+    // scwook Server
+    var serverAddr = 'http://192.168.68.126'
+    var retrieveAddr = serverAddr + ':9012/';
+
     var chartColors = {
         red: 'rgb(255, 99, 132)',
         orange: 'rgb(255, 159, 64)',
@@ -848,19 +860,6 @@
         }
     }
 
-    // var count = 0;
-    // function changeImage() {
-
-    //     if (count == 0) {
-    //         document.getElementById("img").src = "change.svg";
-    //         count = 1;
-    //     }
-    //     else {
-    //         document.getElementById("img").src = "image1.svg";
-    //         count = 0;
-    //     }
-    // }
-
     var slideIndex = 1;
 
     function showDivs(count) {
@@ -896,6 +895,117 @@
 
     }
 
+    var recordData = [
+        { pvName: 'WEB-PAGE:TIMING-ACCT:delay', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-ACCT:width', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-CHOPPER:delay', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-CHOPPER:width', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-RFQ:delay', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-RFQ:width', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE1:status7', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE2:status7', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE3:status7', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE4:status7', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE5:status7', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE6:status7', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status1', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status2', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status3', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status4', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status5', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status6', value: 0 },
+        { pvName: 'WEB-PAGE:FPS-NODE7:status7', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-ACCT:polarity', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-CHOPPER:polarity', value: 0 },
+        { pvName: 'WEB-PAGE:TIMING-RFQ:polarity', value: 0 }
+    ];
+
+    function getRecordData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                let jsonValue = JSON.parse(this.responseText);
+
+                recordData.forEach(function (data) {
+
+                    for (i = 0; i < recordData.length; i++) {
+                        let pvName = recordData[i].pvName;
+                        let value = jsonValue[pvName].value;
+
+                        if (typeof value == 'object') {
+                            recordData[i].value = jsonValue[pvName].value.index;
+                        }
+                        else {
+                            recordData[i].value = jsonValue[pvName].value;
+                        }
+                    }
+                });
+
+                console.log(recordData[0].value);
+                console.log(recordData[1].value);
+                console.log(recordData[2].value);
+                console.log(recordData[3].value);
+                console.log(recordData[4].value);
+                console.log(recordData[5].value);
+
+
+                // console.log(this.responseText);
+                // let channelLength = jsonValue.channelName.length;
+                // let valueLength = jsonValue.value.length
+
+                // for (let i = 0; i < channelLength; i++) {
+                //     pvData[jsonValue.channelName[i]] = jsonValue.value[i];
+                //     console.log(jsonValue.channelName[i], jsonValue.value[i]);
+                // }
+
+                // if (jsonValue.length)
+
+                // }
+            }
+
+        };
+
+        xhttp.open("GET", retrieveAddr, true);
+        xhttp.send();
+    }
+
     function timer() {
         var d = new Date();
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
@@ -903,6 +1013,11 @@
 
     window.onload = function () {
         // firstShowUp();
+        setInterval(function () {
+            getRecordData();
+
+        }, 10000);
+
         simulation();
 
         var details = [
@@ -1014,7 +1129,6 @@
                 }, 50);
             }, 3000);
 
-
         }, 1000);
 
         // Timestamp
@@ -1030,13 +1144,12 @@
         var dt4 = 0.3
         var dt5 = 0.3
         var dir = -1;
-        setInterval( function () {
+        setInterval(function () {
             dt2 += 0.02 * dir;
             dt4 += 0.01 * dir;
             dir *= -1;
 
-            console.log(dt4, dir);
-        }, 10000); 
+        }, 10000);
 
         setInterval(function () {
             var timestamp1ID = document.getElementById('timestamp1');

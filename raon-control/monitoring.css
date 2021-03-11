@@ -180,7 +180,7 @@
 .doughnutChartText {
     position: absolute;
     width: 100%;
-    top: 140px;
+    top: 120px;
     color: white;
     font-size: 30px;
     text-align: center;
@@ -189,7 +189,7 @@
 .doughnutChartTextUnder {
     position: absolute;
     width: 100%;
-    top: 180px;
+    top: 155px;
     color: gray;
     font-size: 18px;
     text-align: center;
