@@ -6,6 +6,8 @@ from pvaccess import *
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+SERVER_ADDR = "192.168.68.126"
+
 pvObjectDict = dict()
 
 class ChannelMonitor:
@@ -39,4 +41,4 @@ def get_data():
 
 
 if __name__ == "__main__":
-    app.run(host="192.168.0.105", port="8080")
+    app.run(host=SERVER_ADDR, port="9012")
