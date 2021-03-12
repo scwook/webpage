@@ -16,6 +16,9 @@ class ChannelMonitor:
 
     def monitor(self, data):
         pvObjectDict[self.name] = dict(data)
+        
+        if type(pvObjectDict[self.name]['value']) is dict:
+            pvObjectDict[self.name]['value'] = pvObjectDict[self.name]['value']['index']
 
 ### Read Channel List
 pvList = list(line.strip() for line in open('pvList'))

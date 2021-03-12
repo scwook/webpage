@@ -881,7 +881,6 @@
             x[i].style.display = "none";
         }
 
-        console.log(n);
         if (count < 0) {
             x[slideIndex - 1].style.position = "relative";
             x[slideIndex - 1].style.animation = "animateleft 0.4s";
@@ -895,160 +894,159 @@
 
     }
 
-    var recordData = [
-        { pvName: 'WEB-PAGE:TIMING-ACCT:delay', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-ACCT:width', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-CHOPPER:delay', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-CHOPPER:width', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-RFQ:delay', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-RFQ:width', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE1:status7', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE2:status7', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE3:status7', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE4:status7', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE5:status7', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE6:status7', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status1', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status2', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status3', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status4', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status5', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status6', value: 0 },
-        { pvName: 'WEB-PAGE:FPS-NODE7:status7', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-ACCT:polarity', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-CHOPPER:polarity', value: 0 },
-        { pvName: 'WEB-PAGE:TIMING-RFQ:polarity', value: 0 }
-    ];
-
+    var dataReadState = false;
+    var recordData = {}
     function getRecordData() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
 
-                let jsonValue = JSON.parse(this.responseText);
-
-                recordData.forEach(function (data) {
-
-                    for (i = 0; i < recordData.length; i++) {
-                        let pvName = recordData[i].pvName;
-                        let value = jsonValue[pvName].value;
-
-                        if (typeof value == 'object') {
-                            recordData[i].value = jsonValue[pvName].value.index;
-                        }
-                        else {
-                            recordData[i].value = jsonValue[pvName].value;
-                        }
-                    }
-                });
-
-                console.log(recordData[0].value);
-                console.log(recordData[1].value);
-                console.log(recordData[2].value);
-                console.log(recordData[3].value);
-                console.log(recordData[4].value);
-                console.log(recordData[5].value);
-
-
-                // console.log(this.responseText);
-                // let channelLength = jsonValue.channelName.length;
-                // let valueLength = jsonValue.value.length
-
-                // for (let i = 0; i < channelLength; i++) {
-                //     pvData[jsonValue.channelName[i]] = jsonValue.value[i];
-                //     console.log(jsonValue.channelName[i], jsonValue.value[i]);
-                // }
-
-                // if (jsonValue.length)
-
-                // }
+                recordData = JSON.parse(this.responseText);
+                dataReadState = true;
             }
-
         };
 
         xhttp.open("GET", retrieveAddr, true);
         xhttp.send();
     }
 
+    // Timestamp
     function timer() {
         var d = new Date();
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
+    setInterval(timer, 1000);
+
+    // Create Chart Canvase
+    var details = [
+        { label: "Line Chart1", color: window.chartColors.red },
+        { label: "Line Chart2", color: window.chartColors.blue }
+    ]
+
+    var ctx1 = document.getElementById('canvas-2x2').getContext('2d');
+    window.myChart1 = new Chart(ctx1, lineChartConfig(details[0]));
+
+    var ctx2 = document.getElementById('canvas-3x2').getContext('2d');
+    window.myChart3 = new Chart(ctx2, lineChartConfig(details[1]));
+
+    // *******************
+    // 
+    // **  Windows Load **
+    // 
+    // *******************
     window.onload = function () {
+
         // firstShowUp();
         setInterval(function () {
             getRecordData();
 
-        }, 10000);
+        }, 2000);
 
-        simulation();
+        // Set Real Data
+        // real_storage();
+        real_fps();
+        // real_timestamp();
+        // real_timing();
+        // real_network();
+        // real_server();
 
-        var details = [
-            { label: "Line Chart1", color: window.chartColors.red },
-            { label: "Line Chart2", color: window.chartColors.blue }
+        // Set Simulation Data
+        simulation_storage();
+        // simulation_fps();
+        simulation_timestamp();
+        simulation_timing();
+        simulation_network();
+        simulation_server();
+    }
+
+    // function firstShowUp() {
+    //     rotationStart();
+    //     fillStart(80);
+    // }
+
+    function real_storage() {
+
+    }
+
+    // FPS Global Variable
+    var fpsNodeClass = document.getElementsByClassName('fps-node');
+    var id = new Array(fpsNodeClass.length);
+    var idCount = new Array(fpsNodeClass.length);
+
+    function real_fps() {
+
+        // FPS Node
+        var realData2NodeClass = [];
+        var fpsPVList = [
+            'WEB-PAGE:FPS-NODE1:status1', 'WEB-PAGE:FPS-NODE1:status2', 'WEB-PAGE:FPS-NODE1:status3', 'WEB-PAGE:FPS-NODE1:status4', 'WEB-PAGE:FPS-NODE1:status5', 'WEB-PAGE:FPS-NODE1:status6', 'WEB-PAGE:FPS-NODE1:status7',
+            'WEB-PAGE:FPS-NODE2:status1', 'WEB-PAGE:FPS-NODE2:status2', 'WEB-PAGE:FPS-NODE2:status3', 'WEB-PAGE:FPS-NODE2:status4', 'WEB-PAGE:FPS-NODE2:status5', 'WEB-PAGE:FPS-NODE2:status6', 'WEB-PAGE:FPS-NODE2:status7',
+            'WEB-PAGE:FPS-NODE3:status1', 'WEB-PAGE:FPS-NODE3:status2', 'WEB-PAGE:FPS-NODE3:status3', 'WEB-PAGE:FPS-NODE3:status4', 'WEB-PAGE:FPS-NODE3:status5', 'WEB-PAGE:FPS-NODE3:status6', 'WEB-PAGE:FPS-NODE3:status7',
+            'WEB-PAGE:FPS-NODE4:status1', 'WEB-PAGE:FPS-NODE4:status2', 'WEB-PAGE:FPS-NODE4:status3', 'WEB-PAGE:FPS-NODE4:status4', 'WEB-PAGE:FPS-NODE4:status5', 'WEB-PAGE:FPS-NODE4:status6', 'WEB-PAGE:FPS-NODE4:status7',
+            'WEB-PAGE:FPS-NODE5:status1', 'WEB-PAGE:FPS-NODE5:status2', 'WEB-PAGE:FPS-NODE5:status3', 'WEB-PAGE:FPS-NODE5:status4', 'WEB-PAGE:FPS-NODE5:status5', 'WEB-PAGE:FPS-NODE5:status6', 'WEB-PAGE:FPS-NODE5:status7',
+            'WEB-PAGE:FPS-NODE6:status1', 'WEB-PAGE:FPS-NODE6:status2', 'WEB-PAGE:FPS-NODE6:status3', 'WEB-PAGE:FPS-NODE6:status4', 'WEB-PAGE:FPS-NODE6:status5', 'WEB-PAGE:FPS-NODE6:status6', 'WEB-PAGE:FPS-NODE6:status7',
+            'WEB-PAGE:FPS-NODE7:status1', 'WEB-PAGE:FPS-NODE7:status2', 'WEB-PAGE:FPS-NODE7:status3', 'WEB-PAGE:FPS-NODE7:status4', 'WEB-PAGE:FPS-NODE7:status5', 'WEB-PAGE:FPS-NODE7:status6', 'WEB-PAGE:FPS-NODE7:status7',
         ]
+        var value2Color = { 'undefined': 'rgb(0, 64, 96)', 0: 'rgb(0, 166, 81)', 1: 'rgb(237, 26, 59)' };
 
-        var ctx1 = document.getElementById('canvas-2x2').getContext('2d');
-        window.myChart1 = new Chart(ctx1, lineChartConfig(details[0]));
+        setInterval(function () {
 
-        var ctx2 = document.getElementById('canvas-3x2').getContext('2d');
-        window.myChart3 = new Chart(ctx2, lineChartConfig(details[1]));
+            if (dataReadState) {
+                for (let i = 0; i < fpsNodeClass.length; i++) {
+                    var currentColor = window.getComputedStyle(fpsNodeClass[i]).getPropertyValue("background-color");
+                    var newColor = value2Color[recordData[fpsPVList[i]].value];
 
-        var myVar = setInterval(timer, 1000);
+                    if (currentColor != newColor) {
+
+                        id[i] = setInterval(setFPSBackgroundColor, 50, i, 'rgb(0, 64, 96)', newColor);
+                        idCount[i] = 0;
+                    }
+                }
+            }
+        }, 5000);
     }
 
-    function firstShowUp() {
-        rotationStart();
-        fillStart(80);
+    function setFPSBackgroundColor(index, color1, color2) {
+        // var count = 0;
+
+        if (idCount[index] == 4) {
+            clearInterval(id[index]);
+        }
+
+        switch (idCount[index]) {
+            case 0:
+            case 2:
+            case 4:
+                fpsNodeClass[index].style.backgroundColor = color2;
+                break;
+
+            case 1:
+            case 3:
+                fpsNodeClass[index].style.backgroundColor = color1;
+                break;
+        }
+
+        idCount[index] += 1;
+        // count += 1;
     }
 
-    function simulation() {
+    function real_timestamp() {
 
-        // Pressure
-        // var pressureValue1ID = document.getElementById('pressure-value1');
-        // setInterval(function () {
-        //     var dataValue = (Math.random() * 10).toFixed(1);
-        //     pressureValue1ID.innerText = dataValue;
+    }
 
-        // }, 3000);
+    function real_timing() {
 
+    }
+
+    function real_network() {
+
+    }
+
+    function real_server() {
+
+    }
+
+    function simulation_storage() {
         var chartMaxLength = 503;
 
         // Storage
@@ -1095,7 +1093,9 @@
         iocChartID.classList.remove('doughnutForeground');
         void iocChartID.offsetWidth;
         iocChartID.classList.add('doughnutForeground');
+    }
 
+    function simulation_fps() {
         // FPS Node
         var fpsNodeClass = document.getElementsByClassName('fps-node');
         var colorArray = ['#004060', '#00A651', '#ED1A3B'];
@@ -1130,7 +1130,9 @@
             }, 3000);
 
         }, 1000);
+    }
 
+    function simulation_timestamp() {
         // Timestamp
         var deg1 = 0;
         var deg2 = 0;
@@ -1171,6 +1173,17 @@
             deg5 += dt5;
         }, 30);
 
+    }
+
+    function simulation_timing() {
+
+    }
+
+    function simulation_network() {
+
+    }
+
+    function simulation_server() {
         // Web Server
         var webServerMaxCPU = 100;
         var webServerMaxMemory = 100;
@@ -1542,6 +1555,20 @@
             }
 
         }, 5000);
+    }
+
+
+
+    function simulation() {
+
+        // Pressure
+        // var pressureValue1ID = document.getElementById('pressure-value1');
+        // setInterval(function () {
+        //     var dataValue = (Math.random() * 10).toFixed(1);
+        //     pressureValue1ID.innerText = dataValue;
+
+        // }, 3000);
+
     }
 </script>
 
