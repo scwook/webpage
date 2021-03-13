@@ -211,12 +211,19 @@
                     <div class="grid-item grid-1x1">
                         <p class="title">Timing</p>
                         <div class="timing-container">
-                            <div
+                            <div id='timing-chopper-value'
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
-                                100us</div>
-                            <svg id="timing-chopper" width="200" height="52" style="margin-top: 10px;">
-                                <polyline id="timing-chopper-polygon" class="timing" points="0 51 60 51 60 51 130 51 130 51 200 51"
-                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
+                                0us
+                            </div>
+                            <svg id="timing-chopper" width="200" height="52" style="margin-top: 20px;">
+                                <polyline id="timing-chopper-polygon" class="timing"
+                                    points="0 51 60 51 60 51 130 51 130 51 200 51"
+                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;">
+                                    <animate id="chopperTimingPolygonAnimation" attributeName="points"
+                                        begin="indefinite" dur="0.5s" fill="freeze" keySplines="0.0 0.4 0.2 1"
+                                        calcMode="spline" keyTimes="0;1" from="0 51 40 51 40 51 150 51 150 51 200 51"
+                                        to="0 51 40 51 40 51 150 51 150 51 200 51" />
+                                </polyline>
                             </svg>
                         </div>
                         <div class="sub-title">Chopper</div>
@@ -381,12 +388,19 @@
                     <div class="grid-item grid-1x1">
                         <p class="title">Timing</p>
                         <div class="timing-container">
-                            <div
+                            <div id='timing-acct-value'
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
-                                100us</div>
+                                0us
+                            </div>
                             <svg id="timing-acct" width="200" height="52" style="margin-top: 10px;">
-                                <polyline id="timing-acct-polygon" class="timing" points="0 51 60 51 60 51 130 51 130 51 200 51"
-                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
+                                <polyline id="timing-acct-polygon" class="timing"
+                                    points="0 51 60 51 60 51 130 51 130 51 200 51"
+                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;">
+                                    <animate id="acctTimingPolygonAnimation" attributeName="points" begin="indefinite"
+                                        dur="0.5s" fill="freeze" keySplines="0.0 0.4 0.2 1" calcMode="spline"
+                                        keyTimes="0;1" from="0 51 40 51 40 51 150 51 150 51 200 51"
+                                        to="0 51 40 51 40 51 150 51 150 51 200 51" />
+                                </polyline>
                             </svg>
                         </div>
                         <div class="sub-title">ACCT</div>
@@ -559,12 +573,19 @@
                     <div class="grid-item grid-1x1">
                         <p class="title">Timing</p>
                         <div class="timing-container">
-                            <div
+                            <div id='timing-rfq-value'
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
-                                250us</div>
+                                0us
+                            </div>
                             <svg id="timing-rfq" width="200" height="52" style="margin-top: 10px;">
-                                <polyline id="timing-rfq-polygon" class="timing" points="0 51 60 51 60 51 130 51 130 51 200 51"
-                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
+                                <polyline id="timing-rfq-polygon" class="timing"
+                                    points="0 51 60 51 60 51 130 51 130 51 200 51"
+                                    style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;">
+                                    <animate id="rfqTimingPolygonAnimation" attributeName="points" begin="indefinite"
+                                        dur="0.5s" fill="freeze" keySplines="0.0 0.4 0.2 1" calcMode="spline"
+                                        keyTimes="0;1" from="0 51 40 51 40 51 150 51 150 51 200 51"
+                                        to="0 51 40 51 40 51 150 51 150 51 200 51" />
+                                </polyline>
                             </svg>
                         </div>
                         <div class="sub-title">RFQ</div>
@@ -1170,69 +1191,142 @@
     function simulation_timing() {
 
         // Chopper
-        var chopperTimingPolygonID = document.getElementById('timing-chopper-polygon');
-        var chopperTimingAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-        chopperTimingAni.setAttribute('id', 'chopperTimingPolygonAnimation');
-        chopperTimingAni.setAttribute('begin', 'indefinite');
-        chopperTimingAni.setAttribute("attributeName", "points");
-        chopperTimingAni.setAttribute('dur', '0.5s');
-        chopperTimingAni.setAttribute('fill', 'freeze');
-        chopperTimingAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
-        chopperTimingAni.setAttribute('keyTimes', '0;1');
-        chopperTimingAni.setAttribute('calcMode', 'spline');
-        chopperTimingAni.setAttribute('dur', '0.5s');
-        chopperTimingAni.setAttribute('from', '0 51 40 51 40 51 150 51 150 51 200 51');
-        chopperTimingAni.setAttribute('to', '0 1 60 1 60 51 130 51 130 1 200 1');
-
-        chopperTimingPolygonID.appendChild(chopperTimingAni);
-    
         setTimeout(function () {
-            document.getElementById("chopperTimingPolygonAnimation").beginElement();
+
+            setInterval(function () {
+                var chopperValue = Math.floor(Math.random() * 500) + 50;
+                var drawingWidth = chopperValue;
+
+                var invert = 1;
+                var y1 = ' 51';
+                var y2 = ' 1';
+
+                // Max Drawing width is 900us
+                if (chopperValue > 800) {
+                    drawingWidth = 800;
+                }
+
+                if (invert == 1) {
+                    let tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                // point space = max point(200) / max timing width in container(1000us) = 0.2 
+                // as of center point = center point(100) - value / 2 * point offset = center point +- value * 0.1
+                var pointOffset = Math.floor(drawingWidth * 0.1);
+                var point1 = '0' + y1 + ' ';
+                var point2 = 100 - pointOffset + y1 + ' ';
+                var point3 = 100 - pointOffset + y2 + ' ';
+                var point4 = 100 + pointOffset + y2 + ' ';
+                var point5 = 100 + pointOffset + y1 + ' ';
+                var point6 = '200' + y1;
+
+                var polygonPoint = point1 + point2 + point3 + point4 + point5 + point6;
+
+                var timingAnimation = document.getElementById('chopperTimingPolygonAnimation');
+                var currentPolygonPoints = timingAnimation.getAttribute('to');
+
+                timingAnimation.setAttribute('from', currentPolygonPoints);
+                timingAnimation.setAttribute('to', polygonPoint);
+
+                document.getElementById("chopperTimingPolygonAnimation").beginElement();
+                document.getElementById('timing-chopper-value').innerText = chopperValue + 'us';
+            }, 5000);
+
         }, 1000);
 
         // ACCT
-        var acctTimingPolygonID = document.getElementById('timing-acct-polygon');
-        var acctTimingAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-        acctTimingAni.setAttribute('id', 'acctTimingPolygonAnimation');
-        acctTimingAni.setAttribute('begin', 'indefinite');
-        acctTimingAni.setAttribute("attributeName", "points");
-        acctTimingAni.setAttribute('dur', '0.5s');
-        acctTimingAni.setAttribute('fill', 'freeze');
-        acctTimingAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
-        acctTimingAni.setAttribute('keyTimes', '0;1');
-        acctTimingAni.setAttribute('calcMode', 'spline');
-        acctTimingAni.setAttribute('dur', '0.5s');
-        acctTimingAni.setAttribute('from', '0 51 40 51 40 51 150 51 150 51 200 51');
-        acctTimingAni.setAttribute('to', '0 51 60 51 60 1 130 1 130 51 200 51');
+        setTimeout(function () {
+            setInterval(function () {
 
-        acctTimingPolygonID.appendChild(acctTimingAni);
-    
-        setTimeout(function () {
-            document.getElementById("acctTimingPolygonAnimation").beginElement();
+                var acctValue = Math.floor(Math.random() * 500) + 50;
+                var drawingWidth = acctValue;
+
+                var invert = 0;
+                var y1 = ' 51';
+                var y2 = ' 1';
+
+                // Max Drawing width is 900us
+                if (acctValue > 800) {
+                    drawingWidth = 800;
+                }
+
+                if (invert == 1) {
+                    let tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                // point space = max point(200) / max timing width in container(1000us) = 0.2 
+                // as of center point = center point(100) - value / 2 * point offset = center point +- value * 0.1
+                var pointOffset = Math.floor(drawingWidth * 0.1);
+                var point1 = '0' + y1 + ' ';
+                var point2 = 100 - pointOffset + y1 + ' ';
+                var point3 = 100 - pointOffset + y2 + ' ';
+                var point4 = 100 + pointOffset + y2 + ' ';
+                var point5 = 100 + pointOffset + y1 + ' ';
+                var point6 = '200' + y1;
+
+                var polygonPoint = point1 + point2 + point3 + point4 + point5 + point6;
+
+                var timingAnimation = document.getElementById('acctTimingPolygonAnimation');
+                var currentPolygonPoints = timingAnimation.getAttribute('to');
+
+                timingAnimation.setAttribute('from', currentPolygonPoints);
+                timingAnimation.setAttribute('to', polygonPoint);
+
+                document.getElementById("acctTimingPolygonAnimation").beginElement();
+                document.getElementById('timing-acct-value').innerText = acctValue + 'us';
+            }, 5000);
+
         }, 1000);
- 
+
         // RFQ
-        var rfqTimingPolygonID = document.getElementById('timing-rfq-polygon');
-        var rfqTimingAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
-        rfqTimingAni.setAttribute('id', 'rfqTimingPolygonAnimation');
-        rfqTimingAni.setAttribute('begin', 'indefinite');
-        rfqTimingAni.setAttribute("attributeName", "points");
-        rfqTimingAni.setAttribute('dur', '0.5s');
-        rfqTimingAni.setAttribute('fill', 'freeze');
-        rfqTimingAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
-        rfqTimingAni.setAttribute('keyTimes', '0;1');
-        rfqTimingAni.setAttribute('calcMode', 'spline');
-        rfqTimingAni.setAttribute('dur', '0.5s');
-        rfqTimingAni.setAttribute('from', '0 51 40 51 40 51 150 51 150 51 200 51');
-        rfqTimingAni.setAttribute('to', '0 51 40 51 40 1 150 1 150 51 200 51');
-    
-        rfqTimingPolygonID.appendChild(rfqTimingAni);
-    
         setTimeout(function () {
-            document.getElementById("rfqTimingPolygonAnimation").beginElement();
+            setInterval(function () {
+
+                var rfqValue = Math.floor(Math.random() * 500) + 50;
+                var drawingWidth = rfqValue;
+
+                var invert = 0;
+                var y1 = ' 51';
+                var y2 = ' 1';
+
+                // Max Drawing width is 900us
+                if (rfqValue > 800) {
+                    drawingWidth = 800;
+                }
+
+                if (invert == 1) {
+                    let tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                // point space = max point(200) / max timing width in container(1000us) = 0.2 
+                // as of center point = center point(100) - value / 2 * point offset = center point +- value * 0.1
+                var pointOffset = Math.floor(drawingWidth * 0.1);
+                var point1 = '0' + y1 + ' ';
+                var point2 = 100 - pointOffset + y1 + ' ';
+                var point3 = 100 - pointOffset + y2 + ' ';
+                var point4 = 100 + pointOffset + y2 + ' ';
+                var point5 = 100 + pointOffset + y1 + ' ';
+                var point6 = '200' + y1;
+
+                var polygonPoint = point1 + point2 + point3 + point4 + point5 + point6;
+
+                var timingAnimation = document.getElementById('rfqTimingPolygonAnimation');
+                var currentPolygonPoints = timingAnimation.getAttribute('to');
+
+                timingAnimation.setAttribute('from', currentPolygonPoints);
+                timingAnimation.setAttribute('to', polygonPoint);
+                document.getElementById("rfqTimingPolygonAnimation").beginElement();
+                document.getElementById('timing-rfq-value').innerText = rfqValue + 'us';
+            }, 5000);
+
         }, 1000);
- 
-        
+
     }
 
     function simulation_network() {
