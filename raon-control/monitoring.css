@@ -281,7 +281,7 @@
 .timing {
     animation: timing 0.5s ease-out forwards;
     stroke-width: 2px;
-    stroke-dasharray: 290;
+    stroke-dasharray: 302;
 }
 
 .tooltiptext {
@@ -351,7 +351,7 @@
 
 @keyframes timing {
     from {
-        stroke-dashoffset: 290;
+        stroke-dashoffset: 302;
     }
     to {
         stroke-dashoffset: 0;

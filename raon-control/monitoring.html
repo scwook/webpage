@@ -214,8 +214,8 @@
                             <div
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
                                 100us</div>
-                            <svg id="timing-chopper" width="190" height="52" style="margin-top: 10px;">
-                                <polyline class="timing" points="0 1 60 1 60 51 130 51 130 1 190 1"
+                            <svg id="timing-chopper" width="200" height="52" style="margin-top: 10px;">
+                                <polyline id="timing-chopper-polygon" class="timing" points="0 51 60 51 60 51 130 51 130 51 200 51"
                                     style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
                             </svg>
                         </div>
@@ -384,8 +384,8 @@
                             <div
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
                                 100us</div>
-                            <svg id="timing-acct" width="190" height="52" style="margin-top: 10px;">
-                                <polyline class="timing" points="0 51 60 51 60 1 130 1 130 51 190 51"
+                            <svg id="timing-acct" width="200" height="52" style="margin-top: 10px;">
+                                <polyline id="timing-acct-polygon" class="timing" points="0 51 60 51 60 51 130 51 130 51 200 51"
                                     style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
                             </svg>
                         </div>
@@ -562,8 +562,8 @@
                             <div
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
                                 250us</div>
-                            <svg id="timing-rfq" width="190" height="52" style="margin-top: 10px;">
-                                <polyline class="timing" points="0 51 40 51 40 1 150 1 150 51 190 51"
+                            <svg id="timing-rfq" width="200" height="52" style="margin-top: 10px;">
+                                <polyline id="timing-rfq-polygon" class="timing" points="0 51 60 51 60 51 130 51 130 51 200 51"
                                     style="fill:none;stroke:#93278f;stroke-miterlimit:10;stroke-width:2px;" />
                             </svg>
                         </div>
@@ -937,7 +937,7 @@
 
         // Set Real Data
         // real_storage();
-        real_fps();
+        // real_fps();
         // real_timestamp();
         // real_timing();
         // real_network();
@@ -945,7 +945,7 @@
 
         // Set Simulation Data
         simulation_storage();
-        // simulation_fps();
+        simulation_fps();
         simulation_timestamp();
         simulation_timing();
         simulation_network();
@@ -1169,6 +1169,70 @@
 
     function simulation_timing() {
 
+        // Chopper
+        var chopperTimingPolygonID = document.getElementById('timing-chopper-polygon');
+        var chopperTimingAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        chopperTimingAni.setAttribute('id', 'chopperTimingPolygonAnimation');
+        chopperTimingAni.setAttribute('begin', 'indefinite');
+        chopperTimingAni.setAttribute("attributeName", "points");
+        chopperTimingAni.setAttribute('dur', '0.5s');
+        chopperTimingAni.setAttribute('fill', 'freeze');
+        chopperTimingAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        chopperTimingAni.setAttribute('keyTimes', '0;1');
+        chopperTimingAni.setAttribute('calcMode', 'spline');
+        chopperTimingAni.setAttribute('dur', '0.5s');
+        chopperTimingAni.setAttribute('from', '0 51 40 51 40 51 150 51 150 51 200 51');
+        chopperTimingAni.setAttribute('to', '0 1 60 1 60 51 130 51 130 1 200 1');
+
+        chopperTimingPolygonID.appendChild(chopperTimingAni);
+    
+        setTimeout(function () {
+            document.getElementById("chopperTimingPolygonAnimation").beginElement();
+        }, 1000);
+
+        // ACCT
+        var acctTimingPolygonID = document.getElementById('timing-acct-polygon');
+        var acctTimingAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        acctTimingAni.setAttribute('id', 'acctTimingPolygonAnimation');
+        acctTimingAni.setAttribute('begin', 'indefinite');
+        acctTimingAni.setAttribute("attributeName", "points");
+        acctTimingAni.setAttribute('dur', '0.5s');
+        acctTimingAni.setAttribute('fill', 'freeze');
+        acctTimingAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        acctTimingAni.setAttribute('keyTimes', '0;1');
+        acctTimingAni.setAttribute('calcMode', 'spline');
+        acctTimingAni.setAttribute('dur', '0.5s');
+        acctTimingAni.setAttribute('from', '0 51 40 51 40 51 150 51 150 51 200 51');
+        acctTimingAni.setAttribute('to', '0 51 60 51 60 1 130 1 130 51 200 51');
+
+        acctTimingPolygonID.appendChild(acctTimingAni);
+    
+        setTimeout(function () {
+            document.getElementById("acctTimingPolygonAnimation").beginElement();
+        }, 1000);
+ 
+        // RFQ
+        var rfqTimingPolygonID = document.getElementById('timing-rfq-polygon');
+        var rfqTimingAni = document.createElementNS("http://www.w3.org/2000/svg", 'animate');
+        rfqTimingAni.setAttribute('id', 'rfqTimingPolygonAnimation');
+        rfqTimingAni.setAttribute('begin', 'indefinite');
+        rfqTimingAni.setAttribute("attributeName", "points");
+        rfqTimingAni.setAttribute('dur', '0.5s');
+        rfqTimingAni.setAttribute('fill', 'freeze');
+        rfqTimingAni.setAttribute('keySplines', '0.0 0.4 0.2 1');
+        rfqTimingAni.setAttribute('keyTimes', '0;1');
+        rfqTimingAni.setAttribute('calcMode', 'spline');
+        rfqTimingAni.setAttribute('dur', '0.5s');
+        rfqTimingAni.setAttribute('from', '0 51 40 51 40 51 150 51 150 51 200 51');
+        rfqTimingAni.setAttribute('to', '0 51 40 51 40 1 150 1 150 51 200 51');
+    
+        rfqTimingPolygonID.appendChild(rfqTimingAni);
+    
+        setTimeout(function () {
+            document.getElementById("rfqTimingPolygonAnimation").beginElement();
+        }, 1000);
+ 
+        
     }
 
     function simulation_network() {
