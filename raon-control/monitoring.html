@@ -41,7 +41,7 @@
     <div style="height:20px"></div>
 
     <div class="body-box">
-        <button class="slide-button" onclick="showDivs(-1)">&#10094;</button>
+        <button class="slide-button" onclick="changePage(-1)">&#10094;</button>
 
         <div class="slide-box">
             <!-- Page 1 -->
@@ -234,14 +234,14 @@
                         <p class="title">Network
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
-                        <div class="data">6.19 Gb/s</div>
-                        <div class="sub-data">12.10 Gb/s</div>
+                        <div id="scl32-primary-uplink" class="data">0</div>
+                        <div id="scl32-secondary-uplink" class="sub-data">0</div>
                         <div class="sub-title">SCL</div>
                     </div>
 
                     <!-- 2 / 2 - 3 -->
                     <div class="grid-item grid-2x1" style="grid-column: 2/span 2;">
-                        <canvas id="canvas-2x2"></canvas>
+                        <canvas id="scl32-network"></canvas>
                     </div>
 
                     <!-- 2 / 4 -->
@@ -419,14 +419,15 @@
                         <p class="title">Network
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
-                        <div class="data">6.19 Gb/s</div>
-                        <div class="sub-data">12.10 Gb/s</div>
+                        <div id="scl4-primary-uplink" class="data">0</div>
+                        <div id="scl4-secondary-uplink" class="sub-data">0</span>
+                        </div>
                         <div class="sub-title">SCL</div>
                     </div>
 
                     <!-- 3 / 2 - 3 -->
                     <div class="grid-item grid-2x1" style="grid-column: 2/span 2;">
-                        <canvas id="canvas-3x2"></canvas>
+                        <canvas id="scl4-network"></canvas>
                     </div>
 
                     <!-- 3 / 4 -->
@@ -675,7 +676,7 @@
                 </div>
             </div>
         </div>
-        <button class="slide-button" onclick="showDivs(1)">&#10095;</button>
+        <button class="slide-button" onclick="changePage(1)">&#10095;</button>
     </div>
 </body>
 
@@ -754,84 +755,6 @@
 
         topPosition += direction;
         subBox.style.top = topPosition + 'px';
-
-        // console.log(topPosition);
-    }
-
-    function randomScalingFactor() {
-        return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
-    }
-
-    function onRefresh(chart) {
-        chart.config.data.datasets.forEach(function (dataset) {
-            dataset.data.push({
-                x: Date.now(),
-                y: randomScalingFactor()
-            });
-        });
-    }
-
-    // Line chart configuration
-    function lineChartConfig(details) {
-        // var color = Chart.helpers.color;
-        return {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: details.label,
-                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                    borderColor: details.color,
-                    fill: false,
-                    cubicInterpolationMode: 'monotone',
-                    data: [],
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: details.label
-                },
-                legend: {
-                    display: false
-                },
-                layout: {
-                    padding: {
-                        bottom: 10
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'realtime',
-                        realtime: {
-                            duration: 60000,
-                            refresh: 1000,
-                            delay: 2000,
-                            onRefresh: onRefresh
-                        },
-                        gridLines: {
-                            display: false
-                        }
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'value'
-                        },
-                        gridLines: {
-                            display: false
-                        }
-                    }]
-                },
-                tooltips: {
-                    mode: 'nearest',
-                    intersect: false
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: false
-                }
-            }
-        };
     }
 
     function timer() {
@@ -875,7 +798,7 @@
 
     var slideIndex = 1;
 
-    function showDivs(count) {
+    function changePage(count) {
 
         slideIndex += count;
         n = slideIndex;
@@ -931,18 +854,6 @@
 
     setInterval(timer, 1000);
 
-    // Create Chart Canvase
-    var details = [
-        { label: "Line Chart1", color: window.chartColors.red },
-        { label: "Line Chart2", color: window.chartColors.blue }
-    ]
-
-    var ctx1 = document.getElementById('canvas-2x2').getContext('2d');
-    window.myChart1 = new Chart(ctx1, lineChartConfig(details[0]));
-
-    var ctx2 = document.getElementById('canvas-3x2').getContext('2d');
-    window.myChart3 = new Chart(ctx2, lineChartConfig(details[1]));
-
     // *******************
     // 
     // **  Windows Load **
@@ -960,7 +871,7 @@
         // real_storage();
         // real_fps();
         // real_timestamp();
-        // real_timing();
+        real_timing();
         // real_network();
         // real_server();
 
@@ -968,7 +879,7 @@
         simulation_storage();
         simulation_fps();
         simulation_timestamp();
-        simulation_timing();
+        // simulation_timing();
         simulation_network();
         simulation_server();
     }
@@ -1048,6 +959,147 @@
     }
 
     function real_timing() {
+        // Chopper
+        var chopperPV = 'WEB-PAGE:TIMING-CHOPPER:width';
+
+        setInterval(function () {
+
+            if (dataReadState) {
+                var value = recordData[chopperPV].value;
+                var drawingWidth = value;
+
+                var invert = 1;
+                var y1 = ' 51';
+                var y2 = ' 1';
+
+                // Max Drawing width is 900us
+                if (value > 800) {
+                    drawingWidth = 800;
+                }
+
+                if (invert == 1) {
+                    let tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                // point space = max point(200) / max timing width in container(1000us) = 0.2 
+                // as of center point = center point(100) - value / 2 * point offset = center point +- value * 0.1
+                var pointOffset = Math.floor(drawingWidth * 0.1);
+                var point1 = '0' + y1 + ' ';
+                var point2 = 100 - pointOffset + y1 + ' ';
+                var point3 = 100 - pointOffset + y2 + ' ';
+                var point4 = 100 + pointOffset + y2 + ' ';
+                var point5 = 100 + pointOffset + y1 + ' ';
+                var point6 = '200' + y1;
+
+                var polygonPoint = point1 + point2 + point3 + point4 + point5 + point6;
+
+                var timingAnimation = document.getElementById('chopperTimingPolygonAnimation');
+                var currentPolygonPoints = timingAnimation.getAttribute('to');
+
+                timingAnimation.setAttribute('from', currentPolygonPoints);
+                timingAnimation.setAttribute('to', polygonPoint);
+
+                document.getElementById("chopperTimingPolygonAnimation").beginElement();
+                document.getElementById('timing-chopper-value').innerText = value + 'us';
+            }
+        }, 5000);
+
+
+        // ACCT
+        var acctPV = 'WEB-PAGE:TIMING-ACCT:width';
+
+        setInterval(function () {
+
+            if (dataReadState) {
+                var value = recordData[acctPV].value;
+                var drawingWidth = value;
+
+                var invert = 1;
+                var y1 = ' 51';
+                var y2 = ' 1';
+
+                // Max Drawing width is 900us
+                if (value > 800) {
+                    drawingWidth = 800;
+                }
+
+                if (invert == 1) {
+                    let tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                // point space = max point(200) / max timing width in container(1000us) = 0.2 
+                // as of center point = center point(100) - value / 2 * point offset = center point +- value * 0.1
+                var pointOffset = Math.floor(drawingWidth * 0.1);
+                var point1 = '0' + y1 + ' ';
+                var point2 = 100 - pointOffset + y1 + ' ';
+                var point3 = 100 - pointOffset + y2 + ' ';
+                var point4 = 100 + pointOffset + y2 + ' ';
+                var point5 = 100 + pointOffset + y1 + ' ';
+                var point6 = '200' + y1;
+
+                var polygonPoint = point1 + point2 + point3 + point4 + point5 + point6;
+
+                var timingAnimation = document.getElementById('acctTimingPolygonAnimation');
+                var currentPolygonPoints = timingAnimation.getAttribute('to');
+
+                timingAnimation.setAttribute('from', currentPolygonPoints);
+                timingAnimation.setAttribute('to', polygonPoint);
+
+                document.getElementById("acctTimingPolygonAnimation").beginElement();
+                document.getElementById('timing-acct-value').innerText = value + 'us';
+            }
+        }, 5000);
+
+        // RFQ
+        var rfqPV = 'WEB-PAGE:TIMING-RFQ:width';
+
+        setInterval(function () {
+
+            if (dataReadState) {
+                var value = recordData[rfqPV].value;
+                var drawingWidth = value;
+
+                var invert = 1;
+                var y1 = ' 51';
+                var y2 = ' 1';
+
+                // Max Drawing width is 900us
+                if (value > 800) {
+                    drawingWidth = 800;
+                }
+
+                if (invert == 1) {
+                    let tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                // point space = max point(200) / max timing width in container(1000us) = 0.2 
+                // as of center point = center point(100) - value / 2 * point offset = center point +- value * 0.1
+                var pointOffset = Math.floor(drawingWidth * 0.1);
+                var point1 = '0' + y1 + ' ';
+                var point2 = 100 - pointOffset + y1 + ' ';
+                var point3 = 100 - pointOffset + y2 + ' ';
+                var point4 = 100 + pointOffset + y2 + ' ';
+                var point5 = 100 + pointOffset + y1 + ' ';
+                var point6 = '200' + y1;
+
+                var polygonPoint = point1 + point2 + point3 + point4 + point5 + point6;
+
+                var timingAnimation = document.getElementById('rfqTimingPolygonAnimation');
+                var currentPolygonPoints = timingAnimation.getAttribute('to');
+
+                timingAnimation.setAttribute('from', currentPolygonPoints);
+                timingAnimation.setAttribute('to', polygonPoint);
+
+                document.getElementById("rfqTimingPolygonAnimation").beginElement();
+                document.getElementById('timing-rfq-value').innerText = value + 'us';
+            }
+        }, 5000);
 
     }
 
@@ -1330,6 +1382,198 @@
     }
 
     function simulation_network() {
+
+        // SCL3, SCL2 Vlan 30, 20
+        var scl32CharConfig = {
+            // var color = Chart.helpers.color;
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Primary',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.red,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }, {
+                    label: 'Secondary',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.blue,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'SCL3,2 Main Network Uplink'
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 10
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: scl32DataOnRefresh
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                }
+            }
+        };
+
+
+        var scl32ChartContext = document.getElementById('scl32-network').getContext('2d');
+        window.scl32Chart = new Chart(scl32ChartContext, scl32CharConfig);
+
+        function scl32DataOnRefresh(chart) {
+            var pValue = Math.random() * 10;
+            pValue = pValue.toFixed(1);
+
+            var sValue = Math.random() * 10;
+            sValue = sValue.toFixed(1);
+
+            var scl32PrimaryUplinkID = document.getElementById('scl32-primary-uplink');
+            var scl32SecondaryUplinkID = document.getElementById('scl32-secondary-uplink');
+
+            scl32PrimaryUplinkID.innerText = pValue;
+            scl32SecondaryUplinkID.innerText = sValue;
+
+            chart.config.data.datasets[0].data.push({
+                x: Date.now(),
+                y: pValue
+            });
+
+            chart.config.data.datasets[1].data.push({
+                x: Date.now(),
+                y: sValue
+            });
+        }
+
+        // SCL3, SCL2 Vlan 40
+        var scl4CharConfig = {
+            // var color = Chart.helpers.color;
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Primary',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.purple,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }, {
+                    label: 'Secondary',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.green,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'SCL3,2 Sub Network Uplink'
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 10
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: scl4DataOnRefresh
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                }
+            }
+        };
+
+
+        var scl4ChartContext = document.getElementById('scl4-network').getContext('2d');
+        window.scl4Chart = new Chart(scl4ChartContext, scl4CharConfig);
+
+        function scl4DataOnRefresh(chart) {
+            var pValue = Math.random() * 10;
+            pValue = pValue.toFixed(1);
+
+            var sValue = Math.random() * 10;
+            sValue = sValue.toFixed(1);
+
+            var scl4PrimaryUplinkID = document.getElementById('scl4-primary-uplink');
+            var scl4SecondaryUplinkID = document.getElementById('scl4-secondary-uplink');
+
+            scl4PrimaryUplinkID.innerText = pValue;
+            scl4SecondaryUplinkID.innerText = sValue;
+
+            chart.config.data.datasets[0].data.push({
+                x: Date.now(),
+                y: pValue
+            });
+
+            chart.config.data.datasets[1].data.push({
+                x: Date.now(),
+                y: sValue
+            });
+        }
 
     }
 

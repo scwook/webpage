@@ -101,9 +101,9 @@
 
 .data {
     position: relative;
-    top: 20px;
+    top: 30px;
     color: white;
-    font-size: 48px;
+    font-size: 40px;
     text-align: center;
     /* font-family: Roboto-Thin; */
     /* background-color: darkcyan; */
@@ -111,9 +111,9 @@
 
 .sub-data {
     position: relative;
-    top: 25px;
+    top: 30px;
     color: white;
-    font-size: 32px;
+    font-size: 28px;
     text-align: center;
     /* font-family: Roboto-Thin; */
     /* background-color: darkgoldenrod; */
@@ -371,4 +371,14 @@
     body {
         background-position: 0px var(--background-image-top);
     }
+}
+
+#scl32-primary-uplink::after, #scl4-primary-uplink:after {
+    content: ' Gb/s';
+    font-size: 36px;
+}
+
+#scl32-secondary-uplink::after, #scl4-secondary-uplink::after {
+    content: ' Gb/s';
+    font-size: 24px;
 }
