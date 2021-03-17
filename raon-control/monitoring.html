@@ -960,20 +960,22 @@
 
     function real_timing() {
         // Chopper
-        var chopperPV = 'WEB-PAGE:TIMING-CHOPPER:width';
+        var chopperWidthPV = 'WEB-PAGE:TIMING-CHOPPER:width';
+        var chopperPolarityPV = 'WEB-PAGE:TIMING-CHOPPER:polarity';
 
         setInterval(function () {
 
             if (dataReadState) {
-                var value = recordData[chopperPV].value;
-                var drawingWidth = value;
+                var width = recordData[chopperWidthPV].value;
+                var invert = recordData[chopperPolarityPV].value;
+            
+                var drawingWidth = width;
 
-                var invert = 1;
                 var y1 = ' 51';
                 var y2 = ' 1';
 
                 // Max Drawing width is 900us
-                if (value > 800) {
+                if (width > 800) {
                     drawingWidth = 800;
                 }
 
@@ -1002,26 +1004,28 @@
                 timingAnimation.setAttribute('to', polygonPoint);
 
                 document.getElementById("chopperTimingPolygonAnimation").beginElement();
-                document.getElementById('timing-chopper-value').innerText = value + 'us';
+                document.getElementById('timing-chopper-value').innerText = width + 'us';
             }
         }, 5000);
 
 
         // ACCT
-        var acctPV = 'WEB-PAGE:TIMING-ACCT:width';
+        var acctWidthPV = 'WEB-PAGE:TIMING-ACCT:width';
+        var acctPolarityPV = 'WEB-PAGE:TIMING-ACCT:polarity';
 
         setInterval(function () {
 
             if (dataReadState) {
-                var value = recordData[acctPV].value;
-                var drawingWidth = value;
+                var width = recordData[acctWidthPV].value;
+                var invert = recordData[acctPolarityPV].value;
 
-                var invert = 1;
+                var drawingWidth = width;
+
                 var y1 = ' 51';
                 var y2 = ' 1';
 
                 // Max Drawing width is 900us
-                if (value > 800) {
+                if (width > 800) {
                     drawingWidth = 800;
                 }
 
@@ -1050,25 +1054,27 @@
                 timingAnimation.setAttribute('to', polygonPoint);
 
                 document.getElementById("acctTimingPolygonAnimation").beginElement();
-                document.getElementById('timing-acct-value').innerText = value + 'us';
+                document.getElementById('timing-acct-value').innerText = width + 'us';
             }
         }, 5000);
 
         // RFQ
-        var rfqPV = 'WEB-PAGE:TIMING-RFQ:width';
+        var rfqWidthPV = 'WEB-PAGE:TIMING-RFQ:width';
+        var rfqPolarityPV = 'WEB-PAGE:TIMING-RFQ:polarity';
 
         setInterval(function () {
 
             if (dataReadState) {
-                var value = recordData[rfqPV].value;
-                var drawingWidth = value;
+                var width = recordData[rfqWidthPV].value;
+                var invert = recordData[rfqPolarityPV].value;
 
-                var invert = 1;
+                var drawingWidth = width;
+
                 var y1 = ' 51';
                 var y2 = ' 1';
 
                 // Max Drawing width is 900us
-                if (value > 800) {
+                if (width > 800) {
                     drawingWidth = 800;
                 }
 
@@ -1097,7 +1103,7 @@
                 timingAnimation.setAttribute('to', polygonPoint);
 
                 document.getElementById("rfqTimingPolygonAnimation").beginElement();
-                document.getElementById('timing-rfq-value').innerText = value + 'us';
+                document.getElementById('timing-rfq-value').innerText = width + 'us';
             }
         }, 5000);
 
