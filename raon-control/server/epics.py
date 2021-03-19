@@ -38,7 +38,7 @@ for name in pvList:
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/')
+@app.route('/epics/retrieve')
 def get_data():
         return json.dumps(pvObjectDict)
 

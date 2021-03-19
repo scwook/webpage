@@ -101,7 +101,7 @@
 
                     <!-- 1 / 4 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">FPS</p>
+                        <p class="title" id="fps-title">FPS</p>
                         <div id="fps-container">
                             <!-- Node 1 -->
                             <div class="fps-node" style="--delay: 0.0s;"></div>
@@ -209,7 +209,7 @@
 
                     <!-- 1 / 6 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">Timing</p>
+                        <p class="title" id="chopper-timing-title">Timing</p>
                         <div class="timing-container">
                             <div id='timing-chopper-value'
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
@@ -386,7 +386,7 @@
 
                     <!-- 2 / 6 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">Timing</p>
+                        <p class="title" id="acct-timing-title">Timing</p>
                         <div class="timing-container">
                             <div id='timing-acct-value'
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
@@ -572,7 +572,7 @@
 
                     <!-- 3 / 6 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">Timing</p>
+                        <p class="title" id="rfq-timing-title">Timing</p>
                         <div class="timing-container">
                             <div id='timing-rfq-value'
                                 style="width: 100%; text-align: center; color:white; font-size: 20px; margin-top: 50px;">
@@ -682,16 +682,12 @@
 
 <script>
     // Control Server
-    // var serverAddr = 'http://192.168.68.14'
-    // var imageServer = serverAddr + ':4879/asset_image/'
-    // var inventoryAddr = serverAddr + ':9010/inventory'
-    // var retrieveAddr = inventoryAddr + '/retrieve/*';
-    // var insertAddr = inventoryAddr + '/insert';
-    // var updateAddr = inventoryAddr + '/update';
+    // var serverAddr = 'http://10.1.181.201'
+    // var retrieveAddr = serverAddr + ':9012/epics/retrieve';
 
     // scwook Server
-    var serverAddr = 'http://192.168.68.126'
-    var retrieveAddr = serverAddr + ':9012/';
+    var serverAddr = 'http://192.168.68.14'
+    var retrieveAddr = serverAddr + ':9012/epics/retrieve';
 
     var chartColors = {
         red: 'rgb(255, 99, 132)',
@@ -854,11 +850,13 @@
 
     setInterval(timer, 1000);
 
-    // *******************
-    // 
-    // **  Windows Load **
-    // 
-    // *******************
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     window.onload = function () {
 
         // firstShowUp();
@@ -869,7 +867,7 @@
 
         // Set Real Data
         // real_storage();
-        // real_fps();
+        real_fps();
         // real_timestamp();
         real_timing();
         // real_network();
@@ -877,7 +875,7 @@
 
         // Set Simulation Data
         simulation_storage();
-        simulation_fps();
+        // simulation_fps();
         simulation_timestamp();
         // simulation_timing();
         simulation_network();
@@ -888,6 +886,13 @@
     //     rotationStart();
     //     fillStart(80);
     // }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function real_storage() {
 
@@ -928,6 +933,12 @@
                 }
             }
         }, 5000);
+
+        // tooltip
+        var tooltipElem = document.createElement('SPAN');
+        tooltipElem.classList.add('tooltiptext');
+        tooltipElem.innerText = 'WEB-PAGE:FPS-NODE#:status#';
+        document.getElementById('fps-title').appendChild(tooltipElem);
     }
 
     function setFPSBackgroundColor(index, color1, color2) {
@@ -968,7 +979,7 @@
             if (dataReadState) {
                 var width = recordData[chopperWidthPV].value;
                 var invert = recordData[chopperPolarityPV].value;
-            
+
                 var drawingWidth = width;
 
                 var y1 = ' 51';
@@ -1007,6 +1018,12 @@
                 document.getElementById('timing-chopper-value').innerText = width + 'us';
             }
         }, 5000);
+
+        // tooltip
+        var tooltipElem = document.createElement('SPAN');
+        tooltipElem.classList.add('tooltiptext');
+        tooltipElem.innerText = 'WEB-PAGE:TIMING-CHOPPER:width';
+        document.getElementById('chopper-timing-title').appendChild(tooltipElem);
 
 
         // ACCT
@@ -1058,6 +1075,12 @@
             }
         }, 5000);
 
+        // tooltip
+        var tooltipElem = document.createElement('SPAN');
+        tooltipElem.classList.add('tooltiptext');
+        tooltipElem.innerText = 'WEB-PAGE:TIMING-ACCT:width';
+        document.getElementById('acct-timing-title').appendChild(tooltipElem);
+
         // RFQ
         var rfqWidthPV = 'WEB-PAGE:TIMING-RFQ:width';
         var rfqPolarityPV = 'WEB-PAGE:TIMING-RFQ:polarity';
@@ -1107,6 +1130,11 @@
             }
         }, 5000);
 
+        // tooltip
+        var tooltipElem = document.createElement('SPAN');
+        tooltipElem.classList.add('tooltiptext');
+        tooltipElem.innerText = 'WEB-PAGE:TIMING-RFQ:width';
+        document.getElementById('rfq-timing-title').appendChild(tooltipElem);
     }
 
     function real_network() {
@@ -1116,6 +1144,13 @@
     function real_server() {
 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function simulation_storage() {
         var chartMaxLength = 503;

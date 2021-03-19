@@ -16,7 +16,7 @@
 				d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
 				style="fill:#f3f3f3" />
 		</svg>
-        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+		<div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
 		<div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
 		<div id="left-menu">
 			<a href="" class="secret-menu">Logbook</a>
@@ -84,6 +84,14 @@
 </body>
 
 <script>
+	// Control Server
+	// var serverAddr = 'http://10.1.181.201'
+	// var retrieveAddr = serverAddr + ':9012/epics/retrieve';
+
+	// scwook Server
+	var serverAddr = 'http://192.168.80.54'
+	var retrieveAddr = serverAddr + ':17665/mgmt/bpl/getPVStatus?pv=';
+
 	function retrieveData() {
 		var searchText = document.getElementById("input").value;
 		if (searchText.length) {
@@ -152,7 +160,7 @@
 				}
 			}
 		};
-		var rName = "http://192.168.80.54:17665/mgmt/bpl/getPVStatus?pv=" + retrievalName;
+		var rName = retrieveAddr + retrievalName;
 		xhttp.open("GET", rName, true);
 		xhttp.send();
 	}

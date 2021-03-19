@@ -1,3 +1,7 @@
+body {
+    overflow: visible;
+}
+
 .search-box {
     /* position: relative; */
     width: 800px;
