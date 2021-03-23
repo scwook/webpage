@@ -1,23 +1,390 @@
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <style>
-    .asset-text {
-        font-size: 10vw;
+    @font-face {
+        font-family: "Helvetica-Neue-Light";
+        src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
     }
 
-</style>
-<body>
-    <div id="asset-image"></div>
-    <div class="asset-text" id="asset-number">198306192</div>
-    <div class="asset-text" id="asset-date">2020-06-19</div>
-    <div class="asset-text" id="asset-name">iPhone</div>
-    <div class="asset-text" id="asset-manamger">손창욱</div>
-    <div class="asset-text" id="asset-location">중앙제어센터 1층 가속기제어팀</div>
-</body>
-<script>
+    @font-face {
+        font-family: "Roboto-Thin";
+        src: url(fonts/Roboto-Thin.ttf);
+    }
 
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url(fonts/Roboto-Light.ttf);
+    }
+
+    @font-face {
+        font-family: "NotoSansKR-Regular";
+        src: url(fonts/NotoSansKR-Regular.otf);
+    }
+
+    body {
+        margin: 0px;
+        background-color: black;
+        background-image: url('images/masset_bg.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+        overflow: hidden;
+        text-align: center;
+        color: white;
+        font-family: "Helvetica-Neue-Light";
+    }
+
+    .top-polygon,
+    .bottom-polygon {
+        position: absolute;
+        /* opacity: 0.07; */
+        z-index: -1;
+
+    }
+
+    .polygon-style {
+        fill:#0094c5;
+        opacity: 0.07;
+    }
+</style>
+
+<body>
+
+    <!-- Top Polygon -->
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="top-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <!-- Bottom Polygon -->
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <svg class="bottom-polygon" width="60" height="52" viewBox="0 0 60 52">
+        <polygon class="polygon-style" points="45 0 15 0 0 26 15 52 45 52 60 26 45 0" />
+    </svg>
+
+    <div style="font-size: 5vw; margin-top: 1vh; color: #CCCCCC">Accelerator Control Asset Manager</div>
+    <div id="asset-number" style="font-size: 8vw; margin-top: 8vh; color:#00A99D">198306192</div>
+    <div id="asset-date" style="font-size: 5vw; margin-top: 0.5vh; color: #CCCCCC">2020-06-19</div>
+
+    <div id="asset-image" style="width:80%; margin:auto; margin-top: 2vh"><img src="images/1.JPG" style="width:100%; height:auto"></div>
+
+    <div id="asset-name" style="font-size: 5vw; margin-top: 0vh; font-family: NotoSansKR-Regular">iPhone</div>
+    <div id="asset-location" style="font-size: 5vw; margin-top: 1vh; font-family: NotoSansKR-Regular">중앙제어센터 1층 가속기제어팀
+    </div>
+    <div id="asset-manamger" style="font-size: 6vw; margin-top: 1vh; font-family: NotoSansKR-Regular">손창욱</div>
+</body>
+
+<script>
+    // console.log(window.innerWidth);
+
+    var topPolygonSVGElement = document.getElementsByClassName('top-polygon');
+    var bottomPolygonSVGElement = document.getElementsByClassName('bottom-polygon');
+
+    var defaultWidth = 375;
+    var defaultHeight = 667;
+
+    var viewBoxScaleWidth = defaultWidth / screen.width;
+    var viewboxScaleHeight = defaultHeight / screen.height;
+
+    var polygonViewBoxWidth = 60 * viewBoxScaleWidth;
+    var polygonViewBoxHeight = 52 * viewboxScaleHeight;
+
+    var polygonViewBox = "0 0 " + polygonViewBoxWidth + " " + polygonViewBoxHeight;
+
+    // document.getElementById('asset-number').innerText = 
+
+    for (let i = 0; i < topPolygonSVGElement.length; i++) {
+        topPolygonSVGElement[i].setAttribute("viewBox", polygonViewBox);
+        bottomPolygonSVGElement[i].setAttribute("viewBox", polygonViewBox);
+    }
+
+    var horizontalInitPos = 15 * viewboxScaleHeight;
+    var verticalInitPos = 15 * viewboxScaleHeight;
+
+    var horizontalDt = 48 * 2 * viewBoxScaleWidth;
+    var verticalDt = 56 * viewboxScaleHeight;
+
+    var bottomPolygonOffset = 300 * viewboxScaleHeight;
+    // var verticalShiftDt = verticalDt / 2;
+
+
+    // topPolygonSVGElement[0].style.left = horizontalInitPos + 'px';
+    // topPolygonSVGElement[0].style.top = verticalInitPos + 'px';
+
+    // topPolygonSVGElement[1].style.left = horizontalInitPos + horizontalDt + 'px';
+    // topPolygonSVGElement[1].style.top = verticalInitPos + verticalDt + 'px';
+
+    var polygonCount = 0;
+    for (let i = 0; i < 4; i++) {
+        for (let k = 0; k < 4; k++) {
+            topPolygonSVGElement[polygonCount].style.left = horizontalInitPos + (i * horizontalDt) + 'px';
+            topPolygonSVGElement[polygonCount].style.top = verticalInitPos + (k * verticalDt) + 'px';
+
+            bottomPolygonSVGElement[polygonCount].style.left = horizontalInitPos + (i * horizontalDt) + 'px';
+            bottomPolygonSVGElement[polygonCount].style.top = bottomPolygonOffset + verticalInitPos + (k * verticalDt) + 'px';
+
+            polygonCount += 1;
+        }
+    }
+
+    horizontalInitPos += 48;
+    verticalInitPos += verticalDt / 2;
+
+    for (let i = 0; i < 3; i++) {
+        for (let k = 0; k < 4; k++) {
+            topPolygonSVGElement[polygonCount].style.left = horizontalInitPos + (i * horizontalDt) + 'px';
+            topPolygonSVGElement[polygonCount].style.top = verticalInitPos + (k * verticalDt) + 'px';
+
+            bottomPolygonSVGElement[polygonCount].style.left = horizontalInitPos + (i * horizontalDt) + 'px';
+            bottomPolygonSVGElement[polygonCount].style.top = bottomPolygonOffset + verticalInitPos + (k * verticalDt) + 'px';
+
+            polygonCount += 1;
+
+        }
+    }
+        // var verticalDt = 112;
+        // var verticalShiftDt = verticalDt / 2;
+        // var horizontalDt = 97;
+        // var topPolygonInitPos = 600;
+        // var bottomPolygonInitPos = 1200;
+
+        // var polygonCount = 0;
+
+        // for (var j = 0; j < 6; j++) {
+        //     var num = 7 - j;
+        //     var hShift = j * horizontalDt;
+        //     var vShift = j * verticalShiftDt;
+        //     var animationDelay = j / 20;
+
+        //     for (var i = 0; i < num; i++) {
+
+
+        //         topPolygonSVGElement[polygonCount].style.left = topPolygonInitPos - hShift + 'px';
+        //         topPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
+
+        //         bottomPolygonSVGElement[polygonCount].style.left = bottomPolygonInitPos + hShift + 'px';
+        //         bottomPolygonSVGElement[polygonCount].style.top = (verticalInitPos + vShift) + verticalDt * i + 'px';
+
+        //         polygonCount += 1;
+        //     }
+        // }
 </script>
 
 </html>
