@@ -9,7 +9,7 @@
         src: url(fonts/helveticaneue/HelveticaNeueLight.ttf);
     }
 
-    @font-face {
+    /* @font-face {
         font-family: "Roboto-Thin";
         src: url(fonts/Roboto-Thin.ttf);
     }
@@ -17,7 +17,7 @@
     @font-face {
         font-family: "Roboto-Light";
         src: url(fonts/Roboto-Light.ttf);
-    }
+    } */
 
     @font-face {
         font-family: "NotoSansKR-Regular";
@@ -291,8 +291,6 @@
 
     var polygonViewBox = "0 0 " + polygonViewBoxWidth + " " + polygonViewBoxHeight;
 
-    // document.getElementById('asset-number').innerText = 
-
     for (let i = 0; i < topPolygonSVGElement.length; i++) {
         topPolygonSVGElement[i].setAttribute("viewBox", polygonViewBox);
         bottomPolygonSVGElement[i].setAttribute("viewBox", polygonViewBox);
@@ -388,6 +386,9 @@
         else {
         	assetImageID.src = 'images/noImage.svg';
         }
+
+        // document.getElementById('asset-number').innerText = window.screen.width;
+
     }
 
     window.onload = function () {

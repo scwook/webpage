@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 SERVER_ADDR = 'localhost'
-UPLOAD_FOLDER = '/home/scwook/flask/upload'
+UPLOAD_FOLDER = '/data/asset_image'
 DB_HOST = 'localhost'
 DB_USER = 'scwook'
 DB_PASSWORD = 'qwer1234'
