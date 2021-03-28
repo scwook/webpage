@@ -67,39 +67,56 @@
 </style>
 
 <body>
-
     <label>Event Title</label>
     <input type="text" id="new-event-title" value="Test Event Title">
 
     <label>Snapshot Description</label>
-    <input type="text" id="new-snapshot-description" vlaue="Test Snapshot Description">
+    <input type="text" id="new-snapshot-description" value="Test Snapshot Description">
 
-    <!-- <button id="save-button" onclick="setInventoryData()">Save</button> -->
+    <button id="save-button" onclick="createEvent()">Save</button>
 </body>
+
 <script>
-    var serverAddr = 'http://192.168.68.126'
-    var tachineAddr = serverAddr + ':8080/tachine/event'
+    var serverAddr = 'http://localhost';
+    var tachineAddr = serverAddr + ':9013/tachine/event';
 
-    var eventData = [
-        { 'title': 'Event Test' }
-    ]
+    var eventData = { 
+        title: 'Event Test', 
+        description: 'Snapshot Test' 
+    };
 
-    function setAssetData() {
-        var formData = new FormData(document.forms.namedItem("fileInfo"));
+
+    function createEvent() {
+        var eventTitle = document.getElementById('new-event-title').value;
+        var snapshotDescription = document.getElementById('new-snapshot-description').value;
+
+        eventData.title = eventTitle;
+        eventData.description = snapshotDescription;
+
+        createEventDatabase();
+    }
+
+    function createEventDatabase() {
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-
+                console.log(this.responseText);
             }
             // else {
             // alert('Status Error : ' + this.status);
             // }
         };
 
-        xhttp.open("POST", tachineAddr, false);
-        xhttp.send(eventData);
+        xhttp.open("PUT", tachineAddr, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(eventData));
     }
+
+    window.onload = function () {
+        createEvent();
+        console.log('load');
+    } 
 </script>
 
 </html>
