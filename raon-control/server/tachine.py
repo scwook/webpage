@@ -23,7 +23,7 @@ def create_event():
     jsonData = request.get_json()
 
     # Insert new event
-    dateNow = "'" + datetime.datetime.now() + "'"
+    dateNow = "'" + str(datetime.datetime.now()) + "'"
     eventTitle = "'" + jsonData['title'] + "'"
 
     insertEventQuery = 'INSERT INTO event(date,title) values(' + dateNow + "," + eventTitle + ")"
@@ -32,7 +32,7 @@ def create_event():
 
     lastEventQuery = 'SELECT max(eventid) FROM event'
     tachine.execute(lastEventQuery)
-    lastEventID = tachine.fetchone()[0]
+    lastEventID = "'" + str(tachine.fetchone()[0]) + "'"
 
     # Insert new snapshot
     snapshotDescription = "'" + jsonData['description'] + "'"
@@ -44,7 +44,7 @@ def create_event():
     lastSnapshotQuery = 'SELECT max(snapshotid) FROM snapshot_info'
 
     tachine.execute(lastSnapshotQuery)
-    lastSnapshotID = tachine.fetchone()[0]
+    lastSnapshotID = str(tachine.fetchone()[0])
     
     # Create snapshot table
     createTableQuery = 'CREATE TABLE snapshot_' + lastSnapshotID + '(pvname varchar(255) NOT NULL, value varchar(255))'
