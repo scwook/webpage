@@ -73,33 +73,64 @@
     <label>Snapshot Description</label>
     <input type="text" id="new-snapshot-description" value="Test Snapshot Description">
 
-    <button id="save-button" onclick="createEventSnapshot()">Save</button>
+    <button id="save-button" onclick="createNewEventSet()">Save</button>
     <!-- <button type="button" onclick="alert('Hello World!')">Click Me!</button> -->
 
 </body>
 
 <script>
-    var serverAddr = 'http://192.168.0.105';
-    var tachineAddr = serverAddr + ':9013/tachine/event';
+    var serverAddr = 'http://192.168.0.105:9013/tachine';
+    var newEventAddr = serverAddr + '/event';
+    var retrieveEventAddr = serverAddr + '/retrieve/event';
+    var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
+    var retrieveRecordAddr = serverAddr + '/retrieve/record'
 
-    var eventData = { 
-        title: 'Event Test', 
-        description: 'Snapshot Test' 
+    var eventData = {
+        title: 'Event Test',
+        description: 'Snapshot Test'
     };
 
-    function createEventSnapshot() {
+    var recordData = {
+        'output1': '1',
+        'output2': '2',
+        'output3': '3',
+        'output4': '4',
+        'output5': '5',
+        'output6': '6',
+        'output7': '7',
+        'output8': '8',
+        'output9': '9',
+        'output10': '10',
+    }
+
+    function createNewEventSet() {
         var eventTitle = document.getElementById('new-event-title').value;
         var snapshotDescription = document.getElementById('new-snapshot-description').value;
 
         eventData.title = eventTitle;
         eventData.description = snapshotDescription;
 
-        console.log(eventData);
-        
-        createEventDatabase();
+        setEventSnapshot();
     }
 
-    function createEventDatabase() {
+    function setEventSnapshot() {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        xhttp.open("POST", tachineNewEventAddr, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(eventData));
+    }
+
+    function getSnapshotRecord() {
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -111,15 +142,14 @@
             // }
         };
 
-        xhttp.open("POST", tachineAddr, true);
-        xhttp.setRequestHeader('Content-Type', 'application/json');
-        xhttp.send(JSON.stringify(eventData));
+        xhttp.open("GET", retrieveSnapshotAddr, true);
+        xhttp.send();
     }
 
     window.onload = function () {
 
 
-    } 
+    }
 </script>
 
 </html>

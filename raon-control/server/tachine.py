@@ -58,6 +58,14 @@ def create_event():
 
     return json.dumps(tachineDic)
 
+@app.route('/tachine/retrieve/snapshot/<id>')
+def get_asset_list(id):
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
+    tachine = conn.cursor()
+
+    return 'OK'
+
+
 @app.route('/tachine/snapshot/<snapshotData>', methods=['POST'])
 def create_snapshot(snapshotData):
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
