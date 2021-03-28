@@ -73,11 +73,13 @@
     <label>Snapshot Description</label>
     <input type="text" id="new-snapshot-description" value="Test Snapshot Description">
 
-    <button id="save-button" onclick="createEvent()">Save</button>
+    <button id="save-button" onclick="createEventSnapshot()">Save</button>
+    <!-- <button type="button" onclick="alert('Hello World!')">Click Me!</button> -->
+
 </body>
 
 <script>
-    var serverAddr = 'http://localhost';
+    var serverAddr = 'http://192.168.0.105';
     var tachineAddr = serverAddr + ':9013/tachine/event';
 
     var eventData = { 
@@ -85,14 +87,15 @@
         description: 'Snapshot Test' 
     };
 
-
-    function createEvent() {
+    function createEventSnapshot() {
         var eventTitle = document.getElementById('new-event-title').value;
         var snapshotDescription = document.getElementById('new-snapshot-description').value;
 
         eventData.title = eventTitle;
         eventData.description = snapshotDescription;
 
+        console.log(eventData);
+        
         createEventDatabase();
     }
 
@@ -108,14 +111,14 @@
             // }
         };
 
-        xhttp.open("PUT", tachineAddr, true);
+        xhttp.open("POST", tachineAddr, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(eventData));
     }
 
     window.onload = function () {
-        createEvent();
-        console.log('load');
+
+
     } 
 </script>
 

@@ -1,5 +1,6 @@
 import pymysql
 import json
+import datetime
 
 from flask import Flask, jsonify
 from flask import request
@@ -14,16 +15,16 @@ DB_USER = 'ctrluser'
 DB_PASSWORD = 'qwer1234'
 DB_DATABASE = 'tachine'
 
-@app.route('/tachine/event/<eventData>')
-def create_event(eventData):
+@app.route('/tachine/event', methods=['POST'])
+def create_event():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     tachine = conn.cursor()
 
-    #dateNow = datetime.datetime.now()
-    dateNow = '2021-03-29'
+    jsonData = request.get_json()
+    dateNow = datetime.datetime.now()
 
     # Insert new event
-    eventTitle = eventData['title']
+    eventTitle = jsonData['title']
 
     insertEventQuery = 'INSERT INTO event(date,title) values(' + dateNow + "," + eventTitle + ")"
     tachine.execute(insertEventQuery)
@@ -34,7 +35,7 @@ def create_event(eventData):
     lastEventID = tachine.fetchone()[0]
 
     # Insert new snapshot
-    snapshotDescription = eventData['description']
+    snapshotDescription = jsonData['description']
 
     insertSnapshotQuery = 'INSERT INTO snapshot_info(description,eventid) values(' + snapshotDescription + "," + lastEventID + ")"
     tachine.execute(insertSnapshotQuery)
