@@ -32,12 +32,13 @@ def create_event():
 
     lastEventQuery = 'SELECT max(eventid) FROM event'
     tachine.execute(lastEventQuery)
-    lastEventID = "'" + str(tachine.fetchone()[0]) + "'"
+    lastEventID = str(tachine.fetchone()[0])
+    lastEventIDStr = "'" + str(tachine.fetchone()[0]) + "'"
 
     # Insert new snapshot
     snapshotDescription = "'" + jsonData['description'] + "'"
 
-    insertSnapshotQuery = 'INSERT INTO snapshot_info(description,eventid) values(' + snapshotDescription + "," + lastEventID + ")"
+    insertSnapshotQuery = 'INSERT INTO snapshot_info(description,eventid) values(' + snapshotDescription + "," + lastEventIDStr + ")"
     tachine.execute(insertSnapshotQuery)
     conn.commit()
 
