@@ -21,21 +21,21 @@ def create_event():
     tachine = conn.cursor()
 
     jsonData = request.get_json()
-    dateNow = datetime.datetime.now()
 
     # Insert new event
-    eventTitle = jsonData['title']
+    dateNow = "'" + datetime.datetime.now() + "'"
+    eventTitle = "'" + jsonData['title'] + "'"
 
     insertEventQuery = 'INSERT INTO event(date,title) values(' + dateNow + "," + eventTitle + ")"
     tachine.execute(insertEventQuery)
-    tachine.commit()
+    conn.commit()
 
     lastEventQuery = 'SELECT max(eventid) FROM event'
     tachine.execute(lastEventQuery)
     lastEventID = tachine.fetchone()[0]
 
     # Insert new snapshot
-    snapshotDescription = jsonData['description']
+    snapshotDescription = "'" + jsonData['description'] + "'"
 
     insertSnapshotQuery = 'INSERT INTO snapshot_info(description,eventid) values(' + snapshotDescription + "," + lastEventID + ")"
     tachine.execute(insertSnapshotQuery)
