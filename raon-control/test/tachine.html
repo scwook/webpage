@@ -74,16 +74,18 @@
     <input type="text" id="new-snapshot-description" value="Test Snapshot Description">
 
     <button id="save-button" onclick="createNewEventSet()">Save</button>
-    <!-- <button type="button" onclick="alert('Hello World!')">Click Me!</button> -->
+    <button id="save-button" onclick="getEvent()">Load</button>
 
 </body>
 
 <script>
-    var serverAddr = 'http://192.168.0.105:9013/tachine';
+    var serverAddr = 'http://localhost:9013/timeleap';
     var newEventAddr = serverAddr + '/event';
+    var newSnapshotAddr = serverAddr + '/snapshot';
+
     var retrieveEventAddr = serverAddr + '/retrieve/event';
     var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
-    var retrieveRecordAddr = serverAddr + '/retrieve/record'
+    var retrieveSnapshotRecordAddr = serverAddr + '/retrieve/snapshot/record'
 
     var eventData = {
         title: 'Event Test',
@@ -102,6 +104,8 @@
         'output9': '9',
         'output10': '10',
     }
+
+    var retrieveSnapshotID = 4;
 
     function createNewEventSet() {
         var eventTitle = document.getElementById('new-event-title').value;
@@ -130,6 +134,38 @@
         xhttp.send(JSON.stringify(eventData));
     }
 
+    function getEvent() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveEventAddr;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
+    }
+
+    function getSnapshot() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveSnapshotAddr;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
+    }
+
     function getSnapshotRecord() {
 
         var xhttp = new XMLHttpRequest();
@@ -142,8 +178,17 @@
             // }
         };
 
-        xhttp.open("GET", retrieveSnapshotAddr, true);
+        var rName = retrieveSnapshotRecordAddr + '/' + retrieveSnapshotID;
+        xhttp.open("GET", rName, true);
         xhttp.send();
+    }
+
+    function updateSnapshotRecord() {
+
+    }
+
+    function applySnapshotRecord() {
+
     }
 
     window.onload = function () {
