@@ -33,7 +33,7 @@ def create_event():
     lastEventQuery = 'SELECT max(eventid) FROM event'
     timeleap.execute(lastEventQuery)
     lastEventID = str(timeleap.fetchone()[0])
-    lastEventIDStr = "'" + str(timeleap.fetchone()[0]) + "'"
+    lastEventIDStr = "'" + str(lastEventID) + "'"
 
     # Insert new snapshot
     snapshotDescription = "'" + jsonData['description'] + "'"
@@ -60,7 +60,7 @@ def create_event():
 
 
 @app.route('/timeleap/snapshot', methods=['POST'])
-def create_snapshot(id):
+def create_snapshot():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
     timeleap = conn.cursor()
 

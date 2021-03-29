@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="common.css">
+<link rel="stylesheet" type="text/css" href="timeleap.css">
+<script src="script/jquery.min.js"></script>
+
+<body>
+    <div style="margin:auto; position: relative; width:1920px; height:80px;">
+        <div id="time-stamp"></div>
+        <svg id="under-line" width="1920" height="42">
+            <polyline class="under-bar-style" points="0 40 760 40 791 0" />
+            <polyline class="under-bar-style" points="1920 40 1160 40 1129 0" />
+        </svg>
+        <svg id="center-top" width="400" height="80">
+            <path
+                d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
+                style="fill:#f3f3f3" />
+        </svg>
+        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+        <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+        <div id="left-menu">
+            <a href="" class="secret-menu">Logbook</a>
+            <a href="" class="secret-menu">Finder</a>
+            <a href="" class="secret-menu">Naming</a>
+            <a href="bab.html">Bab</a>
+            <a href="asset.html">Asset</a>
+
+        </div>
+        <div id="right-menu">
+            <a href="monitoring.html">Monitoring</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="archive.html">Archive</a>
+            <a href="downloads.html">Download</a>
+            <a href="documents.html">Document</a>
+        </div>
+    </div>
+
+    <div style="height:20px"></div>
+
+    <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
+
+        <!-- Left -->
+        <div id="body-left">
+            <div class="title-box">Schedule</div>
+
+            <div style="display: flex; position:relative; left: 25px;">
+                <button id="last-button" onclick="lastCalendar()">&#10094;</button>
+
+                <div id="year">January 2021</div>
+                <button id="next-button" onclick="nextCalendar()">&#10095;</button>
+            </div>
+
+            <div style="display: flex;">
+                <div class="week">SUN</div>
+                <div class="week">MON</div>
+                <div class="week">TUE</div>
+                <div class="week">WED</div>
+                <div class="week">THU</div>
+                <div class="week">FRI</div>
+                <div class="week">SAT</div>
+            </div>
+
+            <div id="calendar">
+                <!-- 1 week -->
+                <div class="day" style="z-index: 2;">
+                    <div class="today"></div>
+                    <!-- <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button> -->
+                </div>
+                <div class="day" style="z-index: 1;">
+                    <div class="today"></div>
+                    <!-- <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation2</button> -->
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+
+                <!-- 2 week -->
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+
+                <!-- 3 week -->
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+
+                <!-- 4 week -->
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+
+                <!-- 5 week -->
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+
+                <!-- 6 week -->
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+                <div class="day">
+                    <div class="today"></div>
+                </div>
+            </div>
+
+            <div style="height:20px"></div>
+
+            <div class="title-box" style="display: inline-block; width:50px;">Todo</div>
+            <div class="title-bar under-bar" style="--barColor: #ec2227;"></div>
+
+            <div id="todo-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est laborum.</div>
+
+        </div>
+
+        <!-- Center -->
+        <div id="body-center">
+
+        </div>
+
+        <!-- Right -->
+        <div id="body-right">
+            <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
+            <div class="title-bar under-bar" style="--barColor: #5D6D7E;"></div>
+
+            <table>
+                <thead id="tableHead" style="font-family: Roboto-Light">
+                    <!-- <tr>
+                        <th>PV Name</th>
+                        <th>Status</th>
+                        <th>Connected</th>
+                        <th>Monitored</th>
+                        <th>Sampling Period</th>
+                        <th>Last Event</th>
+                    </tr> -->
+                </thead>
+
+                <tbody id="tableBody">
+                    <!-- <tr>
+                        <td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
+                        <td>Being archived</td>
+                        <td>true</td>
+                        <td>true</td>
+                        <td>1.0</td>
+                        <td>Feb/02/2021 07:39:45 +09:00</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Control Server
+    // var serverAddr = 'http://192.168.68.14'
+    // var scheduleAddr = serverAddr + ':9011/schedule/'
+
+    // scwook Server
+    var serverAddr = 'http://localhost'
+    var scheduleAddr = serverAddr + ':8081/schedule/'
+
+    var today = new Date();
+    var date = new Date();
+    var colorTable = ['#8E44AD', '#E74C3C', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
+
+    var monthString = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    var monthArray = new Array();
+    monthArray[0] = "January";
+    monthArray[1] = "February";
+    monthArray[2] = "March";
+    monthArray[3] = "April";
+    monthArray[4] = "May";
+    monthArray[5] = "June";
+    monthArray[6] = "July";
+    monthArray[7] = "August";
+    monthArray[8] = "September";
+    monthArray[9] = "October";
+    monthArray[10] = "November";
+    monthArray[11] = "December";
+
+    var scheduleList = [
+        {
+            fromDate: "2020-12-21",
+            toDate: "2020-12-22",
+            title: "Beam Commissioning 1",
+            detail: [
+                'Cool down',
+                'Beam Injection',
+                'Pulse Mode Operation'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: 1, seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: 1, seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: 1, seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: 2, seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: 2, seat: 2, leader: 0 },
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: 2, seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: 2, seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: 2, seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: 2, seat: 6, leader: 0 },
+                { name: "Jo, HyunChul", team: "Cryogenic", desk: 3, seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 3, seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 3, seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 4, seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: 4, seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 4, seat: 2, leader: 1 }
+            ]
+        },
+
+        {
+            fromDate: "2021-01-11",
+            toDate: "2021-01-12",
+            title: "Beam Commissioning 1",
+            detail: [
+                'Cool down',
+                'Beam Injection',
+                'Pulse Mode Operation'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
+                { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
+            ]
+        },
+        {
+            fromDate: "2021-01-22",
+            toDate: "2021-01-23",
+            title: "Beam Commissioning 2",
+            detail: [
+                'Cool down',
+                'Beam Injection',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation',
+                'Pulse Mode Operation'
+
+            ],
+            shifter: [
+                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
+                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
+                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
+                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
+                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
+                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 3, leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 4, leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 5, leader: 0 }
+            ]
+        },
+
+        {
+            fromDate: "2021-01-25",
+            toDate: "2021-01-26",
+            title: "Beam Commissioning 3",
+            detail: [
+                'Cool down',
+                'Beam Injection'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+            ]
+        },
+
+        {
+            fromDate: "2021-02-05",
+            toDate: "2021-02-06",
+            title: "Beam Commissioning 5",
+            detail: [
+                'Cool down',
+                'Beam Injection'
+            ],
+            shifter: [
+                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
+                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
+                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
+                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
+                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+            ]
+        }
+    ];
+
+    function thisCalendar() {
+        // Remove this month schedule buttons
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        // Clear this month schedule list
+        var bodyCenterId = document.getElementById('body-center');
+        bodyCenterId.innerHTML = '';
+
+        // Clear shift list
+        var shiftAvatar = document.getElementsByClassName("avatar-img");
+        var shiftUserTable = document.getElementsByClassName("shift-user");
+        var shiftTeamTable = document.getElementsByClassName("team-name");
+        var shiftDesk = document.getElementsByClassName("desk-img");
+        for (let i = 0; i < 20; i++) {
+            shiftAvatar[i].src = '';
+            shiftUserTable[i].innerText = '';
+            shiftTeamTable[i].innerText = '';
+            shiftDesk[i].innerHTML = '';
+        }
+
+        // Create last month
+        today = new Date(today.getFullYear(), today.getMonth());
+        makeCalendar();
+
+        // Create schedule and shift list
+        getScheduleDatabase();
+        //makeSchedule();
+
+        // Show up first shift list
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        if (scheduleButtonClass[0]) {
+            scheduleButtonClass[0].click();
+        }
+        else {
+            // Title under line animation re-trigger
+            var titleBarClass = document.getElementsByClassName('title-bar');
+
+            // 0: Todo under line, 1: Shift under line
+            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+            titleBarClass[1].classList.remove('under-bar');
+            titleBarClass[1].offsetWidth;
+            titleBarClass[1].classList.add('under-bar');
+        }
+    }
+
+    function lastCalendar() {
+
+        // Remove this month schedule buttons
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        // Clear this month schedule list
+        var bodyCenterId = document.getElementById('body-center');
+        bodyCenterId.innerHTML = '';
+
+        // Clear shift list
+        var shiftAvatar = document.getElementsByClassName("avatar-img");
+        var shiftUserTable = document.getElementsByClassName("shift-user");
+        var shiftTeamTable = document.getElementsByClassName("team-name");
+        var shiftDesk = document.getElementsByClassName("desk-img");
+        for (let i = 0; i < 20; i++) {
+            shiftAvatar[i].src = '';
+            shiftUserTable[i].innerText = '';
+            shiftTeamTable[i].innerText = '';
+            shiftDesk[i].innerHTML = '';
+        }
+
+        // Create last month
+        today = new Date(today.getFullYear(), today.getMonth() - 1);
+        makeCalendar();
+
+        // Create schedule and shift list
+        getScheduleDatabase();
+        //makeSchedule();
+
+        // Show up first shift list
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        if (scheduleButtonClass[0]) {
+            scheduleButtonClass[0].click();
+        }
+        else {
+            // Title under line animation re-trigger
+            var titleBarClass = document.getElementsByClassName('title-bar');
+
+            // 0: Todo under line, 1: Shift under line
+            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+            titleBarClass[1].classList.remove('under-bar');
+            titleBarClass[1].offsetWidth;
+            titleBarClass[1].classList.add('under-bar');
+        }
+    }
+
+    function nextCalendar() {
+
+        //getScheduleDatabase();
+
+        // Remove this month schedule buttons
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
+            scheduleButtonClass[i].remove();
+        }
+
+        // Clear this month schedule list
+        var bodyCenterId = document.getElementById('body-center');
+        bodyCenterId.innerHTML = '';
+
+        // Clear shift list
+        var shiftAvatar = document.getElementsByClassName("avatar-img");
+        var shiftUserTable = document.getElementsByClassName("shift-user");
+        var shiftTeamTable = document.getElementsByClassName("team-name");
+        var shiftDesk = document.getElementsByClassName("desk-img");
+        for (let i = 0; i < 20; i++) {
+            shiftAvatar[i].src = '';
+            shiftUserTable[i].innerText = '';
+            shiftTeamTable[i].innerText = '';
+            shiftDesk[i].innerHTML = '';
+        }
+
+        // Create next month
+        today = new Date(today.getFullYear(), today.getMonth() + 1);
+        makeCalendar();
+
+        // Create schedule and shift list
+        getScheduleDatabase();
+        // makeSchedule();
+
+        // Show up first shift list
+        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        if (scheduleButtonClass[0]) {
+            scheduleButtonClass[0].click();
+        }
+        else {
+            // Title under line animation re-trigger
+            var titleBarClass = document.getElementsByClassName('title-bar');
+
+            // 0: Todo under line, 1: Shift under line
+            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+            titleBarClass[1].classList.remove('under-bar');
+            titleBarClass[1].offsetWidth;
+            titleBarClass[1].classList.add('under-bar');
+        }
+    }
+
+    function makeCalendar() {
+        // Year and Month
+        var yearId = document.getElementById("year");
+        var month = monthArray[today.getMonth()];
+        yearId.innerHTML = month + " " + today.getFullYear();
+
+        var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+        var dayCalss = document.getElementsByClassName('day');
+        var thisMonthFirstDay = firstDate.getDay();
+        var day = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+
+
+        // This Month
+        for (let i = 0; i < dayCalss.length; i++) {
+            var todayClass = dayCalss[i].getElementsByClassName('today')[0];
+
+            // Last Month last day reset and start this month first day
+            if (i == thisMonthFirstDay) {
+                day = 1;
+            }
+
+            todayClass.innerHTML = day;
+
+            // Sunday
+            if (i % 7 == 0) {
+                todayClass.style.color = "tomato";
+            }
+
+            // Today
+            todayClass.style.backgroundColor = "transparent";
+            if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
+                // todayClass.style.backgroundColor = "dodgerblue";
+            }
+
+            day += 1;
+
+            // Last day reset and start next month first day
+            if (day > lastDate.getDate()) {
+                day = 1;
+            }
+        }
+    }
+
+    function makeSchedule() {
+        var dayCalss = document.getElementsByClassName('day');
+        var month = monthString[today.getMonth()];
+        var year = today.getFullYear();
+        var yearMonth = year + '-' + month;
+        var listBoxDelay = 0.0;
+        var listBoxColorIndex = 0;
+
+        for (let i = 0; i < scheduleList.length; i++) {
+
+            var startDate = new Date(scheduleList[i].fromDate);
+            var endDate = new Date(scheduleList[i].toDate);
+            var days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)) + 1;
+
+            var fromDateArray = scheduleList[i].fromDate.split("-");
+            var list = fromDateArray[0] + '-' + fromDateArray[1];
+
+            // var toDateArray = scheduleList[i].toDate.split("-");
+            // var list = toDateArray[0] + '-' + toDateArray[1];
+
+            if (yearMonth == list) {
+
+                var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                var startIndex = firstDate.getDay() + parseInt(fromDateArray[2]) - 1;
+                // var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
+                var endIndex = parseInt(startIndex) + parseInt(days);
+
+                // If schedule exceeds the last date of this month
+                if (endIndex > dayCalss.length) {
+                    endIndex = dayCalss.length;
+                }
+
+                createScheduleButton(startIndex);
+
+                function createScheduleButton(index) {
+                    var color = colorTable[listBoxColorIndex];
+                    var scheduleButton = document.createElement('BUTTON');
+                    var buttonText = document.createTextNode(scheduleList[i].title);
+                    scheduleButton.classList.add('scheduleButton');
+                    scheduleButton.addEventListener('click', function () { shifterList(i, color) });
+                    scheduleButton.style.backgroundColor = color;
+                    scheduleButton.style.height = '24px';
+
+                    var buttonWidthScale = 1;
+                    for (var j = index; j < endIndex; j++) {
+                        // button head
+                        if (j == startIndex) {
+                            scheduleButton.style.borderTopLeftRadius = '12px';
+                            scheduleButton.style.borderBottomLeftRadius = '12px';
+                        }
+
+                        // button tail
+                        if (j == (endIndex - 1)) {
+                            scheduleButton.style.borderTopRightRadius = '12px';
+                            scheduleButton.style.borderBottomRightRadius = '12px';
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+                            break;
+                        }
+
+                        // In case of end of week
+                        if ((j + 1) % 7 == 0) {
+                            scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+                            scheduleButton.appendChild(buttonText);
+                            dayCalss[index].appendChild(scheduleButton);
+
+                            // create new button for next week
+                            createScheduleButton(j + 1);
+                            break;
+                        }
+
+                        buttonWidthScale += 1;
+                    }
+
+                    // Create schedule list box and detail infomation
+                    scheduleDetail(i, listBoxDelay, color);
+                    listBoxDelay += 0.2;
+                    listBoxColorIndex += 1;
+                }
+            }
+        }
+    }
+
+    function scheduleDetail(index, delay, color) {
+
+        var bodyCenterId = document.getElementById('body-center');
+        let i = index;
+        var height = 0;
+        var heightLineCount = 1;
+
+        var fromDateArray = scheduleList[i].fromDate.split("-");
+        var beginDay = parseInt(fromDateArray[2]);
+
+        var toDateArray = scheduleList[i].toDate.split("-");
+        var endDay = parseInt(toDateArray[2]);
+
+        var scheduleBox = document.createElement('DIV');
+        scheduleBox.classList.add('schedule-list-box');
+        scheduleBox.style.setProperty('--listBoxDelay', delay + 's');
+
+        scheduleBox.style.backgroundColor = color;
+
+        var scheduleBegin = document.createElement('DIV');
+        scheduleBegin.classList.add('schedule-day-begin');
+        scheduleBegin.innerText = beginDay;
+
+
+        var scheduleEnd = document.createElement('DIV');
+        scheduleEnd.classList.add('schedule-day-end');
+        scheduleEnd.innerText = -(endDay);
+
+        var scheduleTitle = document.createElement('DIV');
+        scheduleTitle.classList.add('schedule-day-title');
+        scheduleTitle.innerText = scheduleList[i].title;
+
+        scheduleBox.appendChild(scheduleBegin);
+        scheduleBox.appendChild(scheduleEnd);
+        scheduleBox.appendChild(scheduleTitle);
+
+        for (let j = 0; j < scheduleList[i].detail.length; j++) {
+            var daySchedule = document.createElement('DIV');
+            daySchedule.classList.add('schedule-day-detail');
+            daySchedule.innerText = 'Day ' + parseInt(beginDay + j) + ' : ' + scheduleList[i].detail[j];
+
+            scheduleBox.appendChild(daySchedule);
+
+            if (heightLineCount > 3) {
+                height = 3 * 23;
+            }
+            else {
+                height = heightLineCount * 23;
+            }
+
+            heightLineCount += 1;
+        }
+
+        scheduleBox.style.setProperty('--listBoxHeight', 50 + height + 'px');
+        scheduleBox.style.setProperty('--listBoxHeightExpand', 38 + heightLineCount * 23 + 'px');
+
+
+        bodyCenterId.appendChild(scheduleBox);
+    }
+
+    var desk1SVG = '<svg width="40" height="8"><path class="desk1" d="M6.67,6.4A10.51,10.51,0,0,1,12.07,8h1.26V0H0V8H1.26A10.51,10.51,0,0,1,6.67,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M20,6.4A10.54,10.54,0,0,1,25.41,8h1.26V0H13.33V8h1.26A10.54,10.54,0,0,1,20,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M33.33,6.4A10.51,10.51,0,0,1,38.74,8H40V0H26.67V8h1.26a10.51,10.51,0,0,1,5.4-1.6" style="fill:#e6e6e5"/></svg>'
+    var desk2SVG = '<svg width="19.97" height="21"><path class="desk2" d="M9.13,16.38,7.63,21,2.11,17,6,14.13A6.25,6.25,0,0,0,9.13,16.38Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5A6.15,6.15,0,0,0,6,14.13L2.11,17,0,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5H0L2.11,4,6,6.87A6.15,6.15,0,0,0,4.86,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M6,6.87,2.11,4,7.63,0l1.5,4.62A6.25,6.25,0,0,0,6,6.87Z" style="fill:#e6e6e5"/><path class="desk2" d="M11,4.32a6.31,6.31,0,0,0-1.91.3L7.63,0h6.82L13,4.62A6.31,6.31,0,0,0,11,4.32Z" style="fill:#e6e6e5"/><path class="desk2" d="M13,4.62,14.45,0,20,4,16,6.87A6.25,6.25,0,0,0,13,4.62Z" style="fill:#e6e6e5"/></svg>'
+    var desk3SVG = '<svg width="19.97" height="21"><path class="desk3" d="M10.84,16.38,12.34,21l5.52-4-3.93-2.86A6.21,6.21,0,0,1,10.84,16.38Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5a6.15,6.15,0,0,1-1.18,3.63L17.86,17,20,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5H20L17.86,4,13.93,6.87A6.15,6.15,0,0,1,15.11,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M13.93,6.87,17.86,4,12.34,0l-1.5,4.62A6.21,6.21,0,0,1,13.93,6.87Z" style="fill:#e6e6e5"/><path class="desk3" d="M8.93,4.32a6.31,6.31,0,0,1,1.91.3L12.34,0H5.52L7,4.62A6.31,6.31,0,0,1,8.93,4.32Z" style="fill:#e6e6e5"/><path class="desk3" d="M7,4.62,5.52,0,0,4,3.94,6.87A6.18,6.18,0,0,1,7,4.62Z" style="fill:#e6e6e5"/></svg>'
+    var desk4SVG = '<svg width="25" height="12"><path class="desk4" d="M6.84,7.85,2.39,4.58,0,12H5.5A7.09,7.09,0,0,1,6.84,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M10.34,5.28,8.64,0,2.39,4.58,6.84,7.85A7.06,7.06,0,0,1,10.34,5.28Z" style="fill:#e6e6e5"/><path class="desk4" d="M12.5,4.93a7,7,0,0,1,2.16.35L16.36,0H8.64l1.7,5.28A7,7,0,0,1,12.5,4.93Z" style="fill:#e6e6e5"/><path class="desk4" d="M18.16,7.85l4.45-3.27L16.36,0l-1.7,5.28A7.06,7.06,0,0,1,18.16,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M19.5,12H25L22.61,4.58,18.16,7.85A7.09,7.09,0,0,1,19.5,12Z" style="fill:#e6e6e5"/></svg>'
+
+    // function shifterList(listNum, color) {
+
+    //     var shiftNum = listNum;
+    //     var shiftAvatar = document.getElementsByClassName("avatar-img");
+    //     var shiftUserTable = document.getElementsByClassName("shift-user");
+    //     var shiftTeamTable = document.getElementsByClassName("team-name");
+    //     var shiftDesk = document.getElementsByClassName("desk-img");
+
+    //     var shiferInfo = scheduleList[shiftNum].shifter;
+    //     var desk1Count = 0;
+    //     var desk2Count = 0;
+    //     var desk3Count = 0;
+    //     var desk4Count = 0;
+
+    //     for (let i = 0; i < shiferInfo.length; i++) {
+    //         shiftAvatar[i].src = "images/avatar.svg";
+    //         shiftUserTable[i].innerText = shiferInfo[i].name;
+    //         shiftTeamTable[i].innerText = shiferInfo[i].team;
+
+    //         let deskNum = shiferInfo[i].desk;
+    //         let seatNum = shiferInfo[i].seat;
+    //         let isShiftLeader = shiferInfo[i].leader;
+    //         var deskColor = '';
+    //         var numberOfDesk = 0;
+
+    //         switch (deskNum) {
+    //             case 1:
+    //                 shiftDesk[i].innerHTML = desk1SVG;
+    //                 var deskClass = document.getElementsByClassName('desk1');
+    //                 var numberOfDesk = 3;
+    //                 var deskOffset = numberOfDesk * desk1Count;
+    //                 desk1Count += 1;
+
+    //                 for (let j = 0; j < numberOfDesk; j++) {
+    //                     if (seatNum == j + 1) {
+    //                         if (isShiftLeader) {
+    //                             deskColor = '#ec2227';
+    //                         }
+    //                         else {
+    //                             deskColor = '#2baae2';
+    //                         }
+    //                     }
+    //                     else {
+    //                         deskColor = '#e6e6e5';
+    //                     }
+
+    //                     deskClass[deskOffset + j].style.fill = deskColor;
+    //                 }
+    //                 break;
+
+    //             case 2:
+    //                 shiftDesk[i].innerHTML = desk2SVG;
+    //                 var deskClass = document.getElementsByClassName('desk2');
+    //                 var numberOfDesk = 6;
+    //                 var deskOffset = numberOfDesk * desk2Count;
+    //                 desk2Count += 1;
+
+    //                 for (let j = 0; j < numberOfDesk; j++) {
+    //                     if (seatNum == j + 1) {
+    //                         if (isShiftLeader) {
+    //                             deskColor = '#ec2227';
+    //                         }
+    //                         else {
+    //                             deskColor = '#2baae2';
+    //                         }
+    //                     }
+    //                     else {
+    //                         deskColor = '#e6e6e5';
+    //                     }
+
+    //                     deskClass[deskOffset + j].style.fill = deskColor;
+    //                 }
+    //                 break;
+
+    //             case 3:
+    //                 shiftDesk[i].innerHTML = desk3SVG;
+    //                 var deskClass = document.getElementsByClassName('desk3');
+    //                 var numberOfDesk = 6;
+    //                 var deskOffset = numberOfDesk * desk3Count;
+    //                 desk3Count += 1;
+
+    //                 for (let j = 0; j < numberOfDesk; j++) {
+    //                     if (seatNum == j + 1) {
+    //                         if (isShiftLeader) {
+    //                             deskColor = '#ec2227';
+    //                         }
+    //                         else {
+    //                             deskColor = '#2baae2';
+    //                         }
+    //                     }
+    //                     else {
+    //                         deskColor = '#e6e6e5';
+    //                     }
+
+    //                     deskClass[deskOffset + j].style.fill = deskColor;
+    //                 }
+    //                 break;
+
+    //             case 4:
+    //                 shiftDesk[i].innerHTML = desk4SVG;
+    //                 var deskClass = document.getElementsByClassName('desk4');
+    //                 var numberOfDesk = 5;
+    //                 var deskOffset = numberOfDesk * desk4Count;
+    //                 desk4Count += 1;
+
+    //                 for (let j = 0; j < numberOfDesk; j++) {
+    //                     if (seatNum == j + 1) {
+    //                         if (isShiftLeader) {
+    //                             deskColor = '#ec2227';
+    //                         }
+    //                         else {
+    //                             deskColor = '#2baae2';
+    //                         }
+    //                     }
+    //                     else {
+    //                         deskColor = '#e6e6e5';
+    //                     }
+
+    //                     deskClass[deskOffset + j].style.fill = deskColor;
+    //                 }
+    //                 break;
+
+    //             default:
+    //                 break;
+    //         }
+    //     }
+
+    //     // Clear left rows
+    //     for (let i = shiferInfo.length; i < 20; i++) {
+    //         shiftAvatar[i].src = '';
+    //         shiftUserTable[i].innerText = '';
+    //         shiftTeamTable[i].innerText = '';
+    //         shiftDesk[i].innerHTML = '';
+    //     }
+
+    //     // Title under line animation re-trigger
+    //     var titleBarClass = document.getElementsByClassName('title-bar');
+
+    //     // 0: Todo under line, 1: Shift under line
+    //     titleBarClass[1].style.setProperty('--barColor', color);
+    //     titleBarClass[1].classList.remove('under-bar');
+    //     titleBarClass[1].offsetWidth;
+    //     titleBarClass[1].classList.add('under-bar');
+    // }
+
+    // Clock
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
+
+    //getScheduleDatabase();
+
+    window.onload = function () {
+        var myVar = setInterval(timer, 1000);
+
+        thisCalendar()
+        // makeSchedule();
+        // scheduleDetail();
+        // shifterList(0, '#8E44AD');
+
+        // setInterval(getScheduleDatabase, 2000);
+
+    }
+
+    function getScheduleDatabase() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                scheduleList = JSON.parse(this.responseText);
+                makeSchedule();
+
+                var schedule = document.getElementsByClassName('scheduleButton');
+                if (schedule.length) {
+                    schedule[0].click();
+                }
+            }
+        };
+
+        var server = scheduleAddr + today.getFullYear() + '-' + monthString[today.getMonth()];
+        xhttp.open("GET", server, true);
+        xhttp.send();
+    }
+</script>
+
+</html>

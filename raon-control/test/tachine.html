@@ -73,13 +73,13 @@
     <label>Snapshot Description</label>
     <input type="text" id="new-snapshot-description" value="Test Snapshot Description">
 
-    <button id="save-button" onclick="createNewEventSet()">Save</button>
-    <button id="save-button" onclick="getEvent()">Load</button>
+    <button id="save-button" onclick="createNewEventSet()">Event</button>
+    <button id="save-button" onclick="setSnapshot()">Snapshot</button>
 
 </body>
 
 <script>
-    var serverAddr = 'http://localhost:9013/timeleap';
+    var serverAddr = 'http://192.168.68.126:9013/timeleap';
     var newEventAddr = serverAddr + '/event';
     var newSnapshotAddr = serverAddr + '/snapshot';
 
@@ -91,6 +91,11 @@
         title: 'Event Test',
         description: 'Snapshot Test'
     };
+
+    var snapshotData = {
+        eventid : '2',
+        description : 'New Snapshot'
+    }
 
     var recordData = {
         'output1': '1',
@@ -114,24 +119,40 @@
         eventData.title = eventTitle;
         eventData.description = snapshotDescription;
 
-        setEventSnapshot();
+        setNewTimeleap();
     }
 
-    function setEventSnapshot() {
+    function setNewTimeleap() {
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                // console.log(this.responseText);
+                console.log(this.responseText);
             }
             // else {
             // alert('Status Error : ' + this.status);
             // }
         };
 
-        xhttp.open("POST", tachineNewEventAddr, true);
+        xhttp.open("POST", newEventAddr, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(eventData));
+    }
+
+    function setSnapshot() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        xhttp.open("POST", newSnapshotAddr, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(snapshotData));
     }
 
     function getEvent() {
