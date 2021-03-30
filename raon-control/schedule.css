@@ -135,7 +135,7 @@ button {
     color: white;
     margin: auto;
     font-family: "Roboto-Light";
-    margin-top: 40px;
+    margin-top: 50px;
     position: relative;
     animation: animatebottom 1s;
     animation-delay: var(--listBoxDelay);

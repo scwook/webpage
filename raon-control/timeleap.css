@@ -16,7 +16,7 @@
     float: left;
     width: 750px;
     height: 980px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .title-box {
@@ -137,7 +137,7 @@ button {
     color: white;
     margin: auto;
     font-family: "Roboto-Light";
-    margin-top: 40px;
+    margin-top: 50px;
     position: relative;
     animation: animatebottom 1s;
     animation-delay: var(--listBoxDelay);
@@ -176,6 +176,18 @@ button {
     margin-top: 8px;
 }
 
+.snapshot-new-button {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    line-height: 28px;
+    right: 10px;
+    top: 5px;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+}
+
 #button-group {
     position: absolute;
     right: 0px;
@@ -210,8 +222,7 @@ table {
     width: 700px;
     font-size: 18px;
     margin: auto;
-    margin-top: 20px;
-
+    margin-top: 10px;
 }
 
 th {
@@ -276,3 +287,25 @@ td:nth-child(1) {
         background-position: 0px var(--background-image-top);
     }
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #34495E; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #34495E; 
+  }
