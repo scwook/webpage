@@ -23,7 +23,7 @@ def create_event():
     jsonData = request.get_json()
 
     # Insert new event
-    dateNow = "'" + str(datetime.datetime.now()) + "'"
+    dateNow = "'" + str(datetime.date.today()) + "'"
     eventTitle = "'" + jsonData['title'] + "'"
 
     insertEventQuery = 'INSERT INTO event(date,title) values(' + dateNow + "," + eventTitle + ")"
@@ -36,9 +36,10 @@ def create_event():
     lastEventIDStr = "'" + str(lastEventID) + "'"
 
     # Insert new snapshot
+    snapshotTimestamp = "'" + str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + "'"
     snapshotDescription = "'" + jsonData['description'] + "'"
 
-    insertSnapshotQuery = 'INSERT INTO snapshot_info(description,eventid) values(' + snapshotDescription + "," + lastEventIDStr + ")"
+    insertSnapshotQuery = 'INSERT INTO snapshot_info(timestamp,description,eventid) values(' + snapshotTimestamp + "," + snapshotDescription + "," + lastEventIDStr + ")"
     timeleap.execute(insertSnapshotQuery)
     conn.commit()
 
@@ -68,9 +69,10 @@ def create_snapshot():
 
     # Insert new snapshot
     eventID = "'" + jsonData['eventid'] + "'"
+    snapshotTimestamp = "'" + str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) + "'"
     snapshotDescription = "'" + jsonData['description'] + "'"
     
-    insertSnapshotQuery = 'INSERT INTO snapshot_info(description,eventid) values(' + snapshotDescription + "," + eventID + ")"
+    insertSnapshotQuery = 'INSERT INTO snapshot_info(timestamp,description,eventid) values(' + snapshotTimestamp + "," + snapshotDescription + "," + eventID + ")"
     timeleap.execute(insertSnapshotQuery)
     conn.commit()
     

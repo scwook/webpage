@@ -174,58 +174,38 @@ button {
     margin-top: 8px;
 }
 
-#shift-table {
-    position: relative;
-    margin-left: 25px;
-    /* animation: animatebottom 1s; */
-    /* animation-fill-mode: forwards; */
-    /* opacity: 0; */
-    /* border: 1px solid white; */
+table {
+    border-collapse: separate;
+    border-spacing: 0 3px;
+    width: 700px;
+    font-size: 20px;
+    margin: auto;
 }
 
-.shift-avatar {
-    width: 60px;
-    height: 60px;
-}
-
-/* .shift-avatar img {
-    width: 60px;
-    height: 60px;
-} */
-
-.shift-team {
-    width: 290px;
-    height: 20px;
-    /* text-align: left; */
-    padding-left: 10px;
-    font-size: 14px;
-    color: gray;
-}
-
-.shift-team svg {
-    vertical-align: middle;
-}
-
-.shift-user {
-    width: 290px;
-    height: 40px;
-    font-size: 28px;
-    padding-left: 10px;
+th {
     color: white;
+    background-color: #009FCA;
+    height: 28px;
+    text-align: center;
 }
 
-.avatar-img {
-    /* border: 2px solid white; */
-    border-radius: 50%;
+td {
+    color: white;
+    height: 30px;
+    text-align: center;
 }
 
-.row-spacing {
-    height: 20px;
+tr:nth-child(even) {
+    background-color: #2d2d2d;
 }
 
-.desk-img {
-    display: inline-block;
-    margin-left: 10px;
+tr:nth-child(odd) {
+    background-color: #1d1d1d;
+}
+
+td:nth-child(1) {
+    padding-left: 10px;
+    text-align: left;
 }
 
 @keyframes bar-animation {

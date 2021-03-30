@@ -41,7 +41,7 @@
 
         <!-- Left -->
         <div id="body-left">
-            <div class="title-box">Schedule</div>
+            <div class="title-box">Time Leap</div>
 
             <div style="display: flex; position:relative; left: 25px;">
                 <button id="last-button" onclick="lastCalendar()">&#10094;</button>
@@ -222,8 +222,8 @@
 
         <!-- Right -->
         <div id="body-right">
-            <div class="title-box" style="display: inline-block; width:50px;">Shift</div>
-            <div class="title-bar under-bar" style="--barColor: #5D6D7E;"></div>
+            <div class="title-box" id="snapshot-id" style="display: inline-block;"></div>
+            <!-- <div class="title-bar under-bar" style="--barColor: #5D6D7E;"></div> -->
 
             <table>
                 <thead id="tableHead" style="font-family: Roboto-Light">
@@ -257,10 +257,6 @@
     // var serverAddr = 'http://192.168.68.14'
     // var scheduleAddr = serverAddr + ':9011/schedule/'
 
-    // scwook Server
-    var serverAddr = 'http://localhost'
-    var scheduleAddr = serverAddr + ':8081/schedule/'
-
     var today = new Date();
     var date = new Date();
     var colorTable = ['#8E44AD', '#E74C3C', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
@@ -280,145 +276,53 @@
     monthArray[10] = "November";
     monthArray[11] = "December";
 
-    var scheduleList = [
+    var timeleapList = [
         {
-            fromDate: "2020-12-21",
-            toDate: "2020-12-22",
-            title: "Beam Commissioning 1",
-            detail: [
-                'Cool down',
-                'Beam Injection',
-                'Pulse Mode Operation'
-            ],
-            shifter: [
-                { name: "Son, Changwook", team: "Accelerator Control", desk: 1, seat: 1, leader: 1 },
-                { name: "Lee, SangIl", team: "Accelerator Control", desk: 1, seat: 2, leader: 0 },
-                { name: "Park, MiJeong", team: "Accelerator Control", desk: 1, seat: 3, leader: 0 },
-                { name: "Choi, YoungJun", team: "Accelerator Control", desk: 2, seat: 1, leader: 0 },
-                { name: "Kim, YongHak", team: "Accelerator Control", desk: 2, seat: 2, leader: 0 },
-                { name: "Kim TaeKyung", team: "Cryogenic", desk: 2, seat: 3, leader: 0 },
-                { name: "Park, InMyung", team: "Cryogenic", desk: 2, seat: 4, leader: 0 },
-                { name: "Shin, JaeHee", team: "Cryogenic", desk: 2, seat: 5, leader: 0 },
-                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: 2, seat: 6, leader: 0 },
-                { name: "Jo, HyunChul", team: "Cryogenic", desk: 3, seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 3, seat: 3, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 4, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 3, seat: 5, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: 3, seat: 6, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 4, seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: 4, seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: 4, seat: 2, leader: 1 }
+            eventid: "1",
+            date: "2021-03-09",
+            title: "Event Test 1",
+            snapshot: [
+                { snapshotid: "1", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "2", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "3", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "4", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "5", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
             ]
         },
 
         {
-            fromDate: "2021-01-11",
-            toDate: "2021-01-12",
-            title: "Beam Commissioning 1",
-            detail: [
-                'Cool down',
-                'Beam Injection',
-                'Pulse Mode Operation'
-            ],
-            shifter: [
-                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
-                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
-                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
-                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
-                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
-                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
-                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
-                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
-                { name: "Jo, HyunChul", team: "Cryogenic", desk: "3", seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 3, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 2, leader: 1 }
-            ]
-        },
-        {
-            fromDate: "2021-01-22",
-            toDate: "2021-01-23",
-            title: "Beam Commissioning 2",
-            detail: [
-                'Cool down',
-                'Beam Injection',
-                'Pulse Mode Operation',
-                'Pulse Mode Operation',
-                'Pulse Mode Operation',
-                'Pulse Mode Operation',
-                'Pulse Mode Operation',
-                'Pulse Mode Operation'
-
-            ],
-            shifter: [
-                { name: "Kim TaeKyung", team: "Cryogenic", desk: "2", seat: 3, leader: 0 },
-                { name: "Park, InMyung", team: "Cryogenic", desk: "2", seat: 4, leader: 0 },
-                { name: "Shin, JaeHee", team: "Cryogenic", desk: "2", seat: 5, leader: 0 },
-                { name: "Yoon, Sungwoon", team: "Cryogenic", desk: "2", seat: 6, leader: 0 },
-                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: 1, leader: 1 },
-                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: 2, leader: 0 },
-                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: 3, leader: 0 },
-                { name: "Choi, YoungJun", team: "Accelerator Control", desk: "2", seat: 1, leader: 0 },
-                { name: "Kim, YongHak", team: "Accelerator Control", desk: "2", seat: 2, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 4, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "3", seat: 5, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: 6, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 1, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 2, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 3, leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: 4, leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: 5, leader: 0 }
+            eventid: "2",
+            date: "2021-03-18",
+            title: "Event Test 2",
+            snapshot: [
+                { snapshotid: "21", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "22", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "23", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "24", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "25", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
             ]
         },
 
         {
-            fromDate: "2021-01-25",
-            toDate: "2021-01-26",
-            title: "Beam Commissioning 3",
-            detail: [
-                'Cool down',
-                'Beam Injection'
-            ],
-            shifter: [
-                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
-                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
-                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
-            ]
-        },
-
-        {
-            fromDate: "2021-02-05",
-            toDate: "2021-02-06",
-            title: "Beam Commissioning 5",
-            detail: [
-                'Cool down',
-                'Beam Injection'
-            ],
-            shifter: [
-                { name: "Son, Changwook", team: "Accelerator Control", desk: "1", seat: "1", leader: 1 },
-                { name: "Lee, SangIl", team: "Accelerator Control", desk: "1", seat: "2", leader: 0 },
-                { name: "Park, MiJeong", team: "Accelerator Control", desk: "1", seat: "3", leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "3", seat: "6", leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "1", leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "2", leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "3", leader: 0 },
-                { name: "Park, Heecheol", team: "Cryogenic", desk: "4", seat: "4", leader: 0 },
-                { name: "Yoo, JungHyun", team: "Cryogenic", desk: "4", seat: "5", leader: 0 }
+            eventid: "3",
+            date: "2021-03-23",
+            title: "Event Test 3",
+            snapshot: [
+                { snapshotid: "101", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 3" },
+                { snapshotid: "102", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 4" },
+                { snapshotid: "103", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 5" },
+                { snapshotid: "104", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 6" },
+                { snapshotid: "105", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 7" },
             ]
         }
+    ];
+
+    var recordData = [
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "1" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "2" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "3" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "4" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "5" }
     ];
 
     function thisCalendar() {
@@ -433,40 +337,40 @@
         bodyCenterId.innerHTML = '';
 
         // Clear shift list
-        var shiftAvatar = document.getElementsByClassName("avatar-img");
-        var shiftUserTable = document.getElementsByClassName("shift-user");
-        var shiftTeamTable = document.getElementsByClassName("team-name");
-        var shiftDesk = document.getElementsByClassName("desk-img");
-        for (let i = 0; i < 20; i++) {
-            shiftAvatar[i].src = '';
-            shiftUserTable[i].innerText = '';
-            shiftTeamTable[i].innerText = '';
-            shiftDesk[i].innerHTML = '';
-        }
+        // var shiftAvatar = document.getElementsByClassName("avatar-img");
+        // var shiftUserTable = document.getElementsByClassName("shift-user");
+        // var shiftTeamTable = document.getElementsByClassName("team-name");
+        // var shiftDesk = document.getElementsByClassName("desk-img");
+        // for (let i = 0; i < 20; i++) {
+        //     shiftAvatar[i].src = '';
+        //     shiftUserTable[i].innerText = '';
+        //     shiftTeamTable[i].innerText = '';
+        //     shiftDesk[i].innerHTML = '';
+        // }
 
         // Create last month
         today = new Date(today.getFullYear(), today.getMonth());
         makeCalendar();
 
         // Create schedule and shift list
-        getScheduleDatabase();
-        //makeSchedule();
+        // getScheduleDatabase();
+        makeEventList();
 
         // Show up first shift list
-        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        if (scheduleButtonClass[0]) {
-            scheduleButtonClass[0].click();
-        }
-        else {
-            // Title under line animation re-trigger
-            var titleBarClass = document.getElementsByClassName('title-bar');
+        // var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        // if (scheduleButtonClass[0]) {
+        //     scheduleButtonClass[0].click();
+        // }
+        // else {
+        //     // Title under line animation re-trigger
+        //     var titleBarClass = document.getElementsByClassName('title-bar');
 
-            // 0: Todo under line, 1: Shift under line
-            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-            titleBarClass[1].classList.remove('under-bar');
-            titleBarClass[1].offsetWidth;
-            titleBarClass[1].classList.add('under-bar');
-        }
+        //     // 0: Todo under line, 1: Shift under line
+        //     titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+        //     titleBarClass[1].classList.remove('under-bar');
+        //     titleBarClass[1].offsetWidth;
+        //     titleBarClass[1].classList.add('under-bar');
+        // }
     }
 
     function lastCalendar() {
@@ -482,40 +386,40 @@
         bodyCenterId.innerHTML = '';
 
         // Clear shift list
-        var shiftAvatar = document.getElementsByClassName("avatar-img");
-        var shiftUserTable = document.getElementsByClassName("shift-user");
-        var shiftTeamTable = document.getElementsByClassName("team-name");
-        var shiftDesk = document.getElementsByClassName("desk-img");
-        for (let i = 0; i < 20; i++) {
-            shiftAvatar[i].src = '';
-            shiftUserTable[i].innerText = '';
-            shiftTeamTable[i].innerText = '';
-            shiftDesk[i].innerHTML = '';
-        }
+        // var shiftAvatar = document.getElementsByClassName("avatar-img");
+        // var shiftUserTable = document.getElementsByClassName("shift-user");
+        // var shiftTeamTable = document.getElementsByClassName("team-name");
+        // var shiftDesk = document.getElementsByClassName("desk-img");
+        // for (let i = 0; i < 20; i++) {
+        //     shiftAvatar[i].src = '';
+        //     shiftUserTable[i].innerText = '';
+        //     shiftTeamTable[i].innerText = '';
+        //     shiftDesk[i].innerHTML = '';
+        // }
 
         // Create last month
         today = new Date(today.getFullYear(), today.getMonth() - 1);
         makeCalendar();
 
         // Create schedule and shift list
-        getScheduleDatabase();
-        //makeSchedule();
+        // getScheduleDatabase();
+        makeEventList();
 
         // Show up first shift list
-        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        if (scheduleButtonClass[0]) {
-            scheduleButtonClass[0].click();
-        }
-        else {
-            // Title under line animation re-trigger
-            var titleBarClass = document.getElementsByClassName('title-bar');
+        // var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        // if (scheduleButtonClass[0]) {
+        //     scheduleButtonClass[0].click();
+        // }
+        // else {
+        //     // Title under line animation re-trigger
+        //     var titleBarClass = document.getElementsByClassName('title-bar');
 
-            // 0: Todo under line, 1: Shift under line
-            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-            titleBarClass[1].classList.remove('under-bar');
-            titleBarClass[1].offsetWidth;
-            titleBarClass[1].classList.add('under-bar');
-        }
+        //     // 0: Todo under line, 1: Shift under line
+        //     titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+        //     titleBarClass[1].classList.remove('under-bar');
+        //     titleBarClass[1].offsetWidth;
+        //     titleBarClass[1].classList.add('under-bar');
+        // }
     }
 
     function nextCalendar() {
@@ -533,40 +437,40 @@
         bodyCenterId.innerHTML = '';
 
         // Clear shift list
-        var shiftAvatar = document.getElementsByClassName("avatar-img");
-        var shiftUserTable = document.getElementsByClassName("shift-user");
-        var shiftTeamTable = document.getElementsByClassName("team-name");
-        var shiftDesk = document.getElementsByClassName("desk-img");
-        for (let i = 0; i < 20; i++) {
-            shiftAvatar[i].src = '';
-            shiftUserTable[i].innerText = '';
-            shiftTeamTable[i].innerText = '';
-            shiftDesk[i].innerHTML = '';
-        }
+        // var shiftAvatar = document.getElementsByClassName("avatar-img");
+        // var shiftUserTable = document.getElementsByClassName("shift-user");
+        // var shiftTeamTable = document.getElementsByClassName("team-name");
+        // var shiftDesk = document.getElementsByClassName("desk-img");
+        // for (let i = 0; i < 20; i++) {
+        //     shiftAvatar[i].src = '';
+        //     shiftUserTable[i].innerText = '';
+        //     shiftTeamTable[i].innerText = '';
+        //     shiftDesk[i].innerHTML = '';
+        // }
 
         // Create next month
         today = new Date(today.getFullYear(), today.getMonth() + 1);
         makeCalendar();
 
         // Create schedule and shift list
-        getScheduleDatabase();
-        // makeSchedule();
+        // getScheduleDatabase();
+        makeEventList();
 
         // Show up first shift list
-        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        if (scheduleButtonClass[0]) {
-            scheduleButtonClass[0].click();
-        }
-        else {
-            // Title under line animation re-trigger
-            var titleBarClass = document.getElementsByClassName('title-bar');
+        // var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
+        // if (scheduleButtonClass[0]) {
+        //     scheduleButtonClass[0].click();
+        // }
+        // else {
+        //     // Title under line animation re-trigger
+        //     var titleBarClass = document.getElementsByClassName('title-bar');
 
-            // 0: Todo under line, 1: Shift under line
-            titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-            titleBarClass[1].classList.remove('under-bar');
-            titleBarClass[1].offsetWidth;
-            titleBarClass[1].classList.add('under-bar');
-        }
+        //     // 0: Todo under line, 1: Shift under line
+        //     titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
+        //     titleBarClass[1].classList.remove('under-bar');
+        //     titleBarClass[1].offsetWidth;
+        //     titleBarClass[1].classList.add('under-bar');
+        // }
     }
 
     function makeCalendar() {
@@ -615,7 +519,7 @@
         }
     }
 
-    function makeSchedule() {
+    function makeEventList() {
         var dayCalss = document.getElementsByClassName('day');
         var month = monthString[today.getMonth()];
         var year = today.getFullYear();
@@ -623,13 +527,13 @@
         var listBoxDelay = 0.0;
         var listBoxColorIndex = 0;
 
-        for (let i = 0; i < scheduleList.length; i++) {
+        for (let i = 0; i < timeleapList.length; i++) {
 
-            var startDate = new Date(scheduleList[i].fromDate);
-            var endDate = new Date(scheduleList[i].toDate);
+            var startDate = new Date(timeleapList[i].date);
+            var endDate = startDate;
             var days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)) + 1;
 
-            var fromDateArray = scheduleList[i].fromDate.split("-");
+            var fromDateArray = timeleapList[i].date.split("-");
             var list = fromDateArray[0] + '-' + fromDateArray[1];
 
             // var toDateArray = scheduleList[i].toDate.split("-");
@@ -647,14 +551,14 @@
                     endIndex = dayCalss.length;
                 }
 
-                createScheduleButton(startIndex);
+                createEventButton(startIndex);
 
-                function createScheduleButton(index) {
+                function createEventButton(index) {
                     var color = colorTable[listBoxColorIndex];
                     var scheduleButton = document.createElement('BUTTON');
-                    var buttonText = document.createTextNode(scheduleList[i].title);
+                    var buttonText = document.createTextNode(timeleapList[i].title);
                     scheduleButton.classList.add('scheduleButton');
-                    scheduleButton.addEventListener('click', function () { shifterList(i, color) });
+                    // scheduleButton.addEventListener('click', function () { snashotRecordList() });
                     scheduleButton.style.backgroundColor = color;
                     scheduleButton.style.height = '24px';
 
@@ -683,7 +587,7 @@
                             dayCalss[index].appendChild(scheduleButton);
 
                             // create new button for next week
-                            createScheduleButton(j + 1);
+                            createEventButton(j + 1);
                             break;
                         }
 
@@ -691,7 +595,7 @@
                     }
 
                     // Create schedule list box and detail infomation
-                    scheduleDetail(i, listBoxDelay, color);
+                    snashotDetail(i, listBoxDelay, color);
                     listBoxDelay += 0.2;
                     listBoxColorIndex += 1;
                 }
@@ -699,17 +603,17 @@
         }
     }
 
-    function scheduleDetail(index, delay, color) {
+    function snashotDetail(index, delay, color) {
 
         var bodyCenterId = document.getElementById('body-center');
         let i = index;
         var height = 0;
         var heightLineCount = 1;
 
-        var fromDateArray = scheduleList[i].fromDate.split("-");
+        var fromDateArray = timeleapList[i].date.split("-");
         var beginDay = parseInt(fromDateArray[2]);
 
-        var toDateArray = scheduleList[i].toDate.split("-");
+        var toDateArray = fromDateArray;
         var endDay = parseInt(toDateArray[2]);
 
         var scheduleBox = document.createElement('DIV');
@@ -729,17 +633,20 @@
 
         var scheduleTitle = document.createElement('DIV');
         scheduleTitle.classList.add('schedule-day-title');
-        scheduleTitle.innerText = scheduleList[i].title;
+        scheduleTitle.innerText = timeleapList[i].title;
 
         scheduleBox.appendChild(scheduleBegin);
         scheduleBox.appendChild(scheduleEnd);
         scheduleBox.appendChild(scheduleTitle);
 
-        for (let j = 0; j < scheduleList[i].detail.length; j++) {
+        for (let j = 0; j < timeleapList[i].snapshot.length; j++) {
+            let snapshotID = timeleapList[i].snapshot[j].snapshotid;
+
             var daySchedule = document.createElement('DIV');
             daySchedule.classList.add('schedule-day-detail');
-            daySchedule.innerText = 'Day ' + parseInt(beginDay + j) + ' : ' + scheduleList[i].detail[j];
-
+            daySchedule.innerText = snapshotID + ' : ' + timeleapList[i].snapshot[j].description;
+            daySchedule.addEventListener('click', function () { snashotRecordList(snapshotID) });
+            
             scheduleBox.appendChild(daySchedule);
 
             if (heightLineCount > 3) {
@@ -759,155 +666,37 @@
         bodyCenterId.appendChild(scheduleBox);
     }
 
-    var desk1SVG = '<svg width="40" height="8"><path class="desk1" d="M6.67,6.4A10.51,10.51,0,0,1,12.07,8h1.26V0H0V8H1.26A10.51,10.51,0,0,1,6.67,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M20,6.4A10.54,10.54,0,0,1,25.41,8h1.26V0H13.33V8h1.26A10.54,10.54,0,0,1,20,6.4" style="fill:#e6e6e5"/><path class="desk1" d="M33.33,6.4A10.51,10.51,0,0,1,38.74,8H40V0H26.67V8h1.26a10.51,10.51,0,0,1,5.4-1.6" style="fill:#e6e6e5"/></svg>'
-    var desk2SVG = '<svg width="19.97" height="21"><path class="desk2" d="M9.13,16.38,7.63,21,2.11,17,6,14.13A6.25,6.25,0,0,0,9.13,16.38Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5A6.15,6.15,0,0,0,6,14.13L2.11,17,0,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M4.86,10.5H0L2.11,4,6,6.87A6.15,6.15,0,0,0,4.86,10.5Z" style="fill:#e6e6e5"/><path class="desk2" d="M6,6.87,2.11,4,7.63,0l1.5,4.62A6.25,6.25,0,0,0,6,6.87Z" style="fill:#e6e6e5"/><path class="desk2" d="M11,4.32a6.31,6.31,0,0,0-1.91.3L7.63,0h6.82L13,4.62A6.31,6.31,0,0,0,11,4.32Z" style="fill:#e6e6e5"/><path class="desk2" d="M13,4.62,14.45,0,20,4,16,6.87A6.25,6.25,0,0,0,13,4.62Z" style="fill:#e6e6e5"/></svg>'
-    var desk3SVG = '<svg width="19.97" height="21"><path class="desk3" d="M10.84,16.38,12.34,21l5.52-4-3.93-2.86A6.21,6.21,0,0,1,10.84,16.38Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5a6.15,6.15,0,0,1-1.18,3.63L17.86,17,20,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M15.11,10.5H20L17.86,4,13.93,6.87A6.15,6.15,0,0,1,15.11,10.5Z" style="fill:#e6e6e5"/><path class="desk3" d="M13.93,6.87,17.86,4,12.34,0l-1.5,4.62A6.21,6.21,0,0,1,13.93,6.87Z" style="fill:#e6e6e5"/><path class="desk3" d="M8.93,4.32a6.31,6.31,0,0,1,1.91.3L12.34,0H5.52L7,4.62A6.31,6.31,0,0,1,8.93,4.32Z" style="fill:#e6e6e5"/><path class="desk3" d="M7,4.62,5.52,0,0,4,3.94,6.87A6.18,6.18,0,0,1,7,4.62Z" style="fill:#e6e6e5"/></svg>'
-    var desk4SVG = '<svg width="25" height="12"><path class="desk4" d="M6.84,7.85,2.39,4.58,0,12H5.5A7.09,7.09,0,0,1,6.84,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M10.34,5.28,8.64,0,2.39,4.58,6.84,7.85A7.06,7.06,0,0,1,10.34,5.28Z" style="fill:#e6e6e5"/><path class="desk4" d="M12.5,4.93a7,7,0,0,1,2.16.35L16.36,0H8.64l1.7,5.28A7,7,0,0,1,12.5,4.93Z" style="fill:#e6e6e5"/><path class="desk4" d="M18.16,7.85l4.45-3.27L16.36,0l-1.7,5.28A7.06,7.06,0,0,1,18.16,7.85Z" style="fill:#e6e6e5"/><path class="desk4" d="M19.5,12H25L22.61,4.58,18.16,7.85A7.09,7.09,0,0,1,19.5,12Z" style="fill:#e6e6e5"/></svg>'
+    function snashotRecordList(snapshotID) {
+        document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotID;
 
-    // function shifterList(listNum, color) {
+        if (recordData.length) {
+            let tHead = '';
+            tHead += `<tr>
+						<th>PV Name</th>
+						<th>Value</th>
+						<th>Status</th>
+						<th>Not Restore</th>
+						</tr>`
 
-    //     var shiftNum = listNum;
-    //     var shiftAvatar = document.getElementsByClassName("avatar-img");
-    //     var shiftUserTable = document.getElementsByClassName("shift-user");
-    //     var shiftTeamTable = document.getElementsByClassName("team-name");
-    //     var shiftDesk = document.getElementsByClassName("desk-img");
+            document.getElementById("tableHead").innerHTML = tHead;
 
-    //     var shiferInfo = scheduleList[shiftNum].shifter;
-    //     var desk1Count = 0;
-    //     var desk2Count = 0;
-    //     var desk3Count = 0;
-    //     var desk4Count = 0;
+            let tData = '';
+            for (let i = 0; i < recordData.length; i++) {
+                tData += `<tr>
+						<td>${recordData[i].pvname}</td>
+						<td>${recordData[i].value}</td>
+						<td>Connected</td>
+						<td>OK</td>
+						</tr>`
+            }
 
-    //     for (let i = 0; i < shiferInfo.length; i++) {
-    //         shiftAvatar[i].src = "images/avatar.svg";
-    //         shiftUserTable[i].innerText = shiferInfo[i].name;
-    //         shiftTeamTable[i].innerText = shiferInfo[i].team;
-
-    //         let deskNum = shiferInfo[i].desk;
-    //         let seatNum = shiferInfo[i].seat;
-    //         let isShiftLeader = shiferInfo[i].leader;
-    //         var deskColor = '';
-    //         var numberOfDesk = 0;
-
-    //         switch (deskNum) {
-    //             case 1:
-    //                 shiftDesk[i].innerHTML = desk1SVG;
-    //                 var deskClass = document.getElementsByClassName('desk1');
-    //                 var numberOfDesk = 3;
-    //                 var deskOffset = numberOfDesk * desk1Count;
-    //                 desk1Count += 1;
-
-    //                 for (let j = 0; j < numberOfDesk; j++) {
-    //                     if (seatNum == j + 1) {
-    //                         if (isShiftLeader) {
-    //                             deskColor = '#ec2227';
-    //                         }
-    //                         else {
-    //                             deskColor = '#2baae2';
-    //                         }
-    //                     }
-    //                     else {
-    //                         deskColor = '#e6e6e5';
-    //                     }
-
-    //                     deskClass[deskOffset + j].style.fill = deskColor;
-    //                 }
-    //                 break;
-
-    //             case 2:
-    //                 shiftDesk[i].innerHTML = desk2SVG;
-    //                 var deskClass = document.getElementsByClassName('desk2');
-    //                 var numberOfDesk = 6;
-    //                 var deskOffset = numberOfDesk * desk2Count;
-    //                 desk2Count += 1;
-
-    //                 for (let j = 0; j < numberOfDesk; j++) {
-    //                     if (seatNum == j + 1) {
-    //                         if (isShiftLeader) {
-    //                             deskColor = '#ec2227';
-    //                         }
-    //                         else {
-    //                             deskColor = '#2baae2';
-    //                         }
-    //                     }
-    //                     else {
-    //                         deskColor = '#e6e6e5';
-    //                     }
-
-    //                     deskClass[deskOffset + j].style.fill = deskColor;
-    //                 }
-    //                 break;
-
-    //             case 3:
-    //                 shiftDesk[i].innerHTML = desk3SVG;
-    //                 var deskClass = document.getElementsByClassName('desk3');
-    //                 var numberOfDesk = 6;
-    //                 var deskOffset = numberOfDesk * desk3Count;
-    //                 desk3Count += 1;
-
-    //                 for (let j = 0; j < numberOfDesk; j++) {
-    //                     if (seatNum == j + 1) {
-    //                         if (isShiftLeader) {
-    //                             deskColor = '#ec2227';
-    //                         }
-    //                         else {
-    //                             deskColor = '#2baae2';
-    //                         }
-    //                     }
-    //                     else {
-    //                         deskColor = '#e6e6e5';
-    //                     }
-
-    //                     deskClass[deskOffset + j].style.fill = deskColor;
-    //                 }
-    //                 break;
-
-    //             case 4:
-    //                 shiftDesk[i].innerHTML = desk4SVG;
-    //                 var deskClass = document.getElementsByClassName('desk4');
-    //                 var numberOfDesk = 5;
-    //                 var deskOffset = numberOfDesk * desk4Count;
-    //                 desk4Count += 1;
-
-    //                 for (let j = 0; j < numberOfDesk; j++) {
-    //                     if (seatNum == j + 1) {
-    //                         if (isShiftLeader) {
-    //                             deskColor = '#ec2227';
-    //                         }
-    //                         else {
-    //                             deskColor = '#2baae2';
-    //                         }
-    //                     }
-    //                     else {
-    //                         deskColor = '#e6e6e5';
-    //                     }
-
-    //                     deskClass[deskOffset + j].style.fill = deskColor;
-    //                 }
-    //                 break;
-
-    //             default:
-    //                 break;
-    //         }
-    //     }
-
-    //     // Clear left rows
-    //     for (let i = shiferInfo.length; i < 20; i++) {
-    //         shiftAvatar[i].src = '';
-    //         shiftUserTable[i].innerText = '';
-    //         shiftTeamTable[i].innerText = '';
-    //         shiftDesk[i].innerHTML = '';
-    //     }
-
-    //     // Title under line animation re-trigger
-    //     var titleBarClass = document.getElementsByClassName('title-bar');
-
-    //     // 0: Todo under line, 1: Shift under line
-    //     titleBarClass[1].style.setProperty('--barColor', color);
-    //     titleBarClass[1].classList.remove('under-bar');
-    //     titleBarClass[1].offsetWidth;
-    //     titleBarClass[1].classList.add('under-bar');
-    // }
+            document.getElementById("tableBody").innerHTML = tData;
+            $("table tr").hide();
+            $("table tr").each(function (index) {
+                $(this).delay(index * 50).show(500);
+            });
+        }
+    }
 
     // Clock
     function timer() {
@@ -921,33 +710,33 @@
         var myVar = setInterval(timer, 1000);
 
         thisCalendar()
-        // makeSchedule();
-        // scheduleDetail();
+        // makeEventList();
+        // snashotDetail();
         // shifterList(0, '#8E44AD');
 
         // setInterval(getScheduleDatabase, 2000);
 
     }
 
-    function getScheduleDatabase() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+    // function getScheduleDatabase() {
+    //     var xhttp = new XMLHttpRequest();
+    //     xhttp.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
 
-                scheduleList = JSON.parse(this.responseText);
-                makeSchedule();
+    //             scheduleList = JSON.parse(this.responseText);
+    //             makeEventList();
 
-                var schedule = document.getElementsByClassName('scheduleButton');
-                if (schedule.length) {
-                    schedule[0].click();
-                }
-            }
-        };
+    //             var schedule = document.getElementsByClassName('scheduleButton');
+    //             if (schedule.length) {
+    //                 schedule[0].click();
+    //             }
+    //         }
+    //     };
 
-        var server = scheduleAddr + today.getFullYear() + '-' + monthString[today.getMonth()];
-        xhttp.open("GET", server, true);
-        xhttp.send();
-    }
+    //     var server = scheduleAddr + today.getFullYear() + '-' + monthString[today.getMonth()];
+    //     xhttp.open("GET", server, true);
+    //     xhttp.send();
+    // }
 </script>
 
 </html>
