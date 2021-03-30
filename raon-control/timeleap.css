@@ -12,16 +12,18 @@
 }
 
 #body-right {
+    position: relative;
     float: left;
     width: 750px;
     height: 980px;
+    overflow: scroll;
 }
 
 .title-box {
     /* display: flex;
     align-items: center; */
     position: relative;
-    width: 700px;
+    /* width: 700px; */
     height: 40px;
     left: 25px;
     font-size: 32px;
@@ -174,12 +176,42 @@ button {
     margin-top: 8px;
 }
 
+#button-group {
+    position: absolute;
+    right: 0px;
+    top: 3px;
+    display: flex;
+    width: 550px;
+    height: 30px;
+    justify-content: space-evenly;
+}
+
+.config-button {
+    width: 80px;
+    height: 30px;
+    border: 2px solid #34495E;
+    border-radius: 0px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: transparent;
+    transition-duration: 0.4s;
+    font-family: "Roboto-Thin";
+}
+
+.config-button:hover {
+    background-color: #34495E;
+}
+
 table {
     border-collapse: separate;
     border-spacing: 0 3px;
     width: 700px;
-    font-size: 20px;
+    font-size: 18px;
     margin: auto;
+    margin-top: 20px;
+
 }
 
 th {

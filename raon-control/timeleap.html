@@ -6,38 +6,37 @@
 
 <body>
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
-        <div id="time-stamp"></div>
-        <svg id="under-line" width="1920" height="42">
-            <polyline class="under-bar-style" points="0 40 760 40 791 0" />
-            <polyline class="under-bar-style" points="1920 40 1160 40 1129 0" />
-        </svg>
-        <svg id="center-top" width="400" height="80">
-            <path
-                d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
-                style="fill:#f3f3f3" />
-        </svg>
-        <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
-        <div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
-        <div id="left-menu">
-            <a href="" class="secret-menu">Logbook</a>
-            <a href="" class="secret-menu">Finder</a>
-            <a href="" class="secret-menu">Naming</a>
-            <a href="bab.html">Bab</a>
-            <a href="asset.html">Asset</a>
-
-        </div>
-        <div id="right-menu">
-            <a href="monitoring.html">Monitoring</a>
-            <a href="schedule.html">Schedule</a>
-            <a href="archive.html">Archive</a>
-            <a href="downloads.html">Download</a>
-            <a href="documents.html">Document</a>
-        </div>
+		<div id="time-stamp"></div>
+		<svg id="under-line" width="1920" height="42">
+			<polyline class="under-line-style" points="0 40 760 40 791 0" />
+			<polyline class="under-line-style" points="1920 40 1160 40 1129 0" />
+		</svg>
+		<svg id="center-top" width="400" height="80">
+			<path
+				d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
+				style="fill:#f3f3f3" />
+		</svg>
+		<div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div>
+		<div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+		<div id="left-menu">
+			<a href="" class="secret-menu">Logbook</a>
+			<a href="" class="secret-menu">Finder</a>
+			<a href="" class="secret-menu">Naming</a>
+			<a href="bab.html">Bab</a>
+			<a href="asset.html">Asset</a>
+		</div>
+		<div id="right-menu">
+			<a href="monitoring.html">Monitoring</a>
+			<a href="schedule.html">Schedule</a>
+			<a href="archive.html">Archive</a>
+			<a href="downloads.html">Download</a>
+			<a href="documents.html">Document</a>
+		</div>
     </div>
 
     <div style="height:20px"></div>
 
-    <div class="body" style="width:1920px; height:780px; display:flex; margin:auto;">
+    <div style="width:1920px; height:780px; display:flex; margin:auto;">
 
         <!-- Left -->
         <div id="body-left">
@@ -223,8 +222,13 @@
         <!-- Right -->
         <div id="body-right">
             <div class="title-box" id="snapshot-id" style="display: inline-block;"></div>
-            <!-- <div class="title-bar under-bar" style="--barColor: #5D6D7E;"></div> -->
-
+            <div id="button-group">
+                <button class="config-button">Set</button>
+                <button class="config-button">Load</button>
+                <button class="config-button">Save</button>
+                <button class="config-button">Import</button>
+                <button class="config-button">Export</button>
+            </div>
             <table>
                 <thead id="tableHead" style="font-family: Roboto-Light">
                     <!-- <tr>
@@ -322,104 +326,103 @@
         { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "2" },
         { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "3" },
         { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "4" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "5" }
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "5" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "6" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "7" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "8" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "9" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "10" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "11" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "12" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "13" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "14" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "15" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "16" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "17" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "18" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "19" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "20" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "21" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "22" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "23" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "24" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "25" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "26" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "27" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "28" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "29" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "30" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "1" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "2" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "3" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "4" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "5" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "6" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "7" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "8" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "9" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "10" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "11" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "12" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "13" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "14" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "15" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "16" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "17" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "18" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "19" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "20" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "21" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "22" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "23" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "24" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "25" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "26" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "27" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "28" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "29" },
+        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "30" },
+
     ];
 
     function thisCalendar() {
         // Remove this month schedule buttons
-        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-            scheduleButtonClass[i].remove();
+        var eventButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = eventButtonClass.length - 1; i >= 0; i--) {
+            eventButtonClass[i].remove();
         }
 
         // Clear this month schedule list
         var bodyCenterId = document.getElementById('body-center');
         bodyCenterId.innerHTML = '';
-
-        // Clear shift list
-        // var shiftAvatar = document.getElementsByClassName("avatar-img");
-        // var shiftUserTable = document.getElementsByClassName("shift-user");
-        // var shiftTeamTable = document.getElementsByClassName("team-name");
-        // var shiftDesk = document.getElementsByClassName("desk-img");
-        // for (let i = 0; i < 20; i++) {
-        //     shiftAvatar[i].src = '';
-        //     shiftUserTable[i].innerText = '';
-        //     shiftTeamTable[i].innerText = '';
-        //     shiftDesk[i].innerHTML = '';
-        // }
 
         // Create last month
         today = new Date(today.getFullYear(), today.getMonth());
         makeCalendar();
 
-        // Create schedule and shift list
-        // getScheduleDatabase();
+        // Create event list
         makeEventList();
-
-        // Show up first shift list
-        // var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        // if (scheduleButtonClass[0]) {
-        //     scheduleButtonClass[0].click();
-        // }
-        // else {
-        //     // Title under line animation re-trigger
-        //     var titleBarClass = document.getElementsByClassName('title-bar');
-
-        //     // 0: Todo under line, 1: Shift under line
-        //     titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-        //     titleBarClass[1].classList.remove('under-bar');
-        //     titleBarClass[1].offsetWidth;
-        //     titleBarClass[1].classList.add('under-bar');
-        // }
     }
 
     function lastCalendar() {
 
         // Remove this month schedule buttons
-        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-            scheduleButtonClass[i].remove();
+        var eventButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = eventButtonClass.length - 1; i >= 0; i--) {
+            eventButtonClass[i].remove();
         }
 
         // Clear this month schedule list
         var bodyCenterId = document.getElementById('body-center');
         bodyCenterId.innerHTML = '';
 
-        // Clear shift list
-        // var shiftAvatar = document.getElementsByClassName("avatar-img");
-        // var shiftUserTable = document.getElementsByClassName("shift-user");
-        // var shiftTeamTable = document.getElementsByClassName("team-name");
-        // var shiftDesk = document.getElementsByClassName("desk-img");
-        // for (let i = 0; i < 20; i++) {
-        //     shiftAvatar[i].src = '';
-        //     shiftUserTable[i].innerText = '';
-        //     shiftTeamTable[i].innerText = '';
-        //     shiftDesk[i].innerHTML = '';
-        // }
-
         // Create last month
         today = new Date(today.getFullYear(), today.getMonth() - 1);
         makeCalendar();
 
-        // Create schedule and shift list
-        // getScheduleDatabase();
+        // Create event list
+
         makeEventList();
-
-        // Show up first shift list
-        // var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        // if (scheduleButtonClass[0]) {
-        //     scheduleButtonClass[0].click();
-        // }
-        // else {
-        //     // Title under line animation re-trigger
-        //     var titleBarClass = document.getElementsByClassName('title-bar');
-
-        //     // 0: Todo under line, 1: Shift under line
-        //     titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-        //     titleBarClass[1].classList.remove('under-bar');
-        //     titleBarClass[1].offsetWidth;
-        //     titleBarClass[1].classList.add('under-bar');
-        // }
     }
 
     function nextCalendar() {
@@ -427,50 +430,21 @@
         //getScheduleDatabase();
 
         // Remove this month schedule buttons
-        var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-            scheduleButtonClass[i].remove();
+        var eventButtonClass = document.getElementsByClassName('scheduleButton');
+        for (let i = eventButtonClass.length - 1; i >= 0; i--) {
+            eventButtonClass[i].remove();
         }
 
         // Clear this month schedule list
         var bodyCenterId = document.getElementById('body-center');
         bodyCenterId.innerHTML = '';
 
-        // Clear shift list
-        // var shiftAvatar = document.getElementsByClassName("avatar-img");
-        // var shiftUserTable = document.getElementsByClassName("shift-user");
-        // var shiftTeamTable = document.getElementsByClassName("team-name");
-        // var shiftDesk = document.getElementsByClassName("desk-img");
-        // for (let i = 0; i < 20; i++) {
-        //     shiftAvatar[i].src = '';
-        //     shiftUserTable[i].innerText = '';
-        //     shiftTeamTable[i].innerText = '';
-        //     shiftDesk[i].innerHTML = '';
-        // }
-
         // Create next month
         today = new Date(today.getFullYear(), today.getMonth() + 1);
         makeCalendar();
 
-        // Create schedule and shift list
-        // getScheduleDatabase();
+        // Create event list
         makeEventList();
-
-        // Show up first shift list
-        // var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-        // if (scheduleButtonClass[0]) {
-        //     scheduleButtonClass[0].click();
-        // }
-        // else {
-        //     // Title under line animation re-trigger
-        //     var titleBarClass = document.getElementsByClassName('title-bar');
-
-        //     // 0: Todo under line, 1: Shift under line
-        //     titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-        //     titleBarClass[1].classList.remove('under-bar');
-        //     titleBarClass[1].offsetWidth;
-        //     titleBarClass[1].classList.add('under-bar');
-        // }
     }
 
     function makeCalendar() {
@@ -646,7 +620,7 @@
             daySchedule.classList.add('schedule-day-detail');
             daySchedule.innerText = snapshotID + ' : ' + timeleapList[i].snapshot[j].description;
             daySchedule.addEventListener('click', function () { snashotRecordList(snapshotID) });
-            
+
             scheduleBox.appendChild(daySchedule);
 
             if (heightLineCount > 3) {
@@ -693,7 +667,7 @@
             document.getElementById("tableBody").innerHTML = tData;
             $("table tr").hide();
             $("table tr").each(function (index) {
-                $(this).delay(index * 50).show(500);
+                $(this).delay(index * 20).show(300);
             });
         }
     }
