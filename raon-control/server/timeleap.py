@@ -13,7 +13,7 @@ SERVER_ADDR = 'localhost'
 DB_HOST = 'localhost'
 DB_USER = 'ctrluser'
 DB_PASSWORD = 'qwer1234'
-DB_DATABASE = 'tachine'
+DB_DATABASE = 'timeleap'
 
 @app.route('/timeleap/event', methods=['POST'])
 def create_event():
