@@ -188,12 +188,20 @@ button {
     color: white;
 }
 
+.snapshot-list-table tr {
+    height: 20px;
+}
+
+.snapshot-list-table td:nth-child(1) {
+    width: 40px;
+}
+
 #button-group {
     position: absolute;
     right: 0px;
     top: 3px;
     display: flex;
-    width: 550px;
+    width: 500px;
     height: 30px;
     justify-content: space-evenly;
 }
@@ -216,7 +224,7 @@ button {
     background-color: #34495E;
 }
 
-table {
+#record-table {
     border-collapse: separate;
     border-spacing: 0 3px;
     width: 700px;
@@ -225,28 +233,28 @@ table {
     margin-top: 10px;
 }
 
-th {
+#record-table th {
     color: white;
     background-color: #009FCA;
     height: 28px;
     text-align: center;
 }
 
-td {
+#record-table td {
     color: white;
     height: 30px;
     text-align: center;
 }
 
-tr:nth-child(even) {
+#record-table tr:nth-child(even) {
     background-color: #2d2d2d;
 }
 
-tr:nth-child(odd) {
+#record-table tr:nth-child(odd) {
     background-color: #1d1d1d;
 }
 
-td:nth-child(1) {
+#record-table td:nth-child(1) {
     padding-left: 10px;
     text-align: left;
 }

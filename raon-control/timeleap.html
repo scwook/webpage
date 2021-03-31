@@ -40,7 +40,7 @@
 
         <!-- Left -->
         <div id="body-left">
-            <div class="title-box">Time Leap</div>
+            <div class="title-box" onclick="createNewEventSet()">Time Leap</div>
 
             <div style="display: flex; position:relative; left: 25px; margin-top:10px">
                 <button id="last-button" onclick="lastCalendar()">&#10094;</button>
@@ -229,8 +229,8 @@
                 <button class="config-button">Import</button>
                 <button class="config-button">Export</button>
             </div>
-            <table>
-                <thead id="tableHead" style="font-family: Roboto-Light">
+            <table id="record-table">
+                <thead id="record-tableHead" style="font-family: Roboto-Light">
                     <!-- <tr>
                         <th>PV Name</th>
                         <th>Status</th>
@@ -241,7 +241,7 @@
                     </tr> -->
                 </thead>
 
-                <tbody id="tableBody">
+                <tbody id="record-tableBody">
                     <!-- <tr>
                         <td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
                         <td>Being archived</td>
@@ -258,8 +258,13 @@
 
 <script>
     // Control Server
-    // var serverAddr = 'http://192.168.68.14'
-    // var scheduleAddr = serverAddr + ':9011/schedule/'
+    var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    var newEventAddr = serverAddr + '/event';
+    var newSnapshotAddr = serverAddr + '/snapshot';
+
+    var retrieveEventAddr = serverAddr + '/retrieve/event';
+    var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
+    var retrieveSnapshotRecordAddr = serverAddr + '/retrieve/snapshot/record'
 
     var today = new Date();
     var date = new Date();
@@ -382,7 +387,6 @@
         { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "28" },
         { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "29" },
         { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "30" },
-
     ];
 
     function thisCalendar() {
@@ -568,7 +572,7 @@
                         buttonWidthScale += 1;
                     }
 
-                    // Create schedule list box and detail infomation
+                    // Create snapsnot list box and detail infomation
                     snashotDetail(i, listBoxDelay, color);
                     listBoxDelay += 0.2;
                     listBoxColorIndex += 1;
@@ -611,7 +615,7 @@
 
         var newSnapshotButton = document.createElement('DIV');
         newSnapshotButton.classList.add('snapshot-new-button');
-        newSnapshotButton.addEventListener('click', function () { createNewSnapshot(timeleapList[i].eventid) });
+        newSnapshotButton.addEventListener('click', function () { setSnapshot(i) });
         newSnapshotButton.innerText = '+';
 
         scheduleBox.appendChild(scheduleBegin);
@@ -619,35 +623,36 @@
         scheduleBox.appendChild(scheduleTitle);
         scheduleBox.appendChild(newSnapshotButton);
 
+        var snapshotTable = document.createElement('TABLE');
+        snapshotTable.setAttribute('class', 'snapshot-list-table');
+
         for (let j = 0; j < timeleapList[i].snapshot.length; j++) {
             let snapshotID = timeleapList[i].snapshot[j].snapshotid;
 
-            var daySchedule = document.createElement('DIV');
-            daySchedule.classList.add('schedule-day-detail');
-            daySchedule.innerText = snapshotID + ' : ' + timeleapList[i].snapshot[j].description;
-            daySchedule.addEventListener('click', function () { snashotRecordList(snapshotID) });
+            var row = snapshotTable.insertRow(-1);
+            var idCell = row.insertCell(0);
+            var descriptionCell = row.insertCell(1);
 
-            scheduleBox.appendChild(daySchedule);
-
+            idCell.innerText = snapshotID
+            descriptionCell.innerText = timeleapList[i].snapshot[j].description;
+            descriptionCell.addEventListener('click', function () { snashotRecordList(snapshotID) })
 
             if (heightLineCount > 3) {
-                height = 3 * 23;
+                height = 3 * 20;
             }
             else {
-                height = heightLineCount * 23;
+                height = heightLineCount * 20;
             }
 
             heightLineCount += 1;
         }
 
+        scheduleBox.appendChild(snapshotTable);
+
         scheduleBox.style.setProperty('--listBoxHeight', 50 + height + 'px');
-        scheduleBox.style.setProperty('--listBoxHeightExpand', 38 + heightLineCount * 23 + 'px');
+        scheduleBox.style.setProperty('--listBoxHeightExpand', 38 + heightLineCount * 20 + 'px');
 
         bodyCenterId.appendChild(scheduleBox);
-    }
-
-    function createNewSnapshot(eventID) {
-        alert(eventID);
     }
 
     function snashotRecordList(snapshotID) {
@@ -662,7 +667,7 @@
 						<th>Not Restore</th>
 						</tr>`
 
-            document.getElementById("tableHead").innerHTML = tHead;
+            document.getElementById("record-tableHead").innerHTML = tHead;
 
             let tData = '';
             for (let i = 0; i < recordData.length; i++) {
@@ -674,9 +679,9 @@
 						</tr>`
             }
 
-            document.getElementById("tableBody").innerHTML = tData;
-            $("table tr").hide();
-            $("table tr").each(function (index) {
+            document.getElementById("record-tableBody").innerHTML = tData;
+            $("#record-table tr").hide();
+            $("#record-table tr").each(function (index) {
                 $(this).delay(index * 20).show(300);
             });
         }
@@ -690,6 +695,124 @@
 
     //getScheduleDatabase();
 
+    function createNewEventSet() {
+        // var eventTitle = document.getElementById('new-event-title').value;
+        // var snapshotDescription = document.getElementById('new-snapshot-description').value;
+
+        eventData.title = 'New Event';
+        eventData.description = 'New Snapshot';
+
+        setNewTimeleap();
+    }
+
+    function setNewTimeleap() {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                alert('Create New');
+
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        xhttp.open("POST", newEventAddr, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(eventData));
+    }
+
+    function setSnapshot(index) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+
+                var snapshotTable = document.getElementsByClassName('snapshot-list-table')[index];
+                var row = snapshotTable.insertRow(0);
+                var idCell = row.insertCell(0);
+                var descriptionCell = row.insertCell(1);
+
+                idCell.innerText = jsonValue.snapshotid;
+                descriptionCell.innerText = 'New Snapshot';
+
+                var listBox = snapshotTable.parentElement;
+                var listBoxHeight = listBox.offsetHeight;
+                
+                listBox.style.setProperty('--listBoxHeightExpand', listBoxHeight + 3 + 'px');
+                descriptionCell.addEventListener('click', function () { snashotRecordList(jsonValue.snapshotid) })
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var snapshotData = {eventid : timeleapList[index].eventid, description : "New Snapshot"};
+        
+        xhttp.open("POST", newSnapshotAddr, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(snapshotData));
+    }
+
+    function getEvent() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveEventAddr;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
+    }
+
+    function getSnapshot() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveSnapshotAddr;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
+    }
+
+    function getSnapshotRecord() {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveSnapshotRecordAddr + '/' + retrieveSnapshotID;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
+    }
+
+    function updateSnapshotRecord() {
+
+    }
+
+    function applySnapshotRecord() {
+
+    }
+
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
 
@@ -700,27 +823,10 @@
 
         // setInterval(getScheduleDatabase, 2000);
 
+
+
     }
 
-    // function getScheduleDatabase() {
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function () {
-    //         if (this.readyState == 4 && this.status == 200) {
-
-    //             scheduleList = JSON.parse(this.responseText);
-    //             makeEventList();
-
-    //             var schedule = document.getElementsByClassName('scheduleButton');
-    //             if (schedule.length) {
-    //                 schedule[0].click();
-    //             }
-    //         }
-    //     };
-
-    //     var server = scheduleAddr + today.getFullYear() + '-' + monthString[today.getMonth()];
-    //     xhttp.open("GET", server, true);
-    //     xhttp.send();
-    // }
 </script>
 
 </html>
