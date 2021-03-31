@@ -188,7 +188,7 @@ INSERT INTO snapshot_5 VALUES
 
 /* Event 2 Snapshot */
 
-NSERT INTO snapshot_info(timestamp,description,eventid) VALUES
+INSERT INTO snapshot_info(timestamp,description,eventid) VALUES
 ('2021-04-05 10:20:10','ECR Warm Up',2),
 ('2021-04-05 11:20:10','Beam Transport to LEBT',2),
 ('2021-04-05 12:20:10','Beam Transport to Chopper',2),
@@ -367,7 +367,7 @@ INSERT INTO snapshot_10 VALUES
 
 /* Event 3 Snapshot */
 
-NSERT INTO snapshot_info(timestamp,description,eventid) VALUES
+INSERT INTO snapshot_info(timestamp,description,eventid) VALUES
 ('2021-04-07 10:20:10','ECR Warm Up',3),
 ('2021-04-07 11:20:10','Beam Transport to LEBT',3),
 ('2021-04-07 12:20:10','Beam Transport to Chopper',3),
@@ -546,7 +546,7 @@ INSERT INTO snapshot_15 VALUES
 
 /* Event 4 Snapshot */
 
-NSERT INTO snapshot_info(timestamp,description,eventid) VALUES
+INSERT INTO snapshot_info(timestamp,description,eventid) VALUES
 ('2021-04-13 10:20:10','ECR Warm Up',4),
 ('2021-04-13 11:20:10','Beam Transport to LEBT',4),
 ('2021-04-13 12:20:10','Beam Transport to Chopper',4),
@@ -725,7 +725,7 @@ INSERT INTO snapshot_20 VALUES
 
 /* Event 5 Snapshot */
 
-NSERT INTO snapshot_info(timestamp,description,eventid) VALUES
+INSERT INTO snapshot_info(timestamp,description,eventid) VALUES
 ('2021-04-15 10:20:10','ECR Warm Up',5),
 ('2021-04-15 11:20:10','QWR Warm Up',5),
 ('2021-04-15 12:20:10','Beam Transport to QWR',5);
@@ -834,7 +834,7 @@ INSERT INTO snapshot_23 VALUES
 
 /* Event 6 Snapshot */
 
-NSERT INTO snapshot_info(timestamp,description,eventid) VALUES
+INSERT INTO snapshot_info(timestamp,description,eventid) VALUES
 ('2021-04-21 10:20:10','ECR Warm Up',6),
 ('2021-04-21 11:20:10','HWR Warm Up',6),
 ('2021-04-21 12:20:10','Beam Transport to HWR',6);
@@ -943,7 +943,7 @@ INSERT INTO snapshot_26 VALUES
 
 /* Event 7 Snapshot */
 
-NSERT INTO snapshot_info(timestamp,description,eventid) VALUES
+INSERT INTO snapshot_info(timestamp,description,eventid) VALUES
 ('2021-04-27 10:20:10','Injector Standby',7),
 ('2021-04-27 12:20:10','Beam Transport to High Energy Experiment',7);
 
