@@ -92,6 +92,32 @@ def create_snapshot():
 
     return json.dumps(timeleapDic)
 
+@app.route('/timeleap/retrieve', methods=['GET'])
+def get_event_list():
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
+    eventCursor = conn.cursor()
+    snapshotCursor = conn.cursor()
+
+    eventRetrieveQuery = 'SELECT * FROM event'
+    eventCursor.execute(retrieveQuery)
+
+    retrieveArray = []
+    for x in eventCursor:
+        retrieveDic = {'eventid':x[0], 'date':x[1], 'title':x[2], 'snapshot':[]}
+
+        snapshotRetrieveQuery = 'SELECT * FROM snapshot_info WHERE eventid' + '"' + x[0] + '"'
+        snapshotCursor.execute(snapshotRetrieveQuery)
+    
+        snapshotArray = []
+        for y in snapshotCursor:
+            snapshotDic = {'snapshotid':x[0], 'description':x[1], 'eventid':x[2]}
+            snapshotArray.append(snapshotDic)
+
+        retrieveDic['snapshot'] = snapshotArray
+        retrieveArray.append(retrieveDic)
+
+    return json.dumps(retrieveArray, ensure_ascii=False)
+
 @app.route('/timeleap/retrieve/event', methods=['GET'])
 def get_event_list():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
