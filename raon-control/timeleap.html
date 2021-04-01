@@ -257,18 +257,19 @@
 </body>
 
 <script>
-    // Control Server
+    // scwook Server
     var serverAddr = 'http://192.168.68.126:9013/timeleap';
     var newEventAddr = serverAddr + '/event';
     var newSnapshotAddr = serverAddr + '/snapshot';
 
+    var retrieveAddr = serverAddr + '/retrieve';
     var retrieveEventAddr = serverAddr + '/retrieve/event';
     var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
     var retrieveSnapshotRecordAddr = serverAddr + '/retrieve/snapshot/record'
 
     var today = new Date();
     var date = new Date();
-    var colorTable = ['#8E44AD', '#E74C3C', '#3498DB', '#16A085', '#F1C40F', '#D35400'];
+    var colorTable = ['#8E44AD', '#3498DB', '#16A085', '#F39C12', '#95A5A6', '#E74C3C', '#2ECC71', '#2980B9', '#F1C40F', '#34495E'];
 
     var monthString = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
     var monthArray = new Array();
@@ -285,7 +286,7 @@
     monthArray[10] = "November";
     monthArray[11] = "December";
 
-    var timeleapList = [
+    var timeleapData = [
         {
             eventid: "1",
             date: "2021-03-09",
@@ -404,8 +405,8 @@
         today = new Date(today.getFullYear(), today.getMonth());
         makeCalendar();
 
-        // Create event list
-        makeEventList();
+        // Create event and snapshot list
+        getRetrieve();
     }
 
     function lastCalendar() {
@@ -505,13 +506,13 @@
         var listBoxDelay = 0.0;
         var listBoxColorIndex = 0;
 
-        for (let i = 0; i < timeleapList.length; i++) {
+        for (let i = 0; i < timeleapData.length; i++) {
 
-            var startDate = new Date(timeleapList[i].date);
+            var startDate = new Date(timeleapData[i].date);
             var endDate = startDate;
             var days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)) + 1;
 
-            var fromDateArray = timeleapList[i].date.split("-");
+            var fromDateArray = timeleapData[i].date.split("-");
             var list = fromDateArray[0] + '-' + fromDateArray[1];
 
             // var toDateArray = scheduleList[i].toDate.split("-");
@@ -534,7 +535,7 @@
                 function createEventButton(index) {
                     var color = colorTable[listBoxColorIndex];
                     var scheduleButton = document.createElement('BUTTON');
-                    var buttonText = document.createTextNode(timeleapList[i].title);
+                    var buttonText = document.createTextNode('Event ' + timeleapData[i].eventid);
                     scheduleButton.classList.add('scheduleButton');
                     // scheduleButton.addEventListener('click', function () { snashotRecordList() });
                     scheduleButton.style.backgroundColor = color;
@@ -588,7 +589,7 @@
         var height = 0;
         var heightLineCount = 1;
 
-        var fromDateArray = timeleapList[i].date.split("-");
+        var fromDateArray = timeleapData[i].date.split("-");
         var beginDay = parseInt(fromDateArray[2]);
 
         var toDateArray = fromDateArray;
@@ -602,16 +603,16 @@
 
         var scheduleBegin = document.createElement('DIV');
         scheduleBegin.classList.add('schedule-day-begin');
-        scheduleBegin.innerText = beginDay;
+        scheduleBegin.innerText = timeleapData[i].eventid;
 
 
-        var scheduleEnd = document.createElement('DIV');
-        scheduleEnd.classList.add('schedule-day-end');
-        scheduleEnd.innerText = -(endDay);
+        // var scheduleEnd = document.createElement('DIV');
+        // scheduleEnd.classList.add('schedule-day-end');
+        // scheduleEnd.innerText = -(endDay);
 
         var scheduleTitle = document.createElement('DIV');
         scheduleTitle.classList.add('schedule-day-title');
-        scheduleTitle.innerText = timeleapList[i].title;
+        scheduleTitle.innerText = timeleapData[i].title;
 
         var newSnapshotButton = document.createElement('DIV');
         newSnapshotButton.classList.add('snapshot-new-button');
@@ -619,23 +620,23 @@
         newSnapshotButton.innerText = '+';
 
         scheduleBox.appendChild(scheduleBegin);
-        scheduleBox.appendChild(scheduleEnd);
+        // scheduleBox.appendChild(scheduleEnd);
         scheduleBox.appendChild(scheduleTitle);
         scheduleBox.appendChild(newSnapshotButton);
 
         var snapshotTable = document.createElement('TABLE');
         snapshotTable.setAttribute('class', 'snapshot-list-table');
 
-        for (let j = 0; j < timeleapList[i].snapshot.length; j++) {
-            let snapshotID = timeleapList[i].snapshot[j].snapshotid;
+        for (let j = 0; j < timeleapData[i].snapshot.length; j++) {
+            let snapshotID = timeleapData[i].snapshot[j].snapshotid;
 
             var row = snapshotTable.insertRow(-1);
             var idCell = row.insertCell(0);
             var descriptionCell = row.insertCell(1);
 
             idCell.innerText = snapshotID
-            descriptionCell.innerText = timeleapList[i].snapshot[j].description;
-            descriptionCell.addEventListener('click', function () { snashotRecordList(snapshotID) })
+            descriptionCell.innerText = timeleapData[i].snapshot[j].description;
+            descriptionCell.addEventListener('click', function () { getSnapshotRecord(snapshotID) })
 
             if (heightLineCount > 3) {
                 height = 3 * 20;
@@ -728,7 +729,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-				var jsonValue = JSON.parse(this.responseText);
+                var jsonValue = JSON.parse(this.responseText);
 
                 var snapshotTable = document.getElementsByClassName('snapshot-list-table')[index];
                 var row = snapshotTable.insertRow(0);
@@ -740,7 +741,7 @@
 
                 var listBox = snapshotTable.parentElement;
                 var listBoxHeight = listBox.offsetHeight;
-                
+
                 listBox.style.setProperty('--listBoxHeightExpand', listBoxHeight + 3 + 'px');
                 descriptionCell.addEventListener('click', function () { snashotRecordList(jsonValue.snapshotid) })
             }
@@ -749,11 +750,31 @@
             // }
         };
 
-        var snapshotData = {eventid : timeleapList[index].eventid, description : "New Snapshot"};
-        
+        var snapshotData = { eventid: timeleapData[index].eventid, description: "New Snapshot" };
+
         xhttp.open("POST", newSnapshotAddr, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(snapshotData));
+    }
+
+    function getRetrieve() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var jsonValue = JSON.parse(this.responseText);
+                timeleapData = jsonValue;
+
+                // Create event list
+                makeEventList();
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveAddr;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
     }
 
     function getEvent() {
@@ -788,19 +809,49 @@
         xhttp.send();
     }
 
-    function getSnapshotRecord() {
+    function getSnapshotRecord(snapshotRecordID) {
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+                var jsonValue = JSON.parse(this.responseText);
+
+                document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotRecordID;
+
+                if (jsonValue.length) {
+                    let tHead = '';
+                    tHead += `<tr>
+                <th>PV Name</th>
+                <th>Value</th>
+                <th>Status</th>
+                <th>Not Restore</th>
+                </tr>`
+
+                    document.getElementById("record-tableHead").innerHTML = tHead;
+
+                    let tData = '';
+                    for (let i = 0; i < jsonValue.length; i++) {
+                        tData += `<tr>
+                <td>${jsonValue[i].pvname}</td>
+                <td>${jsonValue[i].value}</td>
+                <td>Connected</td>
+                <td>OK</td>
+                </tr>`
+                    }
+
+                    document.getElementById("record-tableBody").innerHTML = tData;
+                    $("#record-table tr").hide();
+                    $("#record-table tr").each(function (index) {
+                        $(this).delay(index * 20).show(300);
+                    });
+                }
             }
             // else {
             // alert('Status Error : ' + this.status);
             // }
         };
 
-        var rName = retrieveSnapshotRecordAddr + '/' + retrieveSnapshotID;
+        var rName = retrieveSnapshotRecordAddr + '/' + snapshotRecordID;
         xhttp.open("GET", rName, true);
         xhttp.send();
     }
@@ -816,15 +867,12 @@
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
 
-        thisCalendar()
+        thisCalendar();
         // makeEventList();
         // snashotDetail();
         // shifterList(0, '#8E44AD');
 
         // setInterval(getScheduleDatabase, 2000);
-
-
-
     }
 
 </script>
