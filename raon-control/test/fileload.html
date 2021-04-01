@@ -2,25 +2,92 @@
 <html>
 
 <body>
+    <button onclick="openTextFile()">Open</button>
+    <div id="output">...</div>
 
 </body>
 <script>
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      
-    if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
+    function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                var lines = this.responseText.split('\n');
+
+                for (let x of lines) {
+                    var data = x.split(',');
+                    console.log(data);
+                }
+
+            }
+        };
+
+        xhttp.open("GET", "file.txt", true);
+        xhttp.send();
     }
-  };
 
-  xhttp.open("GET", "file.txt", true);
-  xhttp.send();
-}
+    var recordData = [
+        {pvname:'NEW-FILE:SCWOOK-SNAP01:out1', value:'1'},
+        {pvname:'NEW-FILE:SCWOOK-SNAP01:out2', value:'2'},
+        {pvname:'NEW-FILE:SCWOOK-SNAP01:out3', value:'3'},
+        {pvname:'NEW-FILE:SCWOOK-SNAP01:out4', value:'4'},
+        {pvname:'NEW-FILE:SCWOOK-SNAP01:out5', value:'5'}
 
-window.onload = function () {
-    loadDoc();
-}
+    ]
+
+    window.onload = function () {
+        // loadDoc();
+        var dataArray = [];
+        for( let x of recordData) {
+            var dataString = x.pvname + ',' + x.value;
+            dataArray.push(dataString);
+        }
+
+        var dataMergyString = dataArray.join('\r\n');
+
+        console.log(dataMergyString);
+
+        save('test.html', dataMergyString);
+    }
+
+
+    function openTextFile() {
+        var input = document.createElement("input");
+        input.type = "file";
+        input.accept = "text/plain";
+        input.onchange = function (event) {
+
+            var reader = new FileReader();
+            reader.onload = function () {
+                var lines = reader.result.split('\n');
+                var dataArray = new Array();
+
+                for (let x of lines) {
+                    var data = x.split(',');
+                    var dataDic = { pvname: data[0], value: data[1] };
+
+                    dataArray.push(dataDic);
+                }
+
+                console.log(dataArray);
+            };
+            reader.readAsText(event.target.files[0], "euc-kr");
+        };
+
+        input.click();
+    }
+
+    function save(filename, html) {
+        var el = document.createElement('a');
+        el.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(html));
+        el.setAttribute('download', filename);
+        // el.style.display = 'none';
+        document.body.appendChild(el);
+        el.click();
+        // document.body.removeChild(el);
+    }
+
 </script>
 
 </html>

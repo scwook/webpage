@@ -224,7 +224,7 @@
             <div class="title-box" id="snapshot-id" style="display: inline-block;"></div>
             <div id="button-group">
                 <button class="config-button">Set</button>
-                <button class="config-button">Load</button>
+                <button class="config-button" onclick="openRecordFile()">Load</button>
                 <button class="config-button">Save</button>
                 <button class="config-button">Import</button>
                 <button class="config-button">Export</button>
@@ -327,68 +327,7 @@
         }
     ];
 
-    var recordData = [
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "1" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "2" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "3" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "4" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "5" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "6" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "7" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "8" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "9" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "10" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "11" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "12" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "13" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "14" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "15" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "16" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "17" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "18" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "19" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "20" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "21" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "22" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "23" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "24" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "25" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "26" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "27" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "28" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "29" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "30" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "1" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "2" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "3" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "4" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "5" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "6" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "7" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "8" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "9" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "10" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "11" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "12" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "13" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "14" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "15" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "16" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "17" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "18" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "19" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "20" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "21" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "22" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "23" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "24" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "25" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "26" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "27" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "28" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "29" },
-        { pvname: '$(SYS)-$(SUBSYS):$(DEV)-$(SUBDEV):SIGNAL', value: "30" },
-    ];
+    var recordData = new Array();
 
     function thisCalendar() {
         // Remove this month schedule buttons
@@ -537,7 +476,7 @@
                     var scheduleButton = document.createElement('BUTTON');
                     var buttonText = document.createTextNode('Event ' + timeleapData[i].eventid);
                     scheduleButton.classList.add('scheduleButton');
-                    // scheduleButton.addEventListener('click', function () { snashotRecordList() });
+                    // scheduleButton.addEventListener('click', function () { snapshotRecordList() });
                     scheduleButton.style.backgroundColor = color;
                     scheduleButton.style.height = '24px';
 
@@ -656,7 +595,7 @@
         bodyCenterId.appendChild(scheduleBox);
     }
 
-    function snashotRecordList(snapshotID) {
+    function snapshotRecordList(snapshotID) {
         document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotID;
 
         if (recordData.length) {
@@ -686,6 +625,66 @@
                 $(this).delay(index * 20).show(300);
             });
         }
+    }
+
+    // Snapshot Button Function
+    function openRecordFile() {
+        var input = document.createElement("input");
+        input.type = "file";
+        input.accept = "text/plain";
+        input.onchange = function (event) {
+
+            var reader = new FileReader();
+            reader.onload = function () {
+                var lines = reader.result.split('\n');
+                var dataArray = new Array();
+
+                for (let x of lines) {
+                    var data = x.split(',');
+                    var dataDic = { pvname: data[0], value: data[1] };
+
+                    dataArray.push(dataDic);
+                }
+
+                recordData = dataArray;
+
+                console.log(recordData);
+
+                reloadSnapshotRecordData();
+            };
+
+            reader.readAsText(event.target.files[0], "euc-kr");
+        };
+
+        input.click();
+    }
+
+    function reloadSnapshotRecordData() {
+        let tHead = '';
+        tHead += `<tr>
+                <th>PV Name</th>
+                <th>Value</th>
+                <th>Status</th>
+                <th>Not Restore</th>
+                </tr>`
+
+        document.getElementById("record-tableHead").innerHTML = tHead;
+
+        let tData = '';
+        for (let i = 0; i < recordData.length; i++) {
+            tData += `<tr>
+                <td>${recordData[i].pvname}</td>
+                <td>${recordData[i].value}</td>
+                <td>Connected</td>
+                <td>OK</td>
+                </tr>`
+        }
+
+        document.getElementById("record-tableBody").innerHTML = tData;
+        $("#record-table tr").hide();
+        $("#record-table tr").each(function (index) {
+            $(this).delay(index * 20).show(300);
+        });
     }
 
     // Clock
@@ -743,7 +742,7 @@
                 var listBoxHeight = listBox.offsetHeight;
 
                 listBox.style.setProperty('--listBoxHeightExpand', listBoxHeight + 3 + 'px');
-                descriptionCell.addEventListener('click', function () { snashotRecordList(jsonValue.snapshotid) })
+                descriptionCell.addEventListener('click', function () { snapshotRecordList(jsonValue.snapshotid) })
             }
             // else {
             // alert('Status Error : ' + this.status);
