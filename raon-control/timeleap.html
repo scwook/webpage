@@ -223,11 +223,10 @@
         <div id="body-right">
             <div class="title-box" id="snapshot-id" style="display: inline-block;"></div>
             <div id="button-group">
-                <button class="config-button">Set</button>
-                <button class="config-button" onclick="openRecordFile()">Load</button>
-                <button class="config-button">Save</button>
-                <button class="config-button">Import</button>
-                <button class="config-button">Export</button>
+                <button class="config-button">Get</button>
+                <button class="config-button">Put</button>
+                <button class="config-button" onclick="importRecordFile()">Import</button>
+                <button class="config-button" onclick="exportRecordFile()">Export</button>
             </div>
             <table id="record-table">
                 <thead id="record-tableHead" style="font-family: Roboto-Light">
@@ -628,7 +627,7 @@
     }
 
     // Snapshot Button Function
-    function openRecordFile() {
+    function importRecordFile() {
         var input = document.createElement("input");
         input.type = "file";
         input.accept = "text/plain";
@@ -657,6 +656,30 @@
         };
 
         input.click();
+    }
+
+    function exportRecordFile() {
+        var dataArray = [];
+        for (let x of recordData) {
+            var dataString = x.pvname + ',' + x.value;
+            dataArray.push(dataString);
+        }
+
+
+        var filename = document.getElementById('snapshot-id').innerText;
+        filename = filename.toLowerCase() + '.csv';
+
+        var dataMergyString = dataArray.join('\r\n');
+
+        // save('test.html', dataMergyString);
+
+        var downloadElem = document.createElement('a');
+        downloadElem.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(dataMergyString));
+        downloadElem.setAttribute('download', filename);
+        // el.style.display = 'none';
+        document.body.appendChild(downloadElem);
+        downloadElem.click();
+        document.body.removeChild(downloadElem);
     }
 
     function reloadSnapshotRecordData() {
@@ -814,28 +837,33 @@
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var jsonValue = JSON.parse(this.responseText);
+                recordData = jsonValue;
 
                 document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotRecordID;
+
+                var buttonGroupID = document.getElementById('button-group');
+                buttonGroupID.style.visibility = 'visible';
+                console.log('load');
 
                 if (jsonValue.length) {
                     let tHead = '';
                     tHead += `<tr>
-                <th>PV Name</th>
-                <th>Value</th>
-                <th>Status</th>
-                <th>Not Restore</th>
-                </tr>`
+                                <th>PV Name</th>
+                                <th>Value</th>
+                                <th>Status</th>
+                                <th>Not Restore</th>
+                            </tr>`
 
                     document.getElementById("record-tableHead").innerHTML = tHead;
 
                     let tData = '';
                     for (let i = 0; i < jsonValue.length; i++) {
                         tData += `<tr>
-                <td>${jsonValue[i].pvname}</td>
-                <td>${jsonValue[i].value}</td>
-                <td>Connected</td>
-                <td>OK</td>
-                </tr>`
+                                    <td>${jsonValue[i].pvname}</td>
+                                    <td>${jsonValue[i].value}</td>
+                                    <td>Connected</td>
+                                    <td>OK</td>
+                                </tr>`
                     }
 
                     document.getElementById("record-tableBody").innerHTML = tData;
