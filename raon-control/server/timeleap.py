@@ -17,6 +17,31 @@ DB_USER = 'ctrluser'
 DB_PASSWORD = 'qwer1234'
 DB_DATABASE = 'timeleap'
 
+pvObjectDict = dict()
+channelList = list()
+monitoringList = list()
+
+class ChannelMonitor:
+    def __init__(self, name):
+        self.name = name
+
+    def isConnected(self, status):
+        pvObjectDict[self.name] = status
+
+@app.route('/timeleap/snapshot/record/connection', methods=['POST'])
+def channel_connection_status():
+    jsonData = request.get_json()
+
+    index = 0
+    for name in jsonData:
+        pvname = name['pvname']
+        channelList.append(Channel(pvname, ProviderType.CA))
+        monitoringList.append(ChannelMonitor(pvname))
+
+        channelList[index].setConnectionCallback(monitoringList[index].isConnected)
+        index += 1
+
+
 @app.route('/timeleap/event', methods=['POST'])
 def create_event():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_DATABASE, charset='utf8')
