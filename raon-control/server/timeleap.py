@@ -30,6 +30,11 @@ class ChannelMonitor:
 
 @app.route('/timeleap/snapshot/record/connection', methods=['POST'])
 def channel_connection_status():
+
+    channelList = []
+    monitoringList = []
+    pvObjectDict = []
+
     jsonData = request.get_json()
 
     index = 0
@@ -40,6 +45,9 @@ def channel_connection_status():
 
         channelList[index].setConnectionCallback(monitoringList[index].isConnected)
         index += 1
+
+    return json.dumps(pvObjectDict)
+
 
 
 @app.route('/timeleap/event', methods=['POST'])
