@@ -93,8 +93,8 @@
     };
 
     var snapshotData = {
-        eventid : '1',
-        description : 'New Snapshot'
+        eventid: '1',
+        description: 'New Snapshot'
     }
 
     var recordData = {
@@ -212,8 +212,29 @@
 
     }
 
-    window.onload = function () {
+    function getRecordConnection() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
 
+        var recordList = [
+            { 'pvname': 'scwook:line:a' },
+            { 'pvname': 'scwook:line:b' }
+        ]
+        var rName = 'http://192.168.0.105:9013/timeleap/snapshot/record/connection'
+        xhttp.open("POST", rName, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(recordList));
+    }
+
+    window.onload = function () {
+        getRecordConnection();
 
     }
 </script>

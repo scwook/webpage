@@ -31,15 +31,12 @@ class ChannelMonitor:
 @app.route('/timeleap/snapshot/record/connection', methods=['POST'])
 def channel_connection_status():
 
-    channelList = []
-    monitoringList = []
-    pvObjectDict = []
-
     jsonData = request.get_json()
 
     index = 0
     for name in jsonData:
-        pvname = name['pvname']
+        pvname = str(name['pvname'])
+        
         channelList.append(Channel(pvname, ProviderType.CA))
         monitoringList.append(ChannelMonitor(pvname))
 
