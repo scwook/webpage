@@ -27,25 +27,7 @@ class ChannelMonitor:
 
     def isConnected(self, status):
         pvObjectDict[self.name] = status
-
-@app.route('/timeleap/snapshot/record/connection', methods=['POST'])
-def channel_connection_status():
-
-    jsonData = request.get_json()
-
-    index = 0
-    for name in jsonData:
-        pvname = str(name['pvname'])
-        
-        channelList.append(Channel(pvname, ProviderType.CA))
-        monitoringList.append(ChannelMonitor(pvname))
-
-        channelList[index].setConnectionCallback(monitoringList[index].isConnected)
-        index += 1
-
-    return json.dumps(pvObjectDict)
-
-
+        print(self.name, " status ", status)
 
 @app.route('/timeleap/event', methods=['POST'])
 def create_event():
@@ -179,6 +161,7 @@ def get_snapshot_list():
         snapshotArray.append(snapshotDic)
 
     return json.dumps(snapshotArray, ensure_ascii=False)
+    
 
 @app.route('/timeleap/retrieve/snapshot/record/<id>', methods=['GET'])
 def get_record_list(id):
@@ -192,12 +175,32 @@ def get_record_list(id):
 
     recordArray = []
     for x in timeleap:
-        recordDic = {'pvname':x[0], 'value':x[1]}
+        recordDic = {'pvname':x[0], 'value':x[1], 'status':'false'}
         recordArray.append(recordDic)
 
     conn.close()
 
     return json.dumps(recordArray, ensure_ascii=False)
+
+
+@app.route('/timeleap/retrieve/snapshot/record/connection', methods=['POST'])
+def get_record_connection_status():
+
+    jsonData = request.get_json()
+
+    index = 0
+    for name in jsonData:
+        pvname = str(name['pvname'])
+        
+        channelList.append(Channel(pvname, ProviderType.CA))
+        monitoringList.append(ChannelMonitor(pvname))
+
+        channelList[index].setConnectionCallback(monitoringList[index].isConnected)
+        index += 1
+
+        print('start monitoring', pvname)
+
+    return json.dumps(pvObjectDict)
 
 if __name__ == "__main__":
     app.run(host=SERVER_ADDR, port="9013")

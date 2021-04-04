@@ -256,15 +256,20 @@
 </body>
 
 <script>
+    // ctrluser Server
+    //var serverAddr = 'http://192.168.68.126:9013/timeleap';
+
     // scwook Server
-    var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    var serverAddr = 'http://localhost:9013/timeleap';
+
     var newEventAddr = serverAddr + '/event';
     var newSnapshotAddr = serverAddr + '/snapshot';
 
     var retrieveAddr = serverAddr + '/retrieve';
-    var retrieveEventAddr = serverAddr + '/retrieve/event';
-    var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
-    var retrieveSnapshotRecordAddr = serverAddr + '/retrieve/snapshot/record'
+    var retrieveEventAddr = retrieveAddr + '/event';
+    var retrieveSnapshotAddr = retrieveAddr + '/snapshot'
+    var retrieveSnapshotRecordAddr = retrieveSnapshotAddr + '/record'
+    var retrieveSnapshotRecordConnectionAddr = retrieveSnapshotRecordAddr + '/connection'
 
     var today = new Date();
     var date = new Date();
@@ -613,7 +618,7 @@
                 tData += `<tr>
 						<td>${recordData[i].pvname}</td>
 						<td>${recordData[i].value}</td>
-						<td>Connected</td>
+						<td>${recordData[i].status}</td>
 						<td>OK</td>
 						</tr>`
             }
@@ -646,8 +651,6 @@
                 }
 
                 recordData = dataArray;
-
-                console.log(recordData);
 
                 reloadSnapshotRecordData();
             };
@@ -698,7 +701,7 @@
             tData += `<tr>
                 <td>${recordData[i].pvname}</td>
                 <td>${recordData[i].value}</td>
-                <td>Connected</td>
+                <td>${recordData[i].status}</td>
                 <td>OK</td>
                 </tr>`
         }
@@ -733,8 +736,6 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-                alert('Create New');
 
             }
             // else {
@@ -803,7 +804,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -819,7 +820,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -843,7 +844,6 @@
 
                 var buttonGroupID = document.getElementById('button-group');
                 buttonGroupID.style.visibility = 'visible';
-                console.log('load');
 
                 if (jsonValue.length) {
                     let tHead = '';
@@ -861,7 +861,7 @@
                         tData += `<tr>
                                     <td>${jsonValue[i].pvname}</td>
                                     <td>${jsonValue[i].value}</td>
-                                    <td>Connected</td>
+                                    <td>${jsonValue[i].status}</td>
                                     <td>OK</td>
                                 </tr>`
                     }
@@ -872,6 +872,9 @@
                         $(this).delay(index * 20).show(300);
                     });
                 }
+
+                setInterval(getRecordConnection, 60000);
+
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -882,6 +885,32 @@
         xhttp.open("GET", rName, true);
         xhttp.send();
     }
+
+    function getRecordConnection() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var jsonValue = JSON.parse(this.responseText);
+
+                if(recordData.length == jsonValue.length) {
+
+                    for(let i = 0; i < jsonValue.length; i++) {
+                        recordData[i].status = jsonValue[i].recordData[i].pvname;
+                    }
+                }
+
+                console.log(recordData);
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        xhttp.open("POST", retrieveSnapshotRecordConnectionAddr, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(recordData));
+    }
+
 
     function updateSnapshotRecord() {
 
