@@ -43,7 +43,9 @@ def create_record_connection(id):
         channelList.append(Channel(pvname, ProviderType.CA))
         channelList[index].setConnectionCallback(ChannelMonitor(snapshotid, pvname).isConnected)
     
-    index += 1
+        index += 1
+
+    connectionMonitorDict = {snapshotid : channelList}
 
     return 'OK'
 
