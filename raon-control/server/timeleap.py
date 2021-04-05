@@ -51,8 +51,8 @@ def create_record_connection(id):
 
 @app.route('/timeleap/retrieve/snapshot/connection/<id>', methods=['GET'])
 def get_record_connection_status(id):
-    
-    return json.dumps(pvObjectDict)
+    snapshotid = id
+    return json.dumps(snapshotRecordDict[snapshotid])
 
 @app.route('/timeleap/event', methods=['POST'])
 def create_event():
