@@ -1,5 +1,6 @@
 import time
 import json
+import threading
 
 from pvaccess import *
 
@@ -7,26 +8,75 @@ c = MultiChannel(['scwookHost:ai1','scwookHost:ai2','scwookHost:ai3'], ProviderT
 channel = Channel('out', ProviderType.CA)
 
 count = 0
-pvObjectDict = dict()
+snapshotRecordDict = dict()
+#pvObjectDict = dict()
+channelList = list()
+#monitoringList = list()
+#monitoringDict = dict()
 
 class ChannelMonitor:
-    def __init__(self, name):
+    def __init__(self, snapshotid, name):
+        self.snapshotid = snapshotid
         self.name = name
 
     def isConnected(self, status):
-        pvObjectDict[self.name] = status
-        print(json.dumps(pvObjectDict))
+        snapshotRecordDict[self.snapshotid][self.name] = status
+        print('conn')
+
+#channel.setConnectionCallback(ChannelMonitor('out').isConnected)
 
 
-channel.setConnectionCallback(ChannelMonitor('out').isConnected)
+#test = [{'pvname':'SYS-SUBSYS:DEV-SNAP01:out1'},{'pvname':'SYS-SUBSYS:DEV-SNAP01:out2'},{'pvname':'SYS-SUBSYS:DEV-SNAP01:out7'}]
+test = [{'pvname':'out'},{'pvname':'input'},{'pvname':'scwook'}]
 
 
-test = [{'pvname':'scwook'},{'pvname':'scwook2'}]
+snapshotid = 6
 
+index = 0
 for name in test:
-    print(name['pvname'])
+    pvname = name['pvname']
+    print(pvname)
+
+    recordStatusDict = {pvname: 'False'}
+    snapshotRecordDict[snapshotid] = recordStatusDict
+
+    channelList.append(Channel(pvname, ProviderType.CA))
+    #monitoringDict = {snapshotid : ChannelMonitor(snapshotid, pvname)}
+
+    #print(monitoringDict)
+    #monitoringList.append(monitoringDict)
+
+    #print(monitoringList[index])
+
+    #channelList[index].setConnectionCallback(monitoringList[index][snapshotid].isConnected)
+    channelList[index].setConnectionCallback(ChannelMonitor(snapshotid, pvname).isConnected)
+    
+    index += 1
+
+connectionMonitorDict = {snapshotid : channelList}
+
+print(connectionMonitorDict)
+
+timerCount = 0
+def startTimer():
+    timer = threading.Timer(1, startTimer)
+    timer.start()
+    print('timer count', count)
+
+    if count > 5:
+        #del channelList[-1]
+        channel = connectionMonitorDict[snapshotid]
+        for i in range(len(channel)):
+            #del connectionMonitorDict[snapshotid][-1]
+            del channel[-1]
+
+        del snapshotRecordDict[snapshotid]
+
+        timer.cancel()
+
+startTimer()
 
 while 1:
         count += 1
-        print(count)
+        print(snapshotRecordDict)
 	time.sleep(1)

@@ -17,18 +17,16 @@ DB_USER = 'ctrluser'
 DB_PASSWORD = 'qwer1234'
 DB_DATABASE = 'timeleap'
 
-pvObjectDict = dict()
+snapshotRecordDict = dict()
 channelList = list()
-monitoringList = list()
-
 
 class ChannelMonitor:
-    def __init__(self, name):
+    def __init__(self, snapshotid, name):
+        self.snapshotid = snapshotid
         self.name = name
 
     def isConnected(self, status):
-        pvObjectDict[self.name] = status
-        print(self.name, " status ", status)
+        snapshotRecordDict[self.snapshotid][self.name] = status
 
 @app.route('/timeleap/snapshot/connection/<id>', methods=['POST'])
 def create_record_connection(id):
@@ -39,11 +37,13 @@ def create_record_connection(id):
     for name in jsonData:
         pvname = str(name['pvname'])
         
-        channelList.append(Channel(pvname, ProviderType.CA))
-        monitoringList.append(ChannelMonitor(pvname))
+        recordStatusDict = {pvname: 'False'}
+        snapshotRecordDict[snapshotid] = recordStatusDict
 
-        channelList[index].setConnectionCallback(monitoringList[index].isConnected)
-        index += 1
+        channelList.append(Channel(pvname, ProviderType.CA))
+        channelList[index].setConnectionCallback(ChannelMonitor(snapshotid, pvname).isConnected)
+    
+    index += 1
 
     return 'OK'
 
