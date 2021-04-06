@@ -31,13 +31,14 @@ test = [{'pvname':'out'},{'pvname':'input'},{'pvname':'scwook'}]
 
 
 snapshotid = 6
+recordStatusDict = dict()
 
 index = 0
 for name in test:
     pvname = name['pvname']
     print(pvname)
 
-    recordStatusDict = {pvname: 'False'}
+    recordStatusDict['pvname'] = 'False'
     snapshotRecordDict[snapshotid] = recordStatusDict
 
     channelList.append(Channel(pvname, ProviderType.CA))
@@ -54,14 +55,15 @@ for name in test:
     index += 1
 
 connectionMonitorDict = {snapshotid : channelList}
+print(snapsho)
 
 print(connectionMonitorDict)
 
 timerCount = 0
-def startTimer():
-    timer = threading.Timer(1, startTimer)
+def startTimer(snapshotKey, count):
+    timer = threading.Timer(1, startTimer, args=[snapshotKey,count])
     timer.start()
-    print('timer count', count)
+    print('timer count', snapshotKey, count)
 
     if count > 5:
         #del channelList[-1]
@@ -74,7 +76,7 @@ def startTimer():
 
         timer.cancel()
 
-startTimer()
+startTimer([snapshotid,0])
 
 while 1:
         count += 1
