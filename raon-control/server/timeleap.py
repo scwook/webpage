@@ -19,7 +19,7 @@ DB_PASSWORD = 'qwer1234'
 DB_DATABASE = 'timeleap'
 
 snapshotRecordDict = dict()
-channelList = list()
+#channelList = list()
 connectionMonitorDict = dict()
 timerCountDict = dict()
 
@@ -38,10 +38,11 @@ def disconnectionTimer(snapshotKey):
 
     if timerCountDict[snapshotKey] == 10:
         connectionChannel = connectionMonitorDict[snapshotKey]
-
+        
         for i in range(len(connectionChannel)):
             del connectionChannel[-1]
-
+        
+        del connectionMonitorDict[snapshotKey]
         del snapshotRecordDict[snapshotKey]
 
         timer.cancel()
@@ -55,12 +56,13 @@ def create_record_connection(snapshotid):
     
     jsonData = request.get_json()
 
+    channelList = list()
     recordStatusDict = dict()
     index = 0
     for name in jsonData:
         pvname = str(name['pvname'])
         
-        recordStatusDict[pvname] = 'False'
+        recordStatusDict[pvname] = 'false'
         snapshotRecordDict[snapshotid] = recordStatusDict
 
         channelList.append(Channel(pvname, ProviderType.CA))
@@ -70,14 +72,14 @@ def create_record_connection(snapshotid):
 
     connectionMonitorDict[snapshotid] = channelList
 
-    timerCount[snapshotid] = 0
+    timerCountDict[snapshotid] = 0
     disconnectionTimer(snapshotid)
 
     return 'OK'
 
 @app.route('/timeleap/retrieve/snapshot/connection/<snapshotid>', methods=['GET'])
 def get_record_connection_status(snapshotid):
-    timerCount[snapshotid] = 0
+    timerCountDict[snapshotid] = 0
 
     if snapshotRecordDict.get(snapshotid) == None:
         return json.dumps({})
