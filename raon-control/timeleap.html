@@ -257,20 +257,20 @@
 
 <script>
     // ctrluser Server
-    //var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    var serverAddr = 'http://192.168.68.126:9013/timeleap';
 
     // scwook Server
-    var serverAddr = 'http://localhost:9013/timeleap';
+    // var serverAddr = 'http://localhost:9013/timeleap';
 
     var newEventAddr = serverAddr + '/event';
     var newSnapshotAddr = serverAddr + '/snapshot';
     var newRecordConnectionAddr = serverAddr + '/snapshot/connection';
 
     var retrieveAddr = serverAddr + '/retrieve';
-    var retrieveEventAddr = retrieveAddr + '/event';
-    var retrieveSnapshotAddr = retrieveAddr + '/snapshot'
-    var retrieveSnapshotRecordAddr = retrieveSnapshotAddr + '/record'
-    var retrieveSnapshotRecordConnectionAddr = retrieveSnapshotAddr + '/connection'
+    var retrieveEventAddr = serverAddr + '/retrieve/event';
+    var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
+    var retrieveSnapshotRecordAddr = serverAddr + '/retrieve/snapshot/record'
+    var retrieveRecordStatusAddr = serverAddr + '/retrieve/snapshot/connection'
 
     var today = new Date();
     var date = new Date();
@@ -887,12 +887,15 @@
         xhttp.send();
     }
 
+    var recordConnectionIntervalID = null;
+
     function setRecordConnection(snapshotRecordID) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
 
-                setInterval(getRecordConnection(snapshotRecordID), 3000);
+                clearInterval(recordConnectionIntervalID);
+                recordConnectionIntervalID = setInterval(getRecordConnection, 3000, snapshotRecordID);
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -906,19 +909,34 @@
     }
 
     function getRecordConnection(snapshotRecordID) {
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var jsonValue = JSON.parse(this.responseText);
 
-                console.log(jsonValue);
+                for (let i = 0; i < recordData.length; i++) {
+                    let name = recordData[i].pvname;
+                    recordData[i].status = jsonValue[name];
+                    // console.log(recordData[i].pvname);
+                }
 
-                // if(recordData.length == jsonValue.length) {
+                let tData = '';
+                for (let i = 0; i < recordData.length; i++) {
+                    tData += `<tr>
+                                    <td>${recordData[i].pvname}</td>
+                                    <td>${recordData[i].value}</td>
+                                    <td>${recordData[i].status}</td>
+                                    <td>OK</td>
+                                </tr>`
+                }
 
-                //     for(let i = 0; i < jsonValue.length; i++) {
-                //         recordData[i].status = jsonValue[i].recordData[i].pvname;
-                //     }
-                // }
+                document.getElementById("record-tableBody").innerHTML = tData;
+                // $("#record-table tr").hide();
+                // $("#record-table tr").each(function (index) {
+                //     $(this).delay(index * 0).show(0);
+                // });
+                // console.log(recordData);
 
             }
             // else {
@@ -926,9 +944,8 @@
             // }
         };
 
-        var rName = retrieveSnapshotRecordConnectionAddr + '/' + snapshotRecordID;
-        xhttp.open("POST", rName, true);
-        xhttp.setRequestHeader('Content-Type', 'application/json');
+        var rName = retrieveRecordStatusAddr + '/' + snapshotRecordID;
+        xhttp.open("GET", rName, true);
         xhttp.send();
     }
 

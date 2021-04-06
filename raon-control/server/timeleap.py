@@ -1,6 +1,7 @@
 import pymysql
 import json
 import datetime
+import threading
 
 from pvaccess import *
 
@@ -19,6 +20,8 @@ DB_DATABASE = 'timeleap'
 
 snapshotRecordDict = dict()
 channelList = list()
+connectionMonitorDict = dict()
+timerCountDict = dict()
 
 class ChannelMonitor:
     def __init__(self, snapshotid, name):
@@ -28,12 +31,12 @@ class ChannelMonitor:
     def isConnected(self, status):
         snapshotRecordDict[self.snapshotid][self.name] = status
 
-def disconnectionTimer(snapshotKey, count):
-    count += 2
-    timer = threading.Timer(2, monitoringTimer, args=[snapshotKey, count])
+def disconnectionTimer(snapshotKey):
+    timerCountDict[snapshotKey] += 2
+    timer = threading.Timer(2, disconnectionTimer, args=[snapshotKey])
     timer.start()
 
-    if count == 10:
+    if timerCountDict[snapshotKey] == 10:
         connectionChannel = connectionMonitorDict[snapshotKey]
 
         for i in range(len(connectionChannel)):
@@ -45,6 +48,7 @@ def disconnectionTimer(snapshotKey, count):
 
 @app.route('/timeleap/snapshot/connection/<snapshotid>', methods=['POST'])
 def create_record_connection(snapshotid):
+    global connectionMonitorDict
 
     if connectionMonitorDict.get(snapshotid) == None:
         return 'Active'
@@ -64,13 +68,20 @@ def create_record_connection(snapshotid):
     
         index += 1
 
-    connectionMonitorDict = {snapshotid : channelList}
-    disconnectionTimer(snapshotid, 0)
+    connectionMonitorDict[snapshotid] = channelList
+
+    timerCount[snapshotid] = 0
+    disconnectionTimer(snapshotid)
 
     return 'OK'
 
 @app.route('/timeleap/retrieve/snapshot/connection/<snapshotid>', methods=['GET'])
 def get_record_connection_status(snapshotid):
+    timerCount[snapshotid] = 0
+
+    if snapshotRecordDict.get(snapshotid) == None:
+        return json.dumps({})
+
     return json.dumps(snapshotRecordDict[snapshotid])
 
 @app.route('/timeleap/event', methods=['POST'])
