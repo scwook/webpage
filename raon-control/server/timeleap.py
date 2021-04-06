@@ -50,7 +50,7 @@ def disconnectionTimer(snapshotKey):
 def create_record_connection(snapshotid):
     global connectionMonitorDict
 
-    if connectionMonitorDict.get(snapshotid) == None:
+    if connectionMonitorDict.get(snapshotid) != None:
         return 'Active'
     
     jsonData = request.get_json()
