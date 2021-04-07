@@ -47,7 +47,7 @@ def disconnectionTimer(snapshotKey):
 
         timer.cancel()
 
-@app.route('/timeleap/snapshot/put/<snapshotid>', methods=['POST'])
+@app.route('/timeleap/snapshot/put', methods=['POST'])
 def put_record_data():
 
     jsonData = request.get_json()
@@ -57,7 +57,7 @@ def put_record_data():
         value = name['value']
         channel = Channel(pvname)
         channel.put(PvFloat(name))
-        
+
     return 'OK'
 
 @app.route('/timeleap/snapshot/get/<snapshotid>', methods=['POST'])
