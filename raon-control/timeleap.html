@@ -984,10 +984,10 @@
                     var statusSVG = unmonitoredSVG;
                     console.log(recordData[i].status)
                     switch (recordData[i].status) {
-                        case 'true':
+                        case true:
                             statusSVG = connectedSVG;
                             break;
-                        case 'false':
+                        case false:
                             statusSVG = disconnectedSVG;
                         default:
                             break;
