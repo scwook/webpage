@@ -53,9 +53,9 @@ def put_record_data():
     jsonData = request.get_json()
 
     for name in jsonData:
-        if name['status'] == true:
+        if name['status']:
             pvname = str(name['pvname'])
-            value = name['value']
+            value = float(name['value'])
             channel = Channel(pvname, ProviderType.CA)
             channel.put(PvFloat(value))
 

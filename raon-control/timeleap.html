@@ -336,6 +336,9 @@
     ];
 
     var recordData = new Array();
+    var connectedSVG = '<svg width="20" height="14"><rect x="5.5" y="0.5" width="9" height="9" style="fill:#22B573;stroke:#f2f2f2;stroke-miterlimit:10" /><line y1="13.5" x2="20" y2="13.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line x1="10" y1="13.5" x2="10" y2="9.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /></svg>';
+    var disconnectedSVG = '<svg width="20" height="14"><rect x="5.5" y="0.5" width="9" height="9" style="fill:#D4145A;stroke:#f2f2f2;stroke-miterlimit:10" /><line y1="13.5" x2="20" y2="13.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line x1="10" y1="13.5" x2="10" y2="9.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /></svg>';
+    var unmonitoredSVG = '<svg width="20" height="14"><rect x="5.5" y="0.5" width="9" height="9" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line y1="13.5" x2="20" y2="13.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line x1="10" y1="13.5" x2="10" y2="9.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /></svg>';
 
     function thisCalendar() {
         // Remove this month schedule buttons
@@ -563,7 +566,7 @@
 
         var newSnapshotButton = document.createElement('DIV');
         newSnapshotButton.classList.add('snapshot-new-button');
-        newSnapshotButton.addEventListener('click', function () { setSnapshot(i) });
+        newSnapshotButton.addEventListener('click', function () { setNewSnapshot(i) });
         newSnapshotButton.innerText = '+';
 
         scheduleBox.appendChild(scheduleBegin);
@@ -619,10 +622,22 @@
 
             let tData = '';
             for (let i = 0; i < recordData.length; i++) {
+                var statusSVG = unmonitoredSVG;
+                consoel.log(statusSVG);
+                switch (recordData[i].status) {
+                    case 'true':
+                        statusSVG = connectedSVG;
+                        break;
+                    case 'fasle':
+                        statusSVG = disconnectedSVG;
+                    default:
+                        break;
+                }
+
                 tData += `<tr>
 						<td>${recordData[i].pvname}</td>
 						<td>${recordData[i].value}</td>
-						<td>${recordData[i].status}</td>
+						<td>${statusSVG}</td>
 						<td>OK</td>
 						</tr>`
             }
@@ -719,10 +734,22 @@
 
         let tData = '';
         for (let i = 0; i < recordData.length; i++) {
+            var statusSVG = unmonitoredSVG;
+
+            switch (recordData[i].status) {
+                case 'true':
+                    statusSVG = connectedSVG;
+                    break;
+                case 'fasle':
+                    statusSVG = disconnectedSVG;
+                default:
+                    break;
+            }
+
             tData += `<tr>
                 <td>${recordData[i].pvname}</td>
                 <td>${recordData[i].value}</td>
-                <td>${recordData[i].status}</td>
+                <td>${statusSVG}</td>
                 <td>OK</td>
                 </tr>`
         }
@@ -769,7 +796,7 @@
         xhttp.send(JSON.stringify(eventData));
     }
 
-    function setSnapshot(index) {
+    function setNewSnapshot(index) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -879,10 +906,21 @@
 
                     let tData = '';
                     for (let i = 0; i < jsonValue.length; i++) {
+                        var statusSVG = unmonitoredSVG;
+
+                        switch (recordData[i].status) {
+                            case 'true':
+                                statusSVG = connectedSVG;
+                                break;
+                            case 'fasle':
+                                statusSVG = disconnectedSVG;
+                            default:
+                                break;
+                        }
                         tData += `<tr>
                                     <td>${jsonValue[i].pvname}</td>
                                     <td>${jsonValue[i].value}</td>
-                                    <td>${jsonValue[i].status}</td>
+                                    <td>${statusSVG}</td>
                                     <td>OK</td>
                                 </tr>`
                     }
@@ -943,10 +981,24 @@
 
                 let tData = '';
                 for (let i = 0; i < recordData.length; i++) {
+                    var statusSVG = unmonitoredSVG;
+                    console.log(recordData[i].status)
+                    switch (recordData[i].status) {
+                        case 'true':
+                            statusSVG = connectedSVG;
+                            break;
+                        case 'fasle':
+                            statusSVG = disconnectedSVG;
+                        default:
+                            break;
+                    }
+
+                    console.log(statusSVG);
+
                     tData += `<tr>
                                     <td>${recordData[i].pvname}</td>
                                     <td>${recordData[i].value}</td>
-                                    <td>${recordData[i].status}</td>
+                                    <td>${statusSVG}</td>
                                     <td>OK</td>
                                 </tr>`
                 }
