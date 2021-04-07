@@ -650,6 +650,7 @@
         xhttp.open("POST", putRecordAddr, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(recordData));
+        console.log(recordData);
     }
 
     function importRecordFile() {
