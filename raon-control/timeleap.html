@@ -336,9 +336,9 @@
     ];
 
     var recordData = new Array();
-    var connectedSVG = '<svg width="20" height="14"><rect x="5.5" y="0.5" width="9" height="9" style="fill:#22B573;stroke:#f2f2f2;stroke-miterlimit:10" /><line y1="13.5" x2="20" y2="13.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line x1="10" y1="13.5" x2="10" y2="9.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /></svg>';
-    var disconnectedSVG = '<svg width="20" height="14"><rect x="5.5" y="0.5" width="9" height="9" style="fill:#D4145A;stroke:#f2f2f2;stroke-miterlimit:10" /><line y1="13.5" x2="20" y2="13.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line x1="10" y1="13.5" x2="10" y2="9.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /></svg>';
-    var unmonitoredSVG = '<svg width="20" height="14"><rect x="5.5" y="0.5" width="9" height="9" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line y1="13.5" x2="20" y2="13.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /><line x1="10" y1="13.5" x2="10" y2="9.5" style="fill:none;stroke:#f2f2f2;stroke-miterlimit:10" /></svg>';
+    var connectedSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:#22B573;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
+    var disconnectedSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:#D4145A;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
+    var unmonitoredSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:none;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
 
     function thisCalendar() {
         // Remove this month schedule buttons
@@ -681,7 +681,7 @@
 
                 for (let x of lines) {
                     var data = x.split(',');
-                    var dataDic = { pvname: data[0], value: data[1] };
+                    var dataDic = { pvname: data[0], value: data[1], status: 'false' };
 
                     dataArray.push(dataDic);
                 }
@@ -722,15 +722,15 @@
     }
 
     function reloadSnapshotRecordData() {
-        let tHead = '';
-        tHead += `<tr>
-                <th>PV Name</th>
-                <th>Value</th>
-                <th>Status</th>
-                <th>Not Restore</th>
-                </tr>`
+        // let tHead = '';
+        // tHead += `<tr>
+        //         <th>PV Name</th>
+        //         <th>Value</th>
+        //         <th>Status</th>
+        //         <th>Restore</th>
+        //         </tr>`
 
-        document.getElementById("record-tableHead").innerHTML = tHead;
+        // document.getElementById("record-tableHead").innerHTML = tHead;
 
         let tData = '';
         for (let i = 0; i < recordData.length; i++) {
@@ -899,7 +899,7 @@
                                 <th>PV Name</th>
                                 <th>Value</th>
                                 <th>Status</th>
-                                <th>Not Restore</th>
+                                <th>Restore</th>
                             </tr>`
 
                     document.getElementById("record-tableHead").innerHTML = tHead;
@@ -917,11 +917,15 @@
                             default:
                                 break;
                         }
+
+                        recordData[i].restore = true;
+                        var restoreCheckHTML = '<input type="checkbox" checked onclick="' + restoreCheck
+
                         tData += `<tr>
                                     <td>${jsonValue[i].pvname}</td>
                                     <td>${jsonValue[i].value}</td>
                                     <td>${statusSVG}</td>
-                                    <td>OK</td>
+                                    <td>${restoreCheckHTML}</td>
                                 </tr>`
                     }
 
@@ -953,7 +957,7 @@
             if (this.readyState == 4 && this.status == 200) {
 
                 clearInterval(recordConnectionIntervalID);
-                recordConnectionIntervalID = setInterval(getRecordConnection, 3000, snapshotRecordID);
+                recordConnectionIntervalID = setInterval(monitoringRecordConnection, 3000, snapshotRecordID);
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -966,7 +970,7 @@
         xhttp.send(JSON.stringify(recordData));
     }
 
-    function getRecordConnection(snapshotRecordID) {
+    function monitoringRecordConnection(snapshotRecordID) {
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -982,7 +986,7 @@
                 let tData = '';
                 for (let i = 0; i < recordData.length; i++) {
                     var statusSVG = unmonitoredSVG;
-                    console.log(recordData[i].status)
+
                     switch (recordData[i].status) {
                         case true:
                             statusSVG = connectedSVG;
@@ -993,13 +997,25 @@
                             break;
                     }
 
-                    console.log(statusSVG);
+                    var restoreCheckHTML = null;
+                    switch (recordData[i].restore) {
+                        case true:
+                            restoreCheckHTML = '<input type="checkbox" checked>';
+                            break;
+
+                        case false:
+                            restoreCheckHTML = '<input type="checkbox">';
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     tData += `<tr>
                                     <td>${recordData[i].pvname}</td>
                                     <td>${recordData[i].value}</td>
                                     <td>${statusSVG}</td>
-                                    <td>OK</td>
+                                    <td>${restoreCheckHTML}</td>
                                 </tr>`
                 }
 
