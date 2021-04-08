@@ -230,27 +230,8 @@
                 <button class="config-button" onclick="exportRecordFile()">Export</button>
             </div>
             <table id="record-table">
-                <thead id="record-tableHead" style="font-family: Roboto-Light">
-                    <!-- <tr>
-                        <th>PV Name</th>
-                        <th>Status</th>
-                        <th>Connected</th>
-                        <th>Monitored</th>
-                        <th>Sampling Period</th>
-                        <th>Last Event</th>
-                    </tr> -->
-                </thead>
-
-                <tbody id="record-tableBody">
-                    <!-- <tr>
-                        <td>SYS-SUBSYS:DEV-SUBDEV:Signal</td>
-                        <td>Being archived</td>
-                        <td>true</td>
-                        <td>true</td>
-                        <td>1.0</td>
-                        <td>Feb/02/2021 07:39:45 +09:00</td>
-                    </tr> -->
-                </tbody>
+                <thead id="record-tableHead" style="font-family: Roboto-Light"></thead>
+                <tbody id="record-tableBody"></tbody>
             </table>
         </div>
     </div>
@@ -258,7 +239,7 @@
 
 <script>
     // ctrluser Server
-    var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    var serverAddr = 'http://192.168.0.105:9013/timeleap';
 
     // scwook Server
     // var serverAddr = 'http://localhost:9013/timeleap';
@@ -722,15 +703,6 @@
     }
 
     function reloadSnapshotRecordData() {
-        // let tHead = '';
-        // tHead += `<tr>
-        //         <th>PV Name</th>
-        //         <th>Value</th>
-        //         <th>Status</th>
-        //         <th>Restore</th>
-        //         </tr>`
-
-        // document.getElementById("record-tableHead").innerHTML = tHead;
 
         let tData = '';
         for (let i = 0; i < recordData.length; i++) {
@@ -919,7 +891,7 @@
                         }
 
                         recordData[i].restore = true;
-                        var restoreCheckHTML = '<input type="checkbox" checked onclick="' + restoreCheck
+                        var restoreCheckHTML = '<input class="restoreCheckBox" type="checkbox" checked onclick="restoreCheck(' + i + ')">';
 
                         tData += `<tr>
                                     <td>${jsonValue[i].pvname}</td>
@@ -1000,11 +972,11 @@
                     var restoreCheckHTML = null;
                     switch (recordData[i].restore) {
                         case true:
-                            restoreCheckHTML = '<input type="checkbox" checked>';
+                            restoreCheckHTML = '<input class="restoreCheckBox" type="checkbox" checked onclick="restoreCheck(' + i + ')">';
                             break;
 
                         case false:
-                            restoreCheckHTML = '<input type="checkbox">';
+                            restoreCheckHTML = '<input class="restoreCheckBox" type="checkbox" onclick="restoreCheck(' + i + ')">';
                             break;
 
                         default:
@@ -1012,11 +984,11 @@
                     }
 
                     tData += `<tr>
-                                    <td>${recordData[i].pvname}</td>
-                                    <td>${recordData[i].value}</td>
-                                    <td>${statusSVG}</td>
-                                    <td>${restoreCheckHTML}</td>
-                                </tr>`
+                                <td>${recordData[i].pvname}</td>
+                                <td>${recordData[i].value}</td>
+                                <td>${statusSVG}</td>
+                                <td>${restoreCheckHTML}</td>
+                            </tr>`
                 }
 
                 document.getElementById("record-tableBody").innerHTML = tData;
@@ -1044,6 +1016,12 @@
 
     function applySnapshotRecord() {
 
+    }
+
+    function restoreCheck(index) {
+        var checkBoxClass = document.getElementsByClassName('restoreCheckBox');
+        recordData[index].restore = checkBoxClass[index].checked;
+        consoel.log(index);
     }
 
     window.onload = function () {

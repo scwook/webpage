@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="a"></div>
+    <input type='checkbox' onclick="test(12)">
+
+
+    <table id="record-table">
+        <thead id="record-tableHead" style="font-family: Roboto-Light"></thead>
+        <tbody id="record-tableBody"></tbody>
+    </table>
+</body>
+<script>
+
+    function test(aa) {
+        console.log(aa);
+    }
+    // var boxElem = document.createElement('INPUT');
+    // boxElem.setAttribute('type', 'checkbox');
+    // document.body.appendChild(boxElem);
+
+    let tHead = '';
+    tHead += `<tr>
+                <th>PV Name</th>
+                <th>Value</th>
+                <th>Status</th>
+                <th>Restore</th>
+            </tr>`
+
+    let tData = '';
+
+    let value = 1;
+    var restoreCheckHTML = '<input type="checkbox" onclick="test(' + value + ')">';
+
+    tData += `<tr>
+                <td>SCWOOK</td>
+                <td>0619</td>
+                <td>sfeffwfwe</td>
+                <td>${restoreCheckHTML}</td>
+            </tr>`
+
+    document.getElementById("record-tableHead").innerHTML = tHead;
+    document.getElementById("record-tableBody").innerHTML = tData;
+
+</script>
+
+</html>
