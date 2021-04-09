@@ -197,7 +197,7 @@ def get_snapshot_list():
 
     snapshotArray = []
     for x in timeleap:
-        snapshotDic = {'snapshotid':x[0], 'description':x[1], 'eventid':x[2]}
+        snapshotDic = {'snapshotid':y[0], 'timestamp':y[1], 'description':y[2], 'eventid':y[3]}
         snapshotArray.append(snapshotDic)
 
     return json.dumps(snapshotArray, ensure_ascii=False)

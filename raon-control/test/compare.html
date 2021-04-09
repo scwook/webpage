@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<script src="../script/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../common.css">
+<link rel="stylesheet" type="text/css" href="../archive.css">
+
+<body>
+	<div style="margin:auto; position: relative; width:1920px; height:80px;">
+		<div id="time-stamp"></div>
+		<svg id="under-line" width="1920" height="42">
+			<polyline class="under-line-style" points="0 40 760 40 791 0" />
+			<polyline class="under-line-style" points="1920 40 1160 40 1129 0" />
+		</svg>
+		<svg id="center-top" width="400" height="80">
+			<path
+				d="M12.5,0H0L57,76a10,10,0,0,0,8,4H335a10,10,0,0,0,8-4L400,0H387.5L338,66a10,10,0,0,1-8,4H70a10,10,0,0,1-8-4Z"
+				style="fill:#f3f3f3" />
+		</svg>
+		<!-- <div id="raon-box"><a href="main.html"><img src="images/raon-white.svg"></img></a></div> -->
+		<div id="accelerator-control"><a href="members.html">Accelerator Control</a></div>
+		<div id="left-menu">
+			<a href="" class="secret-menu">Logbook</a>
+			<a href="" class="secret-menu">Finder</a>
+			<a href="" class="secret-menu">Naming</a>
+			<a href="bab.html">Bab</a>
+			<a href="asset.html">Asset</a>
+		</div>
+		<div id="right-menu">
+			<a href="monitoring.html">Monitoring</a>
+			<a href="schedule.html">Schedule</a>
+			<a href="archive.html">Archive</a>
+			<a href="downloads.html">Download</a>
+			<a href="documents.html">Document</a>
+		</div>
+	</div>
+
+	<div style="height:100px"></div>
+
+	<div id="body" style="margin:auto; position:relative; width:1920px; height:750px;">
+
+		<div style="height:100px;"></div>
+		<button id="compareButton" onclick="compareSnapshot()">Comapre</button>
+
+		<table>
+			<thead id="tableHead" style="font-family: Roboto-Light"></thead>
+
+			<tbody id="tableBody"></tbody>
+		</table>
+	</div>
+</body>
+
+<script>
+	// ctrluser Server
+	var serverAddr = 'http://192.168.68.126:9013/timeleap';
+
+	var newEventAddr = serverAddr + '/event';
+	var newSnapshotAddr = serverAddr + '/snapshot';
+	var newRecordConnectionAddr = serverAddr + '/snapshot/connection';
+
+	var putRecordAddr = serverAddr + '/snapshot/put';
+
+	var retrieveAddr = serverAddr + '/retrieve';
+	var retrieveEventAddr = serverAddr + '/retrieve/event';
+	var retrieveSnapshotAddr = serverAddr + '/retrieve/snapshot'
+	var retrieveSnapshotRecordAddr = serverAddr + '/retrieve/snapshot/record'
+	var retrieveRecordStatusAddr = serverAddr + '/retrieve/snapshot/connection'
+
+	var snapshotListArray = new Array();
+	var compareSnapshotList = new Array();
+
+	function getSnapshot() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+				snapshotListArray = jsonValue;
+
+				if (jsonValue.length) {
+					let tHead = '';
+					tHead += `<tr>
+						<th>Snapshot</th>
+						<th>Description</th>
+						<th>Timestamp</th>
+						<th>Compare</th>
+						</tr>`
+
+					document.getElementById("tableHead").innerHTML = tHead;
+
+					let tData = '';
+					for (let i = 0; i < jsonValue.length; i++) {
+
+						var compareCheckHTML = '<input class="compareCheckBox" type="checkbox" onclick="compareCheck(' + i + ')">';
+
+						tData += `<tr>
+						<td>${jsonValue[i].snapshotid}</td>
+						<td>${jsonValue[i].description}</td>
+						<td>${jsonValue[i].timestamp}</td>
+						<td>${compareCheckHTML}</td>
+						</tr>`
+					}
+
+					document.getElementById("tableBody").innerHTML = tData;
+					$("table tr").hide();
+					$("table tr").each(function (index) {
+						$(this).delay(index * 0).show(500);
+					});
+				}
+				else {
+
+				}
+			}
+			// else {
+			// alert('Status Error : ' + this.status);
+			// }
+		};
+
+		var rName = retrieveSnapshotAddr;
+		xhttp.open("GET", rName, true);
+		xhttp.send();
+	}
+
+	function compareCheck(index) {
+		compareSnapshotList.push(snapshotListArray[index].snapshotid);
+	}
+
+	var count = 0;
+	function compareSnapshot() {
+
+		compareSnapshotList.sort(function (a, b) {
+			return a - b;
+		});
+
+		getSnapshotRecord(compareSnapshotList[count]);
+	}
+
+	function getSnapshotRecord(snapshotID) {
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonValue = JSON.parse(this.responseText);
+
+				console.log(jsonValue);
+
+				count += 1;
+
+				if( count < compareSnapshotList.length) {
+					console.log(count);
+					getSnapshotRecord(compareSnapshotList[count]);
+				}
+
+			}
+			// else {
+			// alert('Status Error : ' + this.status);
+			// }
+		};
+		// console.log(snapshotID);
+
+		var rName = retrieveSnapshotRecordAddr + '/' + snapshotID;
+		xhttp.open("GET", rName, true);
+		xhttp.send();
+	}
+
+
+	window.onload = function () {
+
+		getSnapshot();
+
+	}
+
+</script>
+
+
+</html>
