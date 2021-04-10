@@ -46,12 +46,19 @@
 
 			<tbody id="tableBody"></tbody>
 		</table>
+
+		<table>
+			<thead id="comapreHead" style="font-family: Roboto-Light"></thead>
+
+			<tbody id="compareBody"></tbody>
+		</table>
+
 	</div>
 </body>
 
 <script>
 	// ctrluser Server
-	var serverAddr = 'http://192.168.68.126:9013/timeleap';
+	var serverAddr = 'http://192.168.0.105:9013/timeleap';
 
 	var newEventAddr = serverAddr + '/event';
 	var newSnapshotAddr = serverAddr + '/snapshot';
@@ -67,6 +74,7 @@
 
 	var snapshotListArray = new Array();
 	var compareSnapshotList = new Array();
+	var compareRecordList = new Array();
 
 	function getSnapshot() {
 		var xhttp = new XMLHttpRequest();
@@ -120,17 +128,38 @@
 	}
 
 	function compareCheck(index) {
-		compareSnapshotList.push(snapshotListArray[index].snapshotid);
+		let id = snapshotListArray[index].snapshotid;
+		let idIndex = compareSnapshotList.indexOf(id);
+
+		if (idIndex == -1) {
+			compareSnapshotList.push(id);
+		}
+		else {
+			compareSnapshotList.splice(idIndex, 1);
+		}
 	}
 
 	var count = 0;
+	var compareTableNameArray = new Array();
+	var compareTableDataArray = new Array();
+	var retrievedRecordArry = new Array();
+
+
 	function compareSnapshot() {
 
 		compareSnapshotList.sort(function (a, b) {
 			return a - b;
 		});
 
-		getSnapshotRecord(compareSnapshotList[count]);
+		count = 0;
+		if (compareSnapshotList.length != 0) {
+			compareRecordList = [];
+			compareTableNameArray = [];
+			compareTableDataArray = [];
+			retrievedRecordArry = [];
+
+			getSnapshotRecord(compareSnapshotList[count]);
+		}
 	}
 
 	function getSnapshotRecord(snapshotID) {
@@ -139,14 +168,25 @@
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				var jsonValue = JSON.parse(this.responseText);
+				// compareRecordList.push(jsonValue);
+				retrievedRecordArry.push(jsonValue);
 
-				console.log(jsonValue);
+				for (let i = 0; i < jsonValue.length; i++) {
+					let name = jsonValue[i].pvname;
+					let index = compareTableNameArray.indexOf(name);
+
+					if (index == -1) {
+						compareTableNameArray.push(name);
+					}
+				}
 
 				count += 1;
 
-				if( count < compareSnapshotList.length) {
-					console.log(count);
+				if (count < compareSnapshotList.length) {
 					getSnapshotRecord(compareSnapshotList[count]);
+				}
+				else {
+					createComapreTable();
 				}
 
 			}
@@ -159,6 +199,65 @@
 		var rName = retrieveSnapshotRecordAddr + '/' + snapshotID;
 		xhttp.open("GET", rName, true);
 		xhttp.send();
+	}
+
+	function createComapreTable() {
+
+		for (let i = 0; i < compareTableNameArray.length; i++) {
+			const name = compareTableNameArray[i];
+
+			let valueList = [];
+
+			for (let k = 0; k < retrievedRecordArry.length; k++) {
+
+				let value = '';
+
+				for (let x = 0; x < retrievedRecordArry[k].length; x++) {
+					const pvname = retrievedRecordArry[k][x].pvname;
+
+					if (name == pvname) {
+						value = retrievedRecordArry[k][x].value;
+						break;
+					}
+				}
+
+				valueList.push(value);
+			}
+
+			let rowData = { 'pvname': name, values: valueList };
+			compareTableDataArray.push(rowData);
+		}
+
+		console.log(compareTableDataArray);
+
+		// if (jsonValue.length) {
+		// 	let tHead = '';
+		// 	tHead += `<tr>
+		// 				<th>Snapshot</th>
+		// 				<th>Description</th>
+		// 				<th>Timestamp</th>
+		// 				<th>Compare</th>
+		// 				</tr>`
+
+		// 	document.getElementById("compareHead").innerHTML = tHead;
+
+		// 	let tData = '';
+		// 	for (let i = 0; i < jsonValue.length; i++) {
+
+		// 		tData += `<tr>
+		// 				<td>${jsonValue[i].snapshotid}</td>
+		// 				<td>${jsonValue[i].description}</td>
+		// 				<td>${jsonValue[i].timestamp}</td>
+		// 				<td>${compareCheckHTML}</td>
+		// 				</tr>`
+		// 	}
+
+		// 	document.getElementById("compareBody").innerHTML = tData;
+		// 	$("table tr").hide();
+		// 	$("table tr").each(function (index) {
+		// 		$(this).delay(index * 0).show(500);
+		// 	});
+		// }
 	}
 
 
