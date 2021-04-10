@@ -48,7 +48,7 @@
 		</table>
 
 		<table>
-			<thead id="comapreHead" style="font-family: Roboto-Light"></thead>
+			<thead id="compareHead" style="font-family: Roboto-Light"></thead>
 
 			<tbody id="compareBody"></tbody>
 		</table>
@@ -58,7 +58,7 @@
 
 <script>
 	// ctrluser Server
-	var serverAddr = 'http://192.168.0.105:9013/timeleap';
+	var serverAddr = 'http://192.168.68.126:9013/timeleap';
 
 	var newEventAddr = serverAddr + '/event';
 	var newSnapshotAddr = serverAddr + '/snapshot';
@@ -230,34 +230,34 @@
 
 		console.log(compareTableDataArray);
 
-		// if (jsonValue.length) {
-		// 	let tHead = '';
-		// 	tHead += `<tr>
-		// 				<th>Snapshot</th>
-		// 				<th>Description</th>
-		// 				<th>Timestamp</th>
-		// 				<th>Compare</th>
-		// 				</tr>`
+		if (compareTableDataArray.length) {
+			let tHead = '';
+			tHead += `<tr>
+						<th>Name</th>
+						<th>Snapshot 1</th>
+						<th>Snapshot 2</th>
+						<th>Snapshot 3</th>
+						</tr>`;
 
-		// 	document.getElementById("compareHead").innerHTML = tHead;
+			document.getElementById("compareHead").innerHTML = tHead;
 
-		// 	let tData = '';
-		// 	for (let i = 0; i < jsonValue.length; i++) {
+			let tData = '';
+			for (let i = 0; i < compareTableDataArray.length; i++) {
 
-		// 		tData += `<tr>
-		// 				<td>${jsonValue[i].snapshotid}</td>
-		// 				<td>${jsonValue[i].description}</td>
-		// 				<td>${jsonValue[i].timestamp}</td>
-		// 				<td>${compareCheckHTML}</td>
-		// 				</tr>`
-		// 	}
+				tData += `<tr>
+						<td>${compareTableDataArray[i].pvname}</td>
+						<td>${compareTableDataArray[i].values[0]}</td>
+						<td>${compareTableDataArray[i].values[1]}</td>
+						<td>${compareTableDataArray[i].values[2]}</td>
+						</tr>`
+			}
 
-		// 	document.getElementById("compareBody").innerHTML = tData;
-		// 	$("table tr").hide();
-		// 	$("table tr").each(function (index) {
-		// 		$(this).delay(index * 0).show(500);
-		// 	});
-		// }
+			document.getElementById("compareBody").innerHTML = tData;
+			$("table tr").hide();
+			$("table tr").each(function (index) {
+				$(this).delay(index * 0).show(500);
+			});
+		}
 	}
 
 
