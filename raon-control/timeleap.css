@@ -265,6 +265,42 @@ button {
     text-align: left;
 }
 
+#compare-table th {
+    color: white;
+    background-color: #009FCA;
+    height: 28px;
+    text-align: center;
+}
+
+#compare-table {
+    border-collapse: separate;
+    border-spacing: 0 3px;
+    width: 700px;
+    font-size: 18px;
+    margin: auto;
+    margin-top: 10px;
+    background-color: black;
+}
+
+#compare-table td {
+    color: white;
+    height: 30px;
+    text-align: center;
+}
+
+#compare-table tr:nth-child(even) {
+    background-color: #2d2d2d;
+}
+
+#compare-table tr:nth-child(odd) {
+    background-color: #1d1d1d;
+}
+
+#compare-table td:nth-child(1) {
+    padding-left: 10px;
+    text-align: left;
+}
+
 @keyframes bar-animation {
     from {
         width: 0px;

@@ -58,7 +58,7 @@
 
 <script>
 	// ctrluser Server
-	var serverAddr = 'http://192.168.68.126:9013/timeleap';
+	var serverAddr = 'http://192.168.0.105:9013/timeleap';
 
 	var newEventAddr = serverAddr + '/event';
 	var newSnapshotAddr = serverAddr + '/snapshot';
@@ -75,6 +75,10 @@
 	var snapshotListArray = new Array();
 	var compareSnapshotList = new Array();
 	var compareRecordList = new Array();
+	var compareTableNameArray = new Array();
+	var compareTableDataArray = new Array();
+	var retrievedRecordArry = new Array();
+
 
 	function getSnapshot() {
 		var xhttp = new XMLHttpRequest();
@@ -140,10 +144,6 @@
 	}
 
 	var count = 0;
-	var compareTableNameArray = new Array();
-	var compareTableDataArray = new Array();
-	var retrievedRecordArry = new Array();
-
 
 	function compareSnapshot() {
 
@@ -228,28 +228,28 @@
 			compareTableDataArray.push(rowData);
 		}
 
-		console.log(compareTableDataArray);
-
 		if (compareTableDataArray.length) {
 			let tHead = '';
-			tHead += `<tr>
-						<th>Name</th>
-						<th>Snapshot 1</th>
-						<th>Snapshot 2</th>
-						<th>Snapshot 3</th>
-						</tr>`;
+			tHead += "<tr><th>Name</th>";
+
+			for (let i = 0; i < compareSnapshotList.length; i++) {
+				tHead += `<th>Sanpshot ${compareSnapshotList[i]}`;
+			}
+
+			tHead += "</tr>";
 
 			document.getElementById("compareHead").innerHTML = tHead;
 
-			let tData = '';
+			let tData = '<tr>';
 			for (let i = 0; i < compareTableDataArray.length; i++) {
 
-				tData += `<tr>
-						<td>${compareTableDataArray[i].pvname}</td>
-						<td>${compareTableDataArray[i].values[0]}</td>
-						<td>${compareTableDataArray[i].values[1]}</td>
-						<td>${compareTableDataArray[i].values[2]}</td>
-						</tr>`
+				tData += `<td>${compareTableDataArray[i].pvname}</td>`;
+
+				for(let k = 0; k < compareSnapshotList.length; k++) {
+					tData += `<td>${compareTableDataArray[i].values[k]}</td>`;
+				}
+
+				tData += "</tr>";
 			}
 
 			document.getElementById("compareBody").innerHTML = tData;

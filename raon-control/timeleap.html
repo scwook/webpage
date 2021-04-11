@@ -37,6 +37,14 @@
     <div style="height:20px"></div>
 
     <div style="width:1920px; height:780px; display:flex; margin:auto;">
+        <div id="snapshot-list"
+        style="display: none; position:fixed; width: 100%; height:100%; z-index: 100; background-color: rgba(0, 0, 0, 0.4); overflow: auto;">
+        <table id="compare-table"
+            style="position: relative; margin: auto;">
+            <thead id="compare-tableHead"></thead>
+            <tbody id="compare-tableBody"></tbody>
+        </table>
+    </div>
 
         <!-- Left -->
         <div id="body-left">
@@ -206,6 +214,8 @@
             <div class="title-box" style="display: inline-block; width:50px;">Todo</div>
             <div class="title-bar under-bar" style="--barColor: #ec2227;"></div>
 
+            <button onclick="showSnapshotListTable()">Compare</button>
+
             <div id="todo-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
                 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -235,11 +245,13 @@
             </table>
         </div>
     </div>
+
+
 </body>
 
 <script>
     // ctrluser Server
-    var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    var serverAddr = 'http://192.168.0.105:9013/timeleap';
 
     // scwook Server
     // var serverAddr = 'http://localhost:9013/timeleap';
@@ -317,6 +329,13 @@
     ];
 
     var recordData = new Array();
+    var snapshotListArray = new Array();
+    var compareSnapshotList = new Array();
+    var compareRecordList = new Array();
+    var compareTableNameArray = new Array();
+    var compareTableDataArray = new Array();
+    var retrievedRecordArry = new Array();
+
     var connectedSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:#22B573;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
     var disconnectedSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:#D4145A;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
     var unmonitoredSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:none;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
@@ -840,7 +859,42 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                var jsonValue = JSON.parse(this.responseText);
+                snapshotListArray = jsonValue;
 
+                if (jsonValue.length) {
+                    let tHead = '';
+                    tHead += `<tr>
+						<th>Snapshot</th>
+						<th>Description</th>
+						<th>Timestamp</th>
+						<th>Compare</th>
+						</tr>`
+
+                    document.getElementById("compare-tableHead").innerHTML = tHead;
+
+                    let tData = '';
+                    for (let i = 0; i < jsonValue.length; i++) {
+
+                        var compareCheckHTML = '<input class="compareCheckBox" type="checkbox" onclick="compareCheck(' + i + ')">';
+
+                        tData += `<tr>
+						<td>${jsonValue[i].snapshotid}</td>
+						<td>${jsonValue[i].description}</td>
+						<td>${jsonValue[i].timestamp}</td>
+						<td>${compareCheckHTML}</td>
+						</tr>`
+                    }
+
+                    document.getElementById("compare-tableBody").innerHTML = tData;
+                    $("table tr").hide();
+                    $("table tr").each(function (index) {
+                        $(this).delay(index * 0).show(500);
+                    });
+                }
+                else {
+
+                }
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -1022,6 +1076,141 @@
         var checkBoxClass = document.getElementsByClassName('restoreCheckBox');
         recordData[index].restore = checkBoxClass[index].checked;
         consoel.log(index);
+    }
+
+    function compareCheck(index) {
+        let id = snapshotListArray[index].snapshotid;
+        let idIndex = compareSnapshotList.indexOf(id);
+
+        if (idIndex == -1) {
+            compareSnapshotList.push(id);
+        }
+        else {
+            compareSnapshotList.splice(idIndex, 1);
+        }
+    }
+
+    var SelectedCompareCount = 0;
+
+    function compareSnapshot() {
+
+        compareSnapshotList.sort(function (a, b) {
+            return a - b;
+        });
+
+        SelectedCompareCount = 0;
+        if (compareSnapshotList.length != 0) {
+            compareRecordList = [];
+            compareTableNameArray = [];
+            compareTableDataArray = [];
+            retrievedRecordArry = [];
+
+            getSnapshotRecordComapre(compareSnapshotList[SelectedCompareCount]);
+        }
+    }
+
+    function getSnapshotRecordComapre(snapshotID) {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var jsonValue = JSON.parse(this.responseText);
+                // compareRecordList.push(jsonValue);
+                retrievedRecordArry.push(jsonValue);
+
+                for (let i = 0; i < jsonValue.length; i++) {
+                    let name = jsonValue[i].pvname;
+                    let index = compareTableNameArray.indexOf(name);
+
+                    if (index == -1) {
+                        compareTableNameArray.push(name);
+                    }
+                }
+
+                SelectedCompareCount += 1;
+
+                if (SelectedCompareCount < compareSnapshotList.length) {
+                    getSnapshotRecordComapre(compareSnapshotList[SelectedCompareCount]);
+                }
+                else {
+                    createComapreTable();
+                }
+
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+        // console.log(snapshotID);
+
+        var rName = retrieveSnapshotRecordAddr + '/' + snapshotID;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
+    }
+
+    function createComapreTable() {
+
+        for (let i = 0; i < compareTableNameArray.length; i++) {
+            const name = compareTableNameArray[i];
+
+            let valueList = [];
+
+            for (let k = 0; k < retrievedRecordArry.length; k++) {
+
+                let value = '';
+
+                for (let x = 0; x < retrievedRecordArry[k].length; x++) {
+                    const pvname = retrievedRecordArry[k][x].pvname;
+
+                    if (name == pvname) {
+                        value = retrievedRecordArry[k][x].value;
+                        break;
+                    }
+                }
+
+                valueList.push(value);
+            }
+
+            let rowData = { 'pvname': name, values: valueList };
+            compareTableDataArray.push(rowData);
+        }
+
+        if (compareTableDataArray.length) {
+            let tHead = '';
+            tHead += "<tr><th>Name</th>";
+
+            for (let i = 0; i < compareSnapshotList.length; i++) {
+                tHead += `<th>Sanpshot ${compareSnapshotList[i]}`;
+            }
+
+            tHead += "</tr>";
+
+            document.getElementById("record-tableHead").innerHTML = tHead;
+
+            let tData = '<tr>';
+            for (let i = 0; i < compareTableDataArray.length; i++) {
+
+                tData += `<td>${compareTableDataArray[i].pvname}</td>`;
+
+                for (let k = 0; k < compareSnapshotList.length; k++) {
+                    tData += `<td>${compareTableDataArray[i].values[k]}</td>`;
+                }
+
+                tData += "</tr>";
+            }
+
+            document.getElementById("record-tableBody").innerHTML = tData;
+            $("table tr").hide();
+            $("table tr").each(function (index) {
+                $(this).delay(index * 0).show(500);
+            });
+        }
+    }
+
+
+    function showSnapshotListTable() {
+        getSnapshot();
+        document.getElementById('snapshot-list').style.display = 'block';
     }
 
     window.onload = function () {
