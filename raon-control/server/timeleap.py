@@ -45,6 +45,8 @@ def disconnectionTimer(snapshotKey):
         del connectionMonitorDict[snapshotKey]
         del snapshotRecordDict[snapshotKey]
 
+        print("Stop connection monitoring: snapshot %s" %(snapshotKey))
+
         timer.cancel()
 
 @app.route('/timeleap/snapshot/put', methods=['POST'])
@@ -250,6 +252,8 @@ def create_record_connection(snapshotid):
 
     timerCountDict[snapshotid] = 0
     disconnectionTimer(snapshotid)
+
+    print("Start connection monitoring: snapshot %s" %(snapshotid))
 
     return 'OK'
 

@@ -36,15 +36,22 @@
 
     <div style="height:20px"></div>
 
-    <div style="width:1920px; height:780px; display:flex; margin:auto;">
-        <div id="snapshot-list"
-        style="display: none; position:fixed; width: 100%; height:100%; z-index: 100; background-color: rgba(0, 0, 0, 0.4); overflow: auto;">
-        <table id="compare-table"
-            style="position: relative; margin: auto;">
-            <thead id="compare-tableHead"></thead>
-            <tbody id="compare-tableBody"></tbody>
+    <div id="snapshot-list-contain">
+        <div class="title-box" id="snapshot-list-title" style="display: inline-block;">Snapshot List</div>
+        <div id="snapshot-list-button-group">
+            <button class="record-config-button" onclick="compareSnapshot()">Compare</button>
+            <button class="record-config-button"
+                onclick="document.getElementById('snapshot-list-contain').style.display='none'"
+                id="close">Close</button>
+        </div>
+        
+        <table id="snapshot-compare-table" style="position: relative; margin: auto;">
+            <thead id="snapshot-compare-tableHead" style="font-family: Roboto-Light"></thead>
+            <tbody id="snapshot-compare-tableBody"></tbody>
         </table>
     </div>
+
+    <div style="width:1920px; height:780px; display:flex; margin:auto;">
 
         <!-- Left -->
         <div id="body-left">
@@ -71,11 +78,9 @@
                 <!-- 1 week -->
                 <div class="day" style="z-index: 2;">
                     <div class="today"></div>
-                    <!-- <button class="shift-button" onclick="" style="background-color: #283593;">Beam Operation 1</button> -->
                 </div>
                 <div class="day" style="z-index: 1;">
                     <div class="today"></div>
-                    <!-- <button class="shift-button" onclick="" style="top:25px; background-color: #2E7D32;">Beam Operation2</button> -->
                 </div>
                 <div class="day">
                     <div class="today"></div>
@@ -232,16 +237,24 @@
         <!-- Right -->
         <div id="body-right">
             <div class="title-box" id="snapshot-id" style="display: inline-block;"></div>
-            <div id="button-group">
-                <button class="config-button">Update</button>
-                <button class="config-button">Get</button>
-                <button class="config-button" onclick="putSnapshotRecord()">Put</button>
-                <button class="config-button" onclick="importRecordFile()">Import</button>
-                <button class="config-button" onclick="exportRecordFile()">Export</button>
+
+            <!-- Record List Table -->
+            <div id="record-table-button">
+                <button class="record-config-button">Update</button>
+                <button class="record-config-button">Get</button>
+                <button class="record-config-button" onclick="putSnapshotRecord()">Put</button>
+                <button class="record-config-button" onclick="importRecordFile()">Import</button>
+                <button class="record-config-button" onclick="exportRecordFile()">Export</button>
             </div>
             <table id="record-table">
                 <thead id="record-tableHead" style="font-family: Roboto-Light"></thead>
                 <tbody id="record-tableBody"></tbody>
+            </table>
+
+            <!-- Compare Record Table -->
+            <table id="compare-table" style="display: none;">
+                <thead id="compare-tableHead" style="font-family: Roboto-Light"></thead>
+                <tbody id="compare-tableBody"></tbody>
             </table>
         </div>
     </div>
@@ -251,7 +264,7 @@
 
 <script>
     // ctrluser Server
-    var serverAddr = 'http://192.168.0.105:9013/timeleap';
+    var serverAddr = 'http://192.168.68.126:9013/timeleap';
 
     // scwook Server
     // var serverAddr = 'http://localhost:9013/timeleap';
@@ -586,7 +599,7 @@
 
             idCell.innerText = snapshotID
             descriptionCell.innerText = timeleapData[i].snapshot[j].description;
-            descriptionCell.addEventListener('click', function () { getSnapshotRecord(snapshotID) })
+            descriptionCell.addEventListener('click', function () { createSnapshotRecordTable(snapshotID) })
 
             if (heightLineCount > 3) {
                 height = 3 * 20;
@@ -855,7 +868,7 @@
         xhttp.send();
     }
 
-    function getSnapshot() {
+    function createSnapshotTable() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -871,7 +884,7 @@
 						<th>Compare</th>
 						</tr>`
 
-                    document.getElementById("compare-tableHead").innerHTML = tHead;
+                    document.getElementById("snapshot-compare-tableHead").innerHTML = tHead;
 
                     let tData = '';
                     for (let i = 0; i < jsonValue.length; i++) {
@@ -886,11 +899,11 @@
 						</tr>`
                     }
 
-                    document.getElementById("compare-tableBody").innerHTML = tData;
-                    $("table tr").hide();
-                    $("table tr").each(function (index) {
-                        $(this).delay(index * 0).show(500);
-                    });
+                    document.getElementById("snapshot-compare-tableBody").innerHTML = tData;
+                    // $("table tr").hide();
+                    // $("table tr").each(function (index) {
+                    //     $(this).delay(index * 0).show(500);
+                    // });
                 }
                 else {
 
@@ -906,6 +919,18 @@
         xhttp.send();
     }
 
+    function createSnapshotRecordTable(snapshotRecordID) {
+
+        // Hide Compare Snapshot Table
+        document.getElementById('compare-table').style.display = "none";
+
+        // Stop Record List Table Update and Hide Table, Config Button
+        document.getElementById('record-table').style.display = "table";
+        document.getElementById('record-table-button').style.visibility = 'visible';
+
+        getSnapshotRecord(snapshotRecordID);
+    }
+
     function getSnapshotRecord(snapshotRecordID) {
 
         var xhttp = new XMLHttpRequest();
@@ -916,7 +941,7 @@
 
                 document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotRecordID;
 
-                var buttonGroupID = document.getElementById('button-group');
+                var buttonGroupID = document.getElementById('record-table-button');
                 buttonGroupID.style.visibility = 'visible';
 
                 if (jsonValue.length) {
@@ -1078,6 +1103,12 @@
         consoel.log(index);
     }
 
+    // 
+    // 
+    // 
+    // 
+    // 
+
     function compareCheck(index) {
         let id = snapshotListArray[index].snapshotid;
         let idIndex = compareSnapshotList.indexOf(id);
@@ -1093,7 +1124,18 @@
     var SelectedCompareCount = 0;
 
     function compareSnapshot() {
+        // Close Snapshot List Table
+        document.getElementById('snapshot-list-contain').style.display = 'none';
 
+        // Stop Record List Table Update and Hide Table, Config Button
+        clearInterval(recordConnectionIntervalID);
+        document.getElementById('record-table').style.display = "none";
+        document.getElementById('record-table-button').style.visibility = 'hidden';
+
+        // Show Compare Snapshot Table
+        document.getElementById('compare-table').style.display = "table";
+
+        // Numeric Sort checked snapshot list
         compareSnapshotList.sort(function (a, b) {
             return a - b;
         });
@@ -1107,6 +1149,7 @@
 
             getSnapshotRecordComapre(compareSnapshotList[SelectedCompareCount]);
         }
+
     }
 
     function getSnapshotRecordComapre(snapshotID) {
@@ -1185,7 +1228,7 @@
 
             tHead += "</tr>";
 
-            document.getElementById("record-tableHead").innerHTML = tHead;
+            document.getElementById("compare-tableHead").innerHTML = tHead;
 
             let tData = '<tr>';
             for (let i = 0; i < compareTableDataArray.length; i++) {
@@ -1199,18 +1242,21 @@
                 tData += "</tr>";
             }
 
-            document.getElementById("record-tableBody").innerHTML = tData;
-            $("table tr").hide();
-            $("table tr").each(function (index) {
+            document.getElementById("compare-tableBody").innerHTML = tData;
+            $("compare-table tr").hide();
+            $("compare-table tr").each(function (index) {
                 $(this).delay(index * 0).show(500);
             });
         }
     }
 
-
     function showSnapshotListTable() {
-        getSnapshot();
-        document.getElementById('snapshot-list').style.display = 'block';
+
+        // Reset Compare Snapshot List
+        compareSnapshotList = [];
+
+        createSnapshotTable();
+        document.getElementById('snapshot-list-contain').style.display = 'block';
     }
 
     window.onload = function () {

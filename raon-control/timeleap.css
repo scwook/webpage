@@ -201,7 +201,7 @@ button {
     width: 40px;
 }
 
-#button-group {
+#record-table-button {
     visibility: hidden;
     position: absolute;
     right: 0px;
@@ -212,7 +212,7 @@ button {
     justify-content: space-evenly;
 }
 
-.config-button {
+.record-config-button {
     width: 80px;
     height: 30px;
     border: 2px solid #004060;
@@ -230,7 +230,7 @@ button {
     background-color: #004060;
 }
 
-#record-table {
+#record-table, #compare-table {
     border-collapse: separate;
     border-spacing: 0 3px;
     width: 700px;
@@ -239,40 +239,40 @@ button {
     margin-top: 10px;
 }
 
-#record-table th {
+#record-table th, #compare-table th {
     color: white;
     background-color: #009FCA;
     height: 28px;
     text-align: center;
 }
 
-#record-table td {
+#record-table td, #compare-table td {
     color: white;
     height: 30px;
     text-align: center;
 }
 
-#record-table tr:nth-child(even) {
+#record-table tr:nth-child(even), #compare-table tr:nth-child(even) {
     background-color: #2d2d2d;
 }
 
-#record-table tr:nth-child(odd) {
+#record-table tr:nth-child(odd), #compare-table tr:nth-child(odd) {
     background-color: #1d1d1d;
 }
 
-#record-table td:nth-child(1) {
+#record-table td:nth-child(1), #compare-table td:nth-child(1) {
     padding-left: 10px;
     text-align: left;
 }
 
-#compare-table th {
+#sanpshot-compare-table th {
     color: white;
     background-color: #009FCA;
     height: 28px;
     text-align: center;
 }
 
-#compare-table {
+#snapshot-compare-table {
     border-collapse: separate;
     border-spacing: 0 3px;
     width: 700px;
@@ -280,25 +280,46 @@ button {
     margin: auto;
     margin-top: 10px;
     background-color: black;
+
 }
 
-#compare-table td {
+#snapshot-compare-table th{
+    color: white;
+    background-color: #009FCA;
+    height: 28px;
+    text-align: center;
+}
+
+#snapshot-compare-table td {
     color: white;
     height: 30px;
     text-align: center;
 }
 
-#compare-table tr:nth-child(even) {
+#snapshot-compare-table tr:nth-child(even) {
     background-color: #2d2d2d;
 }
 
-#compare-table tr:nth-child(odd) {
+#snapshot-compare-table tr:nth-child(odd) {
     background-color: #1d1d1d;
 }
 
-#compare-table td:nth-child(1) {
+#snapshot-compare-table td:nth-child(1) {
     padding-left: 10px;
     text-align: left;
+}
+
+#snapshot-list-contain {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    overflow: auto;
 }
 
 @keyframes bar-animation {
@@ -339,23 +360,27 @@ button {
 }
 
 /* width */
+
 ::-webkit-scrollbar {
     width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px #154360; 
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #154360;
     border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #004060; 
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #004060;
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #004060; 
-  }
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: #004060;
+}
