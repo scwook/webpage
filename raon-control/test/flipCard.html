@@ -8,7 +8,6 @@
     box-sizing: border-box;
 }
 body {
-    overflow: hidden;
 }
 
 section {
@@ -38,7 +37,7 @@ section::before {
     perspective: 500px;
 }
 
-.card .face {
+.card #face {
     position: absolute;
     top: 0;
     left: 0;
@@ -47,25 +46,55 @@ section::before {
     /* box-shadow: 0 15px 35px rgba(0,0,0,0.5); */
     border-radius: 15px;
     background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    /* transform-style: preserve-3d;
-    transition: 1s; */
-
+    backdrop-filter: blur(0px);
+    /* transform-style: preserve-3d; */
+    transition-duration: 1s;
     font-size: 60px;
     color: white;
 }
 
+.card:hover #face:hover{
+    display: block;
+    backdrop-filter: blur(10px);
+}
 </style>
 
 <body>
+
 <section>
+    <button onclick="test()">click</button>
+
     <div class="card">
-        <div class="face front">aaaa</div>
+        <div id="face" style="display: none;">aaaa</div>
+
         <!-- <div class="face front"></div> -->
     </div>
 </section>
+
 </body>
 <script>
+
+function test() {
+    var facdID = document.getElementById('face');
+
+    // document.getElementById('face').style.transition = 'all 1s';
+    // document.getElementById('face').style.backdropFilter = 'blur(10px)';
+    var blurValue = 0.0;
+    var id = setInterval(function () {
+
+        if(blurValue > 5) {
+            clearInterval(id);
+        }
+
+        facdID.style.backdropFilter = 'blur(' + blurValue + 'px)';
+        blurValue += 0.5;
+        console.log(blurValue);
+
+    }, 10);
+
+    facdID.style.display = 'block';
+
+}
 
 </script>
 
