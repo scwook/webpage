@@ -2,7 +2,9 @@
 <html>
 <link rel="stylesheet" type="text/css" href="common.css">
 <link rel="stylesheet" type="text/css" href="timeleap.css">
+
 <script src="script/jquery.min.js"></script>
+<script src="script/chart.js@2.8.0"></script>
 
 <body>
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
@@ -38,7 +40,7 @@
 
     <div id="snapshot-list-body">
         <div style="position:relative; width:800px; margin:auto; margin-top: 20px;">
-            <div class="title-box" id="snapshot-list-title" style="display: inline-block; margin:auto; left:0px;">
+            <div class="title-box" style="display: inline-block; margin:auto; left:0px;">
                 Snapshot List</div>
             <div id="snapshot-list-button">
                 <button class="snapshot-list-config-button" onclick="compareSnapshot()">Compare</button>
@@ -59,7 +61,11 @@
 
         <!-- Left -->
         <div id="body-left">
-            <div class="title-box" onclick="createNewEventSet()">Time Leap</div>
+            <div class="title-box" style="display: inline-block;">Time Leap</div>
+            <div id="event-button-container">
+                <button class="event-config-button" onclick="createNewEventSet()">New</button>
+                <button class="event-config-button" onclick="showSnapshotListTable()">Compare</button>
+            </div>
 
             <div style="display: flex; position:relative; left: 25px; margin-top:10px">
                 <button id="last-button" onclick="lastCalendar()">&#10094;</button>
@@ -220,23 +226,14 @@
 
             <div style="height:20px"></div>
 
-            <div class="title-box" style="display: inline-block; width:50px;">Todo</div>
-            <div class="title-bar under-bar" style="--barColor: #ec2227;"></div>
-
-
-            <div id="todo-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia deserunt mollit anim id est laborum.</div>
-
+            <div id="compare-chart-container">
+                <canvas id="compare-chart" style="width:700px; height:200px"></canvas>
+            </div>
         </div>
 
         <!-- Center -->
         <div id="body-center">
-            <div style="width: 100%; height: 40px; background-color: aqua;">
-                <button class="show-snapshot-list-button" onclick="showSnapshotListTable()">Compare</button>
-            </div>
+
         </div>
 
         <!-- Right -->
@@ -1277,6 +1274,33 @@
         // setInterval(getScheduleDatabase, 2000);
     }
 
+    const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'My First dataset',
+            // backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data,
+        options: {}
+    };
+
+    var compareChartContext = document.getElementById('compare-chart').getContext('2d');
+    var myChart = new Chart(compareChartContext, config);
 </script>
 
 </html>

@@ -1,4 +1,5 @@
 #body-left {
+    position: relative;
     float: left;
     width: 750px;
     height: 980px;
@@ -102,14 +103,11 @@ button {
     font-family: "Roboto-Light";
 }
 
-#todo-box {
+#compare-chart-container {
     position: relative;
     left: 25px;
-    padding: 15px;
-    width: 670px;
-    height: 150px;
-    color: white;
-    font-size: 18px;
+    width: 700px;
+    height: 200px;
     background-color: rgba(25, 25, 25, 0.5);
 }
 
@@ -126,6 +124,36 @@ button {
     animation-name: bar-animation;
     animation-duration: 1s;
     animation-fill-mode: forwards;
+}
+
+
+#event-button-container {
+    position: absolute;
+    right: 25px;
+    top: 3px;
+    display: flex;
+    width: 500px;
+    height: 30px;
+    justify-content: flex-end;
+}
+
+.event-config-button {
+    width: 80px;
+    height: 30px;
+    margin-left: 10px;
+    border: 2px solid #9B59B6;
+    border-radius: 0px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: transparent;
+    transition-duration: 0.4s;
+    font-family: "Roboto-Thin";
+}
+
+.event-config-button:hover {
+    background-color: #9B59B6;
 }
 
 .schedule-list-box {
