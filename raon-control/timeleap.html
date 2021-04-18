@@ -270,10 +270,10 @@
 
 <script>
     // ctrluser Server
-    var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    //var serverAddr = 'http://192.168.68.126:9013/timeleap';
 
     // scwook Server
-    // var serverAddr = 'http://localhost:9013/timeleap';
+    var serverAddr = 'http://localhost:9013/timeleap';
 
     var newEventAddr = serverAddr + '/event';
     var newSnapshotAddr = serverAddr + '/snapshot';
@@ -1266,9 +1266,30 @@
         compareSnapshotList = [];
 
         createSnapshotTable();
-        document.getElementById('snapshot-list-body').style.display = 'block';
-        document.getElementById('snapshot-list-body').style.transition = 'all 1s';
-        document.getElementById('snapshot-list-body').style.backdropFilter = 'blur(5px)';
+        // document.getElementById('snapshot-list-body').style.display = 'block';
+        // document.getElementById('snapshot-list-body').style.transition = 'all 1s';
+        // document.getElementById('snapshot-list-body').style.backdropFilter = 'blur(5px)';
+
+        var snapshotListBodyID = document.getElementById('snapshot-list-body');
+
+        // document.getElementById('face').style.transition = 'all 1s';
+        // document.getElementById('face').style.backdropFilter = 'blur(10px)';
+        var blurValue = 0.0;
+        var opacity = 0.0;
+        var id = setInterval(function () {
+    
+            if(blurValue > 5) {
+                clearInterval(id);
+            }
+    
+            snapshotListBodyID.style.backdropFilter = 'blur(' + blurValue + 'px)';
+            snapshotListBodyID.style.background = 'rgba(255,255,255,' + opacity + ')';
+            blurValue += 0.5;
+            opacity += 0.01;
+    
+        }, 20);
+    
+        snapshotListBodyID.style.display = 'block';
     }
 
     window.onload = function () {
