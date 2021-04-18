@@ -63,8 +63,12 @@
         <div id="body-left">
             <div class="title-box" style="display: inline-block;">Time Leap</div>
             <div id="event-button-container">
-                <button class="event-config-button" onclick="createNewEventSet()">New</button>
-                <button class="event-config-button" onclick="showSnapshotListTable()">Compare</button>
+                <!-- <button class="event-config-button" onclick="createNewEventSet()">New</button> -->
+                <!-- <button class="event-config-button" onclick="showSnapshotListTable()">Compare</button> -->
+                <svg id="snapshot-compare-button" width="25.5" height="25.5" onclick="showSnapshotListTable()">
+                      <polygon points="7.5 7.5 15 7.5 15 0 0 0 0 15 7.5 15 7.5 7.5" style="fill: #e6e6e6"/>
+                      <rect x="10" y="10" width="15" height="15" style="fill: none;stroke: #e6e6e6;stroke-miterlimit: 10"/>
+                  </svg>
             </div>
 
             <div style="display: flex; position:relative; left: 25px; margin-top:10px">
@@ -841,8 +845,12 @@
                 var jsonValue = JSON.parse(this.responseText);
                 timeleapData = jsonValue;
 
+                // Show Button
+                document.getElementById('event-button-container').style.visibility = 'visible';
+
                 // Create event list
                 makeEventList();
+
             }
             // else {
             // alert('Status Error : ' + this.status);

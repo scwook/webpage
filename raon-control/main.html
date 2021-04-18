@@ -2393,7 +2393,7 @@
             }
             for (i; i < maxIndex; i++) {
                 let opacityValue = 1.0 - 0.9 / maxIndex * i;
-                temperature1LevelClass[i].style.opacity = opacityValue;
+                temperature1LevelClass[i].style.opacity = 1.0;
             }
 
             valueIndex = maxIndex - levelBarCount2;
@@ -2403,7 +2403,7 @@
             }
             for (i; i < maxIndex; i++) {
                 let opacityValue = 1.0 - 0.9 / maxIndex * i;
-                temperature2LevelClass[i].style.opacity = opacityValue;
+                temperature2LevelClass[i].style.opacity = 1.0;
             }
 
         }, 3000);
