@@ -44,10 +44,52 @@ def disconnectionTimer(snapshotKey):
         
         del connectionMonitorDict[snapshotKey]
         del snapshotRecordDict[snapshotKey]
+        del timerCountDict[snapshotKey]
 
         print("Stop connection monitoring: snapshot %s" %(snapshotKey))
 
         timer.cancel()
+
+@app.route('/timeleap/snapshot/connection/<snapshotid>', methods=['POST'])
+def create_record_connection(snapshotid):
+    global connectionMonitorDict
+    
+    if connectionMonitorDict.get(snapshotid) != None:
+        return 'Active'
+    
+    jsonData = request.get_json()
+
+    channelList = list()
+    recordStatusDict = dict()
+    index = 0
+    for name in jsonData:
+        pvname = str(name['pvname'])
+        
+        recordStatusDict[pvname] = 'false'
+        snapshotRecordDict[snapshotid] = recordStatusDict
+
+        channelList.append(Channel(pvname, ProviderType.CA))
+        channelList[index].setConnectionCallback(ChannelMonitor(snapshotid, pvname).isConnected)
+    
+        index += 1
+
+    connectionMonitorDict[snapshotid] = channelList
+
+    timerCountDict[snapshotid] = 0
+    disconnectionTimer(snapshotid)
+
+    print("Start connection monitoring: snapshot %s" %(snapshotid))
+
+    return 'OK'
+
+@app.route('/timeleap/retrieve/snapshot/connection/<snapshotid>', methods=['GET'])
+def get_record_connection_status(snapshotid):
+    timerCountDict[snapshotid] = 0
+
+    if snapshotRecordDict.get(snapshotid) == None:
+        return json.dumps({})
+
+    return json.dumps(snapshotRecordDict[snapshotid])
 
 @app.route('/timeleap/snapshot/put', methods=['POST'])
 def put_record_data():
@@ -224,47 +266,6 @@ def get_record_list(id):
 
     return json.dumps(recordArray, ensure_ascii=False)
 
-
-@app.route('/timeleap/snapshot/connection/<snapshotid>', methods=['POST'])
-def create_record_connection(snapshotid):
-    global connectionMonitorDict
-
-    if connectionMonitorDict.get(snapshotid) != None:
-        return 'Active'
-    
-    jsonData = request.get_json()
-
-    channelList = list()
-    recordStatusDict = dict()
-    index = 0
-    for name in jsonData:
-        pvname = str(name['pvname'])
-        
-        recordStatusDict[pvname] = 'false'
-        snapshotRecordDict[snapshotid] = recordStatusDict
-
-        channelList.append(Channel(pvname, ProviderType.CA))
-        channelList[index].setConnectionCallback(ChannelMonitor(snapshotid, pvname).isConnected)
-    
-        index += 1
-
-    connectionMonitorDict[snapshotid] = channelList
-
-    timerCountDict[snapshotid] = 0
-    disconnectionTimer(snapshotid)
-
-    print("Start connection monitoring: snapshot %s" %(snapshotid))
-
-    return 'OK'
-
-@app.route('/timeleap/retrieve/snapshot/connection/<snapshotid>', methods=['GET'])
-def get_record_connection_status(snapshotid):
-    timerCountDict[snapshotid] = 0
-
-    if snapshotRecordDict.get(snapshotid) == None:
-        return json.dumps({})
-
-    return json.dumps(snapshotRecordDict[snapshotid])
 
 if __name__ == "__main__":
     app.run(host=SERVER_ADDR, port="9013")

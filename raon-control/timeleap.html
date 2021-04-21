@@ -270,10 +270,10 @@
 
 <script>
     // ctrluser Server
-    //var serverAddr = 'http://192.168.68.126:9013/timeleap';
+    var serverAddr = 'http://192.168.68.126:9013/timeleap';
 
     // scwook Server
-    var serverAddr = 'http://localhost:9013/timeleap';
+    // var serverAddr = 'http://localhost:9013/timeleap';
 
     var newEventAddr = serverAddr + '/event';
     var newSnapshotAddr = serverAddr + '/snapshot';
@@ -1043,7 +1043,7 @@
                     recordData[i].status = jsonValue[name];
                     // console.log(recordData[i].pvname);
                 }
-
+                
                 let tData = '';
                 for (let i = 0; i < recordData.length; i++) {
                     var statusSVG = unmonitoredSVG;
