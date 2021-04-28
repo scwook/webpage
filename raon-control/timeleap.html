@@ -1041,8 +1041,11 @@
                 for (let i = 0; i < recordData.length; i++) {
                     let name = recordData[i].pvname;
                     recordData[i].status = jsonValue[name];
+                    
                     // console.log(recordData[i].pvname);
                 }
+                
+                console.log(recordData);
                 
                 let tData = '';
                 for (let i = 0; i < recordData.length; i++) {
