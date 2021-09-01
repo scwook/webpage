@@ -1,5 +1,62 @@
 #body {
     /* background-color: thistle; */
+    overflow: hidden;
+    position: relative;
+}
+
+#login-menu {
+    display: flex;
+    position: absolute;
+    width: 500px;
+    /* height: 80px; */
+    right: 0px;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    color: white;
+    font-size: 18px;
+    /* background-color: orange; */
+    bottom: 30px;
+}
+
+#id, #password {
+    /* box-sizing: border-box; */
+    width: 100px;
+    height: 20px;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+    color: white;
+    outline: none;
+    font-size: 16px;
+    /* background-color: gray; */
+    padding-left: 25px;
+    padding-bottom: 5px;
+    font-family: "Roboto-Thin";
+}
+
+#id {
+    background-image: url('images/id.png');
+    background-position: 1px 6px;
+    background-repeat: no-repeat;
+    /* padding-left: 10px; */
+}
+
+#password {
+    background-image: url('images/password.png');
+    background-position: 1px 6px;
+    background-repeat: no-repeat;
+}
+
+#signin {
+    width: 80px;
+    height: 32px;
+    /* background-color: #1B75BB; */
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    font-family: "Roboto-Light";
 }
 
 #container {
@@ -19,7 +76,7 @@
     text-align: center;
 }
 
-#control-system{
+#control-system {
     position: relative;
     color: white;
     margin-top: 100px;
@@ -27,6 +84,22 @@
     font-size: 20px;
     letter-spacing: 5px;
     /* background-color: darkslateblue; */
+}
+
+#particle {
+    /* animation: particleMove 60s linear infinite; */
+    animation: particleMove 1s cubic-bezier(0.075, 0.82, 0.2, 1) forwards;
+
+    /* left: 100px; */
+}
+
+@keyframes particleMove {
+    from {
+        left: 1920px;
+    }
+    to {
+        left: 800px;
+    }
 }
 
 @media all and (max-width: 1920px) {

@@ -6,38 +6,31 @@
 <body>
     <div style="margin:auto; position: relative; width:1920px; height:80px;">
         <div id="time-stamp"></div>
+        <div id="login-menu">
+            <input type="text" id="id">
+            <input type="password" id="password">
+            <input type="button" id="signin" value="Sign in">
+        </div>
     </div>
 
     <div id="body" style="margin:auto; width:1920px; height:1000px;">
-        <svg width="1920" height="1" style="position: absolute; top:500px">
+        <svg width="1920" height="1" style="position: absolute; top:420px">
             <line class="line" y1="0.5" x2="1920" y2="0.5" style="fill: none; stroke:#1b3333;opacity:0.5" />
         </svg>
-        <svg width="793.734" height="6" style="position: absolute; top:498px; left:1200px">
-            <defs>
-                <style>
-                    .cls-1 {
-                        fill: none;
-                        stroke-miterlimit: 10;
-                        stroke: url(#linear-gradient);
-                    }
-
-                    .cls-2 {
-                        fill: #e6e7e7;
-                    }
-                </style>
-                <linearGradient id="linear-gradient" x1="-1129.0036" y1="3.0539" x2="-337.8693" y2="3.0539"
-                    gradientTransform="matrix(-1, 0, 0, 1, -335.2696, -0.0517)" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" stop-opacity="0" />
-                    <stop offset="0.1842" stop-color="#082134" stop-opacity="0.2797" />
-                    <stop offset="0.3785" stop-color="#103f64" stop-opacity="0.5352" />
-                    <stop offset="0.5634" stop-color="#15578a" stop-opacity="0.7369" />
-                    <stop offset="0.7339" stop-color="#1a68a5" stop-opacity="0.8815" />
-                    <stop offset="0.8847" stop-color="#1c72b5" stop-opacity="0.9692" />
-                    <stop offset="1" stop-color="#1d76bb" />
-                </linearGradient>
-            </defs>
-            <line class="cls-1" x1="793.734" y1="3.0022" x2="2.5997" y2="3.0022" />
-            <circle class="cls-2" cx="3" cy="3" r="3" />
+        <svg id="particle" width="793.734" height="6" style="position: absolute; top:418px;">
+            <linearGradient id="linear-gradient" x1="-1129.0036" y1="3.0539" x2="-337.8693" y2="3.0539"
+                gradientTransform="matrix(-1, 0, 0, 1, -335.2696, -0.0517)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-opacity="0" />
+                <stop offset="0.1842" stop-color="#082134" stop-opacity="0.2797" />
+                <stop offset="0.3785" stop-color="#103f64" stop-opacity="0.5352" />
+                <stop offset="0.5634" stop-color="#15578a" stop-opacity="0.7369" />
+                <stop offset="0.7339" stop-color="#1a68a5" stop-opacity="0.8815" />
+                <stop offset="0.8847" stop-color="#1c72b5" stop-opacity="0.9692" />
+                <stop offset="1" stop-color="#1d76bb" />
+            </linearGradient>
+            <line class="cls-1" x1="793.734" y1="3.0022" x2="2.5997" y2="3.0022"
+                style="fill:none; stroke: url(#linear-gradient);" />
+            <circle class="cls-2" cx="3" cy="3" r="3" style="fill:#e6e7e7" />
         </svg>
 
         <div id="container">
