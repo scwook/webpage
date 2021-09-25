@@ -1,3 +1,7 @@
+body {
+  overflow: visible;
+}
+
 .container {
     position: relative;
     animation: animatebottom 1s;
