@@ -52,11 +52,11 @@ body {
     height: 14px;
     width: 14px;
     /* background-color: #eee; */
-    border: 1px solid #2196F3;
+    border: 1px solid var(--borderColor);
 }
 
 .checkbox-container input:checked~.checkmark {
-    background-color: #2196F3;
+    background-color: var(--backgroundColor);
 }
 
 .document-list {
@@ -77,44 +77,17 @@ body {
     /* background-color: brown; */
 }
 
-.document-color-1 {
+.document-color {
     position: absolute;
     width: 16px;
     height: 100px;
-    background-color: #00A99D;
-}
-
-.document-color-2 {
-    position: absolute;
-    width: 16px;
-    height: 100px;
-    background-color: #29ABE2;
-}
-
-.document-color-3 {
-    position: absolute;
-    width: 16px;
-    height: 100px;
-    background-color: #ED1E79;
-}
-
-.document-color-4 {
-    position: absolute;
-    width: 16px;
-    height: 100px;
-    background-color: #8CC63F;
-}
-
-.document-color-5 {
-    position: absolute;
-    width: 16px;
-    height: 100px;
-    background-color: #F7931E;
+    background-color: var(--backgroundColor);
 }
 
 .content-number {
     font-size: 14px;
     font-style: italic;
+    color: var(--textColor);
 }
 
 .content-title {
