@@ -53,11 +53,80 @@ body {
     width: 14px;
     /* background-color: #eee; */
     border: 1px solid #2196F3;
-
 }
 
 .checkbox-container input:checked~.checkmark {
     background-color: #2196F3;
+}
+
+.document-list {
+    position: relative;
+    width: 900px;
+    height: 100px;
+    margin: auto;
+    margin-top: 30px;
+    background-color: rgba(26, 26, 26, 0.3);
+    border: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.document-content{
+    position: absolute;
+    left: 16px;
+    padding-left: 24px;
+    padding-top: 10px;
+    /* background-color: brown; */
+}
+
+.document-color-1 {
+    position: absolute;
+    width: 16px;
+    height: 100px;
+    background-color: #00A99D;
+}
+
+.document-color-2 {
+    position: absolute;
+    width: 16px;
+    height: 100px;
+    background-color: #29ABE2;
+}
+
+.document-color-3 {
+    position: absolute;
+    width: 16px;
+    height: 100px;
+    background-color: #ED1E79;
+}
+
+.document-color-4 {
+    position: absolute;
+    width: 16px;
+    height: 100px;
+    background-color: #8CC63F;
+}
+
+.document-color-5 {
+    position: absolute;
+    width: 16px;
+    height: 100px;
+    background-color: #F7931E;
+}
+
+.content-number {
+    font-size: 14px;
+    font-style: italic;
+}
+
+.content-title {
+    margin-top: 5px;
+    color: white;
+    font-size: 24px;
+}
+
+.content-abstract {
+    margin-top: 5px;
+    color: #B3B3B3;
+    font-size: 18px;
 }
 
 @media all and (max-width: 1920px) {
