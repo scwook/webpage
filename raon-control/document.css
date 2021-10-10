@@ -53,6 +53,7 @@ body {
     width: 14px;
     /* background-color: #eee; */
     border: 1px solid var(--borderColor);
+    /* border-radius: 2px; */
 }
 
 .checkbox-container input:checked~.checkmark {
@@ -67,6 +68,9 @@ body {
     margin-top: 30px;
     background-color: rgba(26, 26, 26, 0.3);
     border: 1px solid rgba(50, 50, 50, 0.3);
+    background-image: url('images/document-bg.png');
+    background-repeat: no-repeat;
+    background-position: 200px -30px;
 }
 
 .document-content{
