@@ -28,7 +28,7 @@ body {
 .checkbox-container {
     display: block;
     position: relative;
-    width: 100px;
+    /* width: 100px; */
     height: 30px;
     padding-left: 24px;
     /* margin-bottom: 10px; */
@@ -54,10 +54,21 @@ body {
     /* background-color: #eee; */
     border: 1px solid var(--borderColor);
     /* border-radius: 2px; */
+    transition: transform 0.2s ease-out, color 0.2s ease;
+    transform: scale3d(0.8,0.8,1);
+}
+
+.checkbox-container:hover .checkmark {
+    transform: scale3d(1,1,1);
+}
+
+.checkbox-container:active .checkmark {
+    transform: scale3d(1.2,1.2,1);
 }
 
 .checkbox-container input:checked~.checkmark {
     background-color: var(--backgroundColor);
+    transform: scale3d(1,1,1);
 }
 
 .document-list {
