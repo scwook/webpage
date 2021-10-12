@@ -5,19 +5,34 @@ body {
 .container {
     position: relative;
     animation: animatebottom 1s;
-    margin-top: 50px;
+    margin-top: 0px;
     bottom: -100px;
     opacity: 0;
     animation-fill-mode: forwards;
 }
 
-.letter {
+#title {
     width: 1000px;
     margin: auto;
+    color: white;
+    font-size: 36px;
     text-align: center;
-    font-size: 24px;
-    color: lightgray;
+}
+
+.subtitle {
+    width: 1000px;
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 28px;
+    color: white;
     position: relative;
+}
+
+.substance {
+    color: #B3B3B3;
+    font-size: 20px;
+    text-align: center;
 }
 
 .console-window {

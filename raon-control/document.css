@@ -55,7 +55,7 @@ body {
     border: 1px solid var(--borderColor);
     /* border-radius: 2px; */
     transition: transform 0.2s ease-out, color 0.2s ease;
-    transform: scale3d(0.8,0.8,1);
+    transform: scale3d(0.75,0.75,1);
 }
 
 .checkbox-container:hover .checkmark {
@@ -63,7 +63,7 @@ body {
 }
 
 .checkbox-container:active .checkmark {
-    transform: scale3d(1.2,1.2,1);
+    transform: scale3d(1.25,1.25,1);
 }
 
 .checkbox-container input:checked~.checkmark {
@@ -111,11 +111,18 @@ body {
     font-size: 24px;
 }
 
+.content-title a, a:link, a:visited {
+    text-decoration: none;
+    color: white;
+}
+
 .content-abstract {
     margin-top: 5px;
     color: #B3B3B3;
     font-size: 18px;
 }
+
+
 
 @media all and (max-width: 1920px) {
     body {
