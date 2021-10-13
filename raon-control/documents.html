@@ -42,34 +42,34 @@
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsumhas been the
             industry's
             standard dummy text ever since the 1500s, when an unknown printer took a galley.</div>
-        <div id="classification">
-            <label class="checkbox-container">EPICS
-                <input type="checkbox" id="epics">
+        <div id="classify">
+            <label class="checkbox-container" onchange="sortDocument()">EPICS
+                <input type="radio" name="doc-group" id="epics" checked="checked">
                 <span class="checkmark" style="--borderColor: #00D8C3; --backgroundColor: #00D8C3;"></span>
             </label>
 
-            <label class="checkbox-container">CSS
-                <input type="checkbox" id="css">
+            <label class="checkbox-container" onchange="sortDocument()">CSS
+                <input type="radio" name="doc-group" id="css">
                 <span class="checkmark" style="--borderColor: #29ABE2; --backgroundColor: #29ABE2;"></span>
             </label>
 
-            <label class="checkbox-container">Network
-                <input type="checkbox" id="css">
+            <label class="checkbox-container" onchange="sortDocument()">Network
+                <input type="radio" name="doc-group" id="network">
                 <span class="checkmark" style="--borderColor: #ED1E79; --backgroundColor: #ED1E79;"></span>
             </label>
 
-            <label class="checkbox-container">Service
-                <input type="checkbox" id="css">
+            <label class="checkbox-container" onchange="sortDocument()">Service
+                <input type="radio" name="doc-group" id="service">
                 <span class="checkmark" style="--borderColor: #8CC63F; --backgroundColor: #8CC63F;"></span>
             </label>
 
-            <label class="checkbox-container">Local
-                <input type="checkbox" id="css">
+            <label class="checkbox-container" onchange="sortDocument()">Local
+                <input type="radio" name="doc-group" id="local">
                 <span class="checkmark" style="--borderColor: #F7931E; --backgroundColor: #F7931E;"></span>
             </label>
         </div>
 
-        <div class="document-list">
+        <div class="document-list epics">
             <div class="document-color" style="--backgroundColor: #00D8C3;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #00D8C3;">Document 1-1</div>
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <div class="document-list">
+        <div class="document-list css">
             <div class="document-color" style="--backgroundColor: #29ABE2;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #29ABE2;">Document 1-1</div>
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <div class="document-list">
+        <div class="document-list network">
             <div class="document-color" style="--backgroundColor: #ED1E79;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #ED1E79;">Document 1-1</div>
@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <div class="document-list">
+        <div class="document-list service">
             <div class="document-color" style="--backgroundColor: #8CC63F;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #8CC63F;">Document 1-1</div>
@@ -105,7 +105,7 @@
             </div>
         </div>
 
-        <div class="document-list">
+        <div class="document-list local">
             <div class="document-color" style="--backgroundColor: #F7931E;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #F7931E;">Document 1-1</div>
@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        <div class="document-list">
+        <div class="document-list epics">
             <div class="document-color" style="--backgroundColor: #00D8C3;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #00D8C3;">Document 1-1</div>
@@ -125,6 +125,12 @@
     </div>
 </body>
 <script>
+    var a = 0;
+    function sortDocument() {
+        var documentListClass = document.getElementsByClassName("document-list");
+        a += 1;
+    }
+
     function timer() {
         var d = new Date();
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
@@ -133,11 +139,11 @@
     window.onload = function () {
         setInterval(timer, 1000);
 
-        var x = document.getElementsByClassName("container");
-
+        var documentListClass = document.getElementsByClassName("document-list");
+        
         var delayTime = 0;
-        for (let i = 0; i < x.length; i++) {
-            x[i].style.animationDelay = delayTime + "s";
+        for (let i = 0; i < documentListClass.length; i++) {
+            documentListClass[i].style.animationDelay = delayTime + "s";
 
             delayTime += 0.2;
         }
