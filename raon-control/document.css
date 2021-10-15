@@ -82,6 +82,10 @@ body {
     background-image: url('images/document-bg.png');
     background-repeat: no-repeat;
     background-position: 200px -30px;
+
+}
+
+.document-animation {
     animation: animatebottom 1s;
     opacity: 0;
     animation-fill-mode: forwards;

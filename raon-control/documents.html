@@ -43,33 +43,38 @@
             industry's
             standard dummy text ever since the 1500s, when an unknown printer took a galley.</div>
         <div id="classify">
-            <label class="checkbox-container" onchange="sortDocument()">EPICS
-                <input type="radio" name="doc-group" id="epics" checked="checked">
+            <label class="checkbox-container" onchange="showAllDocument()">ALL
+                <input type="radio" name="doc-group" id="all" checked="checked">
+                <span class="checkmark" style="--borderColor: #999999; --backgroundColor: #999999;"></span>
+            </label>
+
+            <label class="checkbox-container" onchange="filterDocument('epics')">EPICS
+                <input type="radio" name="doc-group" id="epics">
                 <span class="checkmark" style="--borderColor: #00D8C3; --backgroundColor: #00D8C3;"></span>
             </label>
 
-            <label class="checkbox-container" onchange="sortDocument()">CSS
+            <label class="checkbox-container" onchange="filterDocument('css')">CSS
                 <input type="radio" name="doc-group" id="css">
                 <span class="checkmark" style="--borderColor: #29ABE2; --backgroundColor: #29ABE2;"></span>
             </label>
 
-            <label class="checkbox-container" onchange="sortDocument()">Network
+            <label class="checkbox-container" onchange="filterDocument('network')">Network
                 <input type="radio" name="doc-group" id="network">
                 <span class="checkmark" style="--borderColor: #ED1E79; --backgroundColor: #ED1E79;"></span>
             </label>
 
-            <label class="checkbox-container" onchange="sortDocument()">Service
+            <label class="checkbox-container" onchange="filterDocument('service')">Service
                 <input type="radio" name="doc-group" id="service">
                 <span class="checkmark" style="--borderColor: #8CC63F; --backgroundColor: #8CC63F;"></span>
             </label>
 
-            <label class="checkbox-container" onchange="sortDocument()">Local
+            <label class="checkbox-container" onchange="filterDocument('local')">Local
                 <input type="radio" name="doc-group" id="local">
                 <span class="checkmark" style="--borderColor: #F7931E; --backgroundColor: #F7931E;"></span>
             </label>
         </div>
 
-        <div class="document-list epics">
+        <div class="document-list document-animation epics">
             <div class="document-color" style="--backgroundColor: #00D8C3;"></div>
             <div class="document-content">
                 <div class="content-number" style="--textColor: #00D8C3;">Document 1-1</div>
@@ -78,46 +83,46 @@
             </div>
         </div>
 
-        <div class="document-list css">
+        <div class="document-list document-animation css">
             <div class="document-color" style="--backgroundColor: #29ABE2;"></div>
             <div class="document-content">
-                <div class="content-number" style="--textColor: #29ABE2;">Document 1-1</div>
-                <div class="content-title">EPICS Installation</div>
-                <div class="content-abstract">Installation Guide the EPICS base with standard & script</div>
+                <div class="content-number" style="--textColor: #29ABE2;">Document 2-1</div>
+                <div class="content-title">CS-Studio Installation</div>
+                <div class="content-abstract">Installation Guide the RAON Control System Studio</div>
             </div>
         </div>
 
-        <div class="document-list network">
+        <div class="document-list document-animation network">
             <div class="document-color" style="--backgroundColor: #ED1E79;"></div>
             <div class="document-content">
-                <div class="content-number" style="--textColor: #ED1E79;">Document 1-1</div>
-                <div class="content-title">EPICS Installation</div>
-                <div class="content-abstract">Installation Guide the EPICS base with standard & script</div>
+                <div class="content-number" style="--textColor: #ED1E79;">Document 3-1</div>
+                <div class="content-title">How to use siteApps & siteLibs</div>
+                <div class="content-abstract">Guide to the RAON Specific Application of the EPICS</div>
             </div>
         </div>
 
-        <div class="document-list service">
+        <div class="document-list document-animation service">
             <div class="document-color" style="--backgroundColor: #8CC63F;"></div>
             <div class="document-content">
-                <div class="content-number" style="--textColor: #8CC63F;">Document 1-1</div>
-                <div class="content-title">EPICS Installation</div>
-                <div class="content-abstract">Installation Guide the EPICS base with standard & script</div>
+                <div class="content-number" style="--textColor: #8CC63F;">Document 4-1</div>
+                <div class="content-title">How to use the Logbook System</div>
+                <div class="content-abstract">Guide to read and write based on the Olog</div>
             </div>
         </div>
 
-        <div class="document-list local">
+        <div class="document-list document-animation local">
             <div class="document-color" style="--backgroundColor: #F7931E;"></div>
             <div class="document-content">
-                <div class="content-number" style="--textColor: #F7931E;">Document 1-1</div>
-                <div class="content-title">EPICS Installation</div>
-                <div class="content-abstract">Installation Guide the EPICS base with standard & script</div>
+                <div class="content-number" style="--textColor: #F7931E;">Document 5-1</div>
+                <div class="content-title">How to use the Alarm System</div>
+                <div class="content-abstract">Guide to Alarm System based on the BEAST</div>
             </div>
         </div>
 
-        <div class="document-list epics">
+        <div class="document-list document-animation epics">
             <div class="document-color" style="--backgroundColor: #00D8C3;"></div>
             <div class="document-content">
-                <div class="content-number" style="--textColor: #00D8C3;">Document 1-1</div>
+                <div class="content-number" style="--textColor: #00D8C3;">Document 2-1</div>
                 <div class="content-title">EPICS Installation</div>
                 <div class="content-abstract">Installation Guide the EPICS base with standard & script</div>
             </div>
@@ -125,10 +130,43 @@
     </div>
 </body>
 <script>
-    var a = 0;
-    function sortDocument() {
+    function showAllDocument() {
         var documentListClass = document.getElementsByClassName("document-list");
-        a += 1;
+
+        var delayTime = 0;
+        for (let x of documentListClass) {
+            x.style.animationDelay = delayTime + "s";
+            x.style.display = 'block';
+
+            x.classList.remove('document-animation');
+            void x.offsetWidth;
+            x.classList.add('document-animation');
+
+            delayTime += 0.2;
+        }
+    }
+
+    function filterDocument(filterName) {
+        var documentListClass = document.getElementsByClassName("document-list");
+
+        for (let x of documentListClass) {
+            x.style.display = 'none';
+        }
+
+        let filterClassName = 'document-list ' + filterName;
+        var filterDocumentClass = document.getElementsByClassName(filterClassName);
+
+        var delayTime = 0;
+        for (let x of filterDocumentClass) {
+            x.style.animationDelay = delayTime + "s";
+            x.style.display = 'block';
+
+            x.classList.remove('document-animation');
+            void x.offsetWidth;
+            x.classList.add('document-animation');
+
+            delayTime += 0.2;
+        }
     }
 
     function timer() {
@@ -140,10 +178,16 @@
         setInterval(timer, 1000);
 
         var documentListClass = document.getElementsByClassName("document-list");
-        
+
         var delayTime = 0;
-        for (let i = 0; i < documentListClass.length; i++) {
-            documentListClass[i].style.animationDelay = delayTime + "s";
+        // for (let i = 0; i < documentListClass.length; i++) {
+        //     documentListClass[i].style.animationDelay = delayTime + "s";
+
+        //     delayTime += 0.2;
+        // }
+
+        for (let x of documentListClass) {
+            x.style.animationDelay = delayTime + "s";
 
             delayTime += 0.2;
         }
