@@ -405,17 +405,16 @@
 }
 
 @keyframes animatefade {
-    0% {
+    from {
         opacity: 0;
-        transform: scale3d(0.9, 0.9, 1);
+        bottom: -10px
+        /* transform: scale3d(1.1, 1.1, 1); */
     }
-    /* 50% {
-        opacity: 0.5;
-        transform: scale3d(1.2, 1.2, 1);
-    } */
-    100% {
+
+    to {
         opacity: 1;
-        transform: scale3d(1, 1, 1);
+        bottom: 0px;
+        /* transform: scale3d(1, 1, 1); */
     }
 }
 

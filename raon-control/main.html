@@ -2266,12 +2266,12 @@
 
         var gridItemClass = document.getElementsByClassName("fade-animation");
 
-        // var delayTime = 0;
+        var delayTime = 0;
         for (let x of gridItemClass) {
-            let delayTime = Math.random() * 0.3;
+            // let delayTime = Math.random() * 0.3;
             x.style.animationDelay = delayTime + "s";
 
-            // delayTime += 0.1;
+            delayTime += 0.1;
         }
 
 
