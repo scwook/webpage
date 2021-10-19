@@ -860,10 +860,10 @@
     window.onload = function () {
 
         // firstShowUp();
-        setInterval(function () {
-            getRecordData();
+        // setInterval(function () {
+        //     getRecordData();
 
-        }, 2000);
+        // }, 2000);
 
         // Set Real Data
         // real_storage();
@@ -889,6 +889,7 @@
             sortIndexArray[i] = i;
         }
 
+        // If uncomment this line, first page grid will show up randomly
         sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5});
 
         var delayTime = 0;
@@ -896,9 +897,16 @@
             // let delayTime = Math.random() * 0.3;
             // x.style.animationDelay = delayTime + "s";
             gridItemClass[sortIndexArray[i]].style.animationDelay = delayTime + "s";
-
             delayTime += 0.05;
         }
+
+        setTimeout(function () {
+            for (let i = gridItemClass.length - 1; i >= 0; i--) {
+                
+                gridItemClass[i].classList.remove('fade-animation');
+            }
+
+        }, 2000);
 
     }
 
