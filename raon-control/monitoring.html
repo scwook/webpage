@@ -50,7 +50,7 @@
                 <div class="grid-container">
 
                     <!-- 1 / 1 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Storage</p>
                         <div id="storage-value" class="doughnutChartText"></div>
                         <div class="doughnutChartTextUnder">100TB</div>
@@ -64,7 +64,7 @@
                     </div>
 
                     <!-- 1 / 2 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Archive</p>
                         <div id="archive-value" class="doughnutChartText"></div>
                         <div class="doughnutChartTextUnder">300000</div>
@@ -77,7 +77,7 @@
                     </div>
 
                     <!-- 1 / 3 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">IOC</p>
                         <div id="ioc-value" class="doughnutChartText"></div>
                         <div class="doughnutChartTextUnder">2000</div>
@@ -100,7 +100,7 @@
                     </div> -->
 
                     <!-- 1 / 4 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title" id="fps-title">FPS</p>
                         <div id="fps-container">
                             <!-- Node 1 -->
@@ -169,7 +169,7 @@
                     </div>
 
                     <!-- 1 / 5 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Timestamp</p>
 
                         <div class="timestamp-container"
@@ -208,7 +208,7 @@
                     </div>
 
                     <!-- 1 / 6 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title" id="chopper-timing-title">Timing</p>
                         <div class="timing-container">
                             <div id='timing-chopper-value'
@@ -230,7 +230,7 @@
                     </div>
 
                     <!-- 2 / 1 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Network
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
@@ -240,12 +240,12 @@
                     </div>
 
                     <!-- 2 / 2 - 3 -->
-                    <div class="grid-item grid-2x1" style="grid-column: 2/span 2;">
+                    <div class="grid-item grid-2x1 fade-animation" style="grid-column: 2/span 2;">
                         <canvas id="scl32-network"></canvas>
                     </div>
 
                     <!-- 2 / 4 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Server
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
@@ -315,7 +315,7 @@
                     </div>
 
                     <!-- 2 / 5 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Server
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
@@ -385,7 +385,7 @@
                     </div>
 
                     <!-- 2 / 6 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title" id="acct-timing-title">Timing</p>
                         <div class="timing-container">
                             <div id='timing-acct-value'
@@ -415,7 +415,7 @@
                     </div> -->
 
                     <!-- 3 / 1 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Network
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
@@ -426,12 +426,12 @@
                     </div>
 
                     <!-- 3 / 2 - 3 -->
-                    <div class="grid-item grid-2x1" style="grid-column: 2/span 2;">
+                    <div class="grid-item grid-2x1 fade-animation" style="grid-column: 2/span 2;">
                         <canvas id="scl4-network"></canvas>
                     </div>
 
                     <!-- 3 / 4 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Server
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
@@ -501,7 +501,7 @@
                     </div>
 
                     <!-- 3 / 5 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title">Server
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
                         </p>
@@ -571,7 +571,7 @@
                     </div>
 
                     <!-- 3 / 6 -->
-                    <div class="grid-item grid-1x1">
+                    <div class="grid-item grid-1x1 fade-animation">
                         <p class="title" id="rfq-timing-title">Timing</p>
                         <div class="timing-container">
                             <div id='timing-rfq-value'
@@ -880,6 +880,26 @@
         simulation_timing();
         simulation_network();
         simulation_server();
+
+        var gridItemClass = document.getElementsByClassName("fade-animation");
+        var sortIndexArray = Array();
+        var indexLength = gridItemClass.length;
+
+        for (let i = 0; i < indexLength; i++) {
+            sortIndexArray[i] = i;
+        }
+
+        sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5});
+
+        var delayTime = 0;
+        for (let i = 0; i < indexLength; i++) {
+            // let delayTime = Math.random() * 0.3;
+            // x.style.animationDelay = delayTime + "s";
+            gridItemClass[sortIndexArray[i]].style.animationDelay = delayTime + "s";
+
+            delayTime += 0.03;
+        }
+
     }
 
     // function firstShowUp() {

@@ -48,7 +48,7 @@
 .grid-item {
     position: relative;
     margin: 10px;
-    background-color: rgba(26, 26, 26, 0.5);
+    background-color: rgba(50, 50, 50, 0.3);
 }
 
 .grid-1x1 {
@@ -316,6 +316,26 @@
 .title:hover .tooltiptext {
     visibility: visible;
     opacity: 1.0;
+}
+
+.fade-animation {
+    animation: animatefade 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes animatefade {
+    from {
+        opacity: 0;
+        /* bottom: -10px; */
+        /* transform: scale3d(1.1, 1.1, 1); */
+    }
+
+    to {
+        opacity: 1;
+        /* bottom: 0px; */
+        /* transform: scale3d(1, 1, 1); */
+    }
 }
 
 @keyframes animateleft {

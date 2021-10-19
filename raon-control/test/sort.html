@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div class="scwook" style="width:10px"></div>
+    <div class="scwook" style="width:20px"></div>
+    <div class="scwook" style="width:30px"></div>
+    <div class="scwook" style="width:40px"></div>
+    <div class="scwook" style="width:50px"></div>
+    <div class="scwook" style="width:60px"></div>
+
+    <p id="demo"></p>
+
+    <script>
+        var divC = document.getElementsByClassName("scwook");
+
+        divC = divC.sort(function(a) {return Math.random() - 0.5});
+        console.log(divC);
+
+        // var sortIndexArray = Array();
+
+        // for (let i = 0; i < divC.length; i++) {
+        //     sortIndexArray[i] = i;
+        // }
+
+        // sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
+
+        // console.log(sortIndexArray);
+        // for (let i = 0; i < divC.length; i++) {
+        //     console.log(divC[sortIndexArray[i]]);
+
+        // }
+//document.getElementById("demo").innerHTML = fruits.sort();
+
+    </script>
+
+</body>
+
+</html>
