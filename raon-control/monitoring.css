@@ -319,7 +319,7 @@
 }
 
 .fade-animation {
-    animation: animatefade 0.5s;
+    animation: animatefade 1s;
     opacity: 0;
     animation-fill-mode: forwards;
 }
