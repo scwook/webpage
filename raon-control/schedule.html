@@ -439,10 +439,11 @@
     monthArray[10] = "November";
     monthArray[11] = "December";
 
+    // Example Data
     var scheduleList = [
         {
-            fromDate: "2020-12-21",
-            toDate: "2020-12-22",
+            fromDate: "2021-10-04",
+            toDate: "2021-10-06",
             title: "Beam Commissioning 1",
             detail: [
                 'Cool down',
@@ -472,8 +473,8 @@
         },
 
         {
-            fromDate: "2021-01-11",
-            toDate: "2021-01-12",
+            fromDate: "2021-10-12",
+            toDate: "2021-10-13",
             title: "Beam Commissioning 1",
             detail: [
                 'Cool down',
@@ -502,8 +503,8 @@
             ]
         },
         {
-            fromDate: "2021-01-22",
-            toDate: "2021-01-23",
+            fromDate: "2021-10-20",
+            toDate: "2021-10-22",
             title: "Beam Commissioning 2",
             detail: [
                 'Cool down',
@@ -538,8 +539,8 @@
         },
 
         {
-            fromDate: "2021-01-25",
-            toDate: "2021-01-26",
+            fromDate: "2021-10-18",
+            toDate: "2021-10-19",
             title: "Beam Commissioning 3",
             detail: [
                 'Cool down',
@@ -559,8 +560,8 @@
         },
 
         {
-            fromDate: "2021-02-05",
-            toDate: "2021-02-06",
+            fromDate: "2021-11-01",
+            toDate: "2021-11-05",
             title: "Beam Commissioning 5",
             detail: [
                 'Cool down',
@@ -608,8 +609,8 @@
         makeCalendar();
 
         // Create schedule and shift list
-        getScheduleDatabase();
-        //makeSchedule();
+        //  getScheduleDatabase();
+        makeSchedule();
 
         // Show up first shift list
         var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
