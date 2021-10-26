@@ -64,18 +64,19 @@
             <div class="title-box" style="display: inline-block;">Time Leap</div>
             <div id="event-button-container">
                 <!-- <button class="event-config-button" onclick="createNewEventSet()">New</button> -->
-                <!-- <button class="event-config-button" onclick="showSnapshotListTable()">Compare</button> -->
-                <svg id="snapshot-compare-button" width="25.5" height="25.5" onclick="showSnapshotListTable()">
-                      <polygon points="7.5 7.5 15 7.5 15 0 0 0 0 15 7.5 15 7.5 7.5" style="fill: #e6e6e6"/>
-                      <rect x="10" y="10" width="15" height="15" style="fill: none;stroke: #e6e6e6;stroke-miterlimit: 10"/>
-                  </svg>
+                <!-- <button class="event-config-button" onclick="showSnapshotCompareTable()">Compare</button> -->
+                <svg id="snapshot-compare-button" width="25.5" height="25.5" onclick="showSnapshotCompareTable()">
+                    <polygon points="7.5 7.5 15 7.5 15 0 0 0 0 15 7.5 15 7.5 7.5" style="fill: #e6e6e6" />
+                    <rect x="10" y="10" width="15" height="15"
+                        style="fill: none;stroke: #e6e6e6;stroke-miterlimit: 10" />
+                </svg>
             </div>
 
             <div style="display: flex; position:relative; left: 25px; margin-top:10px">
-                <button id="last-button" onclick="lastCalendar()">&#10094;</button>
+                <button id="last-button" onclick="createCalendar(-1)">&#10094;</button>
 
                 <div id="year">January 2021</div>
-                <button id="next-button" onclick="nextCalendar()">&#10095;</button>
+                <button id="next-button" onclick="createCalendar(1)">&#10095;</button>
             </div>
 
             <div style="display: flex;">
@@ -289,6 +290,8 @@
 
     var today = new Date();
     var date = new Date();
+    var selectedDate = new Date();
+
     var colorTable = ['#8E44AD', '#3498DB', '#16A085', '#F39C12', '#95A5A6', '#E74C3C', '#2ECC71', '#2980B9', '#F1C40F', '#34495E'];
 
     var monthString = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
@@ -306,14 +309,15 @@
     monthArray[10] = "November";
     monthArray[11] = "December";
 
+    // example data
     var timeleapData = [
         {
             eventid: "1",
-            date: "2021-03-09",
+            date: "2021-10-04",
             title: "Event Test 1",
             snapshot: [
-                { snapshotid: "1", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
-                { snapshotid: "2", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "1", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "2", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
                 { snapshotid: "3", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
                 { snapshotid: "4", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
                 { snapshotid: "5", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
@@ -322,27 +326,27 @@
 
         {
             eventid: "2",
-            date: "2021-03-18",
+            date: "2021-10-13",
             title: "Event Test 2",
             snapshot: [
-                { snapshotid: "21", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
-                { snapshotid: "22", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
-                { snapshotid: "23", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
-                { snapshotid: "24", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
-                { snapshotid: "25", timestamp: "2021-03-18 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "21", timestamp: "2021-10-13 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "22", timestamp: "2021-10-13 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "23", timestamp: "2021-10-13 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "24", timestamp: "2021-10-13 12:04:06", description: "Snapshot Test 2" },
+                { snapshotid: "25", timestamp: "2021-10-13 12:04:06", description: "Snapshot Test 2" },
             ]
         },
 
         {
             eventid: "3",
-            date: "2021-03-23",
+            date: "2021-10-26",
             title: "Event Test 3",
             snapshot: [
-                { snapshotid: "101", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 3" },
-                { snapshotid: "102", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 4" },
-                { snapshotid: "103", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 5" },
-                { snapshotid: "104", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 6" },
-                { snapshotid: "105", timestamp: "2021-03-23 12:04:06", description: "Snapshot Test 7" },
+                { snapshotid: "101", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 3" },
+                { snapshotid: "102", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 4" },
+                { snapshotid: "103", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 5" },
+                { snapshotid: "104", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 6" },
+                { snapshotid: "105", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 7" },
             ]
         }
     ];
@@ -359,7 +363,58 @@
     var disconnectedSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:#D4145A;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
     var unmonitoredSVG = '<svg width="16" height="16"><rect x="3.5" y="0.5" width="9" height="9" style="fill:none;stroke:#f2f2f2;"/><line y1="15.5" x2="16" y2="15.5" style="fill:none;stroke:#f2f2f2;"/><line x1="8" y1="15.5" x2="8" y2="9.5" style="fill:none;stroke:#f2f2f2"/></svg>'
 
-    function thisCalendar() {
+    // Clock
+    function timer() {
+        var d = new Date();
+        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
+    }
+
+    window.onload = function () {
+        var myVar = setInterval(timer, 1000);
+
+        getEventDataFromDB();
+
+        // createCalendar(0);
+
+        // thisCalendar();
+        // makeEventList();
+        // snashotDetail();
+        // shifterList(0, '#8E44AD');
+
+        // setInterval(getScheduleDatabase, 2000);
+
+        // Test Chart
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First dataset',
+                // backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data,
+            options: {}
+        };
+
+        var compareChartContext = document.getElementById('compare-chart').getContext('2d');
+        var myChart = new Chart(compareChartContext, config);
+    }
+
+    function createCalendar(offset) {
+
         // Remove this month schedule buttons
         var eventButtonClass = document.getElementsByClassName('scheduleButton');
         for (let i = eventButtonClass.length - 1; i >= 0; i--) {
@@ -370,66 +425,91 @@
         var bodyCenterId = document.getElementById('body-center');
         bodyCenterId.innerHTML = '';
 
-        // Create last month
-        today = new Date(today.getFullYear(), today.getMonth());
-        makeCalendar();
+        // Create selected month
+        var thisDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + offset);
+        selectedDate = thisDate;
+
+        makeCalendar(thisDate);
+        makeEventList(thisDate);
 
         // Create event and snapshot list
-        getRetrieve();
+        // getEventDataFromDB(thisDate);
+        // exampleData();
     }
 
-    function lastCalendar() {
+    // function thisCalendar() {
+    //     // Remove this month schedule buttons
+    //     var eventButtonClass = document.getElementsByClassName('scheduleButton');
+    //     for (let i = eventButtonClass.length - 1; i >= 0; i--) {
+    //         eventButtonClass[i].remove();
+    //     }
 
-        // Remove this month schedule buttons
-        var eventButtonClass = document.getElementsByClassName('scheduleButton');
-        for (let i = eventButtonClass.length - 1; i >= 0; i--) {
-            eventButtonClass[i].remove();
-        }
+    //     // Clear this month schedule list
+    //     var bodyCenterId = document.getElementById('body-center');
+    //     bodyCenterId.innerHTML = '';
 
-        // Clear this month schedule list
-        var bodyCenterId = document.getElementById('body-center');
-        bodyCenterId.innerHTML = '';
+    //     // Create last month
+    //     today = new Date(today.getFullYear(), today.getMonth());
+    //     makeCalendar();
 
-        // Create last month
-        today = new Date(today.getFullYear(), today.getMonth() - 1);
-        makeCalendar();
+    //     // Create event and snapshot list
+    //     // getEventDataFromDB();
+    //     // exampleData();
+    // }
 
-        // Create event list
+    // function lastCalendar() {
 
-        makeEventList();
-    }
+    //     // Remove this month schedule buttons
+    //     var eventButtonClass = document.getElementsByClassName('scheduleButton');
+    //     for (let i = eventButtonClass.length - 1; i >= 0; i--) {
+    //         eventButtonClass[i].remove();
+    //     }
 
-    function nextCalendar() {
+    //     // Clear this month schedule list
+    //     var bodyCenterId = document.getElementById('body-center');
+    //     bodyCenterId.innerHTML = '';
 
-        //getScheduleDatabase();
+    //     // Create last month
+    //     today = new Date(today.getFullYear(), today.getMonth() - 1);
+    //     makeCalendar();
 
-        // Remove this month schedule buttons
-        var eventButtonClass = document.getElementsByClassName('scheduleButton');
-        for (let i = eventButtonClass.length - 1; i >= 0; i--) {
-            eventButtonClass[i].remove();
-        }
+    //     // Create event list
 
-        // Clear this month schedule list
-        var bodyCenterId = document.getElementById('body-center');
-        bodyCenterId.innerHTML = '';
+    //     makeEventList();
+    // }
 
-        // Create next month
-        today = new Date(today.getFullYear(), today.getMonth() + 1);
-        makeCalendar();
+    // function nextCalendar() {
 
-        // Create event list
-        makeEventList();
-    }
+    //     //getScheduleDatabase();
 
-    function makeCalendar() {
+    //     // Remove this month schedule buttons
+    //     var eventButtonClass = document.getElementsByClassName('scheduleButton');
+    //     for (let i = eventButtonClass.length - 1; i >= 0; i--) {
+    //         eventButtonClass[i].remove();
+    //     }
+
+    //     // Clear this month schedule list
+    //     var bodyCenterId = document.getElementById('body-center');
+    //     bodyCenterId.innerHTML = '';
+
+    //     // Create next month
+    //     today = new Date(today.getFullYear(), today.getMonth() + 1);
+    //     makeCalendar();
+
+    //     // Create event list
+    //     makeEventList();
+    // }
+
+    function makeCalendar(referenceDate) {
+
         // Year and Month
         var yearId = document.getElementById("year");
-        var month = monthArray[today.getMonth()];
-        yearId.innerHTML = month + " " + today.getFullYear();
+        var month = monthArray[referenceDate.getMonth()];
+        yearId.innerHTML = month + " " + referenceDate.getFullYear();
 
-        var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
-        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-        var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+        var firstDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 1);
+        var lastDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth() + 1, 0);
+        var prevMonthLastDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 0);
 
         var dayCalss = document.getElementsByClassName('day');
         var thisMonthFirstDay = firstDate.getDay();
@@ -454,7 +534,7 @@
 
             // Today
             todayClass.style.backgroundColor = "transparent";
-            if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
+            if ((date.getFullYear() == referenceDate.getFullYear()) && (date.getMonth() == referenceDate.getMonth()) && (day == referenceDate.getDate())) {
                 // todayClass.style.backgroundColor = "dodgerblue";
             }
 
@@ -467,10 +547,58 @@
         }
     }
 
-    function makeEventList() {
+    // function makeCalendar() {
+
+
+    //     // Year and Month
+    //     var yearId = document.getElementById("year");
+    //     var month = monthArray[today.getMonth()];
+    //     yearId.innerHTML = month + " " + today.getFullYear();
+
+    //     var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    //     var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    //     var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+    //     var dayCalss = document.getElementsByClassName('day');
+    //     var thisMonthFirstDay = firstDate.getDay();
+    //     var day = prevMonthLastDate.getDate() - firstDate.getDay() + 1;
+
+
+    //     // This Month
+    //     for (let i = 0; i < dayCalss.length; i++) {
+    //         var todayClass = dayCalss[i].getElementsByClassName('today')[0];
+
+    //         // Last Month last day reset and start this month first day
+    //         if (i == thisMonthFirstDay) {
+    //             day = 1;
+    //         }
+
+    //         todayClass.innerHTML = day;
+
+    //         // Sunday
+    //         if (i % 7 == 0) {
+    //             todayClass.style.color = "tomato";
+    //         }
+
+    //         // Today
+    //         todayClass.style.backgroundColor = "transparent";
+    //         if ((date.getFullYear() == today.getFullYear()) && (date.getMonth() == today.getMonth()) && (day == today.getDate())) {
+    //             // todayClass.style.backgroundColor = "dodgerblue";
+    //         }
+
+    //         day += 1;
+
+    //         // Last day reset and start next month first day
+    //         if (day > lastDate.getDate()) {
+    //             day = 1;
+    //         }
+    //     }
+    // }
+
+    function makeEventList(referenceDate) {
         var dayCalss = document.getElementsByClassName('day');
-        var month = monthString[today.getMonth()];
-        var year = today.getFullYear();
+        var month = monthString[referenceDate.getMonth()];
+        var year = referenceDate.getFullYear();
         var yearMonth = year + '-' + month;
         var listBoxDelay = 0.0;
         var listBoxColorIndex = 0;
@@ -489,7 +617,7 @@
 
             if (yearMonth == list) {
 
-                var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                var firstDate = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 1);
                 var startIndex = firstDate.getDay() + parseInt(fromDateArray[2]) - 1;
                 // var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
                 var endIndex = parseInt(startIndex) + parseInt(days);
@@ -551,6 +679,90 @@
         }
     }
 
+    // function makeEventList() {
+    //     var dayCalss = document.getElementsByClassName('day');
+    //     var month = monthString[today.getMonth()];
+    //     var year = today.getFullYear();
+    //     var yearMonth = year + '-' + month;
+    //     var listBoxDelay = 0.0;
+    //     var listBoxColorIndex = 0;
+
+    //     for (let i = 0; i < timeleapData.length; i++) {
+
+    //         var startDate = new Date(timeleapData[i].date);
+    //         var endDate = startDate;
+    //         var days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)) + 1;
+
+    //         var fromDateArray = timeleapData[i].date.split("-");
+    //         var list = fromDateArray[0] + '-' + fromDateArray[1];
+
+    //         // var toDateArray = scheduleList[i].toDate.split("-");
+    //         // var list = toDateArray[0] + '-' + toDateArray[1];
+
+    //         if (yearMonth == list) {
+
+    //             var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    //             var startIndex = firstDate.getDay() + parseInt(fromDateArray[2]) - 1;
+    //             // var endIndex = parseInt(startIndex) + parseInt(scheduleList[i].days);
+    //             var endIndex = parseInt(startIndex) + parseInt(days);
+
+    //             // If schedule exceeds the last date of this month
+    //             if (endIndex > dayCalss.length) {
+    //                 endIndex = dayCalss.length;
+    //             }
+
+    //             createEventButton(startIndex);
+
+    //             function createEventButton(index) {
+    //                 var color = colorTable[listBoxColorIndex];
+    //                 var scheduleButton = document.createElement('BUTTON');
+    //                 var buttonText = document.createTextNode('Event ' + timeleapData[i].eventid);
+    //                 scheduleButton.classList.add('scheduleButton');
+    //                 // scheduleButton.addEventListener('click', function () { snapshotRecordList() });
+    //                 scheduleButton.style.backgroundColor = color;
+    //                 scheduleButton.style.height = '24px';
+
+    //                 var buttonWidthScale = 1;
+    //                 for (var j = index; j < endIndex; j++) {
+    //                     // button head
+    //                     if (j == startIndex) {
+    //                         scheduleButton.style.borderTopLeftRadius = '12px';
+    //                         scheduleButton.style.borderBottomLeftRadius = '12px';
+    //                     }
+
+    //                     // button tail
+    //                     if (j == (endIndex - 1)) {
+    //                         scheduleButton.style.borderTopRightRadius = '12px';
+    //                         scheduleButton.style.borderBottomRightRadius = '12px';
+    //                         scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+    //                         scheduleButton.appendChild(buttonText);
+    //                         dayCalss[index].appendChild(scheduleButton);
+    //                         break;
+    //                     }
+
+    //                     // In case of end of week
+    //                     if ((j + 1) % 7 == 0) {
+    //                         scheduleButton.style.width = 100 * buttonWidthScale + 'px';
+    //                         scheduleButton.appendChild(buttonText);
+    //                         dayCalss[index].appendChild(scheduleButton);
+
+    //                         // create new button for next week
+    //                         createEventButton(j + 1);
+    //                         break;
+    //                     }
+
+    //                     buttonWidthScale += 1;
+    //                 }
+
+    //                 // Create snapsnot list box and detail infomation
+    //                 snashotDetail(i, listBoxDelay, color);
+    //                 listBoxDelay += 0.2;
+    //                 listBoxColorIndex += 1;
+    //             }
+    //         }
+    //     }
+    // }
+
     function snashotDetail(index, delay, color) {
 
         var bodyCenterId = document.getElementById('body-center');
@@ -585,7 +797,7 @@
 
         var newSnapshotButton = document.createElement('DIV');
         newSnapshotButton.classList.add('snapshot-new-button');
-        newSnapshotButton.addEventListener('click', function () { setNewSnapshot(i) });
+        newSnapshotButton.addEventListener('click', function () { setNewSnapshot(i) }); // Create new snapshot into selected event
         newSnapshotButton.innerText = '+';
 
         scheduleBox.appendChild(scheduleBegin);
@@ -605,7 +817,7 @@
 
             idCell.innerText = snapshotID
             descriptionCell.innerText = timeleapData[i].snapshot[j].description;
-            descriptionCell.addEventListener('click', function () { createSnapshotRecordTable(snapshotID) })
+            descriptionCell.addEventListener('click', function () { createSnapshotRecordTable(snapshotID) }) // Create recored list table which selected snapshot
 
             if (heightLineCount > 3) {
                 height = 3 * 20;
@@ -642,7 +854,7 @@
             let tData = '';
             for (let i = 0; i < recordData.length; i++) {
                 var statusSVG = unmonitoredSVG;
-                consoel.log(statusSVG);
+                // consoel.log(statusSVG);
                 switch (recordData[i].status) {
                     case 'true':
                         statusSVG = connectedSVG;
@@ -669,12 +881,20 @@
         }
     }
 
-    // Snapshot Button Function
+
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////// Snapshot Record List Button Function ////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+
     function putSnapshotRecord() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+                // console.log(this.responseText);
             }
             // else {
             // alert('Status Error : ' + this.status);
@@ -684,7 +904,7 @@
         xhttp.open("POST", putRecordAddr, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(recordData));
-        console.log(recordData);
+        // console.log(recordData);
     }
 
     function importRecordFile() {
@@ -771,13 +991,13 @@
         });
     }
 
-    // Clock
-    function timer() {
-        var d = new Date();
-        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-    }
-
-    //getScheduleDatabase();
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////// Create New Snapshot Function ////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     function createNewEventSet() {
         // var eventTitle = document.getElementById('new-event-title').value;
@@ -838,22 +1058,24 @@
         xhttp.send(JSON.stringify(snapshotData));
     }
 
-    function getRetrieve() {
+    function getEventDataFromDB() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var jsonValue = JSON.parse(this.responseText);
                 timeleapData = jsonValue;
 
-                // Show Button
+                // Show compare button
                 document.getElementById('event-button-container').style.visibility = 'visible';
 
+                createCalendar(0);
+
                 // Create event list
-                makeEventList();
+                // makeEventList(referenceDate);
 
             }
             // else {
-            // alert('Status Error : ' + this.status);
+            //     console.log(this.readyState, this.status);
             // }
         };
 
@@ -878,57 +1100,6 @@
         xhttp.send();
     }
 
-    function createSnapshotTable() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var jsonValue = JSON.parse(this.responseText);
-                snapshotListArray = jsonValue;
-
-                if (jsonValue.length) {
-                    let tHead = '';
-                    tHead += `<tr>
-						<th>Snapshot</th>
-						<th>Description</th>
-						<th>Timestamp</th>
-						<th>Compare</th>
-						</tr>`
-
-                    document.getElementById("snapshot-compare-tableHead").innerHTML = tHead;
-
-                    let tData = '';
-                    for (let i = 0; i < jsonValue.length; i++) {
-
-                        var compareCheckHTML = '<input class="compareCheckBox" type="checkbox" onclick="compareCheck(' + i + ')">';
-
-                        tData += `<tr>
-						<td>${jsonValue[i].snapshotid}</td>
-						<td>${jsonValue[i].description}</td>
-						<td>${jsonValue[i].timestamp}</td>
-						<td>${compareCheckHTML}</td>
-						</tr>`
-                    }
-
-                    document.getElementById("snapshot-compare-tableBody").innerHTML = tData;
-                    // $("table tr").hide();
-                    // $("table tr").each(function (index) {
-                    //     $(this).delay(index * 0).show(500);
-                    // });
-                }
-                else {
-
-                }
-            }
-            // else {
-            // alert('Status Error : ' + this.status);
-            // }
-        };
-
-        var rName = retrieveSnapshotAddr;
-        xhttp.open("GET", rName, true);
-        xhttp.send();
-    }
-
     function createSnapshotRecordTable(snapshotRecordID) {
 
         // Hide Compare Snapshot Table
@@ -949,54 +1120,7 @@
                 var jsonValue = JSON.parse(this.responseText);
                 recordData = jsonValue;
 
-                document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotRecordID;
-
-                var buttonGroupID = document.getElementById('record-table-button');
-                buttonGroupID.style.visibility = 'visible';
-
-                if (jsonValue.length) {
-                    let tHead = '';
-                    tHead += `<tr>
-                                <th>PV Name</th>
-                                <th>Value</th>
-                                <th>Status</th>
-                                <th>Restore</th>
-                            </tr>`
-
-                    document.getElementById("record-tableHead").innerHTML = tHead;
-
-                    let tData = '';
-                    for (let i = 0; i < jsonValue.length; i++) {
-                        var statusSVG = unmonitoredSVG;
-
-                        switch (recordData[i].status) {
-                            case 'true':
-                                statusSVG = connectedSVG;
-                                break;
-                            case 'fasle':
-                                statusSVG = disconnectedSVG;
-                            default:
-                                break;
-                        }
-
-                        recordData[i].restore = true;
-                        var restoreCheckHTML = '<input class="restoreCheckBox" type="checkbox" checked onclick="restoreCheck(' + i + ')">';
-
-                        tData += `<tr>
-                                    <td>${jsonValue[i].pvname}</td>
-                                    <td>${jsonValue[i].value}</td>
-                                    <td>${statusSVG}</td>
-                                    <td>${restoreCheckHTML}</td>
-                                </tr>`
-                    }
-
-                    document.getElementById("record-tableBody").innerHTML = tData;
-                    $("#record-table tr").hide();
-                    $("#record-table tr").each(function (index) {
-                        $(this).delay(index * 20).show(300);
-                    });
-                }
-
+                makeSnapshotRecordTable(snapshotRecordID, jsonValue);
                 setRecordConnection(snapshotRecordID);
 
             }
@@ -1008,6 +1132,56 @@
         var rName = retrieveSnapshotRecordAddr + '/' + snapshotRecordID;
         xhttp.open("GET", rName, true);
         xhttp.send();
+    }
+
+    function makeSnapshotRecordTable(snapshotID, recordData) {
+        document.getElementById('snapshot-id').innerText = 'Snapshot ' + snapshotID;
+
+        var buttonGroupID = document.getElementById('record-table-button');
+        buttonGroupID.style.visibility = 'visible';
+
+        if (recordData.length) {
+            let tHead = '';
+            tHead += `<tr>
+                <th>PV Name</th>
+                <th>Value</th>
+                <th>Status</th>
+                <th>Restore</th>
+            </tr>`
+
+            document.getElementById("record-tableHead").innerHTML = tHead;
+
+            let tData = '';
+            for (let i = 0; i < recordData.length; i++) {
+                var statusSVG = unmonitoredSVG;
+
+                switch (recordData[i].status) {
+                    case 'true':
+                        statusSVG = connectedSVG;
+                        break;
+                    case 'fasle':
+                        statusSVG = disconnectedSVG;
+                    default:
+                        break;
+                }
+
+                recordData[i].restore = true;
+                var restoreCheckHTML = '<input class="restoreCheckBox" type="checkbox" checked onclick="restoreCheck(' + i + ')">';
+
+                tData += `<tr>
+                    <td>${recordData[i].pvname}</td>
+                    <td>${recordData[i].value}</td>
+                    <td>${statusSVG}</td>
+                    <td>${restoreCheckHTML}</td>
+                </tr>`
+            }
+
+            document.getElementById("record-tableBody").innerHTML = tData;
+            $("#record-table tr").hide();
+            $("#record-table tr").each(function (index) {
+                $(this).delay(index * 20).show(300);
+            });
+        }
     }
 
     var recordConnectionIntervalID = null;
@@ -1041,12 +1215,12 @@
                 for (let i = 0; i < recordData.length; i++) {
                     let name = recordData[i].pvname;
                     recordData[i].status = jsonValue[name];
-                    
+
                     // console.log(recordData[i].pvname);
                 }
-                
-                console.log(recordData);
-                
+
+                // console.log(recordData);
+
                 let tData = '';
                 for (let i = 0; i < recordData.length; i++) {
                     var statusSVG = unmonitoredSVG;
@@ -1263,12 +1437,12 @@
         }
     }
 
-    function showSnapshotListTable() {
+    function showSnapshotCompareTable() {
 
         // Reset Compare Snapshot List
         compareSnapshotList = [];
 
-        createSnapshotTable();
+        getSnapshotListFromDB();
         // document.getElementById('snapshot-list-body').style.display = 'block';
         // document.getElementById('snapshot-list-body').style.transition = 'all 1s';
         // document.getElementById('snapshot-list-body').style.backdropFilter = 'blur(5px)';
@@ -1280,59 +1454,83 @@
         var blurValue = 0.0;
         var opacity = 0.0;
         var id = setInterval(function () {
-    
-            if(blurValue > 5) {
+
+            if (blurValue > 5) {
                 clearInterval(id);
             }
-    
+
             snapshotListBodyID.style.backdropFilter = 'blur(' + blurValue + 'px)';
             snapshotListBodyID.style.background = 'rgba(255,255,255,' + opacity + ')';
             blurValue += 0.5;
             opacity += 0.01;
-    
+
         }, 20);
-    
+
         snapshotListBodyID.style.display = 'block';
     }
 
-    window.onload = function () {
-        var myVar = setInterval(timer, 1000);
+    function getSnapshotListFromDB() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var jsonValue = JSON.parse(this.responseText);
+                snapshotListArray = jsonValue;
 
-        thisCalendar();
-        // makeEventList();
-        // snashotDetail();
-        // shifterList(0, '#8E44AD');
+                if (jsonValue.length) {
+                    let tHead = '';
+                    tHead += `<tr>
+						<th>Snapshot</th>
+						<th>Description</th>
+						<th>Timestamp</th>
+						<th>Compare</th>
+						</tr>`
 
-        // setInterval(getScheduleDatabase, 2000);
+                    document.getElementById("snapshot-compare-tableHead").innerHTML = tHead;
+
+                    let tData = '';
+                    for (let i = 0; i < jsonValue.length; i++) {
+
+                        var compareCheckHTML = '<input class="compareCheckBox" type="checkbox" onclick="compareCheck(' + i + ')">';
+
+                        tData += `<tr>
+						<td>${jsonValue[i].snapshotid}</td>
+						<td>${jsonValue[i].description}</td>
+						<td>${jsonValue[i].timestamp}</td>
+						<td>${compareCheckHTML}</td>
+						</tr>`
+                    }
+
+                    document.getElementById("snapshot-compare-tableBody").innerHTML = tData;
+                    // $("table tr").hide();
+                    // $("table tr").each(function (index) {
+                    //     $(this).delay(index * 0).show(500);
+                    // });
+                }
+                else {
+
+                }
+            }
+            // else {
+            // alert('Status Error : ' + this.status);
+            // }
+        };
+
+        var rName = retrieveSnapshotAddr;
+        xhttp.open("GET", rName, true);
+        xhttp.send();
     }
 
-    const labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-    ];
 
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'My First dataset',
-            // backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    };
+    // Example
+    function exampleData() {
+        // timeleapData = jsonValue;
 
-    const config = {
-        type: 'line',
-        data,
-        options: {}
-    };
+        // Show Button
+        document.getElementById('event-button-container').style.visibility = 'visible';
 
-    var compareChartContext = document.getElementById('compare-chart').getContext('2d');
-    var myChart = new Chart(compareChartContext, config);
+        // Create event list
+        makeEventList();
+    }
 </script>
 
 </html>
