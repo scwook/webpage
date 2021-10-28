@@ -1,22 +1,80 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style> 
-.divcircle {
-  border-radius: 5px;
-  background: #73AD21;
-  width: 10px;
-  height: 10px;  
-}
 
-</style>
+<head>
+  <style>
+    .divcircle {
+      position: absolute;
+      left: var(--left);
+      top: var(--top);
+      border-radius: 1px;
+      background: #73AD21;
+      width: 2px;
+      height: 2px;
+      transition: transform 0.2s ease-out, color 0.2s ease;
+
+    }
+  </style>
 </head>
+
 <body>
 
 
-<div class="divcircle"></div>
-<svg height="100" width="100">
-    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
-  </svg>
+  <div class="divcircle" style="--left: 6px; --top: 6px"></div>
+  <div class="divcircle" style="--left: 17px; --top: 6px"></div>
+  <div class="divcircle" style="--left: 27px; --top: 6px"></div>
+  <div class="divcircle" style="--left: 37px; --top: 6px"></div>
+
+  <div class="divcircle" style="--left: 6px; --top: 17px"></div>
+  <div class="divcircle" style="--left: 17px; --top: 17px"></div>
+  <div class="divcircle" style="--left: 27px; --top: 17px"></div>
+  <div class="divcircle" style="--left: 37px; --top: 17px"></div>
+
 </body>
+
+<script>
+  window.onload = function () {
+    setInterval(resizeCircle, 1000);
+  }
+
+  var dir = true;
+  var scaleX = 2.0;
+  var scaleY = 2.0;
+  var circleClass = document.getElementsByClassName("divcircle");
+
+  function resizeCircle() {
+
+    var sortIndexArray = Array();
+    var indexLength = circleClass.length;
+
+    for (let i = 0; i < indexLength; i++) {
+      sortIndexArray[i] = i;
+    }
+
+    // If uncomment this line, first page grid will show up randomly
+    sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
+
+    for (let i = 0; i < indexLength; i++) {
+      circleClass[sortIndexArray[i]].style.transform = delayTime + "s";
+    }
+
+    if (dir) {
+
+      document.getElementsByClassName('divcircle')[0].style.transform = `scale3d(${scaleX},${scaleY},1)`;
+      // scaleX += 1.0;
+      // scaleY += 1.0;
+      // document.getElementsByClassName('divcircle')[1].style.transform = 'scale3d(5,5,1)';
+
+      dir = false;
+    }
+    else {
+      document.getElementsByClassName('divcircle')[0].style.transform = 'scale3d(1,1,1)';
+      // document.getElementsByClassName('divcircle')[1].style.transform = 'scale3d(1,1,1)';
+
+      dir = true;
+
+    }
+  }
+</script>
+
 </html>
