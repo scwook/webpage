@@ -65,6 +65,7 @@ body {
     left: 10px;
     top: 20px;
     width: 133px;
+    z-index: 100;
 }
 
 #accelerator-control {
@@ -74,6 +75,8 @@ body {
     left: 150px;
     top: 40px;
     font-family: "Helvetica-Neue-Light";
+    letter-spacing: 2px;
+    z-index: 100;
 }
 
 #accelerator-control a {
@@ -91,9 +94,9 @@ body {
 #left-menu {
     display: flex;
     position: absolute;
-    width: 450px;
+    width: 700px;
     height: 80px;
-    left: 300px;
+    left: 50px;
     justify-content: space-evenly;
     color: white;
     font-size: 18px;
