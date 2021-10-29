@@ -631,10 +631,66 @@
                     </div>
                 </div>
 
-                <div class="grid-item fade-animation" style="width:300px; height:160px;">
-                    <div class="data-name" style="position: relative; left: 25px; top:25px">Vacuum</div>
-                    <div class="data-value" style="position: relative; left: 25px; top:40px;">
-                        <span id="vacuum-value">1.9</span><sup id="vacuum-exp" class="exp-value">-9</sup>
+                <div class="grid-item fade-animation" style="display:flex; width:300px; height:160px;">
+                    <div style="width:70%; height:100%">
+                        <div class="data-name" style="position: relative; left: 25px; top:25px">Vacuum</div>
+                        <div class="data-value" style="position: relative; left: 25px; top:40px;">
+                            <span id="vacuum-value">1.9</span><sup id="vacuum-exp" class="exp-value">-9</sup>
+                        </div>
+                    </div>
+                    <div style="width:30%; height: 100%;">
+                        <div id="vacuum-widget">
+                            <div class="vacuum-particle" style="--left: 6px; --top: 6px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 6px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 6px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 6px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 17px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 17px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 17px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 17px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 28px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 28px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 28px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 28px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 39px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 39px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 39px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 39px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 50px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 50px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 50px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 50px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 61px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 61px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 61px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 61px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 72px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 72px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 72px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 72px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 83px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 83px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 83px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 83px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 94px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 94px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 94px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 94px"></div>
+
+                            <div class="vacuum-particle" style="--left: 6px; --top: 105px"></div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 105px"></div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 105px"></div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 105px"></div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -2099,6 +2155,15 @@
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
+
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+
     var myVar = setInterval(timer, 1000);
 
     window.onload = function () {
@@ -2272,8 +2337,6 @@
 
             delayTime += 0.1;
         }
-
-
     }
 
     function firstShowUp() {
@@ -2425,11 +2488,48 @@
         // Vacuum
         var vacuumValueID = document.getElementById('vacuum-value');
         var vacuumExpID = document.getElementById('vacuum-exp');
+        var dir = 1;
+        var particleClass = document.getElementsByClassName("vacuum-particle");
+
+        // set default particle scale
+        for (let i = 0; i < particleClass.length; i++) {
+            particleClass[i].style.transform = 'scale(1, 1)';
+        }
         setInterval(function () {
+            // value
             var dataValue = (Math.random() * 0.0000001).toExponential(1);
 
             vacuumValueID.innerText = dataValue.substring(0, 3);
             vacuumExpID.innerText = dataValue.substring(4, 6);
+
+            // particle animation
+            var sortIndexArray = Array();
+            var indexLength = particleClass.length;
+
+            for (let i = 0; i < indexLength; i++) {
+                sortIndexArray[i] = i;
+            }
+
+            // If uncomment this line, first page grid will show up randomly
+            sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
+
+            for (let i = 0; i < 6; i++) {
+
+                var currentScale = particleClass[sortIndexArray[i]].style.transform.substring(6, 10).split(',');
+                var scaleFactor = parseInt(currentScale[0]);
+
+                if (scaleFactor == 5) {
+                    dir = -1;
+                }
+                if (scaleFactor == 1) {
+
+                    dir = 1;
+                }
+
+                var scaleValue = scaleFactor + dir;
+                particleClass[sortIndexArray[i]].style.transform = `scale(${scaleValue},${scaleValue})`;
+            }
+
 
         }, 3000);
 

@@ -2,79 +2,132 @@
 <html>
 
 <head>
-  <style>
-    .divcircle {
-      position: absolute;
-      left: var(--left);
-      top: var(--top);
-      border-radius: 1px;
-      background: #73AD21;
-      width: 2px;
-      height: 2px;
-      transition: transform 0.2s ease-out, color 0.2s ease;
+    <style>
+        #container {
+            position: relative;
+            left: 500px;
+            top: 500px;
+            width: 47px;
+            height: 113px;
+            border: 1px solid black;
+        }
 
-    }
-  </style>
+        .divcircle {
+            position: absolute;
+            left: var(--left);
+            top: var(--top);
+            border-radius: 1px;
+            background: #73AD21;
+            width: 2px;
+            height: 2px;
+            transition: transform 1.0s ease-out;
+        }
+    </style>
 </head>
 
 <body>
 
+    <div id="container">
+        <div class="divcircle" style="--left: 6px; --top: 6px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 6px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 6px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 6px"></div>
 
-  <div class="divcircle" style="--left: 6px; --top: 6px"></div>
-  <div class="divcircle" style="--left: 17px; --top: 6px"></div>
-  <div class="divcircle" style="--left: 27px; --top: 6px"></div>
-  <div class="divcircle" style="--left: 37px; --top: 6px"></div>
+        <div class="divcircle" style="--left: 6px; --top: 17px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 17px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 17px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 17px"></div>
 
-  <div class="divcircle" style="--left: 6px; --top: 17px"></div>
-  <div class="divcircle" style="--left: 17px; --top: 17px"></div>
-  <div class="divcircle" style="--left: 27px; --top: 17px"></div>
-  <div class="divcircle" style="--left: 37px; --top: 17px"></div>
+        <div class="divcircle" style="--left: 6px; --top: 28px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 28px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 28px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 28px"></div>
 
+        <div class="divcircle" style="--left: 6px; --top: 39px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 39px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 39px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 39px"></div>
+
+        <div class="divcircle" style="--left: 6px; --top: 50px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 50px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 50px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 50px"></div>
+
+        <div class="divcircle" style="--left: 6px; --top: 61px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 61px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 61px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 61px"></div>
+
+        <div class="divcircle" style="--left: 6px; --top: 72px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 72px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 72px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 72px"></div>
+
+        <div class="divcircle" style="--left: 6px; --top: 83px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 83px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 83px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 83px"></div>
+
+        <div class="divcircle" style="--left: 6px; --top: 94px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 94px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 94px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 94px"></div>
+
+        <div class="divcircle" style="--left: 6px; --top: 105px"></div>
+        <div class="divcircle" style="--left: 17px; --top: 105px"></div>
+        <div class="divcircle" style="--left: 28px; --top: 105px"></div>
+        <div class="divcircle" style="--left: 39px; --top: 105px"></div>
+    </div>
 </body>
 
 <script>
-  window.onload = function () {
-    setInterval(resizeCircle, 1000);
-  }
-
-  var dir = true;
-  var scaleX = 2.0;
-  var scaleY = 2.0;
-  var circleClass = document.getElementsByClassName("divcircle");
-
-  function resizeCircle() {
-
-    var sortIndexArray = Array();
-    var indexLength = circleClass.length;
-
-    for (let i = 0; i < indexLength; i++) {
-      sortIndexArray[i] = i;
+    window.onload = function () {
+        setInterval(resizeCircle, 3000);
+        // resizeCircle();
     }
 
-    // If uncomment this line, first page grid will show up randomly
-    sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
+    var dir = 1;
+    var circleClass = document.getElementsByClassName("divcircle");
 
-    for (let i = 0; i < indexLength; i++) {
-      circleClass[sortIndexArray[i]].style.transform = delayTime + "s";
+    for (let i = 0; i < circleClass.length; i++) {
+        circleClass[i].style.transform = 'scale(1, 1)';
     }
 
-    if (dir) {
+    function resizeCircle() {
 
-      document.getElementsByClassName('divcircle')[0].style.transform = `scale3d(${scaleX},${scaleY},1)`;
-      // scaleX += 1.0;
-      // scaleY += 1.0;
-      // document.getElementsByClassName('divcircle')[1].style.transform = 'scale3d(5,5,1)';
+        var sortIndexArray = Array();
 
-      dir = false;
+        var indexLength = circleClass.length;
+
+        for (let i = 0; i < indexLength; i++) {
+            sortIndexArray[i] = i;
+        }
+
+        // If uncomment this line, first page grid will show up randomly
+        sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
+
+        for (let i = 0; i < 6; i++) {
+
+            var currentScale = circleClass[sortIndexArray[i]].style.transform.substring(6, 10).split(',');
+            var scaleFactor = parseInt(currentScale[0]);
+            
+            if (scaleFactor == 5) {
+                dir = -1;
+            }
+            if (scaleFactor == 1) {
+
+                dir = 1;
+            }
+
+            var scaleValue = scaleFactor + dir;
+            circleClass[sortIndexArray[i]].style.transform = `scale(${scaleValue},${scaleValue})`;
+
+
+
+        }
+
     }
-    else {
-      document.getElementsByClassName('divcircle')[0].style.transform = 'scale3d(1,1,1)';
-      // document.getElementsByClassName('divcircle')[1].style.transform = 'scale3d(1,1,1)';
 
-      dir = true;
-
-    }
-  }
 </script>
 
 </html>
