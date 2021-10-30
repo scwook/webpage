@@ -296,7 +296,7 @@
     left: var(--left);
     top: var(--top);
     border-radius: 1px;
-    background: #00a99d;
+    background-color: var(--background-color);
     width: 2px;
     height: 2px;
     transition: transform 0.5s ease-out;
@@ -496,7 +496,7 @@
 }
 
 #sineWave {
-    stroke: #80bfff;
+    /* stroke: #80bfff; */
     stroke-width: 2px;
     stroke-linecap: round;
     fill: none;
