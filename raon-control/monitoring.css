@@ -167,14 +167,7 @@
 .doughnutForeground {
     animation-name: percentage;
     animation-duration: 0.5s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
-    /* --i: 200; */
-    stroke: var(--doughuntColor);
-    stroke-width: 14;
-    stroke-linecap: round;
-    stroke-dasharray: 503;
-    transform: translate(7px, 7px);
+
 }
 
 .doughnutChartText {
@@ -184,7 +177,6 @@
     color: white;
     font-size: 30px;
     text-align: center;
-    
 }
 
 .doughnutChartTextUnder {
@@ -194,6 +186,17 @@
     color: gray;
     font-size: 18px;
     text-align: center;
+}
+
+#storage-chart, #archive-chart, #ioc-chart {
+    stroke: var(--doughuntColor);
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-dasharray: 503;
+    stroke-dashoffset: 503;
+    transform: translate(7px, 7px);
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
 }
 
 .liquid-box {
@@ -330,7 +333,6 @@
         /* bottom: -10px; */
         /* transform: scale3d(1.1, 1.1, 1); */
     }
-
     to {
         opacity: 1;
         /* bottom: 0px; */

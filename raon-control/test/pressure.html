@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {
+    background-color: black;
+}
+
+.container {
+    position: relative;
+    left: 30px;
+    top: 15px;
+    width: 14px;
+    height: 118px;
+    /* background-color: rgba(0, 64, 96, 0.5); */
+    border: 1px solid rgba(0, 84, 188, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#circle {
+    position: absolute;
+    left: 1px;
+    top: 100px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #00b1e8;
+    transition: all 1.0s;
+}
+
+#circle:hover {
+    transform: translate(0px, -50px);
+}
+
+</style>
+
+<body>
+    <div class="container">
+        <div id="circle"></div>
+    </div>
+</body>
+
+<script>
+
+window.onload = function () {
+    var circleID = document.getElementById('circle');
+
+    circleID.style.transform = 'translate(0px, -50px)';
+    // var topPosition = '50px';
+
+    setInterval(function () {
+        var top = -Math.floor(Math.random() * 100);
+        circleID.style.transform = `translate(0px, ${top}px)`;
+    }, 3000);
+}
+</script>
+
+</html>

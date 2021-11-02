@@ -183,6 +183,29 @@
     animation: fill 7s ease-out forwards, rotation 7s linear infinite;
 } */
 
+.pressure-bar {
+    position: relative;
+    left: 30px;
+    top: 15px;
+    width: 14px;
+    height: 118px;
+    /* background-color: rgba(0, 64, 96, 0.5); */
+    border: 2px solid rgba(0, 84, 188, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#pressure-level1 {
+    position: absolute;
+    left: 1px;
+    top: 104px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #00a99d;
+    transition: all 1.0s;
+}
+
 .level-bar {
     position: relative;
     left: 30px;

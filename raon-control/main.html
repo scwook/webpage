@@ -448,6 +448,16 @@
                             <span id="pressure-value1">1.9</span><sup id="pressure-exp2" class="exp-value"></sup>
                         </div>
                     </div>
+
+                    <div style="width:30%; height:100%">
+                        <svg id="pressure-point1" width="5" height="6"
+                            style="position: absolute; top:50px; left:230px; transition:top 1s">
+                            <polygon points="5 3 0 0 0 6 5 3" style="fill:#D4145A" />
+                        </svg>
+                        <div class="pressure-bar">
+                            <div id="pressure-level1"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-item fade-animation" style="display:flex; width:300px; height:160px;">
@@ -596,11 +606,11 @@
                         <svg width="310" height="160">
                             <defs>
                                 <linearGradient id="sinewave-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                  <stop offset="0%" stop-color="#00A99D" />
-                                  <stop offset="100%" stop-color="#29ABE2" />
+                                    <stop offset="0%" stop-color="#00A99D" />
+                                    <stop offset="100%" stop-color="#29ABE2" />
                                 </linearGradient>
-                              </defs>
-                            <path id="sineWave" d="M0,80, L310,80" stroke="url(#sinewave-gradient)"/>
+                            </defs>
+                            <path id="sineWave" d="M0,80, L310,80" stroke="url(#sinewave-gradient)" />
                         </svg>
                     </div>
                 </div>
@@ -646,55 +656,95 @@
                     </div>
                     <div style="width:30%; height: 100%;">
                         <div id="vacuum-widget">
-                            <div class="vacuum-particle" style="--left: 3px; --top: 6px; --background-color:#16AAC1"></div>
-                            <div class="vacuum-particle" style="--left: 14px; --top: 6px; --background-color:#16AAC1"></div>
-                            <div class="vacuum-particle" style="--left: 25px; --top: 6px; --background-color:#16AAC1"></div>
-                            <div class="vacuum-particle" style="--left: 36px; --top: 6px; --background-color:#16AAC1"></div>
+                            <div class="vacuum-particle" style="--left: 3px; --top: 6px; --background-color:#16AAC1">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 14px; --top: 6px; --background-color:#16AAC1">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 25px; --top: 6px; --background-color:#16AAC1">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 36px; --top: 6px; --background-color:#16AAC1">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 6px; --top: 17px; --background-color:#18AAC5"></div>
-                            <div class="vacuum-particle" style="--left: 17px; --top: 17px; --background-color:#18AAC5"></div>
-                            <div class="vacuum-particle" style="--left: 28px; --top: 17px; --background-color:#18AAC5"></div>
-                            <div class="vacuum-particle" style="--left: 39px; --top: 17px; --background-color:#18AAC5"></div>
+                            <div class="vacuum-particle" style="--left: 6px; --top: 17px; --background-color:#18AAC5">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 17px; --background-color:#18AAC5">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 17px; --background-color:#18AAC5">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 17px; --background-color:#18AAC5">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 3px; --top: 28px; --background-color:#1AAAC9"></div>
-                            <div class="vacuum-particle" style="--left: 14px; --top: 28px; --background-color:#1AAAC9"></div>
-                            <div class="vacuum-particle" style="--left: 25px; --top: 28px; --background-color:#1AAAC9"></div>
-                            <div class="vacuum-particle" style="--left: 36px; --top: 28px; --background-color:#1AAAC9"></div>
+                            <div class="vacuum-particle" style="--left: 3px; --top: 28px; --background-color:#1AAAC9">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 14px; --top: 28px; --background-color:#1AAAC9">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 25px; --top: 28px; --background-color:#1AAAC9">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 36px; --top: 28px; --background-color:#1AAAC9">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 6px; --top: 39px; --background-color:#1CAACC"></div>
-                            <div class="vacuum-particle" style="--left: 17px; --top: 39px; --background-color:#1CAACC"></div>
-                            <div class="vacuum-particle" style="--left: 28px; --top: 39px; --background-color:#1CAACC"></div>
-                            <div class="vacuum-particle" style="--left: 39px; --top: 39px; --background-color:#1CAACC"></div>
+                            <div class="vacuum-particle" style="--left: 6px; --top: 39px; --background-color:#1CAACC">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 39px; --background-color:#1CAACC">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 39px; --background-color:#1CAACC">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 39px; --background-color:#1CAACC">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 3px; --top: 50px; --background-color:#1EAAD0"></div>
-                            <div class="vacuum-particle" style="--left: 14px; --top: 50px; --background-color:#1EAAD0"></div>
-                            <div class="vacuum-particle" style="--left: 25px; --top: 50px; --background-color:#1EAAD0"></div>
-                            <div class="vacuum-particle" style="--left: 36px; --top: 50px; --background-color:#1EAAD0"></div>
+                            <div class="vacuum-particle" style="--left: 3px; --top: 50px; --background-color:#1EAAD0">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 14px; --top: 50px; --background-color:#1EAAD0">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 25px; --top: 50px; --background-color:#1EAAD0">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 36px; --top: 50px; --background-color:#1EAAD0">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 6px; --top: 61px; --background-color:#20ABD3"></div>
-                            <div class="vacuum-particle" style="--left: 17px; --top: 61px; --background-color:#20ABD3"></div>
-                            <div class="vacuum-particle" style="--left: 28px; --top: 61px; --background-color:#20ABD3"></div>
-                            <div class="vacuum-particle" style="--left: 39px; --top: 61px; --background-color:#20ABD3"></div>
+                            <div class="vacuum-particle" style="--left: 6px; --top: 61px; --background-color:#20ABD3">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 61px; --background-color:#20ABD3">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 61px; --background-color:#20ABD3">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 61px; --background-color:#20ABD3">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 3px; --top: 72px; --background-color:#23ABD7"></div>
-                            <div class="vacuum-particle" style="--left: 14px; --top: 72px; --background-color:#23ABD7"></div>
-                            <div class="vacuum-particle" style="--left: 25px; --top: 72px; --background-color:#23ABD7"></div>
-                            <div class="vacuum-particle" style="--left: 36px; --top: 72px; --background-color:#23ABD7"></div>
+                            <div class="vacuum-particle" style="--left: 3px; --top: 72px; --background-color:#23ABD7">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 14px; --top: 72px; --background-color:#23ABD7">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 25px; --top: 72px; --background-color:#23ABD7">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 36px; --top: 72px; --background-color:#23ABD7">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 6px; --top: 83px; --background-color:#25ABDB"></div>
-                            <div class="vacuum-particle" style="--left: 17px; --top: 83px; --background-color:#25ABDB"></div>
-                            <div class="vacuum-particle" style="--left: 28px; --top: 83px; --background-color:#25ABDB"></div>
-                            <div class="vacuum-particle" style="--left: 39px; --top: 83px; --background-color:#25ABDB"></div>
+                            <div class="vacuum-particle" style="--left: 6px; --top: 83px; --background-color:#25ABDB">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 83px; --background-color:#25ABDB">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 83px; --background-color:#25ABDB">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 83px; --background-color:#25ABDB">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 3px; --top: 94px; --background-color:#27ABDE"></div>
-                            <div class="vacuum-particle" style="--left: 14px; --top: 94px; --background-color:#27ABDE"></div>
-                            <div class="vacuum-particle" style="--left: 25px; --top: 94px; --background-color:#27ABDE"></div>
-                            <div class="vacuum-particle" style="--left: 36px; --top: 94px; --background-color:#27ABDE"></div>
+                            <div class="vacuum-particle" style="--left: 3px; --top: 94px; --background-color:#27ABDE">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 14px; --top: 94px; --background-color:#27ABDE">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 25px; --top: 94px; --background-color:#27ABDE">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 36px; --top: 94px; --background-color:#27ABDE">
+                            </div>
 
-                            <div class="vacuum-particle" style="--left: 6px; --top: 105px; --background-color:#29ABE2"></div>
-                            <div class="vacuum-particle" style="--left: 17px; --top: 105px; --background-color:#29ABE2"></div>
-                            <div class="vacuum-particle" style="--left: 28px; --top: 105px; --background-color:#29ABE2"></div>
-                            <div class="vacuum-particle" style="--left: 39px; --top: 105px; --background-color:#29ABE2"></div>
+                            <div class="vacuum-particle" style="--left: 6px; --top: 105px; --background-color:#29ABE2">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 17px; --top: 105px; --background-color:#29ABE2">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 28px; --top: 105px; --background-color:#29ABE2">
+                            </div>
+                            <div class="vacuum-particle" style="--left: 39px; --top: 105px; --background-color:#29ABE2">
+                            </div>
                         </div>
 
                     </div>
@@ -2443,9 +2493,14 @@
 
         // Pressure
         var pressureValue1ID = document.getElementById('pressure-value1');
+        var pressureLevel1ID = document.getElementById('pressure-level1');
+
         setInterval(function () {
             var dataValue = (Math.random() * 10).toFixed(1);
             pressureValue1ID.innerText = dataValue;
+
+            var top = -Math.floor(Math.random() * 100);
+            pressureLevel1ID.style.transform = `translate(0px, ${top}px)`;
 
         }, 3000);
 
