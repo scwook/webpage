@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+        background-color: black;
+    }
+
+    .doughnut-contain {
+        position: relative;
+        width: 174px;
+        height: 174px;
+        transform: rotate(-90deg);
+        margin: auto;
+    }
+
+    .doughnutBackground {
+        stroke-dashoffset: 0;
+        stroke: rgba(0, 84, 188, 0.3);
+        transform: translate(7px, 7px);
+        stroke-width: 14;
+    }
+
+    /* .doughnutForeground {
+        animation-name: percentage;
+        animation-duration: 0.5s;
+    } */
+
+    #storage-chart {
+        stroke: var(--doughuntColor);
+        stroke-width: 14;
+        stroke-linecap: round;
+        stroke-dasharray: 503;
+        stroke-dashoffset: 503;
+        transform: translate(7px, 7px);
+        /* animation-timing-function: ease-out;
+        animation-fill-mode: forwards; */
+    }
+
+    /* @keyframes percentage {
+        from {
+            stroke-dashoffset: var(--chartInit);
+        }
+
+        to {
+            stroke-dashoffset: var(--chartValue);
+        }
+    } */
+</style>
+
+<body>
+    <div class="doughnut-contain">
+        <svg width="176" height="176" style="fill:none">
+            <circle class="doughnutBackground" cx="80" cy="80" r="80" />
+            <circle id="storage-chart" class="doughnutForeground" cx="80" cy="80" r="80"
+                style="--doughuntColor:#00ace6; --chartValue:100; --chartInit:503" />
+        </svg>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var chartMaxLength = 503;
+        var storageChartID = document.getElementById('storage-chart');
+        storageChartID.style.strokeDashoffset = '503';
+
+        // setInterval(sim, 5000);
+
+        // sim(dir, valueToOffset);
+    }
+
+    function sim() {
+        var chartMaxLength = 503;
+        var storageChartID = document.getElementById('storage-chart');
+
+        // Storage
+        var storageRealMaxValue = 100;
+        var storageRealValue = Math.random() * storageRealMaxValue;
+
+        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / storageRealMaxValue * storageRealValue);
+
+        var sign = valueToOffset - parseInt(storageChartID.style.strokeDashoffset);
+        var dir = 0;
+        if (sign > 0) {
+            dir = 1;
+        } else if (sign < 0) {
+            dir = -1;
+        }
+
+        var storageChartID = document.getElementById('storage-chart');
+        var currentDashOffset = parseInt(storageChartID.style.strokeDashoffset);
+        var newDashOffset = currentDashOffset;
+        var x = 0.0;
+
+        // console.log(newDashOffset, valueToOffset);
+
+        var id = setInterval(function (offset) {
+
+            var dt = Math.floor(dir * 10 * Math.pow(2,-10 * x) + dir);
+            x += 0.1;
+
+            newDashOffset += dt;
+
+            storageChartID.style.strokeDashoffset = newDashOffset;
+            console.log(newDashOffset, offset);
+
+            if (dir * (offset - newDashOffset) < 0) {
+                clearInterval(id);
+            }
+        }, 10, valueToOffset);
+
+    }
+</script>
+
+</html>
+
+<!-- Math.pow(2, -10 * dt1) -->
