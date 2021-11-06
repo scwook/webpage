@@ -5,7 +5,7 @@
         background-color: black;
     }
 
-    .doughnut-contain {
+    #contain1 {
         position: relative;
         width: 174px;
         height: 174px;
@@ -13,94 +13,118 @@
         margin: auto;
     }
 
-    .doughnutBackground {
+    #contain1-bg {
         stroke-dashoffset: 0;
         stroke: rgba(0, 84, 188, 0.3);
         transform: translate(7px, 7px);
         stroke-width: 14;
     }
 
-    /* .doughnutForeground {
-        animation-name: percentage;
-        animation-duration: 0.5s;
-    } */
-
-    #storage-chart {
-        stroke: var(--doughuntColor);
+    #contain1-fg {
+        stroke: var(--color);
         stroke-width: 14;
         stroke-linecap: round;
         stroke-dasharray: 503;
         stroke-dashoffset: 503;
         transform: translate(7px, 7px);
-        /* animation-timing-function: ease-out;
-        animation-fill-mode: forwards; */
     }
 
-    /* @keyframes percentage {
-        from {
-            stroke-dashoffset: var(--chartInit);
-        }
 
-        to {
-            stroke-dashoffset: var(--chartValue);
-        }
-    } */
+    #contain2 {
+        position: relative;
+        width: 174px;
+        height: 174px;
+        transform: rotate(-90deg);
+        margin: auto;
+    }
+
+    #contain2-bg {
+        stroke-dasharray: 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 0 403;
+        stroke-dashoffset: 0;
+        stroke: rgba(0, 84, 188, 0.3);
+        transform: translate(7px, 7px);
+        stroke-width: 14;
+    }
+
+    #contain2-fg {
+        stroke: var(--color);
+        stroke-width: 14;
+        /* stroke-linecap: round; */
+        stroke-dasharray: 503;
+        stroke-dashoffset: 503;
+        transform: translate(7px, 7px);
+    }
+
 </style>
 
 <body>
-    <div class="doughnut-contain">
+    <div id="contain1">
         <svg width="176" height="176" style="fill:none">
-            <circle class="doughnutBackground" cx="80" cy="80" r="80" />
-            <circle id="storage-chart" class="doughnutForeground" cx="80" cy="80" r="80"
-                style="--doughuntColor:#00ace6; --chartValue:100; --chartInit:503" />
+            <circle id="contain1-bg" cx="80" cy="80" r="80" />
+            <circle id="contain1-fg" cx="80" cy="80" r="80" style="--color:#00ace6;" />
         </svg>
     </div>
+
+    <div style="margin-top: 20px;"></div>
+
+    <div id="contain2">
+        <svg width="176" height="176" style="fill:none">
+            <circle id="contain2-bg" cx="80" cy="80" r="80" />
+            <!-- <circle id="contain2-fg" cx="80" cy="80" r="80" style="--color:#00ace6;" /> -->
+        </svg>
+    </div>
+
 </body>
 <script>
-    var intervalID;
+    var contain1ID;
+    var contain2ID;
 
     document.addEventListener('visibilitychange', function () {
         if (document.hidden) {
             // tab is now inactive
             // temporarily clear timer using clearInterval() / clearTimeout()
-            clearInterval(intervalID);
-            console.log('inactive');
+            clearInterval(contain1ID);
+            // clearInterval(contain2ID);
+
+            // console.log('inactive');
             
 
         }
         else {
             // tab is active again
             // restart timers
-            intervalID = setInterval(sim, 5000);
+            contain1ID = setInterval(contain1, 5000);
+            // contain2ID = setInterval(contain2, 5000);
 
-            console.log('active');
+            // console.log('active');
         }
     });
 
 
     window.onload = function () {
-        var chartMaxLength = 503;
-        var storageChartID = document.getElementById('storage-chart');
-        storageChartID.style.strokeDashoffset = '503';
+        var fgID1 = document.getElementById('contain1-fg');
+        fgID1.style.strokeDashoffset = '503';
+        contain1ID = setInterval(contain1, 5000);
 
-        intervalID = setInterval(sim, 5000);
-        // sim();
-        // sim(dir, valueToOffset);
+        // var fgID2 = document.getElementById('contain2-fg');
+        // fgID2.style.strokeDashoffset = '503';
+        // contain2ID = setInterval(contain2, 5000);
     }
 
-    function sim() {
-        var chartMaxLength = 503;
-        var storageChartID = document.getElementById('storage-chart');
+    function contain1() {
+        var chartMaxLength = Math.ceil(2 * Math.PI * 80); // L = 2 * PI * Radius
+
+        var fgID = document.getElementById('contain1-fg');
 
         // Storage
-        var storageRealMaxValue = 100;
-        var storageRealValue = Math.random() * storageRealMaxValue;
+        var maxValue = 100;
+        var randomValue = Math.random() * maxValue;
 
-        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / storageRealMaxValue * storageRealValue);
+        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
 
 
-        var storageChartID = document.getElementById('storage-chart');
-        var currentDashOffset = parseInt(storageChartID.style.strokeDashoffset);
+        var fgID = document.getElementById('contain1-fg');
+        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
         var sign = valueToOffset - currentDashOffset;
 
         var dir = 0;
@@ -144,7 +168,7 @@
                     count = maxCount; // 
             }
 
-            storageChartID.style.strokeDashoffset = Math.floor(y);
+            fgID.style.strokeDashoffset = Math.floor(y);
 
             x += dx;
             count += 1;
@@ -156,6 +180,83 @@
         }, interval);
 
     }
+
+    // 
+    // 
+    // 
+    // 
+    // 
+
+    function contain2() {
+        var chartMaxLength = Math.ceil(2 * Math.PI * 80); // L = 2 * PI * Radius
+
+        var fgID = document.getElementById('contain2-fg');
+
+        // Storage
+        var maxValue = 100;
+        var randomValue = Math.random() * maxValue;
+
+        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+
+
+        var fgID = document.getElementById('contain2-fg');
+        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+        var sign = valueToOffset - currentDashOffset;
+
+        var dir = 0;
+        if (sign > 0) {
+            dir = -1; // anitclockwise, increase offset value
+        } else if (sign < 0) {
+            dir = 1; // clockwise, decrease offset value
+        }
+
+        if (dir == 0) {
+            return;
+        }
+
+        var duration = 2000;
+        var interval = 10;
+        var count = 0;
+        var maxCount = Math.floor(duration / interval);
+        var x1 = 0.0;
+        var x2 = 1.0;
+        var dx = Math.abs(x1 - x2) / maxCount;
+        var x = 0.0;
+        var y = 0;
+        var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+        var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+        var a = Math.abs(currentDashOffset - valueToOffset);
+        var b = y1;
+
+        var id = setInterval(function () {
+
+            switch (dir) {
+                case 1:
+                    y = a * Math.pow(2, -10 * x) + y1;
+                    break;
+
+                case -1:
+                    y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                    break;
+
+                default:
+                    count = maxCount; // 
+            }
+
+            fgID.style.strokeDashoffset = Math.floor(y);
+
+            x += dx;
+            count += 1;
+
+            if (count == maxCount) {
+                clearInterval(id);
+            }
+
+        }, interval);
+
+    }
+
 
     function easeIncrease() {
         // increase function : y = a * {1 - [2^-(10*x)]} + b
