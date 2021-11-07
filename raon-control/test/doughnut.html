@@ -34,13 +34,12 @@
         position: relative;
         width: 174px;
         height: 174px;
-        transform: rotate(-90deg);
+        transform: rotate(-180deg);
         margin: auto;
     }
 
     #contain2-bg {
-        stroke-dasharray: 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 0 403;
-        stroke-dashoffset: 0;
+        stroke-dasharray: 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 304;
         stroke: rgba(0, 84, 188, 0.3);
         transform: translate(7px, 7px);
         stroke-width: 14;
@@ -50,11 +49,10 @@
         stroke: var(--color);
         stroke-width: 14;
         /* stroke-linecap: round; */
-        stroke-dasharray: 503;
-        stroke-dashoffset: 503;
+        stroke-dasharray: 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 2 8 504;
+        stroke-dashoffset: 208;
         transform: translate(7px, 7px);
     }
-
 </style>
 
 <body>
@@ -70,7 +68,7 @@
     <div id="contain2">
         <svg width="176" height="176" style="fill:none">
             <circle id="contain2-bg" cx="80" cy="80" r="80" />
-            <!-- <circle id="contain2-fg" cx="80" cy="80" r="80" style="--color:#00ace6;" /> -->
+            <circle id="contain2-fg" cx="80" cy="80" r="80" style="--color:#00ace6;" />
         </svg>
     </div>
 
@@ -84,17 +82,17 @@
             // tab is now inactive
             // temporarily clear timer using clearInterval() / clearTimeout()
             clearInterval(contain1ID);
-            // clearInterval(contain2ID);
+            clearInterval(contain2ID);
 
             // console.log('inactive');
-            
+
 
         }
         else {
             // tab is active again
             // restart timers
             contain1ID = setInterval(contain1, 5000);
-            // contain2ID = setInterval(contain2, 5000);
+            contain2ID = setInterval(contain2, 5000);
 
             // console.log('active');
         }
@@ -106,9 +104,9 @@
         fgID1.style.strokeDashoffset = '503';
         contain1ID = setInterval(contain1, 5000);
 
-        // var fgID2 = document.getElementById('contain2-fg');
-        // fgID2.style.strokeDashoffset = '503';
-        // contain2ID = setInterval(contain2, 5000);
+        var fgID2 = document.getElementById('contain2-fg');
+        fgID2.style.strokeDashoffset = '208';
+        contain2ID = setInterval(contain2, 5000);
     }
 
     function contain1() {
@@ -188,7 +186,7 @@
     // 
 
     function contain2() {
-        var chartMaxLength = Math.ceil(2 * Math.PI * 80); // L = 2 * PI * Radius
+        var chartMaxLength = 208;
 
         var fgID = document.getElementById('contain2-fg');
 
