@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #bottom {
+        width: 9px;
+        height: 200px;
+        background-color: rgba(0, 84, 188, 0.3);;
+        background-image: url('../images/arrow-bottom.png');
+        /* background-repeat: no-repeat; */
+        /* background-attachment: fixed; */
+        /* background-position: center; */
+    }
+
+    #right {
+        width: 200px;
+        height: 9px;
+        background-color: rgba(0, 84, 188, 0.3);;
+
+        background-image: url('../images/arrow-right.png');
+        /* background-repeat: no-repeat; */
+        /* background-attachment: fixed; */
+        /* background-position: center; */
+    }
+</style>
+
+<body>
+    <div id="bottom"></div>
+    <div id="right"></div>
+</body>
+<script>
+    var x = 0;
+    var y = 0;
+    setInterval(function () {
+        if( x == 200) {
+            x = 3;
+        }
+
+        if( y == 200) {
+            y = 3;
+        }
+
+        document.getElementById('right').style.backgroundPosition = `${x}px 0px`;
+        document.getElementById('bottom').style.backgroundPosition = `0px ${y}px`;
+
+        x += 1;
+        y += 1;
+
+
+
+    }, 100);
+</script>
+
+</html>
