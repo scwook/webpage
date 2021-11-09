@@ -857,7 +857,41 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            // tab is now inactive
+            // temporarily clear timer using clearInterval() / clearTimeout()
+            clearInterval(storageIntervalID);
+            clearInterval(archiveIntervalID);
+            clearInterval(iocIntervalID);
+        }
+        else {
+            // tab is active again
+            // restart timers
+            simulation_chart();
+        }
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     window.onload = function () {
+
+        // 
+        var storageChartID = document.getElementById('storage-chart');
+        storageChartID.style.strokeDashoffset = '503';
+
+        var storageChartID = document.getElementById('archive-chart');
+        storageChartID.style.strokeDashoffset = '503';
+
+        var storageChartID = document.getElementById('ioc-chart');
+        storageChartID.style.strokeDashoffset = '503';
+
+        // contain1ID = setInterval(contain1, 5000);
 
         // firstShowUp();
         // setInterval(function () {
@@ -874,7 +908,7 @@
         // real_server();
 
         // Set Simulation Data
-        simulation_storage();
+        simulation_chart();
         simulation_fps();
         simulation_timestamp();
         simulation_timing();
@@ -1180,55 +1214,214 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function simulation_storage() {
-        var chartMaxLength = 503;
+    var storageIntervalID, archiveIntervalID, iocIntervalID;
 
-        setInterval(function () {
-            // Storage
-            var storageRealMaxValue = 100;
-            var storageRealValue = Math.random() * storageRealMaxValue;
+    function simulation_chart() {
+        var chartMaxLength = Math.ceil(2 * Math.PI * 80); // L = 2 * PI * Radius
+
+        // Storage
+        storageIntervalID = setInterval(function () {
+
+            var maxValue = 100;
+            var randomValue = Math.random() * maxValue;
+            var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
 
             var storageValueID = document.getElementById('storage-value');
-            storageValueID.innerText = Math.floor(storageRealValue) + 'TB';
+            storageValueID.innerText = Math.floor(randomValue) + 'TB';
 
-            var storageChartID = document.getElementById('storage-chart');
-            var valueToLength = chartMaxLength - chartMaxLength / storageRealMaxValue * storageRealValue;
-            storageChartID.style.setProperty('--chartValue', Math.floor(valueToLength));
+            var fgID = document.getElementById('storage-chart');
+            var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
 
-            storageChartID.classList.remove('doughnutForeground');
-            void storageChartID.offsetWidth;
-            storageChartID.classList.add('doughnutForeground');
+            var sign = valueToOffset - currentDashOffset;
 
-            // // Archive
-            // var archiveRealMaxValue = 300000;
-            // var archiveRealValue = Math.random() * archiveRealMaxValue;
+            var dir = 0;
+            if (sign > 0) {
+                dir = -1; // anitclockwise, increase offset value
+            } else if (sign < 0) {
+                dir = 1; // clockwise, decrease offset value
+            }
 
-            // var archiveValueID = document.getElementById('archive-value');
-            // archiveValueID.innerText = Math.floor(archiveRealValue);
+            if (dir == 0) {
+                return;
+            }
 
-            // var archiveChartID = document.getElementById('archive-chart');
-            // var valueToLength = chartMaxLength - chartMaxLength / archiveRealMaxValue * archiveRealValue;
-            // archiveChartID.style.setProperty('--chartValue', Math.floor(valueToLength));
+            var duration = 2000;
+            var interval = 10;
+            var count = 0;
+            var maxCount = Math.floor(duration / interval);
+            var x1 = 0.0;
+            var x2 = 1.0;
+            var dx = Math.abs(x1 - x2) / maxCount;
+            var x = 0.0;
+            var y = 0;
+            var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+            var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+            var a = Math.abs(currentDashOffset - valueToOffset);
+            var b = y1;
 
-            // archiveChartID.classList.remove('doughnutForeground');
-            // void archiveChartID.offsetWidth;
-            // archiveChartID.classList.add('doughnutForeground');
+            var id = setInterval(function () {
 
-            // // IOC
-            // var iocRealMaxValue = 2000;
-            // var iocRealValue = Math.random() * iocRealMaxValue;
+                switch (dir) {
+                    case 1:
+                        y = a * Math.pow(2, -10 * x) + y1;
+                        break;
 
-            // var iocValueID = document.getElementById('ioc-value');
-            // iocValueID.innerText = Math.floor(iocRealValue);
+                    case -1:
+                        y = a * (1 - Math.pow(2, -10 * x)) + y1;
 
-            // var iocChartID = document.getElementById('ioc-chart');
-            // var valueToLength = chartMaxLength - chartMaxLength / iocRealMaxValue * iocRealValue;
-            // iocChartID.style.setProperty('--chartValue', Math.floor(valueToLength));
+                        break;
 
-            // iocChartID.classList.remove('doughnutForeground');
-            // void iocChartID.offsetWidth;
-            // iocChartID.classList.add('doughnutForeground');
-        }, 3000);
+                    default:
+                        count = maxCount; // 
+                }
+
+                fgID.style.strokeDashoffset = Math.floor(y);
+
+                x += dx;
+                count += 1;
+
+                if (count == maxCount) {
+                    clearInterval(id);
+                }
+
+            }, interval);
+        }, 6000);
+
+        // Archive
+        archiveIntervalID = setInterval(function () {
+
+            var maxValue = 300000;
+            var randomValue = Math.random() * maxValue;
+            var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+
+            var storageValueID = document.getElementById('archive-value');
+            storageValueID.innerText = Math.floor(randomValue);
+
+            var fgID = document.getElementById('archive-chart');
+            var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+
+            var sign = valueToOffset - currentDashOffset;
+
+            var dir = 0;
+            if (sign > 0) {
+                dir = -1; // anitclockwise, increase offset value
+            } else if (sign < 0) {
+                dir = 1; // clockwise, decrease offset value
+            }
+
+            if (dir == 0) {
+                return;
+            }
+
+            var duration = 2000;
+            var interval = 10;
+            var count = 0;
+            var maxCount = Math.floor(duration / interval);
+            var x1 = 0.0;
+            var x2 = 1.0;
+            var dx = Math.abs(x1 - x2) / maxCount;
+            var x = 0.0;
+            var y = 0;
+            var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+            var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+            var a = Math.abs(currentDashOffset - valueToOffset);
+            var b = y1;
+
+            var id = setInterval(function () {
+
+                switch (dir) {
+                    case 1:
+                        y = a * Math.pow(2, -10 * x) + y1;
+                        break;
+
+                    case -1:
+                        y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                        break;
+
+                    default:
+                        count = maxCount; // 
+                }
+
+                fgID.style.strokeDashoffset = Math.floor(y);
+
+                x += dx;
+                count += 1;
+
+                if (count == maxCount) {
+                    clearInterval(id);
+                }
+
+            }, interval);
+        }, 6000);
+
+        // IOC
+        archiveIntervalID = setInterval(function () {
+
+            var maxValue = 2000;
+            var randomValue = Math.random() * maxValue;
+            var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+
+            var storageValueID = document.getElementById('ioc-value');
+            storageValueID.innerText = Math.floor(randomValue);
+
+            var fgID = document.getElementById('ioc-chart');
+            var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+
+            var sign = valueToOffset - currentDashOffset;
+
+            var dir = 0;
+            if (sign > 0) {
+                dir = -1; // anitclockwise, increase offset value
+            } else if (sign < 0) {
+                dir = 1; // clockwise, decrease offset value
+            }
+
+            if (dir == 0) {
+                return;
+            }
+
+            var duration = 2000;
+            var interval = 10;
+            var count = 0;
+            var maxCount = Math.floor(duration / interval);
+            var x1 = 0.0;
+            var x2 = 1.0;
+            var dx = Math.abs(x1 - x2) / maxCount;
+            var x = 0.0;
+            var y = 0;
+            var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+            var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+            var a = Math.abs(currentDashOffset - valueToOffset);
+            var b = y1;
+
+            var id = setInterval(function () {
+
+                switch (dir) {
+                    case 1:
+                        y = a * Math.pow(2, -10 * x) + y1;
+                        break;
+
+                    case -1:
+                        y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                        break;
+
+                    default:
+                        count = maxCount; // 
+                }
+
+                fgID.style.strokeDashoffset = Math.floor(y);
+
+                x += dx;
+                count += 1;
+
+                if (count == maxCount) {
+                    clearInterval(id);
+                }
+
+            }, interval);
+        }, 6000);
 
     }
 
