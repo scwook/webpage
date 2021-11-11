@@ -594,37 +594,93 @@
                 </div>
             </div>
 
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+            <!-- /////////////////////////////////////////////////// -->
+
             <!-- Page 2 -->
             <div class="slide-page" style="display: none">
                 <div class="slide-page-title">Cryogenic</div>
                 <div class="grid-container">
+
+                    <!-- 1 / 1 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">Pressure
-                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
-                        </p>
-                        <p class="data">
-                            <span id="">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
-                        </p>
-                        <div class="sub-title">Gas Bag</div>
+                        <p class="title">LN2</p>
+                        <div class="liquid-box"><span id="n2-value">45</span>
+                            <div class="subBox" style="--backgroundColor:#00A99D"></div>
+                        </div>
+
+                        <div class="sub-title">SCL3</div>
                     </div>
+
+                    <!-- 1 / 2 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">Pressure
-                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
-                        </p>
-                        <p class="data">
-                            <span id="">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
-                        </p>
-                        <div class="sub-title">Gas Bag</div>
+                        <p class="title">LHe</p>
+                        <div class="liquid-box"><span id="he-value">45</span>
+                            <div class="subBox" style="--backgroundColor:#29ABE2"></div>
+                        </div>
+
+                        <div class="sub-title">SCL3</div>
                     </div>
+
+                    <!-- 1 / 3 -->
                     <div class="grid-item grid-1x1">
-                        <p class="title">Pressure
-                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
-                        </p>
-                        <p class="data">
-                            <span id="">1.9</span><sup id="pressure-exp1" class="exp-value">-7</sup>
-                        </p>
-                        <div class="sub-title">Gas Bag</div>
+                        <p class="title">Dewer</p>
+                        <svg width="109" height="153" style="position: relative; left: 84px; top:10px">
+                            <path
+                                d="M107.8333,1.5V124.8333S107.8333,151.5,54.5,151.5,1.1667,124.8333,1.1667,124.8333V1.5"
+                                style="stroke: #2959a8; stroke-width: 2px; opacity: 0.3; fill:none" />
+                        </svg>
+
+                        <svg width="109" height="153" style="position: relative; left: -28px; top:10px;">
+                            <defs>
+                                <linearGradient id="dewer-fill" x1="54.5" y1="151.2134" x2="54.5"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#29ABE2">
+                                        <animate id="dewer-gradient-point1" begin="indefinite" dur="1s"
+                                            attributeName="offset" fill="freeze" from="0" to="0"
+                                            keySplines=" 0.0 0.4 0.1 1" keyTimes="0;1" calcMode="spline" />
+                                    </stop>
+                                    <stop offset="0" stop-color="#29ABE2" stop-opacity="0.0">
+                                        <animate id="dewer-gradient-point2" begin="indefinite" dur="1s"
+                                            attributeName="offset" fill="freeze" from="0" to="0"
+                                            keySplines=" 0.0 0.4 0.1 1" keyTimes="0;1" calcMode="spline" />
+                                    </stop>
+                                </linearGradient>
+                            </defs>
+                            <path fill='url(#dewer-fill)'
+                                d="M107,2.1947v122s0,26.6666-52.5,26.6666S2,124.1947,2,124.1947v-122" />
+                        </svg>
+
+                        <div
+                            style="position:absolute; width:100%; top:120px; font-size: 40px; text-align: center; color: white;">
+                            5000</div>
+
+                        <div class="sub-title"></div>
                     </div>
+
+                    <!-- 1 / 4 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Compressor</p>
+                        <div class="compressor-container" id="compressor-circle1">
+                            <img src="images/dash-circle1.svg">
+                        </div>
+                        <div class="compressor-container">
+                            <img src="images/dash-circle2.svg" id="compressor-circle2">
+                        </div>
+                        <div class="compressor-container">
+                            <img src="images/dash-circle3.svg" id="compressor-circle3">
+                        </div>
+
+                        <div class="sub-title"></div>
+                    </div>
+
+                    <!-- 1 / 5 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Temperature
                             <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
@@ -634,16 +690,22 @@
                         </p>
                         <div class="sub-title">Gas Bag</div>
                     </div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
+
+                    <!-- 1 / 5 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Temperature
+                            <span class="tooltiptext">SYS-SUBSYS:DEV-SUBDEV:Signal</span>
+                        </p>
+                        <p class="data">
+                            <span id="">2.5</span>
+                        </p>
+                        <div class="sub-title">Gas Bag</div>
+                    </div>
+
+                    <!-- 2 - 3 / 4 -->
+                    <div class="grid-item grid-4x2 fade-animation" style="grid-column: 1/span 4; grid-row: 2 / span 3">
+                    </div>
+
                     <div class="grid-item grid-1x1"></div>
                     <div class="grid-item grid-1x1"></div>
                     <div class="grid-item grid-1x1"></div>
@@ -908,12 +970,17 @@
         // real_server();
 
         // Set Simulation Data
+        // Page1 - Control
         simulation_chart();
         simulation_fps();
         simulation_timestamp();
         simulation_timing();
         simulation_network();
         simulation_server();
+
+        // Page2 - Cryo
+        simulation_page2_flow();
+        simulation_dewer();
 
         var gridItemClass = document.getElementsByClassName("fade-animation");
         var sortIndexArray = Array();
@@ -1209,8 +1276,7 @@
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////           Page 1           /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1356,7 +1422,7 @@
         }, 6000);
 
         // IOC
-        archiveIntervalID = setInterval(function () {
+        iocIntervalID = setInterval(function () {
 
             var maxValue = 2000;
             var randomValue = Math.random() * maxValue;
@@ -2216,18 +2282,155 @@
         }, 5000);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////           Page 2           /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    function simulation_page2_flow() {
 
+        // N2 Flow
+        var n2Count = 1;
+        var n2Value = document.getElementById('n2-value');
 
-    function simulation() {
+        setInterval(function () {
+            var maxValue = 100;
+            var valveOpen = Math.floor(Math.random() * maxValue);
+            var valueToPosition = Math.floor(160 / maxValue * valveOpen);
+            n2Value.innerText = 100 - valveOpen;
 
-        // Pressure
-        // var pressureValue1ID = document.getElementById('pressure-value1');
-        // setInterval(function () {
-        //     var dataValue = (Math.random() * 10).toFixed(1);
-        //     pressureValue1ID.innerText = dataValue;
+            var isOpen = true;
+            if (n2Count % 5 == 0) {
+                isOpen = false;
+            }
 
-        // }, 3000);
+            if (isOpen) {
+                rotationStart(0);
+            }
+            else {
+                rotationStop(0);
+            }
+            fillStart(0, valueToPosition);
+            n2Count += 1;
+        }, 5000);
 
+        // He Flow
+        var heCount = 1;
+        var heValue = document.getElementById('he-value');
+
+        setInterval(function () {
+            var maxValue = 100;
+            var valveOpen = Math.floor(Math.random() * maxValue);
+            var valueToPosition = Math.floor(160 / maxValue * valveOpen);
+            heValue.innerText = 100 - valveOpen;
+
+            var isOpen = true;
+            if (heCount % 5 == 0) {
+                isOpen = false;
+            }
+
+            if (isOpen) {
+                rotationStart(1);
+            }
+            else {
+                rotationStop(1);
+            }
+            fillStart(1, valueToPosition);
+            heCount += 1;
+        }, 5000);
+    }
+
+    var rotationID = [null, null];
+    var rotationDegree = [0, 0];
+    var subBox = document.getElementsByClassName('subBox');
+
+    function rotationStart(num) {
+        clearInterval(rotationID[num]);
+
+        rotationID[num] = setInterval(rotation, 10, num);
+    }
+
+    function rotationStop(num) {
+        clearInterval(rotationID[num]);
+    }
+
+    function rotation(num) {
+        subBox[num].style.transform = 'rotate(' + rotationDegree[num] + 'deg)';
+        rotationDegree[num] += 0.5;
+    }
+
+    var fillID = [null, null];
+    var topPosition = [100, 100];
+
+    function fillStart(num, setPosition) {
+        clearInterval(fillID[num]);
+
+        if (setPosition > topPosition[num]) {
+            direction = 1; // empty
+
+        }
+        else if (setPosition < topPosition[num]) {
+            direction = -1 // fill
+        }
+        else {
+            return;
+        }
+
+        fillID[num] = setInterval(fill, 50, num, setPosition, direction); // fill
+
+    }
+
+    function fillStop(num) {
+        clearInterval(fillID[num]);
+    }
+
+    function fill(num, setPosition, direction) {
+
+        if (topPosition[num] == setPosition) {
+            clearInterval(fillID[num]);
+        }
+
+        topPosition[num] += direction;
+        subBox[num].style.top = topPosition[num] + 'px';
+
+        // console.log(topPosition);
+    }
+
+    var currentDewer = 0;
+    function simulation_dewer() {
+        var dewerGradientPoint1 = document.getElementById('dewer-gradient-point1');
+        var dewerGradientPoint2 = document.getElementById('dewer-gradient-point2');
+        // var dewerValueID = document.getElementById('dewer-value');
+
+        setInterval(function () {
+            let dewerValue = Math.random().toFixed(1);
+            // dewerValueID.innerText = dewerValue * 5000;
+
+            dewerGradientPoint1.setAttribute('from', currentDewer);
+            dewerGradientPoint1.setAttribute('to', dewerValue);
+
+            dewerGradientPoint2.setAttribute('from', currentDewer);
+            dewerGradientPoint2.setAttribute('to', dewerValue);
+
+            dewerGradientPoint1.beginElement();
+            dewerGradientPoint2.beginElement();
+
+            currentDewer = dewerValue;
+
+        }, 3000);
+    }
+
+    function simulation_compressor() {
+        var circle1ID = document.getElementById('compressor-circle1');
+        var circle2ID = document.getElementById('compressor-circle2');
+        var circle3ID = document.getElementById('compressor-circle3');
+
+        var circle1Degree = 0;
+        var circle2Degree = 0;
+        var alarm = false;
+        var status = false;
+
+        
     }
 </script>
 
