@@ -341,8 +341,43 @@
     top: 60px;
 }
 
-.compressor-animation {
-    animation: rotaion 
+#compressor-circle3 {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #22B573;
+    border-radius: 60px;
+    transition: all 1s;
+}
+
+.data-value {
+    position: absolute;
+    width: 100%;
+    top: 115px;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+}
+
+#alarm-grid {
+    margin: auto;
+    display: grid;
+    width: 160px;
+    height: 160px;
+    grid-template-columns: 50px 50px 50px;
+    grid-template-rows: 50px 50px 50px;
+    gap: 4px 4px;
+    /* background-color: #00ace6; */
+}
+
+.alarm-item {
+    width: 50px;
+    height: 50px;
+    background-color: #22B573;
+    background-color: rgb(0, 64, 96);
+    border-radius: 3px;
 }
 
 @keyframes animatefade {
