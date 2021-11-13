@@ -53,6 +53,31 @@
         stroke-dashoffset: 208;
         transform: translate(7px, 7px);
     }
+
+    #contain3 {
+        position: relative;
+        width: 174px;
+        height: 174px;
+        transform: rotate(-180deg);
+        margin: auto;
+    }
+
+    #contain3-bg {
+        stroke-dasharray: 250 250;
+        stroke: rgba(0, 84, 188, 0.3);
+        transform: translate(7px, 7px);
+        stroke-width: 14;
+    }
+
+    #contain3-fg {
+        stroke: var(--color);
+        stroke-width: 14;
+        stroke-linecap: round;
+        stroke-dasharray: 250 500;
+        stroke-dashoffset: 250;
+        transform: translate(7px, 7px);
+    }
+
 </style>
 
 <body>
@@ -72,10 +97,18 @@
         </svg>
     </div>
 
+    <div id="contain3">
+        <svg width="176" height="176" style="fill:none">
+            <circle id="contain3-bg" cx="80" cy="80" r="80" />
+            <circle id="contain3-fg" cx="80" cy="80" r="80" style="--color:#00ace6;" />
+        </svg>
+    </div>
+
 </body>
 <script>
     var contain1ID;
     var contain2ID;
+    var contain3ID;
 
     document.addEventListener('visibilitychange', function () {
         if (document.hidden) {
@@ -83,6 +116,7 @@
             // temporarily clear timer using clearInterval() / clearTimeout()
             clearInterval(contain1ID);
             clearInterval(contain2ID);
+            clearInterval(contain3ID);
 
             // console.log('inactive');
 
@@ -93,6 +127,7 @@
             // restart timers
             contain1ID = setInterval(contain1, 5000);
             contain2ID = setInterval(contain2, 5000);
+            contain3ID = setInterval(contain3, 5000);
 
             // console.log('active');
         }
@@ -107,6 +142,10 @@
         var fgID2 = document.getElementById('contain2-fg');
         fgID2.style.strokeDashoffset = '208';
         contain2ID = setInterval(contain2, 5000);
+
+        var fgID3 = document.getElementById('contain3-fg');
+        fgID3.style.strokeDashoffset = '250';
+        contain3ID = setInterval(contain3, 5000);
     }
 
     function contain1() {
@@ -198,6 +237,76 @@
 
 
         var fgID = document.getElementById('contain2-fg');
+        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+        var sign = valueToOffset - currentDashOffset;
+
+        var dir = 0;
+        if (sign > 0) {
+            dir = -1; // anitclockwise, increase offset value
+        } else if (sign < 0) {
+            dir = 1; // clockwise, decrease offset value
+        }
+
+        if (dir == 0) {
+            return;
+        }
+
+        var duration = 2000;
+        var interval = 10;
+        var count = 0;
+        var maxCount = Math.floor(duration / interval);
+        var x1 = 0.0;
+        var x2 = 1.0;
+        var dx = Math.abs(x1 - x2) / maxCount;
+        var x = 0.0;
+        var y = 0;
+        var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+        var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+        var a = Math.abs(currentDashOffset - valueToOffset);
+        var b = y1;
+
+        var id = setInterval(function () {
+
+            switch (dir) {
+                case 1:
+                    y = a * Math.pow(2, -10 * x) + y1;
+                    break;
+
+                case -1:
+                    y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                    break;
+
+                default:
+                    count = maxCount; // 
+            }
+
+            fgID.style.strokeDashoffset = Math.floor(y);
+
+            x += dx;
+            count += 1;
+
+            if (count == maxCount) {
+                clearInterval(id);
+            }
+
+        }, interval);
+
+    }
+
+    function contain3() {
+        var chartMaxLength = 250;
+
+        var fgID = document.getElementById('contain3-fg');
+
+        // Storage
+        var maxValue = 100;
+        var randomValue = Math.random() * maxValue;
+
+        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+
+
+        var fgID = document.getElementById('contain3-fg');
         var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
         var sign = valueToOffset - currentDashOffset;
 

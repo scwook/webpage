@@ -380,6 +380,59 @@
     border-radius: 3px;
 }
 
+#gas-out {
+    position: absolute;
+    width: 180px;
+    height: 110px;
+    left: 50px;
+    top: 85px;
+    border-radius: 55px;
+    border: rgba(0, 84, 188, 0.3) solid 2px;
+}
+
+#gas-in {
+    position: absolute;
+    width: 180px;
+    height: 110px;
+    left: 52px;
+    top: 87px;
+    background-color: #29ABE2;
+    border-radius: 55px;
+    transition: all 2s;
+}
+
+.temperature-item1, .temperature-item2 {
+    transition: opacity 0.5s;
+    transition-delay: var(--delay);
+}
+
+.pressure-contain {
+    position: absolute;
+    left: 53px;
+    top: 73px;
+    width: 174px;
+    height: 174px;
+    transform: rotate(-210deg);
+    margin: auto;
+}
+
+.pressure-bg {
+    stroke-dasharray: 336 168;
+    stroke: rgba(0, 84, 188, 0.3);
+    transform: translate(7px, 7px);
+    stroke-width: 14;
+    stroke-linecap: round;
+}
+
+.pressure-fg {
+    stroke: var(--color);
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-dasharray: 336 500;
+    stroke-dashoffset: 336;
+    transform: translate(7px, 7px);
+}
+
 @keyframes animatefade {
     from {
         opacity: 0;

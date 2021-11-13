@@ -785,15 +785,8 @@
                     <!-- 1 / 6 -->
                     <div class="grid-item grid-1x1">
                         <p class="title">Gas</p>
-                        <svg id="gas-out" width="182" height="112" style="position: absolute; left:49px; top:84px;">
-                            <rect x="1" y="1" width="180" height="110" rx="55"
-                                style="fill:none;stroke:#2959a8;stroke-width:2px;opacity:0.3" />
-                        </svg>
-
-                        <svg id="gas-in" width="182" height="112" style="position: absolute; left:49px; top:84px;">
-                            <rect x="1" y="1" width="180" height="110" rx="55"
-                                style="fill:#29ABE2;"/>
-                        </svg>
+                        <div id="gas-out"></div>
+                        <div id="gas-in" style="transform: scale(0);"></div>
 
                         <div class="sub-title"></div>
                     </div>
@@ -802,10 +795,165 @@
                     <div class="grid-item grid-4x2 fade-animation" style="grid-column: 1/span 4; grid-row: 2 / span 3">
                     </div>
 
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
+                    <!-- 2 / 5 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Temperature</p>
+
+                        <svg width="170" height="128" style="position: absolute; left:55px; top:76px">
+                            <defs>
+                                <style>
+                                    .tis-2 {
+                                        fill: #dc2873;
+                                        opacity: 0.1;
+                                    }
+
+                                    .tis-1 {
+                                        fill: #17a196;
+                                        opacity: 0.1;
+                                    }
+                                </style>
+                            </defs>
+                            <path class="tis-1 temperature-item1" style="--delay:0.0s"
+                                d="M11.29,127.73a85.54,85.54,0,0,1-5.53-11.5l11.06-4.32a71.73,71.73,0,0,0,4.75,9.88Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.1s"
+                                d="M4,111.21A84.84,84.84,0,0,1,1,98.8l11.73-1.86a73.22,73.22,0,0,0,2.52,10.67Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.2s"
+                                d="M.38,93.53c-.25-2.65-.38-5.34-.38-8,0-1.58,0-3.18.13-4.74L12,81.44c-.07,1.35-.11,2.72-.11,4.08,0,2.29.11,4.61.32,6.89Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.3s"
+                                d="M12.38,76.88.59,75.49A86.17,86.17,0,0,1,3,63l11.46,3.1A73.9,73.9,0,0,0,12.38,76.88Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.4s"
+                                d="M15.79,61.71,4.55,57.91a86.81,86.81,0,0,1,5-11.72L20.07,51.6A74.19,74.19,0,0,0,15.79,61.71Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.5s"
+                                d="M22.28,47.6,12.07,41.53A85.18,85.18,0,0,1,19.38,31.1l9.19,7.51A72,72,0,0,0,22.28,47.6Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.6s"
+                                d="M31.57,35.17l-8.69-8.08a84.24,84.24,0,0,1,9.37-8.65l7.37,9.3A71.66,71.66,0,0,0,31.57,35.17Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.7s"
+                                d="M43.29,25l-6.76-9.75c1.9-1.32,3.89-2.58,5.89-3.74,1.67-1,3.38-1.87,5.1-2.72l5.22,10.66c-1.48.73-3,1.52-4.38,2.34C46.63,22.81,44.93,23.89,43.29,25Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.8s"
+                                d="M56.91,17.6l-4.54-11a85.12,85.12,0,0,1,12.13-4l2.82,11.53A72,72,0,0,0,56.91,17.6Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:0.9s"
+                                d="M71.79,13.25,69.71,1.56A85.28,85.28,0,0,1,82.39.27l.31,11.87A72.56,72.56,0,0,0,71.79,13.25Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:1.0s"
+                                d="M98.2,13.37a74.31,74.31,0,0,0-10.92-1.21L87.71.3a85.73,85.73,0,0,1,12.66,1.4Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:1.1s"
+                                d="M113.1,17.79a74.5,74.5,0,0,0-10.43-3.45l2.88-11.51a86.41,86.41,0,0,1,12.09,4Z" />
+                            <path class="tis-1 temperature-item1" style="--delay:1.2s"
+                                d="M126.74,25.2a73.86,73.86,0,0,0-9.47-5.53L122.48,9a86.13,86.13,0,0,1,11,6.43Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.3s"
+                                d="M138.49,35.32a70.74,70.74,0,0,0-8.07-7.4l7.34-9.33a84.26,84.26,0,0,1,9.4,8.61Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.4s"
+                                d="M147.81,47.71a72.1,72.1,0,0,0-6.3-9l9.16-7.55A85.4,85.4,0,0,1,158,41.63Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.5s"
+                                d="M154.3,61.81A72.27,72.27,0,0,0,150,51.71l10.56-5.43a84.62,84.62,0,0,1,5,11.74Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.6s"
+                                d="M157.67,77a74.36,74.36,0,0,0-2-10.77l11.46-3.08a84.76,84.76,0,0,1,2.37,12.52Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.7s"
+                                d="M169.58,93.67l-11.81-1.18c.24-2.41.36-4.86.36-7.29,0-1.23,0-2.46-.09-3.68l11.85-.59c.07,1.41.11,2.84.11,4.27C170,88,169.86,90.87,169.58,93.67Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.8s"
+                                d="M165.9,111.33l-11.3-3.64A73.55,73.55,0,0,0,157.17,97l11.72,1.91A86.32,86.32,0,0,1,165.9,111.33Z" />
+                            <path class="tis-2 temperature-item1" style="--delay:1.9s"
+                                d="M158.62,127.73l-10.28-5.94a72.39,72.39,0,0,0,4.72-9.8l11.05,4.35A86.44,86.44,0,0,1,158.62,127.73Z" />
+                        </svg>
+                        <div class="data-value" id="temperature-value1" style="top: 130px;">0</div>
+                        <div class="sub-title"></div>
+
+                    </div>
+
+                    <!-- 2 / 6 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Pressure</p>
+
+                        <div class="pressure-contain">
+                            <svg width="176" height="176" style="fill:none">
+                                <circle class="pressure-bg" cx="80" cy="80" r="80" />
+                                <circle class="pressure-fg" id="pressure-offset1" cx="80" cy="80" r="80"
+                                    style="--color:#00ace6;" />
+                            </svg>
+                        </div>
+
+                        <div class="data-value" id="pressure-value1" style="top: 130px;">0</div>
+                        <div class="sub-title"></div>
+                    </div>
+
+                    <!-- 3 / 5 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Temperature</p>
+
+                        <svg width="170" height="128" style="position: absolute; left:55px; top:76px">
+                            <defs>
+                                <style>
+                                    .uis-2 {
+                                        fill: #dc2873;
+                                        opacity: 0.1;
+                                    }
+
+                                    .uis-1 {
+                                        fill: #17a196;
+                                        opacity: 0.1;
+                                    }
+                                </style>
+                            </defs>
+                            <path class="uis-1 temperature-item2" style="--delay:0.0s"
+                                d="M11.29,127.73a85.54,85.54,0,0,1-5.53-11.5l11.06-4.32a71.73,71.73,0,0,0,4.75,9.88Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.1s"
+                                d="M4,111.21A84.84,84.84,0,0,1,1,98.8l11.73-1.86a73.22,73.22,0,0,0,2.52,10.67Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.2s"
+                                d="M.38,93.53c-.25-2.65-.38-5.34-.38-8,0-1.58,0-3.18.13-4.74L12,81.44c-.07,1.35-.11,2.72-.11,4.08,0,2.29.11,4.61.32,6.89Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.3s"
+                                d="M12.38,76.88.59,75.49A86.17,86.17,0,0,1,3,63l11.46,3.1A73.9,73.9,0,0,0,12.38,76.88Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.4s"
+                                d="M15.79,61.71,4.55,57.91a86.81,86.81,0,0,1,5-11.72L20.07,51.6A74.19,74.19,0,0,0,15.79,61.71Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.5s"
+                                d="M22.28,47.6,12.07,41.53A85.18,85.18,0,0,1,19.38,31.1l9.19,7.51A72,72,0,0,0,22.28,47.6Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.6s"
+                                d="M31.57,35.17l-8.69-8.08a84.24,84.24,0,0,1,9.37-8.65l7.37,9.3A71.66,71.66,0,0,0,31.57,35.17Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.7s"
+                                d="M43.29,25l-6.76-9.75c1.9-1.32,3.89-2.58,5.89-3.74,1.67-1,3.38-1.87,5.1-2.72l5.22,10.66c-1.48.73-3,1.52-4.38,2.34C46.63,22.81,44.93,23.89,43.29,25Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.8s"
+                                d="M56.91,17.6l-4.54-11a85.12,85.12,0,0,1,12.13-4l2.82,11.53A72,72,0,0,0,56.91,17.6Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:0.9s"
+                                d="M71.79,13.25,69.71,1.56A85.28,85.28,0,0,1,82.39.27l.31,11.87A72.56,72.56,0,0,0,71.79,13.25Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:1.0s"
+                                d="M98.2,13.37a74.31,74.31,0,0,0-10.92-1.21L87.71.3a85.73,85.73,0,0,1,12.66,1.4Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:1.1s"
+                                d="M113.1,17.79a74.5,74.5,0,0,0-10.43-3.45l2.88-11.51a86.41,86.41,0,0,1,12.09,4Z" />
+                            <path class="uis-1 temperature-item2" style="--delay:1.2s"
+                                d="M126.74,25.2a73.86,73.86,0,0,0-9.47-5.53L122.48,9a86.13,86.13,0,0,1,11,6.43Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.3s"
+                                d="M138.49,35.32a70.74,70.74,0,0,0-8.07-7.4l7.34-9.33a84.26,84.26,0,0,1,9.4,8.61Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.4s"
+                                d="M147.81,47.71a72.1,72.1,0,0,0-6.3-9l9.16-7.55A85.4,85.4,0,0,1,158,41.63Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.5s"
+                                d="M154.3,61.81A72.27,72.27,0,0,0,150,51.71l10.56-5.43a84.62,84.62,0,0,1,5,11.74Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.6s"
+                                d="M157.67,77a74.36,74.36,0,0,0-2-10.77l11.46-3.08a84.76,84.76,0,0,1,2.37,12.52Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.7s"
+                                d="M169.58,93.67l-11.81-1.18c.24-2.41.36-4.86.36-7.29,0-1.23,0-2.46-.09-3.68l11.85-.59c.07,1.41.11,2.84.11,4.27C170,88,169.86,90.87,169.58,93.67Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.8s"
+                                d="M165.9,111.33l-11.3-3.64A73.55,73.55,0,0,0,157.17,97l11.72,1.91A86.32,86.32,0,0,1,165.9,111.33Z" />
+                            <path class="uis-2 temperature-item2" style="--delay:1.9s"
+                                d="M158.62,127.73l-10.28-5.94a72.39,72.39,0,0,0,4.72-9.8l11.05,4.35A86.44,86.44,0,0,1,158.62,127.73Z" />
+                        </svg>
+                        <div class="data-value" id="temperature-value2" style="top: 130px;">0</div>
+                        <div class="sub-title"></div>
+
+                    </div>
+
+                    <!-- 3 / 6 -->
+                    <div class="grid-item grid-1x1">
+                        <p class="title">Pressure</p>
+
+                        <div class="pressure-contain">
+                            <svg width="176" height="176" style="fill:none">
+                                <circle class="pressure-bg" cx="80" cy="80" r="80" />
+                                <circle class="pressure-fg" id="pressure-offset2" cx="80" cy="80" r="80"
+                                    style="--color:#00A99D;" />
+                            </svg>
+                        </div>
+
+                        <div class="data-value" id="pressure-value2" style="top: 130px;">0</div>
+                        <div class="sub-title"></div>
+                    </div>
                 </div>
             </div>
 
@@ -1079,6 +1227,15 @@
         simulation_dewer();
         simulation_compressor();
         simulation_alarm();
+        simulation_gas();
+
+        var pressureOffsetID1 = document.getElementById('pressure-offset1');
+        pressureOffsetID1.style.strokeDashoffset = '336';
+        setInterval(simulation_pressure1, 5000);
+
+        var pressureOffsetID2 = document.getElementById('pressure-offset2');
+        pressureOffsetID2.style.strokeDashoffset = '336';
+        setInterval(simulation_pressure2, 5000);
 
         var gridItemClass = document.getElementsByClassName("fade-animation");
         var sortIndexArray = Array();
@@ -1087,6 +1244,10 @@
         for (let i = 0; i < indexLength; i++) {
             sortIndexArray[i] = i;
         }
+
+        simulation_temperature1();
+        simulation_temperature2();
+
 
         // If uncomment this line, first page grid will show up randomly
         sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
@@ -2614,6 +2775,213 @@
             }, 50);
         }, 5000);
     }
+
+    function simulation_gas() {
+        var gasElementID = document.getElementById('gas-in');
+
+        setInterval(function () {
+            var gasValue = Math.random().toFixed(1);
+
+            gasElementID.style.transform = `scale(${gasValue})`;
+
+        }, 5000);
+    }
+
+    function simulation_temperature1() {
+
+        var temperatureID = document.getElementById('temperature-value1');
+        var temperatureLevelClass = document.getElementsByClassName('temperature-item1');
+        var maxValue = 350;
+        var i = 0;
+
+        setInterval(function () {
+            var tempreatureValue = Math.random() * maxValue;
+            temperatureID.innerText = Math.floor(tempreatureValue);
+
+            let levelBarCount = Math.floor(20 / maxValue * tempreatureValue);
+
+            var maxIndex = 19;
+            var valueIndex = maxIndex - levelBarCount;
+
+            var i = 0;
+            for (i; i < levelBarCount; i++) {
+                temperatureLevelClass[i].style.opacity = 1.0;
+            }
+            for (i; i < maxIndex; i++) {
+                temperatureLevelClass[i].style.opacity = 0.1;
+            }
+
+        }, 3000);
+    }
+
+    function simulation_temperature2() {
+
+        var temperatureID = document.getElementById('temperature-value2');
+        var temperatureLevelClass = document.getElementsByClassName('temperature-item2');
+        var maxValue = 350;
+        var i = 0;
+
+        setInterval(function () {
+            var tempreatureValue = Math.random() * maxValue;
+            temperatureID.innerText = Math.floor(tempreatureValue);
+
+            let levelBarCount = Math.floor(20 / maxValue * tempreatureValue);
+
+            var maxIndex = 19;
+            var valueIndex = maxIndex - levelBarCount;
+
+            var i = 0;
+            for (i; i < levelBarCount; i++) {
+                temperatureLevelClass[i].style.opacity = 1.0;
+            }
+            for (i; i < maxIndex; i++) {
+                temperatureLevelClass[i].style.opacity = 0.1;
+            }
+
+        }, 3000);
+    }
+
+    function simulation_pressure1() {
+        var chartMaxLength = 336;
+
+        var fgID = document.getElementById('pressure-offset1');
+        var valueID = document.getElementById('pressure-value1');
+
+        var maxValue = 10;
+        var randomValue = Math.random() * maxValue;
+
+        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+
+        valueID.innerText = randomValue.toFixed(1);
+
+        var sign = valueToOffset - currentDashOffset;
+
+        var dir = 0;
+        if (sign > 0) {
+            dir = -1; // anitclockwise, increase offset value
+        } else if (sign < 0) {
+            dir = 1; // clockwise, decrease offset value
+        }
+
+        if (dir == 0) {
+            return;
+        }
+
+        var duration = 2000;
+        var interval = 10;
+        var count = 0;
+        var maxCount = Math.floor(duration / interval);
+        var x1 = 0.0;
+        var x2 = 1.0;
+        var dx = Math.abs(x1 - x2) / maxCount;
+        var x = 0.0;
+        var y = 0;
+        var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+        var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+        var a = Math.abs(currentDashOffset - valueToOffset);
+        var b = y1;
+
+        var id = setInterval(function () {
+
+            switch (dir) {
+                case 1:
+                    y = a * Math.pow(2, -10 * x) + y1;
+                    break;
+
+                case -1:
+                    y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                    break;
+
+                default:
+                    count = maxCount; // 
+            }
+
+            fgID.style.strokeDashoffset = Math.floor(y);
+
+            x += dx;
+            count += 1;
+
+            if (count == maxCount) {
+                clearInterval(id);
+            }
+
+        }, interval);
+
+    }
+
+    function simulation_pressure2() {
+        var chartMaxLength = 336;
+
+        var fgID = document.getElementById('pressure-offset2');
+        var valueID = document.getElementById('pressure-value2');
+
+        var maxValue = 10;
+        var randomValue = Math.random() * maxValue;
+
+        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+
+        valueID.innerText = randomValue.toFixed(1);
+
+        var sign = valueToOffset - currentDashOffset;
+
+        var dir = 0;
+        if (sign > 0) {
+            dir = -1; // anitclockwise, increase offset value
+        } else if (sign < 0) {
+            dir = 1; // clockwise, decrease offset value
+        }
+
+        if (dir == 0) {
+            return;
+        }
+
+        var duration = 2000;
+        var interval = 10;
+        var count = 0;
+        var maxCount = Math.floor(duration / interval);
+        var x1 = 0.0;
+        var x2 = 1.0;
+        var dx = Math.abs(x1 - x2) / maxCount;
+        var x = 0.0;
+        var y = 0;
+        var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+        var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+        var a = Math.abs(currentDashOffset - valueToOffset);
+        var b = y1;
+
+        var id = setInterval(function () {
+
+            switch (dir) {
+                case 1:
+                    y = a * Math.pow(2, -10 * x) + y1;
+                    break;
+
+                case -1:
+                    y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                    break;
+
+                default:
+                    count = maxCount; // 
+            }
+
+            fgID.style.strokeDashoffset = Math.floor(y);
+
+            x += dx;
+            count += 1;
+
+            if (count == maxCount) {
+                clearInterval(id);
+            }
+
+        }, interval);
+
+    }
+
+
 </script>
 
 </html>
