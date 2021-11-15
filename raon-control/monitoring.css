@@ -433,6 +433,27 @@
     transform: translate(7px, 7px);
 }
 
+.seq-contain {
+    position: absolute;
+    top: 42px;
+    left: 16px;
+    width: 88px;
+    height: 64px;
+    display: grid;
+    grid-template-columns: 16px 16px 16px 16px;
+    grid-template-rows: 16px 16px 16px;
+    gap: 8px;
+    /* background-color: blanchedalmond; */
+}
+
+.seq-item {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(0, 84, 188, 0.3);
+    border-radius: 8px;
+    background-color: var(--backgroundColor);
+}
+
 @keyframes animatefade {
     from {
         opacity: 0;
