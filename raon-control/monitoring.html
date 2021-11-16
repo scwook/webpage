@@ -793,25 +793,88 @@
 
                     <!-- 2 - 3 / 4 -->
                     <div class="grid-item grid-4x2" style=" grid-column: 1/span 4;grid-row: 2 / span 3">
-                        <div style="position: absolute; left: 20px; top:20px; width:120px; height:120px; border: rgba(0, 84, 188, 0.3) solid 2px; border-radius: 24px; ">
-                            <div style="position:absolute; top: 5px; width:100%; color:white; font-size: 16px; text-align: center;">Cooldown</div>
-                            <div style="position:absolute; top: 24px; width:100%; color:#b9b9b9; font-size: 12px; text-align: center;">400 - 4.5k</div>
-                            <div class="seq-contain">
-                                <div class="seq-item" style="--backgroundColor:#22B573"></div>
-                                <div class="seq-item" style="--backgroundColor:#22B573"></div>
-                                <div class="seq-item" style="--backgroundColor:#22B573"></div>
-                                <div class="seq-item" style="--backgroundColor:#22B573"></div>
-                                <div class="seq-item" style="--backgroundColor:#22B573"></div>
-                                <div class="seq-item" style="--backgroundColor:#22B573"></div>
-                                <div class="seq-item" style="--backgroundColor:none"></div>
-                                <div class="seq-item" style="--backgroundColor:none"></div>
-                                <div class="seq-item" style="--backgroundColor:none"></div>
-                                <div class="seq-item" style="--backgroundColor:none"></div>
-                                <div class="seq-item" style="--backgroundColor:none"></div>
-                                <div class="seq-item" style="--backgroundColor:none"></div>
+                        <p class="title">Sequence</p>
 
+                        <div id="seq-list">
+                            <div id="purifier" class="seq-contain">
+                                <div class="seq-title">Purifier</div>
+                                <div class="seq-outline">
+                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-contain">
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                    </div>
+                                </div>
+                                <div class="seq-subtitle"></div>
 
                             </div>
+
+                            <div id="cooldown-4k" class="seq-contain">
+                                <div class="seq-title">Cooldown</div>
+                                <div class="seq-outline">
+                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-contain">
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                    </div>
+                                </div>
+                                <div class="seq-subtitle">400 - 4.5k</div>
+
+                            </div>
+
+                            <div id="lhe-fill" class="seq-contain">
+                                <div class="seq-title">LHe Filling</div>
+                                <div class="seq-outline">
+                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-contain">
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                    </div>
+                                </div>
+                                <div class="seq-subtitle"></div>
+
+                            </div>
+
+                            <div id="cooldown-2k" class="seq-contain">
+                                <div class="seq-title">Cooldown</div>
+                                <div class="seq-outline">
+                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-contain">
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
+                                    </div>
+                                </div>
+                                <div class="seq-subtitle">4.5k - 2.0k</div>
+
+                            </div>
+
                         </div>
                     </div>
 
@@ -1266,7 +1329,7 @@
 
         simulation_temperature1();
         simulation_temperature2();
-
+        simulation_sequence();
 
         // If uncomment this line, first page grid will show up randomly
         sortIndexArray = sortIndexArray.sort(function (a) { return Math.random() - 0.5 });
@@ -3001,7 +3064,74 @@
 
     }
 
+    function simulation_sequence() {
+        var seqListArray = ['purifier', 'cooldown-4k', 'lhe-fill', 'cooldown-2k'];
+        var subSeqDetailArray = [
+            {'purifier' : ['TS Valve On', 'He Valve On', 'Pressurization', 'Flow Start', 'GHe Regulation', 'Circulation', 'TS Regulation', 'He Circulation']},
+            {'colldown-4k' : ['TS Regulation', 'Line Opening', 'He Line Close', 'Return Line Close', 'Phase End']},
+            {'lhe-fill' : ['LHe Filling', 'Complete Return Line', '']}
+        ];
+        var index = 0;
+        var subseqIntervalID;
 
+        setInterval(function () {
+            clearInterval(subseqIntervalID);
+
+            for (let i = 0; i < seqListArray.length; i++) {
+                var seqListName = document.getElementById(seqListArray[i]);
+
+                var seqOutlineClass = seqListName.getElementsByClassName('seq-outline');
+                var subseqItemClass = seqListName.getElementsByClassName('subseq-item');
+
+                seqOutlineClass[0].style.borderColor = "rgba(0, 84, 188, 0.3)";
+
+                for (let j = 0; j < subseqItemClass.length; j++) {
+                    subseqItemClass[j].style.backgroundColor = "transparent";
+                    subseqItemClass[j].classList.remove('animate-opacity');
+                }
+            }
+
+
+            var seqListName = document.getElementById(seqListArray[index]);
+
+            var seqOutlineClass = seqListName.getElementsByClassName('seq-outline');
+            var subseqItemClass = seqListName.getElementsByClassName('subseq-item');
+            var subseqItemLength = subseqItemClass.length;
+
+            seqOutlineClass[0].style.borderColor = "rgba(0, 84, 188, 1.0)";
+
+            var subseqIndex = Math.floor(Math.random() * (subseqItemClass.length - 1));
+            var preIndex = subseqIndex;
+            subseqIntervalID = setInterval(function () {
+
+                // if(subseqIndex - 1 < 0) {
+                //     preIndex == subseqItemLength - 1;
+                // }
+
+                subseqItemClass[preIndex].style.backgroundColor = "transparent";
+                subseqItemClass[preIndex].classList.remove('animate-opacity');
+
+
+                subseqItemClass[subseqIndex].style.backgroundColor = "#0054BC";
+                subseqItemClass[subseqIndex].classList.add('animate-opacity');
+
+                preIndex = subseqIndex;
+                subseqIndex += 1;
+
+                if (subseqIndex == subseqItemLength) {
+                    subseqIndex = 0;
+                }
+
+            }, 3000);
+
+            index += 1;
+            if (index == seqListArray.length) {
+                index = 0;
+            }
+
+        }, 15000);
+
+    }
 </script>
 
 </html>
