@@ -462,6 +462,7 @@
     border: rgba(0, 84, 188, 0.3) solid 2px;
     border-radius: 26px;
     transition: all 1s;
+    overflow: hidden;
 }
 
 .subseq-title {

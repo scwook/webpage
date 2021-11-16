@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id='a'></div>
+    <div id='b'></div>
+</body>
+
+<script>
+    var parent;
+    parent = setInterval(counting, 5000);
+
+    function counting() {
+        var count = 0;
+
+        var id = setInterval(function () {
+            document.getElementById('a').innerText = count;
+            count += 1;
+
+        }, 1000);
+    }
+
+
+
+    var clear = setInterval(function () {
+        clearInterval(parent);
+    }, 10000);
+
+    var seqListArray = ['purifier', 'cooldown-4k', 'lhe-fill', 'cooldown-2k'];
+    var subSeqDetailArray = { 
+            'purifier': ['TS Valve On', 'He Valve On', 'Pressurization', 'Flow Start', 'GHe Regulation', 'Circulation', 'TS Regulation', 'He Circulation'],
+            'cooldown-4k': ['TS Regulation', 'Line Opening', 'He Line Close', 'Return Line Close', 'QWR Reservoir', 'HWR Reservoir','Phase End'],
+            'lhe-fill': ['LHe Filling', 'Complete Return Line', 'TS Return Line', 'EBx Reservoir', 'End Condition'],
+            'cooldown-2k' : ['TBx01 Regulation', 'VLP Regulation', 'CMx Auto Regulation', 'Phase End']
+        }
+
+    document.getElementById('b').innerText = subSeqDetailArray[seqListArray[0]][2];
+</script>
+
+
+</html>

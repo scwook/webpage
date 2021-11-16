@@ -799,7 +799,7 @@
                             <div id="purifier" class="seq-contain">
                                 <div class="seq-title">Purifier</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-title">/div>
                                     <div class="subseq-contain">
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -818,8 +818,10 @@
                             <div id="cooldown-4k" class="seq-contain">
                                 <div class="seq-title">Cooldown</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-title"></div>
                                     <div class="subseq-contain">
+                                        <div class="subseq-item"></div>
+                                        <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -834,12 +836,8 @@
                             <div id="lhe-fill" class="seq-contain">
                                 <div class="seq-title">LHe Filling</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-title"></div>
                                     <div class="subseq-contain">
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -855,16 +853,8 @@
                             <div id="cooldown-2k" class="seq-contain">
                                 <div class="seq-title">Cooldown</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title">Valve On</div>
+                                    <div class="subseq-title"></div>
                                     <div class="subseq-contain">
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
-                                        <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -1088,59 +1078,59 @@
         grey: 'rgb(201, 203, 207)'
     };
 
-    var subBox = document.getElementById('n2-flow');
+    // var subBox = document.getElementById('n2-flow');
 
-    var rotationID = null;
-    var rotationDegree = 0;
+    // var rotationID = null;
+    // var rotationDegree = 0;
 
-    function rotationStart() {
-        clearInterval(rotationID);
+    // function rotationStart() {
+    //     clearInterval(rotationID);
 
-        rotationID = setInterval(rotation, 10);
-    }
+    //     rotationID = setInterval(rotation, 10);
+    // }
 
-    function rotationStop() {
-        clearInterval(rotationID);
-    }
+    // function rotationStop() {
+    //     clearInterval(rotationID);
+    // }
 
-    function rotation() {
-        subBox.style.transform = 'rotate(' + rotationDegree + 'deg)';
-        rotationDegree += 0.5;
-    }
+    // function rotation() {
+    //     subBox.style.transform = 'rotate(' + rotationDegree + 'deg)';
+    //     rotationDegree += 0.5;
+    // }
 
-    var fillID = null;
-    var topPosition = 176;
+    // var fillID = null;
+    // var topPosition = 176;
 
-    function fillStart(setPosition) {
-        clearInterval(fillID);
+    // function fillStart(setPosition) {
+    //     clearInterval(fillID);
 
-        if (setPosition > topPosition) {
-            direction = 1; // empty
+    //     if (setPosition > topPosition) {
+    //         direction = 1; // empty
 
-        }
-        else if (setPosition < topPosition) {
-            direction = -1 // fill
-        }
-        else {
-            return;
-        }
+    //     }
+    //     else if (setPosition < topPosition) {
+    //         direction = -1 // fill
+    //     }
+    //     else {
+    //         return;
+    //     }
 
-        fillID = setInterval(fill, 50, setPosition, direction); // fill
-    }
+    //     fillID = setInterval(fill, 50, setPosition, direction); // fill
+    // }
 
-    function fillStop() {
-        clearInterval(fillID);
-    }
+    // function fillStop() {
+    //     clearInterval(fillID);
+    // }
 
-    function fill(setPosition, direction) {
+    // function fill(setPosition, direction) {
 
-        if (topPosition == setPosition) {
-            clearInterval(fillID);
-        }
+    //     if (topPosition == setPosition) {
+    //         clearInterval(fillID);
+    //     }
 
-        topPosition += direction;
-        subBox.style.top = topPosition + 'px';
-    }
+    //     topPosition += direction;
+    //     subBox.style.top = topPosition + 'px';
+    // }
 
     function timer() {
         var d = new Date();
@@ -1253,11 +1243,16 @@
             clearInterval(storageIntervalID);
             clearInterval(archiveIntervalID);
             clearInterval(iocIntervalID);
+
+            clearInterval(pressure1IntervalID);
+            clearInterval(pressure2IntervalID);
         }
         else {
             // tab is active again
             // restart timers
             simulation_chart();
+            simulation_pressure1();
+            simulation_pressure2();
         }
     });
 
@@ -1295,29 +1290,22 @@
         // real_network();
         // real_server();
 
-        // Set Simulation Data
+        ////////////////////////
+        //     Simulation    //
+        ///////////////////////
+
         // Page1 - Control
-        simulation_chart();
-        simulation_fps();
-        simulation_timestamp();
-        simulation_timing();
-        simulation_network();
-        simulation_server();
+        start_simulation_page1();
 
         // Page2 - Cryo
-        simulation_page2_flow();
-        simulation_dewer();
-        simulation_compressor();
-        simulation_alarm();
-        simulation_gas();
-
         var pressureOffsetID1 = document.getElementById('pressure-offset1');
         pressureOffsetID1.style.strokeDashoffset = '336';
-        setInterval(simulation_pressure1, 5000);
 
         var pressureOffsetID2 = document.getElementById('pressure-offset2');
         pressureOffsetID2.style.strokeDashoffset = '336';
-        setInterval(simulation_pressure2, 5000);
+
+        start_simulation_page2();
+
 
         var gridItemClass = document.getElementsByClassName("fade-animation");
         var sortIndexArray = Array();
@@ -1356,6 +1344,88 @@
     //     rotationStart();
     //     fillStart(80);
     // }
+
+    function start_simulation_page1() {
+
+        simulation_chart();
+        simulation_fps();
+        simulation_timestamp();
+        simulation_timing();
+        simulation_network();
+        simulation_server();
+
+    }
+
+    function start_simulation_page2() {
+        simulation_page2_flow();
+        simulation_dewer();
+        simulation_compressor();
+        simulation_alarm();
+        simulation_gas();
+        simulation_pressure1();
+        simulation_pressure2();
+    }
+
+
+    function stop_simulation_page1() {
+        // Chart
+        clearInterval(storageIntervalID);
+        clearInterval(archiveIntervalID);
+        clearInterval(iocIntervalID);
+
+        // Timestamp
+        clearInterval(timestampIntervalID);
+
+        // FPS
+        clearInterval(fpsIntervalID);
+
+        // Timing
+        clearInterval(timingChopperIntervalID);
+        clearInterval(timingACCTIntervalID);
+        clearInterval(timingRFQIntervalID);
+
+        // Server
+        clearInterval(serverCPUIntervalID);
+        clearInterval(serverGatewayIntervalID);
+        clearInterval(serverRepositoryIntervalID);
+        clearInterval(serverArchiveIntervalID); w
+    }
+
+    function stop_simulation_page2() {
+        // Flow
+        clearInterval(n2FlowIntervalID);
+        clearInterval(heFlowIntervalID);
+        clearInterval(rotationID[0]);
+        clearInterval(rotationID[1]);
+        clearInterval(fillID[0]);
+        clearInterval(fillID[1]);
+
+        // Dewer
+        clearInterval(dewerIntervalID);
+
+        // Compressor
+        clearInterval(compressorIntervalID);
+        clearInterval(compressorAlarmIntervalID);
+        clearInterval(compressorValueIntervalID);
+
+        // Alarm
+        clearInterval(alarmIntervalID);
+
+        // Gase
+        clearInterval(gasIntervalID);
+
+        // Temperature
+        clearInterval(temperature1IntervalID);
+        clearInterval(temperature2IntervalID);
+
+        // Pressure
+        clearInterval(pressure1IntervalID);
+        clearInterval(pressure2IntervalID);
+
+        // Sequence
+        clearInterval(sequenceIntervalID);
+        clearInterval(subseqIntervalID);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1868,6 +1938,7 @@
 
     }
 
+    var timestampIntervalID;
     function simulation_timestamp() {
         // Timestamp
         var deg1 = 0;
@@ -1889,7 +1960,7 @@
 
         }, 10000);
 
-        setInterval(function () {
+        timestampIntervalID = setInterval(function () {
             var timestamp1ID = document.getElementById('timestamp1');
             var timestamp2ID = document.getElementById('timestamp2');
             var timestamp3ID = document.getElementById('timestamp3');
@@ -1911,12 +1982,13 @@
 
     }
 
+    var timingChopperIntervalID, timingACCTIntervalID, timingRFQIntervalID;
     function simulation_timing() {
 
-        // Chopper
         setTimeout(function () {
 
-            setInterval(function () {
+            // Chopper
+            timingChopperIntervalID = setInterval(function () {
                 var chopperValue = Math.floor(Math.random() * 500) + 50;
                 var drawingWidth = chopperValue;
 
@@ -1957,11 +2029,8 @@
                 document.getElementById('timing-chopper-value').innerText = chopperValue + 'us';
             }, 5000);
 
-        }, 1000);
-
-        // ACCT
-        setTimeout(function () {
-            setInterval(function () {
+            // ACCT
+            timingACCTIntervalID = setInterval(function () {
 
                 var acctValue = Math.floor(Math.random() * 500) + 50;
                 var drawingWidth = acctValue;
@@ -2003,11 +2072,9 @@
                 document.getElementById('timing-acct-value').innerText = acctValue + 'us';
             }, 5000);
 
-        }, 1000);
 
-        // RFQ
-        setTimeout(function () {
-            setInterval(function () {
+            // RFQ
+            timingRFQIntervalID = setInterval(function () {
 
                 var rfqValue = Math.floor(Math.random() * 500) + 50;
                 var drawingWidth = rfqValue;
@@ -2049,7 +2116,6 @@
             }, 5000);
 
         }, 1000);
-
     }
 
     function simulation_network() {
@@ -2248,6 +2314,7 @@
 
     }
 
+    var serverWebIntervalID, serverGatewayIntervalID, serverRepositoryIntervalID, serverArchiveIntervalID;
     function simulation_server() {
         // Web Server
         var webServerMaxCPU = 100;
@@ -2255,7 +2322,7 @@
         var webServerMaxDisk = 100;
         var webServerMaxNetwork = 100;
 
-        setInterval(function () {
+        serverCPUIntervalID = setInterval(function () {
             // CPU
             var webServerCPUValue = Math.floor(Math.random() * webServerMaxCPU);
 
@@ -2348,7 +2415,7 @@
         var gatewayServerMaxDisk = 100;
         var gatewayServerMaxNetwork = 100;
 
-        setInterval(function () {
+        serverGatewayIntervalID = setInterval(function () {
             // CPU
             var gatewayServerCPUValue = Math.floor(Math.random() * gatewayServerMaxCPU);
 
@@ -2441,7 +2508,7 @@
         var repositoryServerMaxDisk = 100;
         var repositoryServerMaxNetwork = 100;
 
-        setInterval(function () {
+        serverRepositoryIntervalID = setInterval(function () {
             // CPU
             var repositoryServerCPUValue = Math.floor(Math.random() * repositoryServerMaxCPU);
 
@@ -2534,7 +2601,7 @@
         var archiveServerMaxDisk = 100;
         var archiveServerMaxNetwork = 100;
 
-        setInterval(function () {
+        serverArchiveIntervalID = setInterval(function () {
             // CPU
             var archiveServerCPUValue = Math.floor(Math.random() * archiveServerMaxCPU);
 
@@ -2627,13 +2694,14 @@
     ///////////////////////////////      Simulation Page 2         /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
+    var n2FlowIntervalID, heFlowIntervalID;
     function simulation_page2_flow() {
 
         // N2 Flow
         var n2Count = 1;
         var n2Value = document.getElementById('n2-value');
 
-        setInterval(function () {
+        n2FlowIntervalID = setInterval(function () {
             var maxValue = 100;
             var valveOpen = Math.floor(Math.random() * maxValue);
             var valueToPosition = Math.floor(160 / maxValue * valveOpen);
@@ -2658,7 +2726,7 @@
         var heCount = 1;
         var heValue = document.getElementById('he-value');
 
-        setInterval(function () {
+        heFlowIntervalID = setInterval(function () {
             var maxValue = 100;
             var valveOpen = Math.floor(Math.random() * maxValue);
             var valueToPosition = Math.floor(160 / maxValue * valveOpen);
@@ -2736,14 +2804,16 @@
         // console.log(topPosition);
     }
 
-    var currentDewer = 0;
+    var dewerIntervalID;
     function simulation_dewer() {
+        var currentDewer = 0;
+
         var dewerGradientPoint1 = document.getElementById('dewer-gradient-point1');
         var dewerGradientPoint2 = document.getElementById('dewer-gradient-point2');
         var dewerValueID = document.getElementById('dewer-value');
         // var dewerValueID = document.getElementById('dewer-value');
 
-        setInterval(function () {
+        dewerIntervalID = setInterval(function () {
             let dewerValue = Math.random().toFixed(1);
             // dewerValueID.innerText = dewerValue * 5000;
             dewerValueID.innerText = Math.floor(dewerValue * 5000);
@@ -2762,6 +2832,7 @@
         }, 3000);
     }
 
+    var compressorIntervalID, compressorAlarmIntervalID, compressorValueIntervalID;
     function simulation_compressor() {
         var circle1ID = document.getElementById('compressor-circle1');
         var circle2ID = document.getElementById('compressor-circle2');
@@ -2772,14 +2843,13 @@
         var alarm = false;
         var status = false;
 
-        setInterval(function () {
+        compressorIntervalID = setInterval(function () {
 
             if (status) {
                 status = false;
             } else {
                 status = true;
             }
-
 
             var id = setInterval(function () {
 
@@ -2800,7 +2870,7 @@
 
         }, 10000);
 
-        setInterval(function () {
+        compressorAlarmIntervalID = setInterval(function () {
 
             if (alarm) {
                 circle3ID.style.borderColor = "#ED1E79"
@@ -2817,12 +2887,13 @@
         }, 3000);
     }
 
+    var alarmIntervalID;
     function simulation_alarm() {
         var alarmItemClass = document.getElementsByClassName('alarm-item');
         var alarmStatus = [true, true, true, true, true, true];
         // var colorArray = ['#004060', '#00A651', '#ED1A3B'];
 
-        setInterval(function () {
+        alarmIntervalID = setInterval(function () {
             var index = Math.floor(Math.random() * alarmStatus.length);
             var count = 0;
             var color = "#004060";
@@ -2859,10 +2930,11 @@
         }, 5000);
     }
 
+    var gasIntervalID;
     function simulation_gas() {
         var gasElementID = document.getElementById('gas-in');
 
-        setInterval(function () {
+        gasIntervalID = setInterval(function () {
             var gasValue = Math.random().toFixed(1);
 
             gasElementID.style.transform = `scale(${gasValue})`;
@@ -2870,6 +2942,7 @@
         }, 5000);
     }
 
+    var temperature1IntervalID;
     function simulation_temperature1() {
 
         var temperatureID = document.getElementById('temperature-value1');
@@ -2877,7 +2950,7 @@
         var maxValue = 350;
         var i = 0;
 
-        setInterval(function () {
+        temperature1IntervalID = setInterval(function () {
             var tempreatureValue = Math.random() * maxValue;
             temperatureID.innerText = Math.floor(tempreatureValue);
 
@@ -2897,6 +2970,7 @@
         }, 3000);
     }
 
+    var temperature1Interva2ID;
     function simulation_temperature2() {
 
         var temperatureID = document.getElementById('temperature-value2');
@@ -2904,7 +2978,7 @@
         var maxValue = 350;
         var i = 0;
 
-        setInterval(function () {
+        temperature1Interva2ID = setInterval(function () {
             var tempreatureValue = Math.random() * maxValue;
             temperatureID.innerText = Math.floor(tempreatureValue);
 
@@ -2924,164 +2998,176 @@
         }, 3000);
     }
 
+    var pressure1IntervalID;
     function simulation_pressure1() {
-        var chartMaxLength = 336;
 
-        var fgID = document.getElementById('pressure-offset1');
-        var valueID = document.getElementById('pressure-value1');
+        pressure1IntervalID = setInterval(function () {
+            var chartMaxLength = 336;
 
-        var maxValue = 10;
-        var randomValue = Math.random() * maxValue;
+            var fgID = document.getElementById('pressure-offset1');
+            var valueID = document.getElementById('pressure-value1');
 
-        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
-        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+            var maxValue = 10;
+            var randomValue = Math.random() * maxValue;
 
-        valueID.innerText = randomValue.toFixed(1);
+            var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+            var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
 
-        var sign = valueToOffset - currentDashOffset;
+            valueID.innerText = randomValue.toFixed(1);
 
-        var dir = 0;
-        if (sign > 0) {
-            dir = -1; // anitclockwise, increase offset value
-        } else if (sign < 0) {
-            dir = 1; // clockwise, decrease offset value
-        }
+            var sign = valueToOffset - currentDashOffset;
 
-        if (dir == 0) {
-            return;
-        }
-
-        var duration = 2000;
-        var interval = 10;
-        var count = 0;
-        var maxCount = Math.floor(duration / interval);
-        var x1 = 0.0;
-        var x2 = 1.0;
-        var dx = Math.abs(x1 - x2) / maxCount;
-        var x = 0.0;
-        var y = 0;
-        var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
-        var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
-        var a = Math.abs(currentDashOffset - valueToOffset);
-        var b = y1;
-
-        var id = setInterval(function () {
-
-            switch (dir) {
-                case 1:
-                    y = a * Math.pow(2, -10 * x) + y1;
-                    break;
-
-                case -1:
-                    y = a * (1 - Math.pow(2, -10 * x)) + y1;
-
-                    break;
-
-                default:
-                    count = maxCount; // 
+            var dir = 0;
+            if (sign > 0) {
+                dir = -1; // anitclockwise, increase offset value
+            } else if (sign < 0) {
+                dir = 1; // clockwise, decrease offset value
             }
 
-            fgID.style.strokeDashoffset = Math.floor(y);
-
-            x += dx;
-            count += 1;
-
-            if (count == maxCount) {
-                clearInterval(id);
+            if (dir == 0) {
+                return;
             }
 
-        }, interval);
+            var duration = 2000;
+            var interval = 10;
+            var count = 0;
+            var maxCount = Math.floor(duration / interval);
+            var x1 = 0.0;
+            var x2 = 1.0;
+            var dx = Math.abs(x1 - x2) / maxCount;
+            var x = 0.0;
+            var y = 0;
+            var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+            var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+            var a = Math.abs(currentDashOffset - valueToOffset);
+            var b = y1;
+
+            var id = setInterval(function () {
+
+                switch (dir) {
+                    case 1:
+                        y = a * Math.pow(2, -10 * x) + y1;
+                        break;
+
+                    case -1:
+                        y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                        break;
+
+                    default:
+                        count = maxCount; // 
+                }
+
+                fgID.style.strokeDashoffset = Math.floor(y);
+
+                x += dx;
+                count += 1;
+
+                if (count == maxCount) {
+                    clearInterval(id);
+                }
+
+            }, interval);
+
+        }, 5000);
 
     }
 
+    var pressure2IntervalID;
     function simulation_pressure2() {
-        var chartMaxLength = 336;
+        pressure2IntervalID = setInterval(function () {
 
-        var fgID = document.getElementById('pressure-offset2');
-        var valueID = document.getElementById('pressure-value2');
+            var chartMaxLength = 336;
 
-        var maxValue = 10;
-        var randomValue = Math.random() * maxValue;
+            var fgID = document.getElementById('pressure-offset2');
+            var valueID = document.getElementById('pressure-value2');
 
-        var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
-        var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
+            var maxValue = 10;
+            var randomValue = Math.random() * maxValue;
 
-        valueID.innerText = randomValue.toFixed(1);
+            var valueToOffset = Math.floor(chartMaxLength - chartMaxLength / maxValue * randomValue);
+            var currentDashOffset = parseInt(fgID.style.strokeDashoffset);
 
-        var sign = valueToOffset - currentDashOffset;
+            valueID.innerText = randomValue.toFixed(1);
 
-        var dir = 0;
-        if (sign > 0) {
-            dir = -1; // anitclockwise, increase offset value
-        } else if (sign < 0) {
-            dir = 1; // clockwise, decrease offset value
-        }
+            var sign = valueToOffset - currentDashOffset;
 
-        if (dir == 0) {
-            return;
-        }
-
-        var duration = 2000;
-        var interval = 10;
-        var count = 0;
-        var maxCount = Math.floor(duration / interval);
-        var x1 = 0.0;
-        var x2 = 1.0;
-        var dx = Math.abs(x1 - x2) / maxCount;
-        var x = 0.0;
-        var y = 0;
-        var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
-        var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
-        var a = Math.abs(currentDashOffset - valueToOffset);
-        var b = y1;
-
-        var id = setInterval(function () {
-
-            switch (dir) {
-                case 1:
-                    y = a * Math.pow(2, -10 * x) + y1;
-                    break;
-
-                case -1:
-                    y = a * (1 - Math.pow(2, -10 * x)) + y1;
-
-                    break;
-
-                default:
-                    count = maxCount; // 
+            var dir = 0;
+            if (sign > 0) {
+                dir = -1; // anitclockwise, increase offset value
+            } else if (sign < 0) {
+                dir = 1; // clockwise, decrease offset value
             }
 
-            fgID.style.strokeDashoffset = Math.floor(y);
-
-            x += dx;
-            count += 1;
-
-            if (count == maxCount) {
-                clearInterval(id);
+            if (dir == 0) {
+                return;
             }
 
-        }, interval);
+            var duration = 2000;
+            var interval = 10;
+            var count = 0;
+            var maxCount = Math.floor(duration / interval);
+            var x1 = 0.0;
+            var x2 = 1.0;
+            var dx = Math.abs(x1 - x2) / maxCount;
+            var x = 0.0;
+            var y = 0;
+            var y1 = (dir == 1) ? valueToOffset : currentDashOffset;
+            var y2 = (dir == 1) ? currentDashOffset : valueToOffset;
+            var a = Math.abs(currentDashOffset - valueToOffset);
+            var b = y1;
+
+            var id = setInterval(function () {
+
+                switch (dir) {
+                    case 1:
+                        y = a * Math.pow(2, -10 * x) + y1;
+                        break;
+
+                    case -1:
+                        y = a * (1 - Math.pow(2, -10 * x)) + y1;
+
+                        break;
+
+                    default:
+                        count = maxCount; // 
+                }
+
+                fgID.style.strokeDashoffset = Math.floor(y);
+
+                x += dx;
+                count += 1;
+
+                if (count == maxCount) {
+                    clearInterval(id);
+                }
+
+            }, interval);
+
+        }, 5000);
 
     }
 
+    var sequenceIntervalID, subseqIntervalID;
     function simulation_sequence() {
         var seqListArray = ['purifier', 'cooldown-4k', 'lhe-fill', 'cooldown-2k'];
-        var subSeqDetailArray = [
-            {'purifier' : ['TS Valve On', 'He Valve On', 'Pressurization', 'Flow Start', 'GHe Regulation', 'Circulation', 'TS Regulation', 'He Circulation']},
-            {'colldown-4k' : ['TS Regulation', 'Line Opening', 'He Line Close', 'Return Line Close', 'Phase End']},
-            {'lhe-fill' : ['LHe Filling', 'Complete Return Line', '']}
-        ];
+        var subSeqDetailArray = { 
+            'purifier': ['TS Valve On', 'He Valve On', 'Pressurization', 'Flow Start', 'GHe Regulation', 'Circulation', 'TS Regulation', 'He Circulation'],
+            'cooldown-4k': ['TS Regulation', 'Line Opening', 'He Line Close', 'Return Line Close', 'QWR Reservoir', 'HWR Reservoir','Phase End'],
+            'lhe-fill': ['LHe Filling', 'Complete Return Line', 'TS Return Line', 'EBx Reservoir', 'End Condition'],
+            'cooldown-2k' : ['TBx01 Regulation', 'VLP Regulation', 'CMx Auto Regulation', 'Phase End']
+        }
+        
         var index = 0;
-        var subseqIntervalID;
 
-        setInterval(function () {
+        sequenceIntervalID = setInterval(function () {
             clearInterval(subseqIntervalID);
 
             for (let i = 0; i < seqListArray.length; i++) {
-                var seqListName = document.getElementById(seqListArray[i]);
+                var seqListNameID = document.getElementById(seqListArray[i]);
 
-                var seqOutlineClass = seqListName.getElementsByClassName('seq-outline');
-                var subseqItemClass = seqListName.getElementsByClassName('subseq-item');
+                var seqOutlineClass = seqListNameID.getElementsByClassName('seq-outline');
+                var subseqItemClass = seqListNameID.getElementsByClassName('subseq-item');
 
                 seqOutlineClass[0].style.borderColor = "rgba(0, 84, 188, 0.3)";
 
@@ -3091,11 +3177,13 @@
                 }
             }
 
+            var seqListName = seqListArray[index]
+            var seqListNameID = document.getElementById(seqListName);
 
-            var seqListName = document.getElementById(seqListArray[index]);
+            var seqOutlineClass = seqListNameID.getElementsByClassName('seq-outline');
+            var subseqItemClass = seqListNameID.getElementsByClassName('subseq-item');
+            var subSeqTitleClass = seqListNameID.getElementsByClassName('subseq-title');
 
-            var seqOutlineClass = seqListName.getElementsByClassName('seq-outline');
-            var subseqItemClass = seqListName.getElementsByClassName('subseq-item');
             var subseqItemLength = subseqItemClass.length;
 
             seqOutlineClass[0].style.borderColor = "rgba(0, 84, 188, 1.0)";
@@ -3107,13 +3195,15 @@
                 // if(subseqIndex - 1 < 0) {
                 //     preIndex == subseqItemLength - 1;
                 // }
-
+                
+                subSeqTitleClass[0].innerText = subSeqDetailArray[seqListName][subseqIndex];
                 subseqItemClass[preIndex].style.backgroundColor = "transparent";
                 subseqItemClass[preIndex].classList.remove('animate-opacity');
 
 
                 subseqItemClass[subseqIndex].style.backgroundColor = "#0054BC";
                 subseqItemClass[subseqIndex].classList.add('animate-opacity');
+
 
                 preIndex = subseqIndex;
                 subseqIndex += 1;
