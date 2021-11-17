@@ -240,7 +240,7 @@
                     </div>
 
                     <!-- 2 / 2 - 3 -->
-                    <div class="grid-item grid-2x1 fade-animation" style="grid-column: 2/span 2;">
+                    <div class="grid-item grid-2x1 fade-animation" style="grid-column: 2/span 2; z-index: 1000">
                         <canvas id="scl32-network"></canvas>
                     </div>
 
@@ -426,7 +426,7 @@
                     </div>
 
                     <!-- 3 / 2 - 3 -->
-                    <div class="grid-item grid-2x1 fade-animation" style="grid-column: 2/span 2;">
+                    <div class="grid-item grid-2x1 fade-animation" style="grid-column: 2/span 2; z-index: 1000;">
                         <canvas id="scl4-network"></canvas>
                     </div>
 
@@ -799,7 +799,7 @@
                             <div id="purifier" class="seq-contain">
                                 <div class="seq-title">Purifier</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title">/div>
+                                    <div class="subseq-title">Ready</div>
                                     <div class="subseq-contain">
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -818,7 +818,7 @@
                             <div id="cooldown-4k" class="seq-contain">
                                 <div class="seq-title">Cooldown</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title"></div>
+                                    <div class="subseq-title">Ready</div>
                                     <div class="subseq-contain">
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -836,7 +836,7 @@
                             <div id="lhe-fill" class="seq-contain">
                                 <div class="seq-title">LHe Filling</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title"></div>
+                                    <div class="subseq-title">Ready</div>
                                     <div class="subseq-contain">
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -853,7 +853,7 @@
                             <div id="cooldown-2k" class="seq-contain">
                                 <div class="seq-title">Cooldown</div>
                                 <div class="seq-outline">
-                                    <div class="subseq-title"></div>
+                                    <div class="subseq-title">Ready</div>
                                     <div class="subseq-contain">
                                         <div class="subseq-item"></div>
                                         <div class="subseq-item"></div>
@@ -3158,6 +3158,7 @@
             'cooldown-2k' : ['TBx01 Regulation', 'VLP Regulation', 'CMx Auto Regulation', 'Phase End']
         }
         
+
         var index = 0;
 
         sequenceIntervalID = setInterval(function () {

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<!-- <script src="../script/chart.min.js"></script>
+<script src="../script/chartjs-plugin-streaming.min.js"></script>
+<script src="../script/luxon.min.js"></script>
+<script src="../script/chartjs-adapter-luxon.js"></script> -->
+
+<script src="../script/moment.js"></script>
+<script src="../script/chart.js@2.8.0"></script>
+<script src="../script/chartjs-plugin-streaming.js"></script>
+
+<style>
+
+</style>
+
+<body>
+    <div style="width:580px; height:280px;">
+        <canvas id="scl32-network"></canvas>
+
+    </div>
+
+
+</body>
+
+<script>
+    var chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+
+    window.onload = function () {
+        simulation_network();
+    }
+
+    function simulation_network() {
+
+        // SCL3, SCL2 Vlan 30, 20
+        var scl32CharConfig = {
+            // var color = Chart.helpers.color;
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Primary',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.red,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }, {
+                    label: 'Secondary',
+                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.blue,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    data: [],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'SCL3,2 Main Network Uplink'
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 10
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'realtime',
+                        realtime: {
+                            duration: 60000,
+                            refresh: 1000,
+                            delay: 2000,
+                            onRefresh: scl32DataOnRefresh
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                }
+            }
+        };
+
+
+        var scl32ChartContext = document.getElementById('scl32-network').getContext('2d');
+        window.scl32Chart = new Chart(scl32ChartContext, scl32CharConfig);
+
+        function scl32DataOnRefresh(chart) {
+            var pValue = Math.random() * 10;
+            pValue = pValue.toFixed(1);
+
+            var sValue = Math.random() * 10;
+            sValue = sValue.toFixed(1);
+
+            chart.config.data.datasets[0].data.push({
+                x: Date.now(),
+                y: pValue
+            });
+
+            chart.config.data.datasets[1].data.push({
+                x: Date.now(),
+                y: sValue
+            });
+        }
+    }
+</script>
+
+</html>

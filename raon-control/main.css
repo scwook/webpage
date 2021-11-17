@@ -346,6 +346,8 @@
     font-size: 28px;
     text-align: center;
     font-family: "Roboto-Thin";
+    opacity: 0.0;
+    transition: all 4s ease-out;
 }
 
 .moduleNavi-contain {
