@@ -319,9 +319,9 @@
             snapshot: [
                 { snapshotid: "1", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
                 { snapshotid: "2", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
-                { snapshotid: "3", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
-                { snapshotid: "4", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
-                { snapshotid: "5", timestamp: "2021-03-09 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "3", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "4", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
+                { snapshotid: "5", timestamp: "2021-10-04 12:04:06", description: "Snapshot Test 1" },
             ]
         },
 
@@ -349,7 +349,33 @@
                 { snapshotid: "104", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 6" },
                 { snapshotid: "105", timestamp: "2021-10-26 12:04:06", description: "Snapshot Test 7" },
             ]
-        }
+        },
+
+        {
+            eventid: "4",
+            date: "2021-11-09",
+            title: "Event Test 4",
+            snapshot: [
+                { snapshotid: "31", timestamp: "2021-11-09 12:04:06", description: "Snapshot Test 3" },
+                { snapshotid: "32", timestamp: "2021-11-09 12:04:06", description: "Snapshot Test 4" },
+                { snapshotid: "33", timestamp: "2021-11-09 12:04:06", description: "Snapshot Test 5" },
+                { snapshotid: "34", timestamp: "2021-11-09 12:04:06", description: "Snapshot Test 6" },
+                { snapshotid: "35", timestamp: "2021-11-09 12:04:06", description: "Snapshot Test 7" },
+            ]
+        },
+
+        {
+            eventid: "5",
+            date: "2021-11-18",
+            title: "Event Test 5",
+            snapshot: [
+                { snapshotid: "36", timestamp: "2021-11-18 12:04:06", description: "Snapshot Test 3" },
+                { snapshotid: "37", timestamp: "2021-11-18 12:04:06", description: "Snapshot Test 4" },
+                { snapshotid: "38", timestamp: "2021-11-18 12:04:06", description: "Snapshot Test 5" },
+                { snapshotid: "39", timestamp: "2021-11-18 12:04:06", description: "Snapshot Test 6" },
+                { snapshotid: "40", timestamp: "2021-11-18 12:04:06", description: "Snapshot Test 7" },
+            ]
+        },
     ];
 
     var recordData = new Array();
@@ -373,16 +399,11 @@
     window.onload = function () {
         var myVar = setInterval(timer, 1000);
 
-        getEventDataFromDB();
+        // From Server
+        // getEventDataFromDB();
 
-        // createCalendar(0);
-
-        // thisCalendar();
-        // makeEventList();
-        // snashotDetail();
-        // shifterList(0, '#8E44AD');
-
-        // setInterval(getScheduleDatabase, 2000);
+        // From Example Data
+        createCalendar(0);
 
         // Test Chart
         const labels = [

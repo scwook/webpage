@@ -1034,24 +1034,60 @@
             <div class="slide-page" style="display: none">
                 <div class="slide-page-title">Module</div>
                 <div class="grid-container">
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
-                    <div class="grid-item grid-1x1"></div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">머</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">리</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">깎</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">아</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">라</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
+                    <div class="grid-item grid-1x1">
+                        <div class="page3">대</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2127,14 +2163,14 @@
             data: {
                 datasets: [{
                     label: 'Primary',
-                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    backgroundColor: window.chartColors.red,
                     borderColor: window.chartColors.red,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
                     data: [],
                 }, {
                     label: 'Secondary',
-                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
@@ -2223,14 +2259,14 @@
             data: {
                 datasets: [{
                     label: 'Primary',
-                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    backgroundColor: window.chartColors.purple,
                     borderColor: window.chartColors.purple,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
                     data: [],
                 }, {
                     label: 'Secondary',
-                    // backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                    backgroundColor: window.chartColors.green,
                     borderColor: window.chartColors.green,
                     fill: false,
                     cubicInterpolationMode: 'monotone',
@@ -3151,13 +3187,13 @@
     var sequenceIntervalID, subseqIntervalID;
     function simulation_sequence() {
         var seqListArray = ['purifier', 'cooldown-4k', 'lhe-fill', 'cooldown-2k'];
-        var subSeqDetailArray = { 
+        var subSeqDetailArray = {
             'purifier': ['TS Valve On', 'He Valve On', 'Pressurization', 'Flow Start', 'GHe Regulation', 'Circulation', 'TS Regulation', 'He Circulation'],
-            'cooldown-4k': ['TS Regulation', 'Line Opening', 'He Line Close', 'Return Line Close', 'QWR Reservoir', 'HWR Reservoir','Phase End'],
+            'cooldown-4k': ['TS Regulation', 'Line Opening', 'He Line Close', 'Return Line Close', 'QWR Reservoir', 'HWR Reservoir', 'Phase End'],
             'lhe-fill': ['LHe Filling', 'Complete Return Line', 'TS Return Line', 'EBx Reservoir', 'End Condition'],
-            'cooldown-2k' : ['TBx01 Regulation', 'VLP Regulation', 'CMx Auto Regulation', 'Phase End']
+            'cooldown-2k': ['TBx01 Regulation', 'VLP Regulation', 'CMx Auto Regulation', 'Phase End']
         }
-        
+
 
         var index = 0;
 
@@ -3196,7 +3232,7 @@
                 // if(subseqIndex - 1 < 0) {
                 //     preIndex == subseqItemLength - 1;
                 // }
-                
+
                 subSeqTitleClass[0].innerText = subSeqDetailArray[seqListName][subseqIndex];
                 subseqItemClass[preIndex].style.backgroundColor = "transparent";
                 subseqItemClass[preIndex].classList.remove('animate-opacity');
