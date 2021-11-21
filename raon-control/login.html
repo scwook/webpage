@@ -9,7 +9,9 @@
         <div id="login-menu">
             <input type="text" id="id">
             <input type="password" id="password">
-            <input type="button" id="signin" value="Sign in" onclick="signin()">
+            <!-- <input type="button" id="signin" value="Sign in" onclick="signin()"> -->
+            <input type="button" id="signin" value="Sign in" onclick="login()">
+
         </div>
     </div>
 
@@ -17,7 +19,7 @@
         <svg width="1920" height="1" style="position: absolute; top:420px">
             <line class="line" y1="0.5" x2="1920" y2="0.5" style="fill: none; stroke:#1b3333;opacity:0.5" />
         </svg>
-        <svg id="particle" width="793.734" height="6" style="position: absolute; top:418px;">
+        <svg id="particle" class="beforeLogin" width="793.734" height="6" style="position: absolute; top:418px;">
             <linearGradient id="linear-gradient" x1="-1129.0036" y1="3.0539" x2="-337.8693" y2="3.0539"
                 gradientTransform="matrix(-1, 0, 0, 1, -335.2696, -0.0517)" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stop-opacity="0" />
@@ -62,40 +64,48 @@
 <script>
     var serverAddr = 'http://192.168.68.126:9014';
 
-    function signin() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
-          window.location.href = defaultURL + '/main'
-          console.log(this.responseText);
-
-        }
-        else {
-          // alert('Status Error : ' + this.status);
-          document.getElementById('message').innerText = this.responseText
-        }
-      };
-
-      var userID = document.getElementById('id').value
-      var passwd = document.getElementById('password').value
-
-      var userInfo = { 'id': userID, 'pw': passwd }
-      var rName = serverAddr + '/login'
-      xhttp.open("POST", rName, true);
-      xhttp.setRequestHeader('Content-Type', 'application/json');
-      xhttp.send(JSON.stringify(userInfo));
+    function login() {
+        var id = document.getElementById('particle');
+        id.classList.remove('beforeLogin');
+        void id.offsetWidth;
+        id.classList.add('afterLogin');
     }
-    
+
+    function signin() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                window.location.href = defaultURL + '/main'
+                console.log(this.responseText);
+
+            } else {
+                // alert('Status Error : ' + this.status);
+                document.getElementById('message').innerText = this.responseText
+            }
+        };
+
+        var userID = document.getElementById('id').value
+        var passwd = document.getElementById('password').value
+
+        var userInfo = {
+            'id': userID,
+            'pw': passwd
+        }
+        var rName = serverAddr + '/login'
+        xhttp.open("POST", rName, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(userInfo));
+    }
+
     function timer() {
         var d = new Date();
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
-    window.onload = function () {
+    window.onload = function() {
         // setInterval(timer, 1000);
     }
-
 </script>
 
 
