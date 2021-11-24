@@ -453,9 +453,9 @@
 }
 
 .fade-animation {
-    animation: animatefade 1s;
+    animation: animatefade 1s forwards;
     opacity: 0;
-    animation-fill-mode: forwards;
+    /* animation-fill-mode: forwards; */
 }
 
 @keyframes animatefade {

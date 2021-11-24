@@ -10,7 +10,7 @@
             <input type="text" id="id">
             <input type="password" id="password">
             <!-- <input type="button" id="signin" value="Sign in" onclick="signin()"> -->
-            <input type="button" id="signin" value="Sign in" onclick="login()">
+            <input type="button" id="signin" value="Sign in" onclick="signin()">
 
         </div>
     </div>
@@ -64,27 +64,27 @@
 <script>
     var serverAddr = 'http://192.168.68.126:9014';
 
-    function login() {
-        // var id = document.getElementById('particle');
-        // id.classList.remove('beforeLogin');
-        // void id.offsetWidth;
-        // id.classList.add('afterLogin');
-        document.getElementById('particle').style.transition = 'all 1s ease-in';
-        document.getElementById('particle').style.left = '-800px';
-
-    }
-
     function signin() {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-                window.location.href = defaultURL + '/main'
-                console.log(this.responseText);
+
+                document.getElementById('raon-box').style.transition = 'all 0.5s ease-in'
+                document.getElementById('raon-box').style.opacity = '0.0';
+
+                document.getElementById('control-system').style.transition = 'all 0.5s ease-in'
+                document.getElementById('control-system').style.opacity = '0.0';
+
+                document.getElementById('particle').style.transition = 'all 1s ease-in';
+                document.getElementById('particle').style.left = '-800px';
+
+                setTimeout(function() {
+                    window.location.href = serverAddr + '/main'
+                },1000);
 
             } else {
                 // alert('Status Error : ' + this.status);
-                document.getElementById('message').innerText = this.responseText
+                // document.getElementById('message').innerText = this.responseText
             }
         };
 
@@ -106,7 +106,7 @@
         document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
     }
 
-    window.onload = function() {
+    window.onload = function () {
         // setInterval(timer, 1000);
         var raonBoxID = document.getElementById('raon-box');
 

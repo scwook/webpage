@@ -72,8 +72,7 @@
     top: 20px;
     text-align: center;
     opacity: 0;
-    /* animation: showup 3s linear 1.5s forwards; */
-    transition: all 1s ease-in-out 1.5s;
+    transition: all 1s ease-out 1.5s;
     /* filter: blur(2px); */
     /* transform: scale(1.05); */
 }
@@ -86,8 +85,7 @@
     font-size: 20px;
     letter-spacing: 6px;
     opacity: 0;
-    /* animation: showup 3s linear 2s forwards; */
-    transition: all 3s linear 3s;
+    transition: all 3s ease-out 3s;
 }
 
 #particle {
@@ -95,45 +93,6 @@
     /* animation: particleMoveBefore 1.5s cubic-bezier(0.075, 0.82, 0.2, 1) forwards; */
     left: 1920px;
     transition: all 1.5s cubic-bezier(0.075, 0.82, 0.2, 1);
-}
-
-/* .beforeLogin {
-    animation: particleMoveBefore 1.5s cubic-bezier(0.075, 0.82, 0.2, 1) forwards;
-}
-
-.afterfLogin {
-    animation: particleMoveAfter 1.0s ease-in forwards;
-}
-
-@keyframes particleMoveBefore {
-    from {
-        left: 1920px;
-    }
-    to {
-        left: 800px;
-    }
-}
-
-@keyframes particleMoveAfter {
-    from {
-        left: 800px;
-    }
-    to {
-        left: 0px;
-    }
-} */
-
-@keyframes showup {
-    from {
-        /* transform: scale(1.1); */
-        /* filter: blur(2px); */
-        opacity: 0;
-    }
-    to {
-        /* transform: scale(1); */
-        /* filter: blur(0px); */
-        opacity: 1;
-    }
 }
 
 @media all and (max-width: 1920px) {
