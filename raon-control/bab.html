@@ -726,12 +726,6 @@
     polygonAnimation();
 
     getBabDatabase();
-
-
-    var menuID = document.getElementById('menu');
-    menuID.style.transition = "opacity 0.5s linear 1.0s";
-    menuID.style.opacity = "1";
-
   }
 
   function getBabDatabase() {
@@ -739,7 +733,7 @@
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         babListJSON = JSON.parse(this.responseText);
-        setTimeout(createBabList, 4000, babListJSON);
+        // setTimeout(createBabList, 4000, babListJSON);
         // createBabList(babListJSON);
       }
     };

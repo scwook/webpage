@@ -28,7 +28,7 @@
     animation-name: fadeIn;
     animation-duration: 0.3s;
     animation-timing-function: linear;
-    animation-delay: calc(0.6s + 1s * var(--delay));
+    animation-delay: calc(1.5s * var(--delay));
     animation-fill-mode: forwards;
 }
 
@@ -138,7 +138,7 @@
 
 #out1, #out2, #out3, #out4 {
     opacity: 0;
-    animation: out-showup 2s cubic-bezier(0.165, 0.84, 0.44, 1) 4s forwards;
+    animation: out-showup 1s cubic-bezier(0.165, 0.84, 0.44, 1) 3s forwards;
 }
 
 .menu-text {
@@ -149,10 +149,6 @@
 #selection {
     opacity: 0;
     animation: topDownShowup 0.5s linear 3s forwards;
-}
-
-#menu {
-    opacity: 0;
 }
 
 #wheel, #menu {
