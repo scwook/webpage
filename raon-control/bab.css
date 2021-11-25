@@ -45,6 +45,11 @@
     left: -100px;
 }
 
+#nuclear {
+    opacity: 0;
+    animation: showUp 3s linear forwards;
+}
+
 #over {
     position: absolute;
     width: 100px;
@@ -61,20 +66,24 @@
 } */
 
 #circle2 {
-    animation-name: rotationAni2;
-    animation-duration: var(--duration);
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    /* opacity: 0; */
+    animation: rotationAni2 var(--duration) linear infinite;
     --degree: 360deg;
     /* animation-direction: alternate; */
 }
 
+#circle2-container {
+    animation: circle2-showup 2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
 #circle3 {
-    animation: circle-scaleDown 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
+    transform: scale(0);
+    animation: circle-scaleUp 2s cubic-bezier(0.075, 0.82, 0.2, 1) 1s forwards;
 }
 
 .circle4 {
-    animation: circle-scaleUp 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
+    transform: scale(0);
+    animation: circle-scaleUp 2s cubic-bezier(0.075, 0.82, 0.2, 1) 1.5s forwards;
 }
 
 #circle4-1 {
@@ -93,7 +102,8 @@
 }
 
 #circle5 {
-    animation: circle-scaleUp 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) 0.0s forwards;
+    transform: scale(0);
+    animation: circle-scaleUp 1s cubic-bezier(0.075, 0.82, 0.2, 1) 2s forwards;
 }
 
 .circle5 {
@@ -103,11 +113,12 @@
 
 .circle6 {
     opacity: 0;
-    animation: showUp 0.5s linear var(--delay) forwards;
+    animation: showUp 1s linear var(--delay) 3s forwards;
 }
 
 .circle8 {
-    animation: circle-scaleUp 0.5s cubic-bezier(0.0, 0.4, 0.1, 1) 0.0s forwards;
+    transform: scale(0);
+    animation: circle-scaleUp 1s cubic-bezier(0.075, 0.82, 0.2, 1) 2.5s forwards;
 }
 
 #circle8-1 {
@@ -125,6 +136,11 @@
     animation: circle-rotation 80s linear infinite;
 }
 
+#out1, #out2, #out3, #out4 {
+    opacity: 0;
+    animation: out-showup 2s cubic-bezier(0.165, 0.84, 0.44, 1) 4s forwards;
+}
+
 .menu-text {
     font-size: 18px;
     fill: #f1f2f2;
@@ -132,7 +148,7 @@
 
 #selection {
     opacity: 0;
-    animation: topDownShowup 0.5s linear 1s forwards;
+    animation: topDownShowup 0.5s linear 3s forwards;
 }
 
 #menu {
@@ -148,7 +164,7 @@
     fill: #07536e;
     stroke: #231f20;
     stroke-miterlimit: 10;
-    animation: showUp 0.5s linear var(--delay) forwards;
+    animation: showUp 0.5s linear calc(2s + var(--delay)) forwards;
 }
 
 .wheel-even {
@@ -156,11 +172,11 @@
     fill: #0F495A;
     stroke: #231f20;
     stroke-miterlimit: 10;
-    animation: showUp 0.5s linear var(--delay) forwards;
+    animation: showUp 0.5s linear calc(2s + var(--delay)) forwards;
 }
 
 .roulette {
-    animation: rotationAni2 3s cubic-bezier(0.0, 0.4, 0.1, 1) forwards;
+    animation: rotationAni2 3s cubic-bezier(0.075, 0.82, 0.2, 1) forwards;
 }
 
 @keyframes scaleUp {
@@ -249,5 +265,33 @@
     }
     to {
         transform: rotate(var(--degree));
+    }
+}
+
+@keyframes circle2-showup {
+    from {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes out-showup {
+    from {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media all and (max-width: 1920px) {
+    body {
+        background-position: 0px var(--background-image-top);
     }
 }

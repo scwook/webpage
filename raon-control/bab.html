@@ -307,7 +307,7 @@
   <div id="body-container">
     <div style="width:800px; height:800px; position: relative;">
       <div class="container"><img id="nuclear" src="images/bab/nuclear.svg"></div>
-      <div class="container">
+      <div class="container" id="circle2-container">
         <svg id="circle2" width="800" height="800">
           <defs>
             <style>
@@ -442,7 +442,7 @@
   // var retrieveAddr = serverAddr + ':9009/bab/retrieve';
 
   // scwook Server
-  var serverAddr = 'http://localhost'
+  var serverAddr = 'http://192.168.68.126'
   var retrieveAddr = serverAddr + ':9009/bab/retrieve';
 
   function polygonPositing() {
@@ -463,7 +463,7 @@
       var num = 7 - j;
       var hShift = j * horizontalDt;
       var vShift = j * verticalShiftDt;
-      var animationDelay = j / 20;
+      var animationDelay = j / 20 + 2;
 
       for (var i = 0; i < num; i++) {
         // leftPolygonSVGElement[polygonCount].style.position = 'absolute';
@@ -646,8 +646,9 @@
     ]
   };
 
+  // Sample
   var babMenuArray = ['맥도날드', '설어정', '서브웨이', '국수나무', '스바라시라멘', '우쿠야', '홍기와쭈꾸미', '진본', '역전우동', '냄비요리연구소', '만석장', '롯데리아'];
-
+  
   function createBabList(babListJSON) {
 
     var random = [];
@@ -706,6 +707,10 @@
       var menuContainerID = document.getElementById('menu');
       menuContainerID.appendChild(menuSVG);
     }
+
+    // setTimeout(function() {
+    //   document.getElementsByClassName('menu-text')[0].style.opacity = '1';
+    // }, 1000);
   }
 
 
@@ -734,7 +739,8 @@
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         babListJSON = JSON.parse(this.responseText);
-        createBabList(babListJSON);
+        setTimeout(createBabList, 4000, babListJSON);
+        // createBabList(babListJSON);
       }
     };
 
