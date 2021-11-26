@@ -61,6 +61,7 @@
     height: 200px;
     left: 710px;
     top: 300px;
+    /* background-color: aliceblue; */
 }
 
 #raon-box {
@@ -72,7 +73,7 @@
     top: 20px;
     text-align: center;
     opacity: 0;
-    transition: all 1s ease-out 1.5s;
+    /* transition: all 1s ease-out 1.5s; */
     /* filter: blur(2px); */
     /* transform: scale(1.05); */
 }
@@ -85,7 +86,6 @@
     font-size: 20px;
     letter-spacing: 6px;
     opacity: 0;
-    transition: all 3s ease-out 3s;
 }
 
 #particle {

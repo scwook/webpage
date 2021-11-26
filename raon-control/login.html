@@ -19,7 +19,7 @@
         <svg width="1920" height="1" style="position: absolute; top:420px">
             <line class="line" y1="0.5" x2="1920" y2="0.5" style="fill: none; stroke:#1b3333;opacity:0.5" />
         </svg>
-        <svg id="particle" class="beforeLogin" width="793.734" height="6" style="position: absolute; top:418px;">
+        <svg id="particle" width="793.734" height="6" style="position: absolute; top:418px;">
             <linearGradient id="linear-gradient" x1="-1129.0036" y1="3.0539" x2="-337.8693" y2="3.0539"
                 gradientTransform="matrix(-1, 0, 0, 1, -335.2696, -0.0517)" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stop-opacity="0" />
@@ -36,25 +36,7 @@
         </svg>
 
         <div id="container">
-            <div id="raon-box">
-                <!-- <svg width="218.9826" height="55.3802">
-                    <style>
-                        .raon-color {
-                            fill: #fff;
-                        }
-                    </style>
-                    <circle class="raon-color" cx="12.745" cy="12.745" r="12.745" />
-                    <path class="raon-color"
-                        d="M150.6228,8.1106a23.6359,23.6359,0,1,0,23.4044,23.6332A23.52,23.52,0,0,0,150.6228,8.1106Zm0,38a14.1411,14.1411,0,0,1-13.9036-14.3668,13.911,13.911,0,1,1,27.8073,0A14.1411,14.1411,0,0,1,150.6228,46.1106Z" />
-                    <rect class="raon-color" x="93.195" y="36.3781" width="23.7887" height="7.8786" />
-                    <path class="raon-color"
-                        d="M105.8644,22.4669,104.03,27.1123,91.7556,54.9162H81.5679l20.1105-44.088a4.6364,4.6364,0,0,1,8.4414,0l20.1107,44.088H120.0433L107.7686,27.1123l-1.8347-4.6454Z" />
-                    <path class="raon-color"
-                        d="M187.9187,9.9471a4.6352,4.6352,0,0,0-8.33,2.7979V54.9162h9.2692V31.7437l-.0462-6.9486h.0462l5.0182,6.9486,16.7769,21.7992a4.6345,4.6345,0,0,0,8.33-2.7975V8.5741h-9.2692v23.17l.0463,6.9517h-.0463l-5.0181-6.9517Z" />
-                    <path class="raon-color"
-                        d="M63.6294,31.4322l8.206,8.9258L84.3582,54.9162H72.0671L53.777,32.38a2.0549,2.0549,0,0,1-.48-1.33,2.0846,2.0846,0,0,1,2.0856-2.0841H67.8961a6.0246,6.0246,0,1,0,0-12.0491l-55.1511,0a4.171,4.171,0,0,1,0-8.342H68.8229A14.4844,14.4844,0,0,1,83.4218,22.9412a14.2155,14.2155,0,0,1-4.6342,10.4969c-2.609,2.3987-5.9275,3.5192-10.3122,3.5192" />
-                </svg> -->
-            </div>
+            <div id="raon-box"></div>
             <div id="control-system">Control System</div>
         </div>
     </div>
@@ -101,20 +83,13 @@
         xhttp.send(JSON.stringify(userInfo));
     }
 
-    function timer() {
-        var d = new Date();
-        document.getElementById('time-stamp').innerHTML = d.toLocaleTimeString('en-GB');
-    }
-
     window.onload = function () {
-        // setInterval(timer, 1000);
-        var raonBoxID = document.getElementById('raon-box');
+        document.getElementById('raon-box').style.transition = 'opacity 2s linear 1.5s'
+        document.getElementById('raon-box').style.opacity = '1.0';
 
         document.getElementById('particle').style.left = '800px';
-        raonBoxID.style.opacity = '1.0';
-        // raonBoxID.style.filter = 'blur(0px)';
-        // raonBoxID.style.transform = 'scale(1)';
 
+        document.getElementById('control-system').style.transition = 'opacity 3s linear 2.5s'
         document.getElementById('control-system').style.opacity = '1.0';
 
     }
