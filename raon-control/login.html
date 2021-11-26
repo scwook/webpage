@@ -82,9 +82,9 @@
                     window.location.href = serverAddr + '/main'
                 },1000);
 
-            } else {
-                // alert('Status Error : ' + this.status);
-                // document.getElementById('message').innerText = this.responseText
+            } else if(this.readyState == 4 && this.status == 401) {
+                // alert('Status Error : ' + this.status, this.readyState);
+                alert('Check ID or Password');
             }
         };
 

@@ -47,7 +47,7 @@
 
 #nuclear {
     opacity: 0;
-    animation: showUp 3s linear forwards;
+    animation: showUp 3s linear 1s forwards;
 }
 
 #over {
