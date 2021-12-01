@@ -172,7 +172,7 @@
 }
 
 .roulette {
-    animation: rotationAni2 3s cubic-bezier(0.075, 0.82, 0.2, 1) forwards;
+    animation: rotationAni2 5s cubic-bezier(0.075, 0.82, 0.2, 1) forwards;
 }
 
 @keyframes scaleUp {
