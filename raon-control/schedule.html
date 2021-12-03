@@ -442,8 +442,8 @@
     // Example Data
     var scheduleList = [
         {
-            fromDate: "2021-10-04",
-            toDate: "2021-10-06",
+            fromDate: "2021-12-06",
+            toDate: "2021-12-08",
             title: "Beam Commissioning 1",
             detail: [
                 'Cool down',
@@ -475,9 +475,9 @@
         },
 
         {
-            fromDate: "2021-10-12",
-            toDate: "2021-10-13",
-            title: "Beam Commissioning 1",
+            fromDate: "2021-12-14",
+            toDate: "2021-12-15",
+            title: "Beam Commissioning 2",
             detail: [
                 'Cool down',
                 'Beam Injection',
@@ -505,9 +505,9 @@
             ]
         },
         {
-            fromDate: "2021-10-27",
-            toDate: "2021-10-29",
-            title: "Beam Commissioning 2",
+            fromDate: "2021-12-16",
+            toDate: "2021-12-17",
+            title: "Beam Commissioning 3",
             detail: [
                 'Cool down',
                 'Beam Injection',
@@ -541,9 +541,9 @@
         },
 
         {
-            fromDate: "2021-10-18",
-            toDate: "2021-10-19",
-            title: "Beam Commissioning 3",
+            fromDate: "2021-12-22",
+            toDate: "2021-12-24",
+            title: "Beam Commissioning 4",
             detail: [
                 'Cool down',
                 'Beam Injection'
@@ -562,8 +562,8 @@
         },
 
         {
-            fromDate: "2021-11-01",
-            toDate: "2021-11-05",
+            fromDate: "2021-12-27",
+            toDate: "2021-12-28",
             title: "Beam Commissioning 5",
             detail: [
                 'Cool down',
@@ -633,154 +633,6 @@
             titleBarClass[1].classList.add('under-bar');
         }
     }
-
-    // function thisCalendar() {
-    //     // Remove this month schedule buttons
-    //     var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-    //     for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-    //         scheduleButtonClass[i].remove();
-    //     }
-
-    //     // Clear this month schedule list
-    //     var bodyCenterId = document.getElementById('body-center');
-    //     bodyCenterId.innerHTML = '';
-
-    //     // Clear shift list
-    //     var shiftAvatar = document.getElementsByClassName("avatar-img");
-    //     var shiftUserTable = document.getElementsByClassName("shift-user");
-    //     var shiftTeamTable = document.getElementsByClassName("team-name");
-    //     var shiftDesk = document.getElementsByClassName("desk-img");
-    //     for (let i = 0; i < 20; i++) {
-    //         shiftAvatar[i].src = '';
-    //         shiftUserTable[i].innerText = '';
-    //         shiftTeamTable[i].innerText = '';
-    //         shiftDesk[i].innerHTML = '';
-    //     }
-
-    //     // Create last month
-    //     today = new Date(today.getFullYear(), today.getMonth());
-    //     makeCalendar();
-
-    //     // Create schedule and shift list
-    //     //  getScheduleDatabase();
-    //     makeSchedule();
-
-    //     // Show up first shift list
-    //     var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-    //     if (scheduleButtonClass[0]) {
-    //         scheduleButtonClass[0].click();
-    //     }
-    //     else {
-    //         // Title under line animation re-trigger
-    //         var titleBarClass = document.getElementsByClassName('title-bar');
-
-    //         // 0: Todo under line, 1: Shift under line
-    //         titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-    //         titleBarClass[1].classList.remove('under-bar');
-    //         titleBarClass[1].offsetWidth;
-    //         titleBarClass[1].classList.add('under-bar');
-    //     }
-    // }
-
-    // function lastCalendar() {
-
-    //     // Remove this month schedule buttons
-    //     var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-    //     for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-    //         scheduleButtonClass[i].remove();
-    //     }
-
-    //     // Clear this month schedule list
-    //     var bodyCenterId = document.getElementById('body-center');
-    //     bodyCenterId.innerHTML = '';
-
-    //     // Clear shift list
-    //     var shiftAvatar = document.getElementsByClassName("avatar-img");
-    //     var shiftUserTable = document.getElementsByClassName("shift-user");
-    //     var shiftTeamTable = document.getElementsByClassName("team-name");
-    //     var shiftDesk = document.getElementsByClassName("desk-img");
-    //     for (let i = 0; i < 20; i++) {
-    //         shiftAvatar[i].src = '';
-    //         shiftUserTable[i].innerText = '';
-    //         shiftTeamTable[i].innerText = '';
-    //         shiftDesk[i].innerHTML = '';
-    //     }
-
-    //     // Create last month
-    //     today = new Date(today.getFullYear(), today.getMonth() - 1);
-    //     makeCalendar();
-
-    //     // Create schedule and shift list
-    //     // getScheduleDatabase();
-    //     makeSchedule();
-
-    //     // Show up first shift list
-    //     var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-    //     if (scheduleButtonClass[0]) {
-    //         scheduleButtonClass[0].click();
-    //     }
-    //     else {
-    //         // Title under line animation re-trigger
-    //         var titleBarClass = document.getElementsByClassName('title-bar');
-
-    //         // 0: Todo under line, 1: Shift under line
-    //         titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-    //         titleBarClass[1].classList.remove('under-bar');
-    //         titleBarClass[1].offsetWidth;
-    //         titleBarClass[1].classList.add('under-bar');
-    //     }
-    // }
-
-    // function nextCalendar() {
-
-    //     //getScheduleDatabase();
-
-    //     // Remove this month schedule buttons
-    //     var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-    //     for (let i = scheduleButtonClass.length - 1; i >= 0; i--) {
-    //         scheduleButtonClass[i].remove();
-    //     }
-
-    //     // Clear this month schedule list
-    //     var bodyCenterId = document.getElementById('body-center');
-    //     bodyCenterId.innerHTML = '';
-
-    //     // Clear shift list
-    //     var shiftAvatar = document.getElementsByClassName("avatar-img");
-    //     var shiftUserTable = document.getElementsByClassName("shift-user");
-    //     var shiftTeamTable = document.getElementsByClassName("team-name");
-    //     var shiftDesk = document.getElementsByClassName("desk-img");
-    //     for (let i = 0; i < 20; i++) {
-    //         shiftAvatar[i].src = '';
-    //         shiftUserTable[i].innerText = '';
-    //         shiftTeamTable[i].innerText = '';
-    //         shiftDesk[i].innerHTML = '';
-    //     }
-
-    //     // Create next month
-    //     today = new Date(today.getFullYear(), today.getMonth() + 1);
-    //     makeCalendar();
-
-    //     // Create schedule and shift list
-    //     // getScheduleDatabase();
-    //     makeSchedule();
-
-    //     // Show up first shift list
-    //     var scheduleButtonClass = document.getElementsByClassName('scheduleButton');
-    //     if (scheduleButtonClass[0]) {
-    //         scheduleButtonClass[0].click();
-    //     }
-    //     else {
-    //         // Title under line animation re-trigger
-    //         var titleBarClass = document.getElementsByClassName('title-bar');
-
-    //         // 0: Todo under line, 1: Shift under line
-    //         titleBarClass[1].style.setProperty('--barColor', '#5D6D7E');
-    //         titleBarClass[1].classList.remove('under-bar');
-    //         titleBarClass[1].offsetWidth;
-    //         titleBarClass[1].classList.add('under-bar');
-    //     }
-    // }
 
     function makeCalendar() {
         // Year and Month
